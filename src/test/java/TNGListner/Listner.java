@@ -10,7 +10,7 @@ import org.testng.ITestResult;
 
 import application.AllQA;
 
-
+//Added Listner
 
 
 public class Listner extends AllQA implements ITestListener{
