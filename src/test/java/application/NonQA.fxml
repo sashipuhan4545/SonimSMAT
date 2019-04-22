@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="690.0" prefWidth="1350.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SalesTeam">
+   <children>
+      <AnchorPane layoutX="24.0" layoutY="83.0" prefHeight="584.0" prefWidth="240.0" style="-fx-background-color: #003333;">
+         <children>
+            <Button fx:id="deviceDetect" layoutX="52.0" layoutY="32.0" mnemonicParsing="false" onAction="#Device_Detection" prefHeight="31.0" prefWidth="135.0" text="Detect Device">
+               <font>
+                  <Font name="Times New Roman Bold" size="16.0" />
+               </font>
+               <cursor>   
+                  <Cursor fx:constant="HAND" />  
+               </cursor>
+            </Button>
+            <ListView fx:id="listView" layoutX="20.0" layoutY="241.0" prefHeight="225.0" prefWidth="200.0">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></ListView>
+            <ComboBox fx:id="combobox" layoutX="20.0" layoutY="164.0" onAction="#initialize" prefHeight="31.0" prefWidth="200.0" promptText="Select Application Module">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></ComboBox>
+            <Button fx:id="start" layoutX="10.0" layoutY="488.0" mnemonicParsing="false" onAction="#executeTC" prefHeight="31.0" prefWidth="63.0" text="Start">
+               <font>
+                  <Font name="Times New Roman Bold" size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="ResetBtn" layoutX="89.0" layoutY="490.0" mnemonicParsing="false" onAction="#reset" prefHeight="25.0" prefWidth="63.0" text="Reset">
+               <font>
+                  <Font name="Times New Roman Bold" size="15.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="stopButton" layoutX="165.0" layoutY="488.0" mnemonicParsing="false" onAction="#stop" prefHeight="31.0" prefWidth="63.0" text="Stop">
+               <font>
+                  <Font name="Times New Roman Bold" size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button> 
+            <Button layoutX="37.0" layoutY="545.0" mnemonicParsing="false" onAction="#savereportAndlog" prefHeight="25.0" prefWidth="165.0" text="Reports and Logs">
+               <font>
+                  <Font name="Times New Roman Bold" size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="swapDevice" layoutX="63.0" layoutY="92.0" mnemonicParsing="false" onAction="#swapDevice" prefHeight="42.0" prefWidth="114.0" style="-fx-background-radius: 400;" text="Swap Device">
+               <font>
+                  <Font name="Times New Roman Bold" size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Label layoutX="21.0" layoutY="211.0" prefHeight="17.0" prefWidth="114.0" text="Applications List :" textFill="WHITE">
+               <font>
+                  <Font name="Times New Roman Bold" size="13.5" />
+               </font>
+            </Label>
+         </children>
+         <effect>
+            <Glow />
+         </effect> 
+      </AnchorPane>
+      <AnchorPane fx:id="secondAnchorPane" layoutX="291.0" layoutY="83.0" prefHeight="584.0" prefWidth="700.0" style="-fx-background-color: #003333;">
+         <effect>
+            <Glow />
+         </effect>
+         <children>
+            <Label layoutX="158.0" layoutY="25.0" prefHeight="25.0" prefWidth="41.0" text="DUT" textFill="WHITE">
+               <font>
+                  <Font name="Times New Roman Bold" size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="DUTBuildNo" editable="false" layoutX="88.0" layoutY="148.0" prefHeight="26.0" prefWidth="184.0" style="-fx-text-inner-color: #008000;">
+               <font>
+                  <Font name="Times New Roman Bold" size="12.0" />
+               </font>
+               <cursor> 
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+            </TextField>
+            <TextField fx:id="RefDUTBuildNo" editable="false" layoutX="298.0" layoutY="148.0" prefHeight="26.0" prefWidth="184.0">
+               <font>
+                  <Font name="Times New Roman Bold" size="12.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+            </TextField>
+            <Label layoutX="539.0" layoutY="12.0" prefHeight="28.0" prefWidth="94.0" text="Test Execution" textFill="WHITE">
+               <font>
+                  <Font name="Times New Roman Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="242.0" prefHeight="25.0" prefWidth="135.0" text="Current Test Case :" textFill="WHITE">
+               <font>
+                  <Font name="Times New Roman Bold" size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="currentTestCases" editable="false" layoutX="18.0" layoutY="269.0" prefHeight="25.0" prefWidth="665.0">
+               <font>
+                  <Font name="Times New Roman Bold" size="12.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor></TextField>
+            <Label layoutX="14.0" layoutY="295.0" prefHeight="25.0" prefWidth="135.0" text="PASS Test Case(s) :" textFill="WHITE">
+               <font>
+                  <Font name="Times New Roman Bold" size="14.0" />
+               </font>
+            </Label>
+            <TextArea fx:id="ExecutedTC" editable="false" layoutX="18.0" layoutY="321.0" prefHeight="111.0" prefWidth="665.0">
+               <font>
+                  <Font name="Times New Roman Bold" size="12.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="NONE" />
+               </cursor></TextArea>
+            <Label layoutX="15.0" layoutY="148.0" prefHeight="25.0" prefWidth="81.0" text="Build No. :" textFill="WHITE">
+               <font>
+                  <Font name="Times New Roman Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="331.0" layoutY="25.0" prefHeight="25.0" prefWidth="41.0" text="REF" textFill="WHITE">
+               <font>
+                  <Font name="Times New Roman Bold" size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="product_DUT" editable="false" layoutX="88.0" layoutY="52.0" prefHeight="26.0" prefWidth="184.0" style="-fx-text-inner-color: #008000;">
+               <font>
+                  <Font name="Times New Roman Bold" size="12.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+            </TextField>
+            <Label layoutX="15.0" layoutY="210.0" prefHeight="31.0" prefWidth="81.0" text="Serial No. :" textFill="WHITE">
+               <font>
+                  <Font name="Times New Roman Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="50.0" prefHeight="31.0" prefWidth="70.0" text="Product :" textFill="WHITE">
+               <font>
+                  <Font name="Times New Roman Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="15.0" layoutY="82.0" prefHeight="31.0" prefWidth="81.0" text="Operator :" textFill="WHITE">
+               <font>
+                  <Font name="Times New Roman Bold" size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="operator_DUT" editable="false" layoutX="88.0" layoutY="84.0" prefHeight="26.0" prefWidth="184.0" style="-fx-text-inner-color: #008000;">
+               <font>
+                  <Font name="Times New Roman Bold" size="12.0" />
+               </font></TextField>
+            <TextField fx:id="IMEI_DUT" editable="false" layoutX="88.0" layoutY="116.0" prefHeight="26.0" prefWidth="184.0" style="-fx-text-inner-color: #008000;">
+               <font>
+                  <Font name="Times New Roman Bold" size="12.0" />
+               </font></TextField>
+            <TextField fx:id="product_Ref" editable="false" layoutX="297.0" layoutY="52.0" prefHeight="26.0" prefWidth="184.0">
+               <font>
+                  <Font name="Times New Roman Bold" size="12.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor></TextField>
+            <TextField fx:id="operator_Ref" editable="false" layoutX="298.0" layoutY="84.0" prefHeight="26.0" prefWidth="184.0">
+               <font>
+                  <Font name="Times New Roman Bold" size="12.0" />
+               </font></TextField>
+            <TextField fx:id="IMEI_REF" editable="false" layoutX="298.0" layoutY="116.0" prefHeight="26.0" prefWidth="184.0">
+               <font>
+                  <Font name="Times New Roman Bold" size="12.0" />
+               </font></TextField>
+            <Label layoutX="15.0" layoutY="178.0" prefHeight="31.0" prefWidth="81.0" text="MDN :" textFill="WHITE">
+               <font>
+                  <Font name="Times New Roman Bold" size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="DUTMDN" editable="false" layoutX="88.0" layoutY="180.0" prefHeight="26.0" prefWidth="184.0" style="-fx-text-inner-color: #008000;">
+               <font>
+                  <Font name="Times New Roman Bold" size="12.0" />
+               </font></TextField>
+            <TextField fx:id="RefMDN" editable="false" layoutX="298.0" layoutY="180.0" prefHeight="26.0" prefWidth="184.0">
+               <font>
+                  <Font name="Times New Roman Bold" size="12.0" />
+               </font></TextField>
+            <ProgressIndicator fx:id="progressIndicator" layoutX="507.0" layoutY="76.0" prefHeight="141.0" prefWidth="148.0" progress="0.0" />
+            <Label layoutX="529.0" layoutY="35.0" prefHeight="28.0" prefWidth="114.0" text="Progress Indicator" textFill="WHITE">
+               <font>
+                  <Font name="Times New Roman Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="status" layoutX="332.0" layoutY="240.0" prefHeight="28.0" prefWidth="345.0" textFill="WHITE">
+               <font>
+                  <Font name="Calibri Bold" size="20.0" />
+               </font></Label>
+            <Label layoutX="280.0" layoutY="56.0" prefHeight="16.0" prefWidth="14.0" text="--" textFill="WHITE">
+               <font>
+                  <Font name="Times New Roman Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="280.0" layoutY="88.0" prefHeight="17.0" prefWidth="14.0" text="--" textFill="WHITE">
+               <font>
+                  <Font name="Times New Roman Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="280.0" layoutY="117.0" prefHeight="17.0" prefWidth="14.0" text="--" textFill="WHITE">
+               <font>
+                  <Font name="Times New Roman Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="280.0" layoutY="152.0" prefHeight="17.0" prefWidth="14.0" text="--" textFill="WHITE">
+               <font>
+                  <Font name="Times New Roman Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="280.0" layoutY="185.0" prefHeight="17.0" prefWidth="14.0" text="--" textFill="WHITE">
+               <font>
+                  <Font name="Times New Roman Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="184.0" layoutY="6.0" text="Device Information :" textFill="WHITE">
+               <font>
+                  <Font name="Times New Roman Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="434.0" prefHeight="25.0" prefWidth="135.0" text="FAIL Test Case(s) :" textFill="WHITE">
+               <font>
+                  <Font name="Times New Roman Bold" size="14.0" />
+               </font>
+            </Label>
+            <TextArea fx:id="failedTC" editable="false" layoutX="18.0" layoutY="463.0" prefHeight="111.0" prefWidth="665.0" style="-fx-text-inner-color: #FF0000;">
+               <font>
+                  <Font name="Times New Roman Bold" size="12.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="NONE" />
+               </cursor>
+            </TextArea>
+            <Label layoutX="14.0" layoutY="114.0" prefHeight="31.0" prefWidth="63.0" text="IMEI :" textFill="WHITE">
+               <font>
+                  <Font name="Times New Roman Bold" size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="DUTID" editable="false" layoutX="88.0" layoutY="212.0" prefHeight="26.0" prefWidth="184.0" style="-fx-text-inner-color: #008000;">
+               <font>
+                  <Font name="Times New Roman Bold" size="12.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="RefID" editable="false" layoutX="298.0" layoutY="212.0" prefHeight="26.0" prefWidth="184.0">
+               <font>
+                  <Font name="Times New Roman Bold" size="12.0" />
+               </font>
+            </TextField>
+            <Label layoutX="280.0" layoutY="217.0" prefHeight="17.0" prefWidth="14.0" text="--" textFill="WHITE">
+               <font>
+                  <Font name="Times New Roman Bold" size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="1007.0" layoutY="83.0" prefHeight="584.0" prefWidth="320.0" style="-fx-background-color: #003333;">
+         <effect>
+            <Glow />
+         </effect>
+         <children>
+            <Label layoutX="93.0" layoutY="14.0" prefHeight="17.0" prefWidth="135.0" textFill="WHITE">
+               <font>
+                  <Font name="Times New Roman Bold" size="14.0" />
+               </font>
+            </Label>
+            <Button fx:id="executeFailedTestCases" disable="true" layoutX="87.0" layoutY="48.0" mnemonicParsing="false" onAction="#ExecuteFailedTestCasesOnly" prefHeight="31.0" prefWidth="148.0" text="Execute Failed Cases">
+               <font>
+                  <Font name="Times New Roman Bold" size="14.0" />
+               </font>
+            </Button>
+            <ListView fx:id="testCaseDisplay" layoutX="5.0" layoutY="87.0" prefHeight="491.0" prefWidth="307.0" />
+         </children>
+      </AnchorPane>
+      <MenuBar prefHeight="25.0" prefWidth="1378.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="User-Guide">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#userGuide" text="View" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Execution-Steps">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#TestExecution" text="View" />
+            </items>
+          </Menu>
+            <Menu mnemonicParsing="false" text="Pre-Conditions">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#PreconditionPopUp" text="View" />
+               </items></Menu>
+            <Menu mnemonicParsing="false" text="Support">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#Support" text="View" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="About">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#aboutScreen" text="View" />
+              </items>
+            </Menu>
+        </menus>
+      </MenuBar>
+      <Label layoutX="318.0" layoutY="25.0" prefHeight="49.0" prefWidth="634.0" text="Sonim Mobile-App Automation Tool" textFill="#003333">
+         <font>
+            <Font name="Times New Roman Bold" size="40.0" />
+         </font>
+         <effect>
+            <Glow />
+         </effect>
+      </Label>
+      <Label fx:id="loginAsTeam" layoutX="1007.0" layoutY="41.0" prefHeight="28.0" prefWidth="320.0" textFill="#003333">
+         <font>
+            <Font name="Times New Roman Bold" size="16.0" />
+         </font></Label>
+   </children>
+</AnchorPane>

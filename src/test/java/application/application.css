@@ -1,0 +1,335 @@
+.LoginPageCloseIconPopup {
+	
+    -fx-background-color:black;
+    -fx-border-color:red;
+    -fx-border-width:2.0px;
+}
+
+.LoginPageCloseIconPopup  .label.content{
+	
+    -fx-font-size:14px;
+    -fx-text-fill:red;
+    -fx-font-weight:bold;
+}
+
+.LoginPageCloseIconPopup .header-panel {
+	
+  -fx-background-color:black;
+}
+
+
+
+.LoginPageCloseIconPopup .header-panel .label{
+	
+    -fx-background-color:black;
+    -fx-font-size:14px;
+    -fx-font-weight:bold;
+    -fx-text-fill:red;    
+}
+
+.LoginPageCloseIconPopup .button-bar .container {
+	
+  	-fx-background-color:black;
+}
+
+.LoginPageCloseIconPopup .button {
+	
+   -fx-background-color:black;
+   -fx-text-fill:red;
+   -fx-font-size:12px;
+   -fx-wrap-text:true;
+   -fx-effect:dropshadow(three-pass-box, red, 15.0, 0.0, 0.0, 0.0);
+   -fx-cursor:hand;
+}
+ 
+ 
+.AllTestCaseSkippedPopup {
+	
+    -fx-background-color:black;
+    -fx-border-color:red;
+    -fx-border-width:2.0px;
+}
+
+.AllTestCaseSkippedPopup  .label.content{
+	
+    -fx-font-size:14px;
+    -fx-text-fill:red;
+    -fx-font-weight:bold;
+}
+
+.AllTestCaseSkippedPopup .header-panel {
+	
+  -fx-background-color:black;
+}
+
+.AllTestCaseSkippedPopup .header-panel .label{
+	
+    -fx-background-color:black;
+    -fx-font-size:14px;
+    -fx-font-weight:bold;
+    -fx-text-fill:red;    
+}
+
+.AllTestCaseSkippedPopup .button-bar .container {
+	
+  	-fx-background-color:black;
+}
+
+.AllTestCaseSkippedPopup .button {
+	
+   -fx-background-color:black;
+   -fx-text-fill:red;
+   -fx-font-size:12px;
+   -fx-wrap-text:true;
+   -fx-effect:dropshadow(three-pass-box, red, 15.0, 0.0, 0.0, 0.0);
+   -fx-cursor:hand;
+}
+
+
+.ExecutionCompletedPopup {
+	
+    -fx-background-color:black;
+    -fx-border-color:#00FF00;
+    -fx-border-width:2.0px;
+}
+
+.ExecutionCompletedPopup  .label.content{
+	
+    -fx-font-size:14px;
+    -fx-text-fill:#00FF00;
+    -fx-font-weight:bold;
+}
+
+.ExecutionCompletedPopup .header-panel {
+	
+  -fx-background-color:black;
+}
+
+.ExecutionCompletedPopup .header-panel .label{
+	
+    -fx-background-color:black;
+    -fx-font-size:14px;
+    -fx-font-weight:bold;
+    -fx-text-fill:#00FF00;    
+}
+
+.ExecutionCompletedPopup .button-bar .container {
+	
+  	-fx-background-color:black;
+}
+
+.ExecutionCompletedPopup .button {
+	
+   -fx-background-color:black;
+   -fx-text-fill:#00FF00;
+   -fx-font-size:12px;
+   -fx-wrap-text:true;
+   -fx-effect:dropshadow(three-pass-box, #00FF00, 15.0, 0.0, 0.0, 0.0);
+   -fx-cursor:hand;
+}
+
+.ProgressIndicator .percentage  {
+	
+	-fx-fill: #ffffff ;
+	-fx-font-size:15px;
+	-fx-font-weight:bold;
+}
+
+
+
+
+
+.MDN_Popup {
+	
+    -fx-background-color:#FFFFFF;
+    -fx-border-color:#0000FF;
+    -fx-border-width:2.0px;
+}
+
+.MDN_Popup  .label.content{
+	
+    -fx-font-size:14px;
+    -fx-text-fill:#0000FF;
+    -fx-font-weight:bold;
+    
+}
+
+.MDN_Popup .header-panel {
+	
+  -fx-background-color:#FFFFFF;
+}
+
+.MDN_Popup .header-panel .label{                                      
+	
+    -fx-background-color:#FFFFFF;
+    -fx-font-size:14px;
+    -fx-font-weight:bold;
+    -fx-text-fill:#0000FF;   
+    
+}
+
+.MDN_Popup .button-bar .container {
+	
+  	-fx-background-color:#FFFFFF;
+}
+
+.MDN_Popup .button {
+	
+   -fx-background-color:#FFFFFF;
+   -fx-text-fill:#0000FF;
+   -fx-font-size:12px;
+   -fx-wrap-text:true;
+   -fx-effect:dropshadow(three-pass-box, #0000FF, 15.0, 0.0, 0.0, 0.0);
+   -fx-cursor:hand;
+}
+
+
+
+
+.enteredMDNPopup {
+	
+    -fx-background-color:#FFFFFF;
+    -fx-border-color:#0000FF;
+    -fx-border-width:2.0px;
+}
+
+.enteredMDNPopup  .label.content{
+	
+    -fx-font-size:14px;
+    -fx-text-fill:#0000FF;
+    -fx-font-weight:bold;
+    
+}
+
+.MDN_Popup .header-panel {
+	
+  -fx-background-color:#FFFFFF;
+}
+
+
+
+
+.DeviceDetection {
+	
+    -fx-background-color:black;
+    -fx-border-color:red;
+    -fx-border-width:2.0px;
+}
+
+.DeviceDetection  .label.content{
+	
+    -fx-font-size:14px;
+    -fx-text-fill:red;
+    -fx-font-weight:bold;
+}
+
+.LoginPageCloseIconPopup .header-panel {
+	
+  -fx-background-color:black;
+}
+
+.DeviceDetection .header-panel .label{
+	
+    -fx-background-color:white;
+    -fx-font-size:14px;
+    -fx-font-weight:bold;
+    -fx-text-fill:red;    
+}
+
+.DeviceDetection .button-bar .container {
+	
+  	-fx-background-color:black;
+}
+
+.DeviceDetection .button {
+	
+   -fx-background-color:black;
+   -fx-text-fill:red;
+   -fx-font-size:12px;
+   -fx-wrap-text:true;
+   -fx-effect:dropshadow(three-pass-box, red, 15.0, 0.0, 0.0, 0.0);
+   -fx-cursor:hand;
+}
+
+
+
+
+
+.ListViewItems .list-cell:filled:selected:focused, .list-cell:filled:selected {
+    -fx-background-color: linear-gradient(#328BDB 0.0%, #207BCF 25.0%, #1973C9 75.0%, #0A65BF 100.0%);
+    -fx-text-fill: white;
+    -fx-font-weight:bold;
+}
+
+.ListViewItems.list-view {
+    -fx-selection-bar:green ;
+   
+    -fx-selection-bar-non-focused: green ;
+}
+
+.ListViewItems.list-cell{
+    -fx-font-size:15.0;
+}
+
+
+.ListViewItems.list-cell:filled:hover {
+    -fx-background-color: #0093ff;
+    -fx-text-fill: white;
+    
+}
+.ListViewItems.list-cell {
+    -fx-font-size: 1.5em ;
+}
+
+.ListViewItems.list-cell:inactive {
+    -fx-text-fill: red ;
+}
+
+
+
+
+.menu-bar{
+	
+	
+ 
+  -fx-background-color:#003333;
+  
+  -fx-border-color:  #f0cd90;
+   -fx-border-width: 2
+   
+   
+   
+
+}
+
+.menu-bar .label {
+    -fx-font-size: 14 pt;
+     
+    -fx-font-family: "monospace";
+    -fx-text-fill: 	#ffffff;
+    -fx-font-weight:bold;
+    
+}
+
+.menu:hover {
+    -fx-background-color: black;
+   
+}
+
+.menu-item .label{
+	
+  -fx-font-size: 14 pt;
+  -fx-font-family: "monospace";
+   
+  
+  -fx-background-color: #003333
+  
+}
+
+
+
+
+
+
+
+

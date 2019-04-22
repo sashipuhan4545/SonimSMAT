@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="440.0" prefWidth="800.0" style="-fx-background-color: #003333;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
+   <children>
+      <TextField fx:id="userName" layoutX="545.0" layoutY="172.0" prefHeight="32.0" prefWidth="186.0">
+         <font>
+            <Font name="Times New Roman Bold" size="12.0" />
+         </font>
+      </TextField>
+      <PasswordField fx:id="password" layoutX="545.0" layoutY="249.0" prefHeight="32.0" prefWidth="186.0">
+         <font>
+            <Font name="Times New Roman Bold" size="12.0" />
+         </font>
+      </PasswordField>
+      <Button fx:id="LoginBtn" defaultButton="true" layoutX="659.0" layoutY="295.0" mnemonicParsing="false" onAction="#login" prefHeight="32.0" prefWidth="72.0" text="Login" textFill="#1625d9">
+         <font>
+            <Font name="Times New Roman Bold" size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Label layoutX="545.0" layoutY="100.0" prefHeight="17.0" prefWidth="216.0" text="Sonim Moblie-App Automation Tool" textFill="#eeeeee">
+         <font>
+            <Font name="Times New Roman Bold" size="13.0" /> 
+         </font>
+      </Label>
+      <Label layoutX="545.0" layoutY="29.0" prefHeight="73.0" prefWidth="216.0" text="S-MAT" textAlignment="JUSTIFY" textFill="#dadad5">
+         <font>
+            <Font name="Times New Roman Bold" size="65.0" />
+         </font>
+      </Label>
+      <Label layoutX="545.0" layoutY="140.0" prefHeight="32.0" prefWidth="90.0" text="Username" textFill="#d5dad7">
+         <font>
+            <Font name="Times New Roman Bold" size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="545.0" layoutY="217.0" prefHeight="32.0" prefWidth="90.0" text="Password" textFill="#d5dad7">
+         <font>
+            <Font name="Times New Roman Bold" size="13.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="437.0" fitWidth="537.0" layoutX="4.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+      	<image>
+      		<Image url="@SMAT.jpg" />   
+      	</image>
+      </ImageView>
+      <Label fx:id="errorMessage" layoutX="544.0" layoutY="334.0" prefHeight="32.0" prefWidth="254.0" textFill="#f21010">
+         <font>
+            <Font name="Times New Roman Bold" size="12.0" />
+         </font>
+      </Label>
+      <Button layoutX="760.0" mnemonicParsing="false" onAction="#closeIcon" prefHeight="17.0" prefWidth="40.0" text="X" textFill="#003333">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Hyperlink fx:id="smatSupport" layoutX="678.0" layoutY="376.0" onAction="#smatSupport" prefHeight="23.0" prefWidth="108.0" text="S-MAT Support " textFill="#d5dad7">
+         <font>
+            <Font name="Times New Roman Bold" size="13.0" />
+         </font>
+      </Hyperlink>
+      <Button layoutX="720.0" mnemonicParsing="false" onAction="#minimize" prefHeight="17.0" prefWidth="40.0" text="-" textFill="#003333">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <CheckBox fx:id="rememberMe" layoutX="551.0" layoutY="377.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="119.0" text="Remember Me" textFill="#d5dad7">
+         <font>
+            <Font name="Times New Roman Bold" size="13.0" />
+         </font>
+      </CheckBox>
+   </children>
+</AnchorPane>

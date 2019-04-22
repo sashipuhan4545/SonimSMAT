@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Suite" parallel="false" thread-count="2" >
+
+<listeners>
+	<listener class-name="TNGListner.Listner"></listener>
+
+	</listeners>
+	
+
+	   <test name="Xp3DevSanity">
+		<parameter name="deviceName_" value="XP3800"/>
+		<parameter name="platformVersion_" value="8.1.0"/>
+		<parameter name="URL_" value="127.0.0.1:4723/wd/hub"/>
+	    <parameter name="App_Package_Name_" value="com.android.dialer"/>
+		<parameter name="App_Activity_Name_" value="com.android.dialer.DialerMainActivity"/>
+		
+		<classes>
+		<class name="com.xp3.Test.XP3_Device_Sanity"/>
+	
+		</classes>
+	</test> 
+	 
+	
+</suite>

@@ -1,0 +1,37 @@
+/target/
+
+#Exclude /test-output/
+/test-output/
+
+#Exclude JSON files
+/src/test/resources/drivers/*.json
+
+#Exclude Logs
+/Logs/*
+
+#Exception to above rule
+!Logs/.gitkeep
+
+#Exclude adbLogs
+/src/test/resources/adbLogs/*
+
+#Exception to above rule
+!/src/test/resources/adbLogs/.gitkeep
+
+#Exclude OCR_FILES
+/src/test/resources/OCR_FILES/*
+
+#Exception to above rule
+!/src/test/resources/OCR_FILES/.gitkeep
+
+#Exclude screenshots
+/src/test/resources/screenshots/*
+
+#Exception to above rule
+!/src/test/resources/screenshots/.gitkeep
+
+#Exclude extentreport
+/src/test/resources/extentreport/*
+
+#Exception to above rule
+!/src/test/resources/extentreport/.gitkeep
