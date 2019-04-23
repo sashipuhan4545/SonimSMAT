@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.How;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
@@ -470,7 +471,7 @@ public class Locators_XP8_Sanity {
 	@AndroidFindBy(xpath="//*[@text='facebook']")
 	public static AndroidElement facebook_Logo;
 
-	@AndroidFindBy(xpath="//android.widget.TextView[@text='Languages & input']")
+	@AndroidFindBy(xpath="//android.widget.TextView[@text='LanguagesÂ & input']")
 	public static AndroidElement languageAndInput;
 
 	@AndroidFindBy(xpath="//android.widget.TextView[@text='Languages']")
@@ -485,10 +486,10 @@ public class Locators_XP8_Sanity {
 	@AndroidFindBy(xpath="//android.widget.TextView[@text='English']")
 	public static AndroidElement english_Language;
 
-	@AndroidFindBy(xpath="//android.widget.TextView[@text='Français']")
+	@AndroidFindBy(xpath="//android.widget.TextView[@text='FranÃ§ais']")
 	public static AndroidElement french_Language;
 
-	@AndroidFindBy(xpath="//android.widget.TextView[@text='Español']")
+	@AndroidFindBy(xpath="//android.widget.TextView[@text='EspaÃ±ol']")
 	public static AndroidElement spanish_Language;
 
 	@AndroidFindBy(xpath="//*[@text='att.net' or @text='start.att' or @text='Home - Welcome to att.net']")
@@ -575,13 +576,13 @@ public class Locators_XP8_Sanity {
 	@AndroidFindBy(xpath="//android.widget.Button[@text='+']")
 	public static AndroidElement plus;
 
-	@AndroidFindBy(xpath="//android.widget.Button[@text='−']")
+	@AndroidFindBy(xpath="//android.widget.Button[@text='âˆ’']")
 	public static AndroidElement minus;
 
-	@AndroidFindBy(xpath="//android.widget.Button[@text='×']")
+	@AndroidFindBy(xpath="//android.widget.Button[@text='Ã—']")
 	public static AndroidElement multiply;
 
-	@AndroidFindBy(xpath="//android.widget.Button[@text='÷']")
+	@AndroidFindBy(xpath="//android.widget.Button[@text='Ã·']")
 	public static AndroidElement divide;
 
 	@AndroidFindBy(xpath="//android.widget.Button[@text='DEL']")
@@ -950,7 +951,10 @@ public class Locators_XP8_Sanity {
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.Button\").text(\"MORE\")")
 	public static AndroidElement MORE;
 
-	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").resourceId(\"com.android.settings:id/user_id\")")
+/*	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").resourceId(\"com.android.settings:id/user_id\")")
+	public static AndroidElement googleAccount_email;
+	*/
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").resourceId(\"com.android.settings:id/entity_header_title\")")
 	public static AndroidElement googleAccount_email;
 
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Play Store\")")
@@ -1085,7 +1089,7 @@ public class Locators_XP8_Sanity {
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Sonim Scout\")")
 	public static AndroidElement sonimScout;
 
-	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"SCOUT\")")
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Sonim Scout\")")
 	public static AndroidElement scout_Heading;
 
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Voice Search\")")
@@ -1390,7 +1394,7 @@ public class Locators_XP8_Sanity {
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.EditText\").resourceId(\"com.verizon.messaging.vzmsgs:id/curRecip\")")	
 	public static AndroidElement TO_Field_O;
 	
-	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.EditText\").text(\"Type a message…\")")
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.EditText\").text(\"Type a messageâ€¦\")")
 	public static AndroidElement messageField_O;
 	
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Conversations\")")
@@ -1480,10 +1484,13 @@ public class Locators_XP8_Sanity {
 	@AndroidFindBy(xpath="//*[@text='CANCEL']")
 	public static AndroidElement CANCEL;
 
-	@AndroidFindBy(xpath="//*[contains(@content-desc,'Wi-Fi') and contains(@text,'Off')]")
+	@AndroidFindBy(xpath="//*[contains(@content-desc,'Wi-Fi,') and contains(@text,'Off')]")
 	public static AndroidElement wifi_OffState_QuickPanel_O;
 	
-	@AndroidFindBy(xpath="//*[contains(@content-desc,'Wi-Fi,Wifi three bars') and contains(@text,'On')]")
+/*	@AndroidFindBy(xpath="//*[contains(@content-desc,'Wi-Fi,Wifi three bars') and contains(@text,'On')]")
+	public static AndroidElement wifi_OnState_QuickPanel_O;*/
+	
+	@AndroidFindBy(xpath="//android.widget.Switch[@index='0' and @text='On']")
 	public static AndroidElement wifi_OnState_QuickPanel_O;
 	
 	@AndroidFindBy(xpath="//*[contains(@content-desc,'Bluetooth off') and contains(@text,'Off')]")
@@ -1573,15 +1580,35 @@ public class Locators_XP8_Sanity {
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.Button\").text(\"CANCEL\")")
 	public static AndroidElement TURN_OFF1;
 	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.view.View\").text(\"Sign in\")")
+	public static AndroidElement Google_SignIn_page;
 	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.Button\").text(\"Google Search\")")
+	public static AndroidElement Google_Search_chrome;
 	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.FrameLayout\").resourceId(\"com.google.android.googlequicksearchbox:id/text_container\")")
+	public static AndroidElement Google_search_field;
 	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Google Play Movies & TV\")")
+	public static AndroidElement Google_playmovies_Tv;
 	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.ImageButton\").resourceId(\"com.google.android.apps.docs:id/branded_fab\")")
+	public static AndroidElement Google_drive_add;
 	
+	@AndroidFindBy(xpath="//android.widget.ImageButton[@content-desc='Show navigation drawer']")
+	public static AndroidElement play_music_page;
 	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.Button\").text(\"PLAY NOW\")")
+	public static AndroidElement play_now_playMusic;
 	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Available devices\")")
+	public static AndroidElement Available_devices;
 	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"com.google.android.apps.gsa.searchplate.SearchPlate\").text(\"com.google.android.googlequicksearchbox:id/search_plate\")")
+	public static AndroidElement search_bar;
 	
+	@FindBy(how=How.XPATH, using =("//android.widget.LinearLayout[@index='2']/../..//android.widget.TextView[contains(@text,'@gmail.com')]"))
+	public static AndroidElement connectedAccount;
 	
 	
 	

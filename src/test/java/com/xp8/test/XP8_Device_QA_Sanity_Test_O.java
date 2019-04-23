@@ -98,12 +98,12 @@ public class XP8_Device_QA_Sanity_Test_O extends XP8_Sanity_Util {
 			}
 		}
 	}
-	
+
 
 	@BeforeSuite
 	public void numofTestCases() throws ClassNotFoundException {
-		
-		
+
+
 		appiumService.TOTAL_NUM_OF_TESTCASES=GetMethods.TotalTestcase("XP8_DeviceSanity", this.getClass());
 
 
@@ -150,15 +150,25 @@ public class XP8_Device_QA_Sanity_Test_O extends XP8_Sanity_Util {
 		launch_APP(Locators_XP8_Sanity.calculator);
 		validate_Locators(Locators_XP8_Sanity.equal);
 		launch_APP(Locators_XP8_Sanity.Calendar);
-		validate_Locators(Locators_XP8_Sanity.google_Calendar);
+		customWait(4000);
+		if(isElementExist(Locators_XP8_Sanity.Google_SignIn_page)) {
+			validate_Locators(Locators_XP8_Sanity.Google_SignIn_page);
+		}else {
+			validate_Locators(Locators_XP8_Sanity.google_Calendar);
+		}
 		launch_APP(Locators_XP8_Sanity.camera);
 		clearCameraPermission();
 		validate_Locators(Locators_XP8_Sanity.capturePicture);
 		launch_APP(Locators_XP8_Sanity.chrome);
 		customWait(4000); 
-		validate_Locators(Locators_XP8_Sanity.ACCEPTCONTINUE);
+		if(isElementExist(Locators_XP8_Sanity.Google_Search_chrome)) {
+			validate_Locators(Locators_XP8_Sanity.Google_Search_chrome);
+		}else {
+			validate_Locators(Locators_XP8_Sanity.ACCEPTCONTINUE);
+		}
 		launch_APP(Locators_XP8_Sanity.clock);
-		validate_Locators(Locators_XP8_Sanity.CLOCK);
+
+		validate_Locators(Locators_XP8_Sanity.clock);
 		launch_APP(Locators_XP8_Sanity.contacts);
 		validate_Locators(Locators_XP8_Sanity.add_NewContact);
 		launch_APP(Locators_XP8_Sanity.downloads);
@@ -174,9 +184,11 @@ public class XP8_Device_QA_Sanity_Test_O extends XP8_Sanity_Util {
 		launch_APP(Locators_XP8_Sanity.gmail);
 		validate_Locators(Locators_XP8_Sanity.Welcome_to_Gmail);
 		launch_APP(Locators_XP8_Sanity.google);
-		clickBtn(Locators_XP8_Sanity.NO_THANKS1);
-		validate_Locators(Locators_XP8_Sanity.Search_Google);		
-		launch_APP(Locators_XP8_Sanity.keep); minWait();
+		if(isElementExist(Locators_XP8_Sanity.NO_THANKS1)) {
+			clickBtn(Locators_XP8_Sanity.NO_THANKS1);
+		}
+		validate_Locators(Locators_XP8_Sanity.Google_search_field);		
+		launch_APP(Locators_XP8_Sanity.keep); customWait(3000);
 		try { wt.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//*[contains(@text,'Checking info')]"))); } catch (Exception e) {}
 		customWait(2000);
 		validate_Locators(Locators_XP8_Sanity.headingText_Google);
@@ -187,11 +199,24 @@ public class XP8_Device_QA_Sanity_Test_O extends XP8_Sanity_Util {
 		launch_APP(Locators_XP8_Sanity.photos);
 		validate_Locators(Locators_XP8_Sanity.googlePhotos_uses_FaceGrouping);
 		launch_APP(Locators_XP8_Sanity.PlayMovies_TV);
-		try {wt.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@text='GET STARTED']")));	} catch (Exception e) {	}
-		validate_Locators(Locators_XP8_Sanity.welcome_title_PlayMoviesTV);
+		customWait(4000);
+		if(isElementExist(Locators_XP8_Sanity.Google_SignIn_page)) {
+			validate_Locators(Locators_XP8_Sanity.Google_SignIn_page);
+		}else if (isElementExist(Locators_XP8_Sanity.Google_playmovies_Tv)) {
+			validate_Locators(Locators_XP8_Sanity.Google_playmovies_Tv);
+		}else {
+			try {wt.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@text='GET STARTED']")));	} catch (Exception e) {	}
+			validate_Locators(Locators_XP8_Sanity.welcome_title_PlayMoviesTV);
+		}
 		launch_APP(Locators_XP8_Sanity.PlayMusic);
 		customWait(4000);
-		validate_Locators(Locators_XP8_Sanity.ToUse_GooglePlayMusic);
+		if(isElementExist(Locators_XP8_Sanity.play_music_page)) {
+			validate_Locators(Locators_XP8_Sanity.play_music_page);
+		}else if (check) {
+			validate_Locators(Locators_XP8_Sanity.play_now_playMusic);
+		}else {
+			validate_Locators(Locators_XP8_Sanity.ToUse_GooglePlayMusic);
+		}
 		//launch_APP(Locators_XP8_Sanity.PlayStore);
 		//wt.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//*[contains(@text,'Checking info')]")));
 		//validate_Locators(Locators_XP8_Sanity.Use_your_Google_account);
@@ -211,53 +236,61 @@ public class XP8_Device_QA_Sanity_Test_O extends XP8_Sanity_Util {
 		launch_APP(Locators_XP8_Sanity.youTube);
 		clickBtn(Locators_XP8_Sanity.NOT_NOW);
 		validate_Locators(Locators_XP8_Sanity.youtube_Logo);
-		if (p_b_No.contains("-10.")) {
-			launch_APP(Locators_XP8_Sanity.drive);
-			validate_Locators(Locators_XP8_Sanity.with_your_GoogleAccount);
-			launch_APP(Locators_XP8_Sanity.messaging);
-			clearSMSPermissions();
-			validate_Locators(Locators_XP8_Sanity.add_NewSMS);
-			//launch_APP(Locators_XP8_Sanity.Device_Help);
-			//validate_Locators(Locators_XP8_Sanity.add_NewSMS);
-			launch_APP(Locators_XP8_Sanity.Visual_Voicemail);
-			validate_Locators(Locators_XP8_Sanity.Play_messages_in_any_order);
-		} else if(p_b_No.contains("-00.")) {
-			launch_APP(Locators_XP8_Sanity.drive);
-			validate_Locators(Locators_XP8_Sanity.Use_your_Google_account);
-			launch_APP(Locators_XP8_Sanity.messaging);
-			clearSMSPermissions();
-			validate_Locators(Locators_XP8_Sanity.add_NewSMS);
+	    //	if (p_b_No.contains("-10.")) {
+		//	launch_APP(Locators_XP8_Sanity.drive);
+		//	validate_Locators(Locators_XP8_Sanity.with_your_GoogleAccount);
+		//	launch_APP(Locators_XP8_Sanity.messaging);
+		//	clearSMSPermissions();
+		//	validate_Locators(Locators_XP8_Sanity.add_NewSMS);
+		//	launch_APP(Locators_XP8_Sanity.Device_Help);
+		//	validate_Locators(Locators_XP8_Sanity.add_NewSMS);
+		//	launch_APP(Locators_XP8_Sanity.Visual_Voicemail);
+		//	validate_Locators(Locators_XP8_Sanity.Play_messages_in_any_order);
+	//	} else if(p_b_No.contains("-00.")) {
+	//		launch_APP(Locators_XP8_Sanity.drive);
+		//	validate_Locators(Locators_XP8_Sanity.Use_your_Google_account);
+		//	launch_APP(Locators_XP8_Sanity.messaging);
+		//	clearSMSPermissions();
+		//	validate_Locators(Locators_XP8_Sanity.add_NewSMS);
 //			launch_APP(Locators_XP8_Sanity.QTI_Logkit);
 //			customWait(5000);   clickBtn(Locators_XP8_Sanity.CONTINUE);
 //			validate_Locators(Locators_XP8_Sanity.Recent_captures_and_events);
-		} else if(p_b_No.contains("-15.")) {
-			launch_APP(Locators_XP8_Sanity.drive);
-			validate_Locators(Locators_XP8_Sanity.a_SafePlace_for_all_your_files);
-			launch_APP(Locators_XP8_Sanity.MessagePlus);
-			customWait(3000);
-			validate_Locators(Locators_XP8_Sanity.StartMessaging);
-			launch_APP(Locators_XP8_Sanity.Hum);
-			validate_Locators(Locators_XP8_Sanity.welcome_To_Hum);
-			launch_APP(Locators_XP8_Sanity.Music);
-			clearAllow();
-			validate_Locators(Locators_XP8_Sanity.Artists);
-			launch_APP(Locators_XP8_Sanity.MyVerizon);
-			clearAllow();  clickBtn(Locators_XP8_Sanity.ADVANCE);
-			clearAllow(); 
-			try { wt.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(@text,'Get Started')]"))); } catch (Exception e) {}
-			validate_Locators(Locators_XP8_Sanity.Get_Started);
-			launch_APP(Locators_XP8_Sanity.OmaDMTest);
-			validate_Locators(Locators_XP8_Sanity.SDMFOTA);
-			launch_APP(Locators_XP8_Sanity.SecurityAndPrivacy);
-			validate_Locators(Locators_XP8_Sanity.Continue);
+	//	} else if(p_b_No.contains("-15.")) {
+		//	launch_APP(Locators_XP8_Sanity.drive);
+		//	validate_Locators(Locators_XP8_Sanity.a_SafePlace_for_all_your_files);
+		//	launch_APP(Locators_XP8_Sanity.MessagePlus);
+		//	customWait(3000);
+		//	validate_Locators(Locators_XP8_Sanity.StartMessaging);
+		//	launch_APP(Locators_XP8_Sanity.Hum);
+		//	validate_Locators(Locators_XP8_Sanity.welcome_To_Hum);
+		//	launch_APP(Locators_XP8_Sanity.Music);
+		//	clearAllow();
+		//	validate_Locators(Locators_XP8_Sanity.Artists);
+		//	launch_APP(Locators_XP8_Sanity.MyVerizon);
+		//	clearAllow();  clickBtn(Locators_XP8_Sanity.ADVANCE);
+		//	clearAllow(); 
+		//	try { wt.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(@text,'Get Started')]"))); } catch (Exception e) {}
+		//	validate_Locators(Locators_XP8_Sanity.Get_Started);
+		//	launch_APP(Locators_XP8_Sanity.OmaDMTest);
+		//	validate_Locators(Locators_XP8_Sanity.SDMFOTA);
+		//	launch_APP(Locators_XP8_Sanity.SecurityAndPrivacy);
+		//	validate_Locators(Locators_XP8_Sanity.Continue);
 			//launch_APP(Locators_XP8_Sanity.Snapdragon_Gallery);
 			//clearAllow();
 			//validate_Locators(Locators_XP8_Sanity.Timeline);
+	//	}
+
+		launch_APP(Locators_XP8_Sanity.drive);
+		customWait(2000);
+		if(isElementExist(Locators_XP8_Sanity.Google_SignIn_page)) {
+			validate_Locators(Locators_XP8_Sanity.Google_SignIn_page);
+		}else {
+			validate_Locators(Locators_XP8_Sanity.Google_drive_add);
 		}
 		sf1.assertAll();
 	}
 
-	@Test(priority=-2,dataProvider="XP8SanityTest",dataProviderClass=DataProviders.class)
+	@Test(priority=2,dataProvider="XP8SanityTest",dataProviderClass=DataProviders.class)
 	public void XP8_DeviceSanity_002_AboutPhone_Build_Baseband_Versions(Hashtable<String, String> dt) throws InterruptedException, IOException {
 
 		APP_LOGS.info("===================== XP8_Device_QA_Sanity_002 ======================");
@@ -343,6 +376,7 @@ public class XP8_Device_QA_Sanity_Test_O extends XP8_Sanity_Util {
 		dailCallUsingDailPad(refNum);
 		customWait(6000);
 		end_Call();
+		customWait(2000);
 		validate_Num_In_CallLog(refNum);
 		clear_Call_History_O();
 	}
@@ -377,7 +411,9 @@ public class XP8_Device_QA_Sanity_Test_O extends XP8_Sanity_Util {
 
 		APP_LOGS.info("====================== XP8_Device_QA_Sanity_007 =======================");
 		endCall_RefDevice();
-		String fN=startAdbLog();
+		//	String XP8_Device_QA_Sanity_007=startAdbLog();
+		startAdbLog("XP8_Device_QA_Sanity_007");
+
 		launch_APP(Locators_XP8_Sanity.phone);
 		dailCallUsingDailPad(refNum);
 		customWait(6000);
@@ -387,8 +423,8 @@ public class XP8_Device_QA_Sanity_Test_O extends XP8_Sanity_Util {
 		clickBtn(Locators_XP8_Sanity.mute_call);	minWait();
 		end_Call();
 		customWait(9000);
-		validate_ADB_Logs(fN,"AUDIO_ROUTE, Entering state ActiveSpeakerRoute: ICA.sAR->CARSM.pM_USER_SWITCH_SPEAKER","AUDIO_ROUTE, Leaving state ActiveSpeakerRoute: ICA.sAR->CARSM.pM_USER_SWITCH_BASELINE_ROUTE->CARSM.pM_USER_SWITCH_HEADSET");
-		validate_ADB_Logs(fN,"turning on mute: true","turning on mute: false");
+		validate_ADB_Logs("XP8_Device_QA_Sanity_007","AUDIO_ROUTE, Entering state ActiveSpeakerRoute: ICA.sAR->CARSM.pM_USER_SWITCH_SPEAKER","AUDIO_ROUTE, Leaving state ActiveSpeakerRoute: ICA.sAR->CARSM.pM_USER_SWITCH_BASELINE_ROUTE->CARSM.pM_USER_SWITCH_HEADSET");
+		validate_ADB_Logs("XP8_Device_QA_Sanity_007","turning on mute: true","turning on mute: false");
 	}
 
 	@Test(priority=8,dataProvider="XP8SanityTest", dataProviderClass=DataProviders.class)
@@ -414,8 +450,9 @@ public class XP8_Device_QA_Sanity_Test_O extends XP8_Sanity_Util {
 		clear_Call_History();
 		endCall_RefDevice();
 		make_Call_from_RefDev();
-		customWait(10000);
-		aDriver.pressKeyCode(6);
+		customWait(20000);
+	//	aDriver.pressKeyCode(6);
+		Runtime.getRuntime().exec("adb -s "+p_Id+" shell service call telecom 30");
 		customWait(5000);
 		//endCall_RefDevice();
 		launch_APP(Locators_XP8_Sanity.phone);
@@ -434,7 +471,7 @@ public class XP8_Device_QA_Sanity_Test_O extends XP8_Sanity_Util {
 			clearSMSPermissions();
 			delete_All_SMS();
 			make_Call_from_RefDev();
-			customWait(8000);
+			customWait(10000);
 			reject_Call_With_SMS_O(dt.get("message"));
 			customWait(4000);
 			validate_SentMessage();
@@ -863,6 +900,7 @@ public class XP8_Device_QA_Sanity_Test_O extends XP8_Sanity_Util {
 		disable_Shortcuts_QuickPanel(Locators_XP8_Sanity.wifi_OnState_QuickPanel_O);
 		customWait(3000);
 		launch_APP(Locators_XP8_Sanity.chrome);
+		customWait(2000);
 		clear_SearchBox();
 		validate_MobileData_Disable_O();
 	}
@@ -954,16 +992,16 @@ public class XP8_Device_QA_Sanity_Test_O extends XP8_Sanity_Util {
 
 	@Test(priority=36,dataProvider="XP8SanityTest",dataProviderClass=DataProviders.class)
 	public void XP8_DeviceSanity_036_Verify_Internal_Storage_Space_Capacity(Hashtable<String, String> data) throws InterruptedException, IOException, AWTException {
-		
+
 		APP_LOGS.info("======================XP8_DeviceSanity_036=======================");
 		launch_APP(Locators_XP8_Sanity.settings);
 		navigateTo_Storage();
-		validate_StorageSpace("64.00");
+		validate_StorageSpace("64");
 	}
 
 	@Test(priority=37,dataProvider="XP8SanityTest",dataProviderClass=DataProviders.class)
 	public void XP8_DeviceSanity_037_Validate_Volume_Up_And_Down_MOCall(Hashtable<String, String> data) throws AWTException, InterruptedException, IOException, ParseException {
-		
+
 		APP_LOGS.info("====================== XP8_DeviceSanity_037 =======================");
 		String fN = startAdbLog();
 		endCall_RefDevice();
@@ -986,7 +1024,7 @@ public class XP8_Device_QA_Sanity_Test_O extends XP8_Sanity_Util {
 		customWait(3000);
 		validate_ADB_Logs(fN,"level_changed STREAM_VOICE_CALL 1","level_changed STREAM_VOICE_CALL 5", "level_changed STREAM_VOICE_CALL 10");
 	}
-	
+
 	@Test(priority=38,dataProvider="XP8SanityTest",dataProviderClass=DataProviders.class)
 	public void XP8_DeviceSanity_038_Launch_Application_With_PTT_Key(Hashtable<String, String> data) throws InterruptedException, IOException, AWTException {
 
@@ -1098,7 +1136,9 @@ public class XP8_Device_QA_Sanity_Test_O extends XP8_Sanity_Util {
 		APP_LOGS.info("======================XP8_DeviceSanity_043=======================");
 		launch_APP(Locators_XP8_Sanity.settings);
 		scrollToText("Users & accounts");
-		remove_GoogleAcccount_O();
+		if(isElementExist(Locators_XP8_Sanity.google_Account)) {
+			remove_GoogleAcccount_O();
+		}
 		launch_APP(Locators_XP8_Sanity.soundRecorder);
 		clearAllow();
 		clickOn_Record();
@@ -1106,12 +1146,13 @@ public class XP8_Device_QA_Sanity_Test_O extends XP8_Sanity_Util {
 		customWait(20000);		
 		clickOn_StopRecord();
 		clickOn_Save(data.get("fileName"));
+		customWait(2000);
 		validate_SoundRecList(data.get("fileName"));
 	}
-	
+
 	@Test(priority=44,dataProvider="XP8SanityTest",dataProviderClass=DataProviders.class)
 	public void XP8_DeviceSanity_044_PlayMusic_from_MusicPlayer(Hashtable<String, String> data) throws InterruptedException, IOException, AWTException {
-		
+
 		APP_LOGS.info("======================XP8_DeviceSanity_044=======================");
 		launch_APP(Locators_XP8_Sanity.PlayMusic);
 		customWait(4000);
@@ -1119,7 +1160,8 @@ public class XP8_Device_QA_Sanity_Test_O extends XP8_Sanity_Util {
 		clearAllow();   customWait(3000);
 		Runtime.getRuntime().exec("adb -s "+p_Id+" shell input tap 380 486");
 		minWait();
-		clickBtn(Locators_XP8_Sanity.audioRecords_Music_1); customWait(3000);
+		clickBtn(Locators_XP8_Sanity.audioRecords_Music_1); 
+		customWait(3000);
 		validate_Locators1(Locators_XP8_Sanity.autoFile_Recorded_File);
 		clickBtn(Locators_XP8_Sanity.autoFile_Recorded_File);
 		customWait(5000);
@@ -1140,7 +1182,7 @@ public class XP8_Device_QA_Sanity_Test_O extends XP8_Sanity_Util {
 		customWait(10000);
 		validate_ADB_Logs(fN, "com.android.camera.NEW_PICTURE");
 	}
-	
+
 	@Test(priority=46,dataProvider="XP8SanityTest", dataProviderClass=DataProviders.class)
 	public void XP8_DeviceSanity_046_TakePicture_With_Front_Camera(Hashtable<String, String> dt) throws InterruptedException, AWTException, IOException {
 
@@ -1183,7 +1225,7 @@ public class XP8_Device_QA_Sanity_Test_O extends XP8_Sanity_Util {
 		customWait(8000);
 		validate_ADB_Logs(fN, "encoder (video) stopped");//com.android.camera.NEW_VIDEO
 	}	
-	
+
 	@Test(priority=49,dataProvider="XP8SanityTest", dataProviderClass=DataProviders.class)
 	public void XP8_DeviceSanity_049_Change_SleepMode_Duration(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException {
 
@@ -1198,7 +1240,7 @@ public class XP8_Device_QA_Sanity_Test_O extends XP8_Sanity_Util {
 		clickBtn(Locators_XP8_Sanity.thirtyMin_Sleep);minWait();
 		validate_Locators1(Locators_XP8_Sanity.thirtyMinutes_Inactivity);
 	}
-	
+
 	@Test(priority=50,dataProvider="XP8SanityTest", dataProviderClass=DataProviders.class)
 	public void XP8_DeviceSanity_050_Add_Google_Account(Hashtable<String, String> dt) throws InterruptedException, AWTException, IOException, ParseException {
 
@@ -1210,11 +1252,12 @@ public class XP8_Device_QA_Sanity_Test_O extends XP8_Sanity_Util {
 		OFF_Switch("Airplane mode");
 		launch_APP(Locators_XP8_Sanity.settings);
 		scrollToText("Users & accounts");
+		remove_GoogleAcccount_Orio();
 		navigateTo_AddGoogleAccount();
-		add_GoogleAccount(dt.get("emailId"), dt.get("password"));
+		add_GoogleAccount(dt.get("emailId"), dt.get("password")); 
 		validate_GoogleAcccount(dt.get("emailId"));
 	}
-	
+
 	@Test(priority=51,dataProvider="XP8SanityTest", dataProviderClass=DataProviders.class)
 	public void XP8_DeviceSanity_051_Download_APK_from_Playstore(Hashtable<String, String> dt) throws InterruptedException, AWTException, IOException, ParseException {
 
@@ -1229,7 +1272,7 @@ public class XP8_Device_QA_Sanity_Test_O extends XP8_Sanity_Util {
 		launch_APP(Locators_XP8_Sanity.PlayStore);
 		unInstall_App(dt.get("appName"));
 	}
-	
+
 	@Test(priority=52,dataProvider="XP8SanityTest", dataProviderClass=DataProviders.class)
 	public void XP8_DeviceSanity_052_Launch_Calendar_Add_an_Event(Hashtable<String, String> dt) throws InterruptedException, AWTException, IOException, ParseException {
 
@@ -1245,7 +1288,7 @@ public class XP8_Device_QA_Sanity_Test_O extends XP8_Sanity_Util {
 		scrollToText("Users & accounts");
 		remove_GoogleAcccount_O();
 	}
-	
+
 	@Test(priority=53,dataProvider="XP8SanityTest", dataProviderClass= DataProviders.class)
 	public void XP8_DeviceSanity_053_StreamVideo_via_YouTube(Hashtable<String, String> dt) throws InterruptedException, IOException {
 
@@ -1260,7 +1303,7 @@ public class XP8_Device_QA_Sanity_Test_O extends XP8_Sanity_Util {
 		customWait(6000);
 		validate_Locators1(Locators_XP8_Sanity.playerView_YT);
 	}
-	
+
 	@Test(priority=54,dataProvider="XP8SanityTest",dataProviderClass=DataProviders.class)
 	public void XP8_DeviceSanity_054_Validate_Turn_On_Off_FM(Hashtable<String, String> data) throws AWTException, InterruptedException, IOException {
 
@@ -1293,7 +1336,7 @@ public class XP8_Device_QA_Sanity_Test_O extends XP8_Sanity_Util {
 		validate_ADB_Logs(fN, "searchStations: CURRENT-STATE : FMRxOn ---> NEW-STATE : SearchInProg");
 		clickOnHomeBtn();
 	}
-	
+
 	@Test(priority=56,dataProvider="XP8SanityTest",dataProviderClass=DataProviders.class)
 	public void XP8_DeviceSanity_056_Add_AlarmEvent_Clock(Hashtable<String, String> data) throws InterruptedException, IOException, AWTException {
 
@@ -1303,9 +1346,9 @@ public class XP8_Device_QA_Sanity_Test_O extends XP8_Sanity_Util {
 		addAndDelete_Alarm();
 		customWait(8000);
 		validate_ADB_Logs(fN, "Created new alarm instance: AlarmInstance");
-		
+
 	}
-	
+
 	@Test(priority=57,dataProvider="XP8SanityTest",dataProviderClass=DataProviders.class)
 	public void XP8_DeviceSanity_057_Snooze_Alarm(Hashtable<String, String> data) throws InterruptedException, IOException, AWTException {
 
@@ -1337,20 +1380,19 @@ public class XP8_Device_QA_Sanity_Test_O extends XP8_Sanity_Util {
 		validate_Locators1(Locators_XP8_Sanity.snoozing_Until);
 		clickBtn(Locators_XP8_Sanity.switch_On_State);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -119,7 +119,7 @@ public class XP8_Sanity_Util extends BaseUtil {
 						InputStreamReader isr = new InputStreamReader(inputStream);
 						BufferedReader bf = new BufferedReader(isr);
 						String  value=bf.readLine();
-						
+
 						System.out.println(value);
 						if(value.contains("00000001")||value.contains("ffffffff")) {
 							System.out.println("Phone is ringing so accepting call.");
@@ -1659,7 +1659,6 @@ public class XP8_Sanity_Util extends BaseUtil {
 
 	public void delete_SMS() throws InterruptedException {
 		/* This Method delete the First Thread in the List. */
-
 		try {
 			minWait();
 			clickBtn(Locators_XP8_Sanity.firstSMS_InList);
@@ -1830,28 +1829,28 @@ public class XP8_Sanity_Util extends BaseUtil {
 		//long endTime = System.nanoTime() + TimeUnit.NANOSECONDS.convert(3L, TimeUnit.MINUTES);
 		try {
 			//for (int i = 0; i < 5; i++) {
-				customWait(1000);
-				clickBtn(Locators_XP8_Sanity.switcherButton_Chrome);
-				customWait(2000);
-				clickBtn(Locators_XP8_Sanity.menuButton_Chrome);
-				customWait(2000);
-				clickBtn(Locators_XP8_Sanity.closeAllTabs_Chrome);
-				customWait(2000);
-//				String[] CT = null;
-//				try {
-//					CT = Locators_XP8_Sanity.switcherButton_Chrome.getAttribute("name").split(" ");
-//					System.out.println(CT[0]);
-//					int noOfPage = Integer.parseInt(CT[0]);
-//					if (noOfPage >1) {
-//						continue;
-//					} else {
-//						break;
-//					}
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//				
-//			}
+			customWait(1000);
+			clickBtn(Locators_XP8_Sanity.switcherButton_Chrome);
+			customWait(2000);
+			clickBtn(Locators_XP8_Sanity.menuButton_Chrome);
+			customWait(2000);
+			clickBtn(Locators_XP8_Sanity.closeAllTabs_Chrome);
+			customWait(2000);
+			//				String[] CT = null;
+			//				try {
+			//					CT = Locators_XP8_Sanity.switcherButton_Chrome.getAttribute("name").split(" ");
+			//					System.out.println(CT[0]);
+			//					int noOfPage = Integer.parseInt(CT[0]);
+			//					if (noOfPage >1) {
+			//						continue;
+			//					} else {
+			//						break;
+			//					}
+			//				} catch (Exception e) {
+			//					e.printStackTrace();
+			//				}
+			//				
+			//			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -1991,7 +1990,7 @@ public class XP8_Sanity_Util extends BaseUtil {
 		customWait(2000);
 		enterTextToInputField(Locators_XP8_Sanity.urlBar_Chrome, "www.google.co.in");
 		customWait(4000);
-		
+
 		clickBtn(Locators_XP8_Sanity.googleCoIn_Text);
 		customWait(9000);
 		try {			
@@ -2033,8 +2032,8 @@ public class XP8_Sanity_Util extends BaseUtil {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
+
 
 	public void enable_USBTethering() throws InterruptedException {
 
@@ -2511,7 +2510,8 @@ public class XP8_Sanity_Util extends BaseUtil {
 		try {
 			minWait();
 			String obtainedListName = Locators_XP8_Sanity.file_list_SoundRec.getText();
-
+			System.out.println(expectedListName);
+			System.out.println(obtainedListName);
 			if (expectedListName.equalsIgnoreCase(obtainedListName)) {
 				check=true;
 				APP_LOGS.info("Recorded file list Exist");
@@ -2759,8 +2759,8 @@ public class XP8_Sanity_Util extends BaseUtil {
 		try {
 			System.out.println(Locators_XP8_Sanity.summary.getText());
 			String[] strings = Locators_XP8_Sanity.summary.getText().split(" ");
-			System.out.println(strings[3]);
-			if (strings[3].equalsIgnoreCase(expectedStorage)) {
+			System.out.println(strings[2]);
+			if (strings[2].equalsIgnoreCase(expectedStorage)) {
 				check=true;
 				APP_LOGS.info("Storage space displayed is Correct.");
 				sf.assertTrue(check, "TestCase Valiation is PASS");
@@ -2801,7 +2801,7 @@ public class XP8_Sanity_Util extends BaseUtil {
 		}
 		sf.assertAll();
 	}
-	
+
 	public void navigateTo_Security() throws InterruptedException {
 		try {
 			minWait();
@@ -3438,20 +3438,20 @@ public class XP8_Sanity_Util extends BaseUtil {
 
 	public void validate_BT_Devices() throws InterruptedException {
 		WebDriverWait wait = new WebDriverWait(aDriver, 30);
-		wait.until(ExpectedConditions.visibilityOf(Locators_XP8_Sanity.BT_Devices));
+		wait.until(ExpectedConditions.visibilityOf(Locators_XP8_Sanity.Available_devices));
 		minWait();
-		boolean check=Locators_XP8_Sanity.BT_Devices.isDisplayed();
+		boolean check=Locators_XP8_Sanity.Available_devices.isDisplayed();
 		minWait();
 		SoftAssert sf = new SoftAssert();
 		if (check) {
 			check=true;
 			sf.assertTrue(check, "TestCase Valiation is PASS");
 			test.log(LogStatus.PASS, "Test case Status is Pass.");
-			test.log(LogStatus.INFO, "Reference Device displayed under Bluethooth.");
+			test.log(LogStatus.INFO, "Available Devices displayed under Bluethooth.");
 		} else {
 			sf.fail();
 			test.log(LogStatus.FAIL,"Test Case Status is Fail.");
-			test.log(LogStatus.INFO, "Reference Device NOT displayed under Bluethooth.");
+			test.log(LogStatus.INFO, "Available Devices NOT displayed under Bluethooth.");
 		}
 		sf.assertAll();
 	}
@@ -3512,13 +3512,13 @@ public class XP8_Sanity_Util extends BaseUtil {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void validate_LabelName(String groupName) throws InterruptedException {
 		SoftAssert sf = new SoftAssert();
 		try {
 			customWait(2000);
 			String gorupName1 = Locators_XP8_Sanity.label_Name_InTitleBar.getText();
-			
+
 			if (gorupName1.equals(groupName)) {
 				check=true;
 				sf.assertTrue(check, "TestCase Valiation is PASS");
@@ -3529,7 +3529,7 @@ public class XP8_Sanity_Util extends BaseUtil {
 				test.log(LogStatus.FAIL,"Test Case Status is Fail.");
 				test.log(LogStatus.INFO,"Contacts Group NOT Created.");
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			sf.fail();
@@ -3562,7 +3562,7 @@ public class XP8_Sanity_Util extends BaseUtil {
 		} catch (Exception e) {
 		}
 	}
-	
+
 	public void changeTo_FrontCam() {
 		try {
 			minWait();
@@ -3629,17 +3629,21 @@ public class XP8_Sanity_Util extends BaseUtil {
 			minWait();
 			clickBtn(Locators_XP8_Sanity.ACCEPTorAGREE);
 			customWait(3000);
-
 		} catch (Exception e) {
 		}
 	}
 
 	public void validate_GoogleAcccount(String email1) {
 		try {
+			System.out.println(email1);
+			minWait();
+			launch_APP(Locators_XP8_Sanity.settings);
+			scrollToText("Users & accounts");
 			minWait();
 			clickBtn(Locators_XP8_Sanity.google_Account);
 			minWait();
-			String email2 = Locators_XP8_Sanity.googleAccount_email.getText();			
+			String email2 = Locators_XP8_Sanity.googleAccount_email.getText();	
+			System.out.println(email2);
 			SoftAssert sf = new SoftAssert();
 			if (email1.equals(email2)) {
 				check=true;
@@ -4172,10 +4176,15 @@ public class XP8_Sanity_Util extends BaseUtil {
 			clickBtn(Locators_XP8_Sanity.call_Details);
 			minWait();
 			String numIn_Details = Locators_XP8_Sanity.caller_name_callDetails.getText().replaceAll("[^0-9+]", "");
+			System.out.println(numIn_Details);
+			System.out.println(expectedNum);
 			boolean check1 = numIn_Details.contains(expectedNum);
+			System.out.println(check1);
 			String[] strings = Locators_XP8_Sanity.call_duration_callDetails.getText().split(" ");
 			int duration = Integer.parseInt(strings[0]);
-			boolean check2 = duration>0;
+			System.out.println(duration);
+			boolean check2 = duration>=0;
+			System.out.println(check2);
 			if (check1&&check2) {
 				check=true;
 				test.log(LogStatus.PASS, "Test case Status is Pass.");
@@ -4480,9 +4489,12 @@ public class XP8_Sanity_Util extends BaseUtil {
 			minWait();
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_HOME);
 			minWait();
-			clickBtn(Locators_XP8_Sanity.googleSearch_HomeScreen);
+			launch_APP(Locators_XP8_Sanity.google);
+			/*clickBtn(Locators_XP8_Sanity.googleSearch_HomeScreen);
 			minWait();
 			clickBtn(Locators_XP8_Sanity.NO_THANKS);
+			minWait();*/
+			clickBtn(Locators_XP8_Sanity.Google_search_field);
 			minWait();
 			enterTextToInputField(Locators_XP8_Sanity.Search_Google, searchText);
 			customWait(3000);
@@ -4491,7 +4503,6 @@ public class XP8_Sanity_Util extends BaseUtil {
 		} catch (Exception e) {
 		}
 	}
-
 
 
 	//================================================================================================================================
@@ -4809,7 +4820,7 @@ public class XP8_Sanity_Util extends BaseUtil {
 	public void reject_Call_With_SMS_O(String message) throws InterruptedException {
 
 		try {
-			minWait();
+			customWait(5000);
 			//clickBtn(Locators_XP8_Sanity.incoming_Call);
 			Runtime.getRuntime().exec("adb -s "+p_Id+" shell input tap 660 160");
 			customWait(3000);
@@ -5364,8 +5375,10 @@ public class XP8_Sanity_Util extends BaseUtil {
 		customWait(9000);
 		try {			
 			//customWait(3000);
-			if(isElementExist(Locators_XP8_Sanity.Alert_Popup)) {
-				clickBtn(Locators_XP8_Sanity.OK_2);
+			if(isElementExist(Locators_XP8_Sanity.Alert_Popup) || !(isElementExist(Locators_XP8_Sanity.google_Logo))) {
+				if(isElementExist(Locators_XP8_Sanity.OK_2)) {
+					clickBtn(Locators_XP8_Sanity.OK_2);
+				}
 				check=true;
 				APP_LOGS.info("MobbileData Disabled Successfully");
 				sf.assertTrue(check, "TestCase Valiation is PASS");
@@ -5380,14 +5393,14 @@ public class XP8_Sanity_Util extends BaseUtil {
 			e.printStackTrace();
 			sf.fail();
 		}		
-//		clickBtn(Locators_XP8_Sanity.OK_2);
-//		closeAllTabs();
+		//		clickBtn(Locators_XP8_Sanity.OK_2);
+		//		closeAllTabs();
 		sf.assertAll();
-		
+
 	}
 
 	public void navigate_Create_Label() throws InterruptedException {
-		
+
 		try {
 			minWait();
 			clickBtn(Locators_XP8_Sanity.open_Navigation_Drawer);
@@ -5402,7 +5415,7 @@ public class XP8_Sanity_Util extends BaseUtil {
 	}
 
 	public void create_Label(String labelname) throws InterruptedException {
-		
+
 		try {
 			minWait();
 			enterTextToInputField(Locators_XP8_Sanity.label_Name, labelname);
@@ -5413,9 +5426,9 @@ public class XP8_Sanity_Util extends BaseUtil {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void deleteLabel_IfPresent(String labelName) throws InterruptedException {
-		
+
 		try {
 			minWait();
 			clickBtn(Locators_XP8_Sanity.open_Navigation_Drawer);
@@ -5427,15 +5440,15 @@ public class XP8_Sanity_Util extends BaseUtil {
 			e.printStackTrace();
 		}		
 	}
-	
+
 	public void pressKeyCode(int keyNumber) throws InterruptedException {
-		
+
 		minWait();
 		aDriver.pressKeyCode(keyNumber); 
-		
+
 	}
-	
-	
+
+
 
 	//This method will launch app only in primary device	
 	public void only_For_CallPerformance_clickOnAppList_Primary() throws InterruptedException {
@@ -5455,70 +5468,108 @@ public class XP8_Sanity_Util extends BaseUtil {
 
 
 	//This method will launch app only in primary device
-		public void launch_APP_Only_For_CallPerformance_For_Primary_Device(AndroidElement appToClick) throws InterruptedException {
-			try {
-				fetch_Devices_Details();
-				only_For_CallPerformance_clickOnAppList_Primary();
-				for (int i = 0; i < 6; i++) {
-					if (isElementExist(appToClick)) {
-						
-						clickBtn(appToClick);
-						minWait();
-						break;
-					} else {
-						scroll();
-						minWait();
-					}
+	public void launch_APP_Only_For_CallPerformance_For_Primary_Device(AndroidElement appToClick) throws InterruptedException {
+		try {
+			fetch_Devices_Details();
+			only_For_CallPerformance_clickOnAppList_Primary();
+			for (int i = 0; i < 6; i++) {
+				if (isElementExist(appToClick)) {
+
+					clickBtn(appToClick);
+					minWait();
+					break;
+				} else {
+					scroll();
+					minWait();
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		
+	}
 
-		//This launch app method is used only for call 3G-perfomrance module 	
-		public void launch_APP_Only_For_CallPerformance(AndroidElement appToClick) throws InterruptedException {
-			try {
-				fetch_Devices_Details();
-				only_For_CallPerformance_clickOnAppList();
-				for (int i = 0; i < 6; i++) {
-					if (isElementExist(appToClick)) {
-						
-						clickBtn(appToClick);
-						minWait();
-						break;
-					} else {
-						scroll();
-						minWait();
-					}
+
+	//This launch app method is used only for call 3G-perfomrance module 	
+	public void launch_APP_Only_For_CallPerformance(AndroidElement appToClick) throws InterruptedException {
+		try {
+			fetch_Devices_Details();
+			only_For_CallPerformance_clickOnAppList();
+			for (int i = 0; i < 6; i++) {
+				if (isElementExist(appToClick)) {
+
+					clickBtn(appToClick);
+					minWait();
+					break;
+				} else {
+					scroll();
+					minWait();
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+
+
+	//This  method is used only for call 3G-perfomrance module for making call from MT or REF device 		
+	public void only_For_CallPerformance_clickOnAppList() throws InterruptedException {
+
+		try {
+			minWait();
+			Runtime.getRuntime().exec("adb -s "+r_Id+" shell input keyevent 3");
+			//aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_HOME);		
+			customWait(2000);			
+			clickBtn(Locators_XP8_Sanity.app_List);
+			minWait();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
+	}
 
-
-		//This  method is used only for call 3G-perfomrance module for making call from MT or REF device 		
-		public void only_For_CallPerformance_clickOnAppList() throws InterruptedException {
-
-			try {
+	public void remove_GoogleAcccount_Orio() {
+		//remove added google Account if any 
+		try {
+		//	scrollToText("Users & accounts");
+//			clickOnAccounts();
+			minWait();
+			if(isElementExist(Locators_XP8_Sanity.connectedAccount)) {
+				System.out.println("Account is present");
 				minWait();
-				Runtime.getRuntime().exec("adb -s "+r_Id+" shell input keyevent 3");
-				//aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_HOME);		
-				customWait(2000);			
-				clickBtn(Locators_XP8_Sanity.app_List);
+				clickBtn(Locators_XP8_Sanity.connectedAccount);
 				minWait();
-			} catch (Exception e) {
-				e.printStackTrace();
+				clickBtn(Locators_XP8_Sanity.REMOVE_ACCOUNT);
+				minWait();
+				clickBtn(Locators_XP8_Sanity.REMOVE_ACCOUNT);
+				customWait(3000);
+			}
+			else {
+				System.out.println("No Google account present");
 			}
 
+
+		} catch (Exception e) {
+
 		}
+	}
+	
+	public void navigateTo_AddGoogleAccount_Orio() {
+		//navigate to settings option Add google Account
+		WebDriverWait wt = new WebDriverWait(aDriver, 60);
+		try {
+			scrollToText("Users & accounts");
+			clickBtn(Locators_XP8_Sanity.add_Account);
+			minWait();
+			clickBtn(Locators_XP8_Sanity.google_Account);
+			customWait(1600);
+			wt.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//*[contains(@text,'Checking info')]")));
+			minWait();
+		} catch (Exception e) {
 
-
-
-
-
+		}
+	}
+	
 
 
 
