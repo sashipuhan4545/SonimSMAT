@@ -2,6 +2,7 @@ package application;
 
 
 import java.awt.Desktop;
+//
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -1408,22 +1409,20 @@ public class AllQA  extends CommonConfig {
 
 					case "SMS":
 
-						Thread sms=new Thread(new Runnable() {
+						Thread SMS=new Thread(new Runnable() {
 							public void run() {
-
-								anchorPane.setDisable(false);
-								pi.setVisible(false);
-								currentTcTimer.cancel();
-
-								Platform.runLater(()->AlertDialog("SMS is not applicable for XP8 "));
-								ResetBtn.setDisable(false);
+								TestNG runner=new TestNG();
+								List<String> suitefiles=new ArrayList<String>();
+								suitefiles.add("src/test/resources/drivers/XP8_SMS_Stability_O.xml");
+								System.out.println("XP3 SMS stability Test Started ----------------");
+								runner.setTestSuites(suitefiles);
+								runner.run();	
 
 
 							}
 						});
-						sms.start();
+						SMS.start();
 						break;
-
 					case "ContactTransfer":
 
 						Thread SCOUT=new Thread(new Runnable() {
@@ -3124,13 +3123,36 @@ public class AllQA  extends CommonConfig {
 								e.printStackTrace();
 							}
 
-
-
 						}
 						else {
 							executionReportDoesnotExist("Test Report is not generated yet");
 						}
 
+					}
+
+					break;
+					
+				case "SMS":
+
+					File smsstability = new File("src/test/resources/extentreport/XP8_SMS_Stability_Orio_TestReport.html");
+					File smsdest = new File(System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog");
+					String smspath=System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog";
+					try {
+						FileUtils.copyFileToDirectory(smsstability, smsdest);
+					} catch (IOException e) {
+
+						e.printStackTrace();
+					}
+					if(smsstability.exists()) {
+
+						try {
+							BaseUtil.openReportPath(smspath);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+					else {
+						executionReportDoesnotExist("Test Report is not generated yet");
 					}
 
 					break;
