@@ -33,6 +33,7 @@ import com.xp8.util.Locators_BaseUtil;
 import com.xp8.util.Locators_DeviceStability;
 import com.xp8.util.XP8_Stability_Util_orio;
 
+import application.AllQA;
 import io.appium.java_client.android.AndroidKeyCode;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 
@@ -41,7 +42,7 @@ public class XP8_SMS_StabilityTest_Orio extends XP8_Stability_Util_orio{
 	public ExcelReader excel;
 	Properties properties;
 	public static ExtentTestInterruptedException testexception;
-	public int  itr =1;
+	public int  itr =AllQA.NUMOFCALLS;
 	boolean value = false;
 
 	@BeforeSuite
@@ -172,7 +173,7 @@ public class XP8_SMS_StabilityTest_Orio extends XP8_Stability_Util_orio{
 	}
 
 
-	@Test(priority=-3,dataProvider="XP8_Stability", dataProviderClass=DataProviders.class)
+	@Test(priority=3,dataProvider="XP8_Stability", dataProviderClass=DataProviders.class)
 	public void XP8_TC_003_Stability_Validate_MT_SMS(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException
 	{
 		APP_LOGS.info("===========XP8_Stability_003============");

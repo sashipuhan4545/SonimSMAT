@@ -51,7 +51,6 @@ public class Read_File {
 			
 			System.out.println("<-----------Exeption occurs in takeScreenShotsForOcr method----------->");
 		}
-
 	}
 
 	

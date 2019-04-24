@@ -38,6 +38,7 @@ import com.xp8.util.Locators_DeviceStability;
 
 import com.xp8.util.XP8_Stability_Util_orio;
 
+import application.AllQA;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 
 public class XP8_APK_DownloadTest extends XP8_Stability_Util_orio{
@@ -45,7 +46,7 @@ public class XP8_APK_DownloadTest extends XP8_Stability_Util_orio{
 	public ExcelReader excel;
 	Properties properties;
 	public static ExtentTestInterruptedException testexception;
-	public int  itr =30;
+	public int  itr =AllQA.NUMOFCALLS;
 	boolean value = false;
 	public Timer timer1;
 

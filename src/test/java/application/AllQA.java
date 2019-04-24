@@ -821,7 +821,6 @@ public class AllQA  extends CommonConfig {
 
 		try {
 
-
 			combobox.setItems(items);
 			progressIndicator.getStylesheets().add(getClass().getResource("").toExternalForm());
 			progressIndicator.getStyleClass().add("ProgressIndicator");
@@ -831,13 +830,10 @@ public class AllQA  extends CommonConfig {
 
 			//	listView.setPlaceholder(new Label("No Content In List"));
 
-
 			start.setDisable(true);
 			combobox.setDisable(true);
 			stopButton.setDisable(true);
 			Platform.runLater(() ->loginAsTeam.setText(MainController.TEAM_BASED_LOGIN));
-
-
 
 			comboBoxItems=(String) combobox.getSelectionModel().getSelectedItem();
 
@@ -846,30 +842,22 @@ public class AllQA  extends CommonConfig {
 				listView.setItems(Sanity);
 				listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
-
-
 			}
 			//Added as per Raj comments 03-12-2018
 			else if (comboBoxItems=="Stability") {
-
 				
 				listView.setItems(stability);
 				listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-
-
 			}
 
 			else if (comboBoxItems=="Stability_Non-AT&T") {
-
 				listView.setItems(stability);
 				listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-
 
 			}else if (comboBoxItems=="Stability_AT&T-15595") {
 
 				listView.setItems(ATTStablity);
 				listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-
 
 			}else if (comboBoxItems=="3G-CallPerformance" || comboBoxItems=="VOLTE-CallPerformance") {
 
@@ -934,11 +922,7 @@ public class AllQA  extends CommonConfig {
 			}
 
 
-
-
-
 			//	itemSelectedListner();
-
 
 
 		}catch (Exception e) {
