@@ -697,6 +697,7 @@ public class XP5S_SCOUT_Contact_Transfer_Util extends BaseUtil{
 			e.printStackTrace();
 			test.log(LogStatus.ERROR, "Disable toggle : No Such Element Found");
 			Assert.fail();
+			
 		}
 	}
 

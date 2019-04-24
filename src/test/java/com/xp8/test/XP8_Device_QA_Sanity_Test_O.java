@@ -49,7 +49,7 @@ public class XP8_Device_QA_Sanity_Test_O extends XP8_Sanity_Util {
 	public ExcelReader excel;
 	Properties properties;
 	public Timer timer1;
-
+//test
 	@BeforeSuite
 	public void beforeSuite() throws FileNotFoundException, InterruptedException, IOException, ParseException {
 
