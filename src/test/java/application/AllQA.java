@@ -1414,7 +1414,7 @@ public class AllQA  extends CommonConfig {
 								TestNG runner=new TestNG();
 								List<String> suitefiles=new ArrayList<String>();
 								suitefiles.add("src/test/resources/drivers/XP8_SMS_Stability_O.xml");
-								System.out.println("XP3 SMS stability Test Started ----------------");
+								System.out.println("XP8 SMS stability Test Started ----------------");
 								runner.setTestSuites(suitefiles);
 								runner.run();	
 
@@ -1423,6 +1423,23 @@ public class AllQA  extends CommonConfig {
 						});
 						SMS.start();
 						break;
+						
+					case "Network Stability":
+
+						Thread NetworkStability=new Thread(new Runnable() {
+							public void run() {
+								TestNG runner=new TestNG();
+								List<String> suitefiles=new ArrayList<String>();
+								suitefiles.add("src/test/resources/drivers/XP8_Connectivity_Stability_O.xml");
+								System.out.println("XP8 Network Connectivity stability Test Started ----------------");
+								runner.setTestSuites(suitefiles);
+								runner.run();
+
+							}
+						});
+						NetworkStability.start();
+						break;
+						
 					case "ContactTransfer":
 
 						Thread SCOUT=new Thread(new Runnable() {
@@ -3158,6 +3175,30 @@ public class AllQA  extends CommonConfig {
 					break;
 
 
+				case "Network Stability":
+
+					File Connectivitystability = new File("src/test/resources/extentreport/XP8_NetworkConnectivity_Stability_Orio_TestReport.html");
+					File connectivitydest = new File(System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog");
+					String connectivitypath=System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog";
+					try {
+						FileUtils.copyFileToDirectory(Connectivitystability, connectivitydest);
+					} catch (IOException e) {
+
+						e.printStackTrace();
+					}
+					if(Connectivitystability.exists()) {
+
+						try {
+							BaseUtil.openReportPath(connectivitypath);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+					else {
+						executionReportDoesnotExist("Test Report is not generated yet");
+					}
+
+					break;
 
 				case "Telephony":
 

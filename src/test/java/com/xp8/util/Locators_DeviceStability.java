@@ -723,4 +723,38 @@ public class Locators_DeviceStability {
 
 	@AndroidFindBy(xpath="//*[@text='OK']") 
 	public static AndroidElement OK;
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Settings\")")
+	public static AndroidElement settings;
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Chrome\")")
+	public static AndroidElement chrome;
+	
+	@AndroidFindBy(xpath="//*[@text='XP3800' or@text='XP5800' or @text='XP8800' or @text='KWSA50K' or @text='KWSA80K']")
+	public static AndroidElement BT_Devices;
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").textContains(\"When Bluetooth is turned on\")")
+	public static AndroidElement BT_Disable_Text;
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Add call\")")
+	public static AndroidElement add_Call;
+	
+	@AndroidFindBy(xpath="//*[@resource-id='com.android.dialer:id/digits' or @resource-id='com.google.android.dialer:id/digits']")
+	public static AndroidElement enterNumFiled;
+
+	@AndroidFindBy(xpath="//android.widget.ImageButton[@content-desc='dial']")
+	public static AndroidElement dail;
+	
+	@AndroidFindBy(xpath="//*[@resource-id='com.android.dialer:id/floating_action_button' or @resource-id='com.google.android.dialer:id/fab']")
+	public static AndroidElement dailerPad;
+	
+	@AndroidFindBy(xpath="//android.widget.TextView[@text='Turn off airplane mode to make a call.']")
+	public static AndroidElement turnOff_Airplane_PopUp;
+	
+	@AndroidFindBy(xpath="//*[@text='CANCEL']")
+	public static AndroidElement CANCEL;
+	
+	@AndroidFindBy(xpath="//*[@content-desc='End Call' or @content-desc='End call']")
+	public static AndroidElement end_Call;
+	
 }

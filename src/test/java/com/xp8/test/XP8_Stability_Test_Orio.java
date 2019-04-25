@@ -105,7 +105,7 @@ public class XP8_Stability_Test_Orio extends XP8_Stability_Util_orio{
 		String image= test.addScreenCapture(screenshot_path);	
 		test.log(LogStatus.FAIL,result.getThrowable());						
 		}
-		
+		clearRecentApps();
 		extent.endTest(test);
 		extent.flush();
 	}
@@ -135,7 +135,6 @@ public class XP8_Stability_Test_Orio extends XP8_Stability_Util_orio{
 			validateContactCreation(i,sa1);
 		}	
 		sa1.assertAll();
-		test.log(LogStatus.PASS, "Test case status is Passed");	
 	}
 
 	
@@ -168,13 +167,20 @@ public class XP8_Stability_Test_Orio extends XP8_Stability_Util_orio{
 					validate_SentMessage_O(i,sa2) ;
 					delete_SMS_O();
 				}
+				else {
+					System.out.println("Executing Else part");
+					launch_APP(Locators_DeviceStability.messaging);
+					clearSMSPermissions();
+					create_NewSMS(refNum, data.get("typeMessage"));
+					clickOn_Send();
+					validate_SentMessage(i,sa2) ;
+				}
 			}
 		}
 		else {
 			test.log(LogStatus.SKIP, "NT: IMS is not Enabled");
 		}
 		sa2.assertAll();
-		test.log(LogStatus.PASS, "Test case status is Passed");	
 	}
 
 
@@ -204,8 +210,17 @@ public class XP8_Stability_Test_Orio extends XP8_Stability_Util_orio{
 					validate_SentMessage_O(i,sa3) ;
 					delete_SMS_O();
 				}
+				else {
+					System.out.println("Executing Else part");
+					launch_APP(Locators_DeviceStability.messaging);
+					clearSMSPermissions();
+					navigateTo_NewSMS_O();
+					create_NewSMS(refNum, data.get("typeMessage"));
+					clickOn_Send();
+					validate_SentMessage(i,sa3) ;
+					delete_SMS();
+				}
 			}
-			test.log(LogStatus.PASS, "Test case status is Passed");	
 		}
 		else {
 			test.log(LogStatus.SKIP, "NT: IMS is Enabled");
@@ -239,9 +254,18 @@ public class XP8_Stability_Test_Orio extends XP8_Stability_Util_orio{
 				validate_SentMessage_O(i,sa4) ;
 				delete_SMS_O();
 			}
+			else {
+				System.out.println("Executing Else part");
+				launch_APP(Locators_DeviceStability.messaging);
+				navigateTo_NewSMS_O();
+				create_NewSMS(refNum, data.get("typeMessage3"));
+				validate_CharacterAndPageNumber(Locators_DeviceStability.zero_Characters_FirstPage,data.get("expectedChar&PageNum3"),i);
+				clickOn_Send();
+				validate_SentMessage(i,sa4) ;
+				delete_SMS();
+			}
 		}
 		sa4.assertAll();
-		test.log(LogStatus.PASS, "Test case status is Passed");			
 	}
 
 
@@ -268,9 +292,17 @@ public class XP8_Stability_Test_Orio extends XP8_Stability_Util_orio{
 				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
 				validate_RecievedMessage_O(i,sa5);		
 			}
+			else {
+				System.out.println("Executing Else part");
+				launch_APP(Locators_DeviceStability.messaging);			
+				navigateTo_NewSMS_O();
+				create_NewSMS(pryNum, data.get("typeMessage1"));
+				clickOn_Send();
+				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
+				validate_RecievedMessage_O(i,sa5);		
+			}
 		}
 		sa5.assertAll();
-		test.log(LogStatus.PASS, "Test case status is Passed");	
 	}
 
 
@@ -283,7 +315,7 @@ public class XP8_Stability_Test_Orio extends XP8_Stability_Util_orio{
 		SoftAssert sa6 = new SoftAssert();
 		for(int i=1; i<=itr;i++) {
 			if (p_b_No.contains("-10.")||p_b_No.contains("-00.")) {
-				launch_APP(Locators_XP8_Sanity.messaging);
+				launch_APP(Locators_DeviceStability.messaging);
 				navigateTo_NewSMS();
 				enter_Num_ToField(refNum);
 				add_Picture_O();
@@ -300,10 +332,19 @@ public class XP8_Stability_Test_Orio extends XP8_Stability_Util_orio{
 				validate_SentMessage_O(i,sa6) ;
 				delete_SMS_O();
 				customWait(8000);	   
-			}								
+			}		
+			else {
+				launch_APP(Locators_DeviceStability.messaging);
+				navigateTo_NewSMS();
+				enter_Num_ToField(refNum);
+				add_Picture_O();
+				enterText_MessageField(data.get("typeMessage"));
+				clickOn_Send();
+				validate_SentMessage(i,sa6);
+				delete_SMS();
+			}
 		}
 		sa6.assertAll();
-		test.log(LogStatus.PASS, "Test case status is Passed");	
 	}
 
 	@Test(priority=7,dataProvider="XP8_Stability", dataProviderClass=DataProviders.class)
@@ -315,10 +356,12 @@ public class XP8_Stability_Test_Orio extends XP8_Stability_Util_orio{
 		SoftAssert sa7 = new SoftAssert();
 		for(int i=1; i<=itr;i++) {
 			if (p_b_No.contains("-10.")||p_b_No.contains("-00.")) {
-				launch_APP(Locators_XP8_Sanity.messaging);
+				launch_APP(Locators_DeviceStability.messaging);
 				navigateTo_NewSMS();
-				create_NewSMS_O(refNum, data.get("typeMessage"));
+				enter_Num_ToField(refNum);
 				captureVideo_MMS_O();
+				enterText_MessageField(data.get("typeMessage"));
+				clickOn_Send();
 				validate_SentMessage(i,sa7);
 				delete_SMS();
 			} else if(p_b_No.contains("-15.")) {
@@ -330,10 +373,19 @@ public class XP8_Stability_Test_Orio extends XP8_Stability_Util_orio{
 				validate_SentMessage_O(i,sa7) ;
 				delete_SMS_O();
 				customWait(8000);	   
-			}								
+			}			
+			else {
+				launch_APP(Locators_DeviceStability.messaging);
+				navigateTo_NewSMS();
+				enter_Num_ToField(refNum);
+				captureVideo_MMS_O();
+				enterText_MessageField(data.get("typeMessage"));
+				clickOn_Send();
+				validate_SentMessage(i,sa7);
+				delete_SMS();
+			}
 		}
 		sa7.assertAll();
-		test.log(LogStatus.PASS, "Test case status is Passed");	
 	}	
 
 
@@ -360,8 +412,13 @@ public class XP8_Stability_Test_Orio extends XP8_Stability_Util_orio{
 					initiateCall();		
 					validateCallLog_Orio("called", i,"contacts",sa8);					
 				}
+				else {
+					launch_an_app("contacts");
+					searchContact("Test"+i);
+					initiateCall();		
+					validateCallLog_Orio("called", i,"contacts",sa8);
+				}
 			}
-			test.log(LogStatus.PASS, "Test case status is Passed");	
 		} else {
 			test.log(LogStatus.SKIP, "NT: IMS is Enabled");
 		}   
@@ -391,8 +448,13 @@ public class XP8_Stability_Test_Orio extends XP8_Stability_Util_orio{
 					callHistory() ;
 					validateCallLog_Orio("called", i,"contacts",sa9);
 				}
+				else {
+					launch_an_app("phone");
+					//					   selectPage(Locators_DeviceStability.callHistry_notification);
+					callHistory() ;
+					validateCallLog_Orio("called", i,"contacts",sa9);
+				}
 			}
-			test.log(LogStatus.PASS, "Test case status is Passed");	
 		} else {
 			test.log(LogStatus.SKIP, "NT: IMS is Enabled");
 		}   
@@ -422,8 +484,13 @@ public class XP8_Stability_Test_Orio extends XP8_Stability_Util_orio{
 					initiateCall();		
 					validateCallLog_Orio("called", i,"contacts",sa10);
 				}
+				else {
+					launch_an_app("contacts");
+					searchContact("Test"+i);
+					initiateCall();		
+					validateCallLog("called", i,"contacts",sa10);
+				}
 			}
-			test.log(LogStatus.PASS, "Test case status is Passed");	
 		} else {
 			test.log(LogStatus.SKIP, "NT: IMS is not Enabled");
 		}   
@@ -452,8 +519,13 @@ public class XP8_Stability_Test_Orio extends XP8_Stability_Util_orio{
 					callHistory() ;
 					validateCallLog_Orio("called", i,"contacts",sa11);
 				}
+				else {
+					launch_an_app("phone");
+					selectPage(Locators_DeviceStability.callHistry_notification);
+					callHistory() ;	
+					validateCallLog("called", i,"contacts",sa11);
+				}
 			}
-			test.log(LogStatus.PASS, "Test case status is Passed");	
 		} else {
 			test.log(LogStatus.SKIP, "NT: IMS is not Enabled");
 		}   
@@ -490,7 +562,6 @@ public class XP8_Stability_Test_Orio extends XP8_Stability_Util_orio{
 			disconnectSSIDifConnected();
 		}
 		sa12.assertAll();
-		test.log(LogStatus.PASS, "Test case status is Passed");	
 	}
 
 
@@ -525,7 +596,7 @@ public class XP8_Stability_Test_Orio extends XP8_Stability_Util_orio{
 			clickOn_Networks_and_Internet();
 			wiFi_OFF();
 			launch_an_app("browser");
-			validate_MobileData_Disable(i,sa13);
+			validate_MobileData_Disable(i,"WiFi",sa13);
 			customWait(3000);
 			if(isElementExist(Locators_DeviceStability.alert_OKBtn)) {
 				clickBtn(Locators_DeviceStability.alert_OKBtn);
@@ -533,7 +604,6 @@ public class XP8_Stability_Test_Orio extends XP8_Stability_Util_orio{
 				}
 		}			   
 		sa13.assertAll();
-		test.log(LogStatus.PASS, "Test case status is Passed");	
 	}
 
 	@Test(priority=14,dataProvider="XP8_Stability", dataProviderClass=DataProviders.class)
@@ -559,7 +629,6 @@ public class XP8_Stability_Test_Orio extends XP8_Stability_Util_orio{
 			customWait(5000);
 		}		
 		sa14.assertAll();
-		test.log(LogStatus.PASS, "Test case status is Passed");	
 	}
 
 

@@ -529,7 +529,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 			wait.until(ExpectedConditions.visibilityOf(Locators_DeviceStability.Delivered));
 			customWait(8000);
 			clickBtn(Locators_DeviceStability.firstSMS_InList_O);
-			if(isElementExist(Locators_DeviceStability.unread_Conv_Messages)||isElementExist(Locators_DeviceStability.Delivered)||isElementExist(Locators_DeviceStability.not_Sent_Text)) {
+			if(isElementExist(Locators_DeviceStability.now_Text)||isElementExist(Locators_DeviceStability.unread_Conv_Messages)||isElementExist(Locators_DeviceStability.Delivered)||isElementExist(Locators_DeviceStability.not_Sent_Text)) {
 				check=true;
 				APP_LOGS.info("Message sent Succeccfully");
 				System.out.println("Received");
@@ -1346,6 +1346,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		navigateTo_NewSMS();
 		try {
 			enter_Num_ToField(number);
+			System.out.println("Enter Text");
 			enterText_MessageField(message);
 		} catch (Exception e) {			 
 			e.printStackTrace();
@@ -1384,7 +1385,6 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 			//				sf.fail();
 			//				test.log(LogStatus.ERROR, "Error in validating the Number of characters and Page Number");
 		}
-		sf.assertAll();
 	}	
 
 	public void validate_CharacterAndPageNumber_O(WebElement charAndPageNum,String expectedcharAndPageNum,int n) throws InterruptedException {
@@ -1641,6 +1641,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			test.log(LogStatus.ERROR, "Error in Entering text meassage.");
 		}
 	}
 
@@ -1714,7 +1715,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 
 		try {
 			//				 launch_an_app("messaging");
-			customWait(1000);
+			customWait(2000);
 			System.out.println("Sent msg");
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
 			customWait(1000);
@@ -1903,7 +1904,224 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		} catch (Exception e) {
 		}
 	}
+	
+	public boolean scrollTo(String text) {
+		/*
+		  Method used to select an element on the page by scrolling the Scroll View/List View
+		 */
 
+		boolean check = false;
+		try {  
+			String scrollable = "new UiScrollable(new UiSelector().scrollable(true))";
+			String textElement = ".scrollIntoView(new UiSelector().text(\""+ text +"\"))";
+			aDriver.findElementByAndroidUIAutomator(scrollable+textElement);
+			APP_LOGS.info("Searched application is found sucessfully : ");
+			check = true;
+			return check;
+		}
+		catch(NoSuchElementException e) {
+			return check;
+		}
+	}
+
+	public void dailCallUsingDailPad(String dailNum) throws InterruptedException, IOException {
+
+		try {
+			dailNumber(dailNum);
+			if (!isElementExist(Locators_DeviceStability.turnOff_Airplane_PopUp)) {
+				try {
+					for(int j=1;j<=100;j++){
+						Process child = null;
+						if (r_b_No.contains("8A.")) {
+							child=Runtime.getRuntime().exec("adb -s "+r_Id+" shell service call telecom 27");
+						} else if(r_b_No.contains("5SA.")) {
+							child=Runtime.getRuntime().exec("adb -s "+r_Id+" shell service call telecom 28");
+						}
+						InputStream inputStream = child.getInputStream();
+						InputStreamReader isr = new InputStreamReader(inputStream);
+						BufferedReader bf = new BufferedReader(isr);
+						String  value=bf.readLine();
+						
+						System.out.println(value);
+						if(value.contains("00000001")||value.contains("ffffffff")) {
+							System.out.println("Phone is ringing so accepting call.");
+							Thread.sleep(3000);
+							Runtime.getRuntime().exec("adb -s "+r_Id+" shell input keyevent 5");
+							break;
+						}else {
+							continue;
+						}
+					}
+				}catch(Exception e) {
+					Thread.sleep(2000);
+					Runtime.getRuntime().exec("adb -s "+r_Id+" shell input keyevent 5");
+					Thread.sleep(2000);
+				}
+			}
+			APP_LOGS.info("Number dailed is: "+dailNum);
+		}catch (Exception e) {
+			APP_LOGS.info("Selected Page is not displayed.");
+			e.printStackTrace();
+		}
+	}
+	
+	public void dailNumber(String dailNum) throws IOException {
+		try {
+			minWait();
+			clickBtn(Locators_DeviceStability.add_Call);
+			minWait();
+			clickBtn(Locators_DeviceStability.dailerPad);
+			minWait();
+			clickBtn(Locators_DeviceStability.enterNumFiled);
+			minWait();
+			enterTextToInputField(Locators_DeviceStability.enterNumFiled, dailNum);
+			minWait();
+			//Runtime.getRuntime().exec("adb -s "+p_Id+" shell input text "+dailNum);
+			minWait();
+			clickBtn(Locators_DeviceStability.dail);
+			customWait(4000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
+	
+	
+	public void validate_Airplane_Enable(String dailNum,SoftAssert soft,int n) throws InterruptedException, IOException {
+		/* 
+		 * Method can be Used Validate Airplane Mode activation via by making the call.
+		 */
+		try {
+			customWait(2000);
+			if(isElementExist(Locators_DeviceStability.turnOff_Airplane_PopUp)) {
+				minWait();
+				check=true;
+				APP_LOGS.info("Validated TurnOff Airplane Mode PopUp Displayed Successfully"+ check);
+				soft.assertTrue(check, "TestCase Valiation is PASS");
+				System.out.println("Validated TurnOff Airplane Mode PopUp Displayed Successfully"+ check);
+				test.log(LogStatus.PASS, "Enable Airplane Mode is Validated at iteration: "+n);
+			} else  {
+				minWait();
+				APP_LOGS.info("TurnOff Airplane Mode PopUp NOT Displayed");			
+				System.out.println("Enable Airplane Mode is Unsuccessful at iteration: "+n);
+				test.log(LogStatus.FAIL,"Enable Airplane Mode is Unsuccessful at iteration: "+n);
+				soft.fail();
+			}
+			minWait();
+			clickBtn(Locators_DeviceStability.OK);
+			minWait();
+			clickBtn(Locators_DeviceStability.CANCEL);
+			minWait();
+		} catch (Exception e) {
+			e.printStackTrace();
+//			soft.fail();
+		}	
+	}
+
+	public void validate_Airplane_Disable(String dailNum,SoftAssert soft,int n) throws InterruptedException, IOException {
+		/* 
+		 * Method can be Used Validate Airplane Mode activation via by making the call.
+		 */
+		try {		
+			minWait();
+			if(!isElementExist(Locators_DeviceStability.turnOff_Airplane_PopUp)) {
+				minWait();
+				check=true;
+				APP_LOGS.info("TurnOff Airplane Mode PopUp NOT Displayed.");
+				soft.assertTrue(check, "TestCase Valiation is PASS");
+				test.log(LogStatus.PASS, "Disable Airplane Mode is VAlidated at iteration: "+n);
+			} else  {
+				minWait();
+				APP_LOGS.info("TurnOff Airplane Mode PopUp is Displayed");				
+				test.log(LogStatus.FAIL,"Disable Airplane Mode is UnSuccessful at iteration: "+n);
+				soft.fail();
+			}
+			minWait();
+//			clickBtn(Locators_DeviceStability.OK);
+			minWait();
+		} catch (Exception e) {
+			e.printStackTrace();
+			soft.fail();
+		}	
+	}
+	
+
+	public void end_Call() throws InterruptedException {
+		/* Method is to end Call.
+		 * Precondition : User should initiate the Call to any Number. */
+		try {
+			minWait();
+			if(isElementExist(Locators_DeviceStability.end_Call)) {
+				clickBtn(Locators_DeviceStability.end_Call);
+				APP_LOGS.info("Call Ended");
+			}else {
+				APP_LOGS.info("End Call Button Doesn't exist on screen");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void enable_BT_RefDevice() throws InterruptedException, IOException {
+
+		try {
+			minWait();
+			Runtime.getRuntime().exec("adb -s "+r_Id+" shell input keyevent 3");
+			minWait();
+			Runtime.getRuntime().exec("adb -s "+r_Id+" shell am start -a android.settings.BLUETOOTH_SETTINGS");
+			minWait();
+			Runtime.getRuntime().exec("adb -s "+r_Id+" shell am start -a android.bluetooth.adapter.action.REQUEST_ENABLE");
+			minWait();		
+			Runtime.getRuntime().exec("adb -s "+r_Id+" shell input keyevent 22");
+			minWait();
+			Runtime.getRuntime().exec("adb -s "+r_Id+" shell input keyevent 22");
+			minWait();
+			Runtime.getRuntime().exec("adb -s "+r_Id+" shell input keyevent 66");
+			customWait(3000);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void validate_BT_Devices(SoftAssert soft, int n) throws InterruptedException, IOException {
+		minWait();
+		Runtime.getRuntime().exec("adb -s "+r_Id+" shell am start -a android.settings.BLUETOOTH_SETTINGS");
+        customWait(6000);
+		System.out.println(" Im Searching...BT devices");
+		WebDriverWait wait = new WebDriverWait(aDriver, 30);
+//		scrollToElement(Locators_DeviceStability.BT_Devices);
+		wait.until(ExpectedConditions.visibilityOf(Locators_DeviceStability.BT_Devices));
+		minWait();			
+		boolean check=Locators_DeviceStability.BT_Devices.isDisplayed();
+		minWait();
+		if (check) {
+			check=true;
+			soft.assertTrue(check, "TestCase Valiation is PASS");
+			test.log(LogStatus.PASS, "Enable Bluethooth is Validated at iteration: "+n);
+		} else {
+			soft.fail();
+			test.log(LogStatus.FAIL, "Enable Bluethooth is UnSuccessful at iteration: "+n);
+		}
+	}
+	
+	public boolean clickOnText(String text) {
+		/*
+		  Method used to select an element on the page by scrolling the Scroll View/List View
+		 */
+		boolean check = false;
+		try {  
+			String scrollable = "new UiSelector()";
+			String textElement = ".text(\""+ text +"\")";
+			aDriver.findElementByAndroidUIAutomator(scrollable+textElement).click();
+			APP_LOGS.info("Searched application is found sucessfully : ");
+			check = true;
+			return check;
+		}
+		catch(Exception e) {
+			return check;
+		}
+	}
+	
 	public boolean scrollToTextContains(String text) {
 		/*
 			  Method used to select an element on the page by scrolling the Scroll View/List View
@@ -2083,7 +2301,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		}
 	}
 
-	public void validate_MobileData_Disable(int n,SoftAssert soft) throws InterruptedException, IOException {
+	public void validate_MobileData_Disable(int n,String typ,SoftAssert soft) throws InterruptedException, IOException {
 		/* 
 		 * Validates MobileData disabality by launching the Chrome.
 		 */
@@ -2107,10 +2325,10 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 				check=true;
 				APP_LOGS.info("MobbileData Disabled Successfully");
 				soft.assertTrue(check, "TestCase Valiation is PASS");
-				test.log(LogStatus.PASS, "Disable Data OR Wi-Fi  validation is PASS at iteration "+n);			
+				test.log(LogStatus.PASS, typ+" Disable validation is PASS at iteration "+n);	
 			} else {
 				APP_LOGS.info("Mobiledata is NOT Disabled");
-				test.log(LogStatus.FAIL,"Disable Data OR Wi-Fi validation is FAIL.");
+				test.log(LogStatus.FAIL,typ+" Disable validation is FAIL at iteration "+n);
 				soft.fail();
 			}
 			customWait(3000);
@@ -2273,6 +2491,25 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 			minWait();
 		} catch (Exception e) {
 
+		}
+	}
+	
+	public void validate_Locators1(AndroidElement e1,SoftAssert soft,int n) throws InterruptedException {
+		minWait();
+		boolean check1 = false;		
+		try {
+			check1 = e1.isDisplayed();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		if (check1) {
+			check=true;
+			test.log(LogStatus.PASS, "Disable BT is Validated at iteration: "+n);
+			soft.assertTrue(check, "TestCase Valiation is PASS");
+		} else {
+			test.log(LogStatus.FAIL, "Disable BT is UnSuccessful at iteration: "+n);
+			soft.fail();
 		}
 	}
 
