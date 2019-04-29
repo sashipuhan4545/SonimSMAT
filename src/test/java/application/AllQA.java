@@ -1406,6 +1406,23 @@ public class AllQA  extends CommonConfig {
 
 
 					switch (itemvalue) {
+					
+					case "Wifi":
+
+						Thread wf=new Thread(new Runnable() {
+							public void run() {
+								TestNG runner=new TestNG();
+								List<String> suitefiles=new ArrayList<String>();
+								suitefiles.add("src/test/resources/drivers/XP8_WiFi_Stability_O.xml");
+								runner.setTestSuites(suitefiles);
+								runner.run();	
+
+
+							}
+						});
+						wf.start();
+						break;
+					
 
 					case "SMS":
 
@@ -3147,6 +3164,33 @@ public class AllQA  extends CommonConfig {
 
 					}
 
+					break;
+					
+				case "Wifi":
+
+					File Wifi = new File("src/test/resources/extentreport/XP8_WiFi_Stability_Orio_TestReport.html");
+					File Wifiest = new File(System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog");
+					String Wifiath=System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog";
+					try {
+						FileUtils.copyFileToDirectory(Wifi, Wifiest);
+					} catch (IOException e) {
+
+						e.printStackTrace();
+					}
+					if(Wifi.exists()) {
+
+						try {
+							BaseUtil.openReportPath(Wifiath);
+						} catch (IOException e) {
+
+							e.printStackTrace();
+						}
+
+					}
+					else {
+						executionReportDoesnotExist("Test Report is not generated yet");
+
+					}
 					break;
 					
 				case "SMS":
