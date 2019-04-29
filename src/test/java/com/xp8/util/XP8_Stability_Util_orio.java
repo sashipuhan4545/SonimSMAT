@@ -703,7 +703,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 			}
 			customWait(10000);	
 			endcall();
-            customWait(2000);
+			customWait(2000);
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
 			minWait();
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
@@ -1904,7 +1904,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		} catch (Exception e) {
 		}
 	}
-	
+
 	public boolean scrollTo(String text) {
 		/*
 		  Method used to select an element on the page by scrolling the Scroll View/List View
@@ -1941,7 +1941,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 						InputStreamReader isr = new InputStreamReader(inputStream);
 						BufferedReader bf = new BufferedReader(isr);
 						String  value=bf.readLine();
-						
+
 						System.out.println(value);
 						if(value.contains("00000001")||value.contains("ffffffff")) {
 							System.out.println("Phone is ringing so accepting call.");
@@ -1964,7 +1964,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void dailNumber(String dailNum) throws IOException {
 		try {
 			minWait();
@@ -1985,8 +1985,8 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		}
 	}
 
-	
-	
+
+
 	public void validate_Airplane_Enable(String dailNum,SoftAssert soft,int n) throws InterruptedException, IOException {
 		/* 
 		 * Method can be Used Validate Airplane Mode activation via by making the call.
@@ -2014,7 +2014,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 			minWait();
 		} catch (Exception e) {
 			e.printStackTrace();
-//			soft.fail();
+			//			soft.fail();
 		}	
 	}
 
@@ -2037,14 +2037,14 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 				soft.fail();
 			}
 			minWait();
-//			clickBtn(Locators_DeviceStability.OK);
+			//			clickBtn(Locators_DeviceStability.OK);
 			minWait();
 		} catch (Exception e) {
 			e.printStackTrace();
 			soft.fail();
 		}	
 	}
-	
+
 
 	public void end_Call() throws InterruptedException {
 		/* Method is to end Call.
@@ -2061,7 +2061,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void enable_BT_RefDevice() throws InterruptedException, IOException {
 
 		try {
@@ -2086,10 +2086,10 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 	public void validate_BT_Devices(SoftAssert soft, int n) throws InterruptedException, IOException {
 		minWait();
 		Runtime.getRuntime().exec("adb -s "+r_Id+" shell am start -a android.settings.BLUETOOTH_SETTINGS");
-        customWait(6000);
+		customWait(6000);
 		System.out.println(" Im Searching...BT devices");
 		WebDriverWait wait = new WebDriverWait(aDriver, 30);
-//		scrollToElement(Locators_DeviceStability.BT_Devices);
+		//		scrollToElement(Locators_DeviceStability.BT_Devices);
 		wait.until(ExpectedConditions.visibilityOf(Locators_DeviceStability.BT_Devices));
 		minWait();			
 		boolean check=Locators_DeviceStability.BT_Devices.isDisplayed();
@@ -2103,7 +2103,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 			test.log(LogStatus.FAIL, "Enable Bluethooth is UnSuccessful at iteration: "+n);
 		}
 	}
-	
+
 	public boolean clickOnText(String text) {
 		/*
 		  Method used to select an element on the page by scrolling the Scroll View/List View
@@ -2121,7 +2121,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 			return check;
 		}
 	}
-	
+
 	public boolean scrollToTextContains(String text) {
 		/*
 			  Method used to select an element on the page by scrolling the Scroll View/List View
@@ -2139,7 +2139,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 			return check;
 		}
 	}
-	
+
 	public void scrollToElementWithDpadDown(WebElement element) {
 		/*
 		 * Clicks up button till element is available
@@ -2155,7 +2155,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 			clickBtn(Locators_DeviceStability.firstApp_Suggetion);
 		}
 	}
-	
+
 
 
 	public boolean scrollToText(String text) {
@@ -2246,7 +2246,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 			e.printStackTrace();
 			soft.fail();
 		}
-//		closeAllTabs();	
+		//		closeAllTabs();	
 	}
 
 	public void ON_Switch(String switch_To_ON) {
@@ -2305,10 +2305,10 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		/* 
 		 * Validates MobileData disabality by launching the Chrome.
 		 */
-	    customWait(3000);
+		customWait(3000);
 		if(isElementExist(Locators_DeviceStability.alert_OKBtn)) {
-		clickBtn(Locators_DeviceStability.alert_OKBtn);
-		System.out.println("Im Clicking Ok First ");
+			clickBtn(Locators_DeviceStability.alert_OKBtn);
+			System.out.println("Im Clicking Ok First ");
 		}
 		String url = "www.google.co.in";
 		customWait(2000);
@@ -2335,7 +2335,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 			if(isElementExist(Locators_DeviceStability.alert_OKBtn)) {
 				clickBtn(Locators_DeviceStability.alert_OKBtn);
 				System.out.println("Im Clicking Ok 2nd ");
-				}
+			}
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
 			minWait();
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
@@ -2345,7 +2345,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 			test.log(LogStatus.FAIL,"No Element found");
 			soft.fail();
 		}
-//		closeAllTabs();
+		//		closeAllTabs();
 	}
 
 	public void clearChromePermission() {
@@ -2493,7 +2493,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 
 		}
 	}
-	
+
 	public void validate_Locators1(AndroidElement e1,SoftAssert soft,int n) throws InterruptedException {
 		minWait();
 		boolean check1 = false;		
@@ -2591,9 +2591,9 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_ENTER);
 			customWait(8000);
 			System.out.println("Scrolling");
-		    scrollToElementWithDpadDown(element);
-		    minWait();
-			
+			scrollToElementWithDpadDown(element);
+			minWait();
+
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@text='INSTALL']")));
 			customWait(6000);
 			if (isElementExist(Locators_DeviceStability.INSTALL)) {
@@ -2650,7 +2650,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		//Search Application is installed and uninstall
 
 		clickOnAppList();
-		
+
 		enterTextToInputField(Locators_DeviceStability.searchApps, appName);
 		minWait();
 		System.out.println("Checking....");
@@ -2906,8 +2906,8 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 			e.printStackTrace();
 		}		
 	}
-	
-	
-	
-	
+
+
+
+
 }

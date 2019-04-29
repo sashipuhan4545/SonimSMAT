@@ -71,14 +71,11 @@ public class XP8_SMS_StabilityTest_Orio extends XP8_Stability_Util_orio{
 			System.out.println("Not a directory. Do nothing");
 			return;
 		}
-
 		File[] listFiles = dir.listFiles();
 		for(File file : listFiles){
 			System.out.println("Deleting "+file.getName());
 			file.delete();
-
 		}
-
 	}
 
 	@AfterMethod()
@@ -136,9 +133,16 @@ public class XP8_SMS_StabilityTest_Orio extends XP8_Stability_Util_orio{
 					validate_SentMessage_O(i,sa1) ;
 					delete_SMS_O();
 				}
+				else {
+					System.out.println("Executing Else part");
+					launch_APP(Locators_DeviceStability.messaging);
+					clearSMSPermissions();
+					create_NewSMS(refNum, data.get("typeMessage"));
+					clickOn_Send();
+					validate_SentMessage(i,sa1) ;
+				}
 			}
 			sa1.assertAll();
-			test.log(LogStatus.PASS, "Test case status is Passed");		
 	}
 
 	
@@ -167,9 +171,18 @@ public class XP8_SMS_StabilityTest_Orio extends XP8_Stability_Util_orio{
 				validate_SentMessage_O(i,sa2) ;
 				delete_SMS_O();
 			}
+			else {
+				System.out.println("Executing Else part");
+				launch_APP(Locators_DeviceStability.messaging);
+				navigateTo_NewSMS_O();
+				create_NewSMS(refNum, data.get("typeMessage3"));
+				validate_CharacterAndPageNumber(Locators_DeviceStability.zero_Characters_FirstPage,data.get("expectedChar&PageNum3"),i);
+				clickOn_Send();
+				validate_SentMessage(i,sa2) ;
+				delete_SMS();
+			}
 		}
-		sa2.assertAll();
-		test.log(LogStatus.PASS, "Test case status is Passed");			
+		sa2.assertAll();	
 	}
 
 
@@ -192,6 +205,15 @@ public class XP8_SMS_StabilityTest_Orio extends XP8_Stability_Util_orio{
 				navigateTo_NewSMS_O();				
 				create_NewSMS_O(pryNum,data.get("typeMessage1"));
 				clickOn_Send_O();
+				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
+				validate_RecievedMessage_O(i,sa3);		
+			}
+			else {
+				System.out.println("Executing Else part");
+				launch_APP(Locators_DeviceStability.messaging);			
+				navigateTo_NewSMS_O();
+				create_NewSMS(pryNum, data.get("typeMessage1"));
+				clickOn_Send();
 				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
 				validate_RecievedMessage_O(i,sa3);		
 			}
