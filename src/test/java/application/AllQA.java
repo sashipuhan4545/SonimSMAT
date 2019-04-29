@@ -4734,7 +4734,7 @@ public class AllQA  extends CommonConfig {
 						System.out.println("HEY WHATS=");
 						CommonConfig.CALL_MODULE="MT-Call";
 
-					}else if (newValue.equals("Browser Stability") || newValue.equals("Device Stability") || newValue.equals("Network Stability") || newValue.equals("SMS") ||newValue.equals("Wifi") || newValue.equals("Multitasking")) {
+					}else if (newValue.equals("Browser Stability") || newValue.equals("Device Stability") || newValue.equals("Network Stability")|| newValue.equals("ApkDownload") || newValue.equals("SMS") ||newValue.equals("Wifi") || newValue.equals("Multitasking")) {
 						CommonConfig.CALL_MODULE="";
 						System.out.println("Here we are reseting the Call Module to null");
 						iteration_Input_Dialog();
