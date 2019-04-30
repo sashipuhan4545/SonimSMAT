@@ -505,7 +505,11 @@ public class AllQA  extends CommonConfig {
 				}else if (JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("-00.")) {
 
 					operator_DUT.setText("MainLine");
-				}
+				
+			}else if (JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("-31.")) {
+
+				operator_DUT.setText("EU");
+			}
 
 
 			}
@@ -684,6 +688,9 @@ public class AllQA  extends CommonConfig {
 					operator_Ref.setText("MainLine"); 
 
 
+				}else if (JsonFileReaderAndWriter.ReadRefDeviceFirmWare().contains("-31.")) {
+
+					operator_Ref.setText("EU");
 				}
 
 			}
