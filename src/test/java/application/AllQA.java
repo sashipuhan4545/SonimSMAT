@@ -505,11 +505,11 @@ public class AllQA  extends CommonConfig {
 				}else if (JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("-00.")) {
 
 					operator_DUT.setText("MainLine");
-				
-			}else if (JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("-31.")) {
 
-				operator_DUT.setText("EU");
-			}
+				}else if (JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("-31.")) {
+
+					operator_DUT.setText("EU");
+				}
 
 
 			}
@@ -853,7 +853,7 @@ public class AllQA  extends CommonConfig {
 			}
 			//Added as per Raj comments 03-12-2018
 			else if (comboBoxItems=="Stability") {
-				
+
 				listView.setItems(stability);
 				listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 			}
@@ -964,12 +964,12 @@ public class AllQA  extends CommonConfig {
 
 
 					switch (itemvalue) {
-					
-				
+
+
 
 					case "SonimCare":
-						
-						
+
+
 
 						Thread SC=new Thread(new Runnable() {
 							public void run() {
@@ -1050,8 +1050,8 @@ public class AllQA  extends CommonConfig {
 								currentTcTimer.cancel();
 								Platform.runLater(()->AlertDialog("SMS is not applicable for XP5 "));
 								ResetBtn.setDisable(false);
-								
-							
+
+
 
 
 							}
@@ -1192,7 +1192,7 @@ public class AllQA  extends CommonConfig {
 						AU.start();
 						break;
 
-					
+
 
 					case "SonimWarranty":
 						Thread SW=new Thread(new Runnable() {
@@ -1413,7 +1413,7 @@ public class AllQA  extends CommonConfig {
 
 
 					switch (itemvalue) {
-					
+
 					case "Wifi":
 
 						Thread wf=new Thread(new Runnable() {
@@ -1429,7 +1429,7 @@ public class AllQA  extends CommonConfig {
 						});
 						wf.start();
 						break;
-					
+
 
 					case "SMS":
 
@@ -1447,7 +1447,7 @@ public class AllQA  extends CommonConfig {
 						});
 						SMS.start();
 						break;
-						
+
 					case "Network Stability":
 
 						Thread NetworkStability=new Thread(new Runnable() {
@@ -1463,7 +1463,7 @@ public class AllQA  extends CommonConfig {
 						});
 						NetworkStability.start();
 						break;
-						
+
 					case "ContactTransfer":
 
 						Thread SCOUT=new Thread(new Runnable() {
@@ -1771,6 +1771,24 @@ public class AllQA  extends CommonConfig {
 						break;
 
 
+					case "SafeGuard":
+						Thread SG=new Thread(new Runnable() {
+
+
+							public void run() {
+								TestNG runner=new TestNG();
+								List<String> suitefiles=new ArrayList<String>();
+								suitefiles.add("src/test/resources/drivers/XP8_SafeGuard.xml");
+
+								runner.setTestSuites(suitefiles);
+								runner.run();
+							}
+						});
+						SG.start();	
+						break;		
+
+
+
 					}
 
 					/*
@@ -1798,8 +1816,8 @@ public class AllQA  extends CommonConfig {
 
 
 					switch (itemvalue) {
-					
-					
+
+
 					case "Multitasking":
 
 						Thread Ml=new Thread(new Runnable() {
@@ -1816,8 +1834,8 @@ public class AllQA  extends CommonConfig {
 						});
 						Ml.start();
 						break;
-					
-					
+
+
 					case "Wifi":
 
 						Thread wf=new Thread(new Runnable() {
@@ -1833,8 +1851,8 @@ public class AllQA  extends CommonConfig {
 						});
 						wf.start();
 						break;
-					
-					
+
+
 					case "SafeGuard":
 
 						Thread SG=new Thread(new Runnable() {
@@ -1851,8 +1869,8 @@ public class AllQA  extends CommonConfig {
 						});
 						SG.start();
 						break;
-					
-					
+
+
 
 					case "SonimCare":
 
@@ -2403,7 +2421,7 @@ public class AllQA  extends CommonConfig {
 				switch (itemvalue) {
 
 				case "SonimCare":
-					
+
 					File SC = new File("src/test/resources/extentreport/XP5S_SCOUT_SonimCare_TestReport.html");
 					File Sonimest = new File(System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog");
 					String SCPath=System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog";
@@ -2436,7 +2454,7 @@ public class AllQA  extends CommonConfig {
 
 				case "SafeGuard":
 
-					
+
 
 					File WR = new File("src/test/resources/extentreport/XP5S_SCOUT_SafeGuard_TestReport.html");
 					File WRDest = new File(System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog");
@@ -3019,6 +3037,37 @@ public class AllQA  extends CommonConfig {
 				switch (itemvalue) {
 
 
+
+				case "SafeGuard":
+
+					File SG = new File("src/test/resources/extentreport/XP8_SCOUT_SafeGuard_TestReport.html");
+					File SG_DE = new File(System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog");
+					String path=System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog";
+					try {
+						FileUtils.copyFileToDirectory(SG, SG_DE);
+					} catch (IOException e) {
+
+						e.printStackTrace();
+					}
+					if(SG.exists()) {
+
+						try {
+							BaseUtil.openReportPath(path);
+						} catch (IOException e) {
+
+							e.printStackTrace();
+						}
+
+
+
+					}
+					else {
+						executionReportDoesnotExist("Test Report is not generated yet");
+					}
+
+					break;
+
+
 				case "ApkDownload":
 
 					File PhoneDialer1 = new File("src/test/resources/extentreport/XP8_APK_Download_Stability_Orio_TestReport.html");
@@ -3052,7 +3101,7 @@ public class AllQA  extends CommonConfig {
 
 				case "ContactTransfer":
 
-					File PhoneDialer = new File("src/test/resources/extentreport/XP8_ScoutApps_ContactTransfer_TestReport.html");
+					File PhoneDialer = new File("src/test/resources/extentreport/XP8_SCOUT_Contact_Transfer_TestReport.html");
 					File PhoneDialer_dest = new File(System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog");
 					String PhoneDialer_path=System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog";
 					try {
@@ -3172,7 +3221,7 @@ public class AllQA  extends CommonConfig {
 					}
 
 					break;
-					
+
 				case "Wifi":
 
 					File Wifi = new File("src/test/resources/extentreport/XP8_WiFi_Stability_Orio_TestReport.html");
@@ -3199,7 +3248,7 @@ public class AllQA  extends CommonConfig {
 
 					}
 					break;
-					
+
 				case "SMS":
 
 					File smsstability = new File("src/test/resources/extentreport/XP8_SMS_Stability_Orio_TestReport.html");
@@ -3589,8 +3638,8 @@ public class AllQA  extends CommonConfig {
 			for (String itemvalue : topics) {
 
 				switch (itemvalue) {
-				
-				
+
+
 				case "Multitasking":
 
 					File multitasking = new File("src/test/resources/extentreport/XP3_MultiTasking_Stability_TestReport.html");
@@ -3619,11 +3668,11 @@ public class AllQA  extends CommonConfig {
 
 
 					break;
-				
 
-				
-				
-				
+
+
+
+
 				case "Wifi":
 
 					File Wifi = new File("src/test/resources/extentreport/XP3_WiFi_Stability_TestReport.html");
@@ -3652,11 +3701,11 @@ public class AllQA  extends CommonConfig {
 
 
 					break;
-				
-				
 
-				
-				
+
+
+
+
 				case "SafeGuard":
 
 					File SG = new File("src/test/resources/extentreport/XP3_SCOUT_Safeguard_TestReport.html");
@@ -3685,13 +3734,13 @@ public class AllQA  extends CommonConfig {
 
 
 					break;
-				
 
-				
-				
+
+
+
 				case "SonimCare":
-					
-					
+
+
 
 					File NsonimCareS = new File("src/test/resources/extentreport/XP3_SCOUT_SonimCare_TestReport.html");
 					File SCest = new File(System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog");
@@ -3719,7 +3768,7 @@ public class AllQA  extends CommonConfig {
 
 
 					break;
-				
+
 
 				case "Network Stability":
 
@@ -4659,7 +4708,7 @@ public class AllQA  extends CommonConfig {
 							}else if (newValue.contains("Browser Stability")) {
 								EMAILREPORT="src/test/resources/extentreport/XP8_Browser_Stability_Orio_TestReport.html";
 							}if(newValue.contains("ContactTransfer")) {
-								EMAILREPORT="src/test/resources/extentreport/XP8_ScoutApps_ContactTransfer_TestReport.html";
+								EMAILREPORT="src/test/resources/extentreport/XP8_SCOUT_Contact_Transfer_TestReport.html";
 
 								try {
 									testCaseDisplay.setItems(GetMethods.TestCasesMethodName("XP8_", XP8_ContactTransfer_Test.class));
@@ -4669,7 +4718,11 @@ public class AllQA  extends CommonConfig {
 								}
 
 							}if(newValue.contains("ApkDownload")) {
+								
 								EMAILREPORT="src/test/resources/extentreport/XP8_APK_Download_Stability_Orio_TestReport.html";
+							}else if (newValue.contains("SafeGuard")) {
+
+								EMAILID="src/test/resources/extentreport/XP8_SCOUT_SafeGuard_TestReport.html";
 							}
 
 						}else if (JsonFileReaderAndWriter.primaryDevModelReader().contains("xp3800") || JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("3A")) {
@@ -4713,15 +4766,15 @@ public class AllQA  extends CommonConfig {
 
 
 							}else if (newValue.contains("SonimCare")) {
-								
+
 								EMAILREPORT="src/test/resources/extentreport/XP3_SCOUT_SonimCare_TestReport.html";	
 							}else if(newValue.contains("Wifi")) {
-								
+
 								EMAILREPORT="src/test/resources/extentreport/XP3_WiFi_Stability_TestReport.html";	
 
-								
+
 							}else if(newValue.contains("Multitask")) {
-								
+
 								EMAILREPORT="src/test/resources/extentreport/XP3_MultiTasking_Stability_TestReport.html";	
 
 							}
