@@ -11,6 +11,7 @@ public class SikuliConstants {
 	public static final String phoneicon="src/test/resources/sikuliImages/phoneicon.PNG";
 	public static final String Settings="src/test/resources/sikuliImages/Settings.PNG";
 	public static final String closeicon="src/test/resources/sikuliImages/closeicon.PNG";
+	
 
 	
 	
