@@ -13,55 +13,99 @@ import org.json.simple.parser.ParseException;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import com.graphics.gui.JsonFileReaderAndWriter;
 import com.relevantcodes.extentreports.ExtentReports;
+import com.relevantcodes.extentreports.ExtentTestInterruptedException;
 import com.relevantcodes.extentreports.LogStatus;
-
+import com.xp5S.util.GetMethods;
+import com.xp5S.util.appiumService;
 import com.xp8.util.DataProviders;
 import com.xp8.util.ExcelConstants;
 import com.xp8.util.ExcelReader;
 import com.xp8.util.Locators_BaseUtil;
+import com.xp8.util.Locators_DeviceStability;
 import com.xp8.util.Locators_PhoneDialer;
-import com.xp8.util.XP8_PhoneDialer_Util;
+import com.xp8.util.Locators_PhoneDialer_old;
+import com.xp8.util.XP8_PhoneDialer_util;
 
+import SikuliHelper.SikuliConstants;
+import SikuliHelper.SikuliHelper;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 
-public class XP8_PhoneDialer_Test extends XP8_PhoneDialer_Util{
-
+public class XP8_PhoneDialer_Test extends XP8_PhoneDialer_util{
 
 	public ExcelReader excel;
-	
-	
+	Properties properties;
+	public static ExtentTestInterruptedException testexception;
+	public int  itr =30;
+	boolean value;
+
 	@BeforeSuite
-	public void beforeSuite() throws FileNotFoundException, InterruptedException, IOException, ParseException 
+	public void beforeSuite() throws FileNotFoundException, InterruptedException,  IOException, ParseException, ParseException, ParseException, ParseException, ParseException, ParseException 
 	{
-		extent = new ExtentReports("src/test/resources/extentreport/XP8_PhoneDialer_Test.html", true); //Provide Desired Report Directory Location and Name
-		fetch_Devices_Details();
-	} 
+		extent = new ExtentReports("src/test/resources/extentreport/XP8_PhoneDialer_TestReport.html", true); //Provide Desired Report Directory Location and Name
+	//	extent.loadConfig(new File("src/test/resources/StorageFile/ReportsConfig.xml"));
+		extent.loadConfig(new File(System.getProperty("user.dir")+"//ReportsConfig.xml"));
+		extent.addSystemInfo("Build #",JsonFileReaderAndWriter.primaryDevFirmwareReader())
+		.addSystemInfo("Product",JsonFileReaderAndWriter.primaryDevModelReader())
+		.addSystemInfo("Operator", JsonFileReaderAndWriter.primaryDevOperatorReader());		fetch_Devices_Details();	
+
+	}
+
+	@BeforeSuite
+	public void numofTestCases() throws ClassNotFoundException {
+
+
+		//int numberOfTestCases = GetMethods.TotalTestcase("XP8_TC", this.getClass());
+
+		appiumService.TOTAL_NUM_OF_TESTCASES=GetMethods.TotalTestcase("XP8_TC", this.getClass());
+
+
+	}
+
 
 	@BeforeMethod()
 	public  void beforeMethod(Method method) 
 	{
 		test = extent.startTest( (this.getClass().getSimpleName() +" :: "+  method.getName()),method.getName()); //Test Case Start Here
-		test.assignAuthor("Tejavathi D"); //Test Script Author Name
-		extent.loadConfig(new File(System.getProperty("user.dir")+"//ReportsConfig.xml"));
-		extent.addSystemInfo("Appium", "1.1").addSystemInfo("Environment", "TEST");
+		test.assignAuthor("Farheen Taj"); //Test Script Author Name
+	}
+
+
+	@BeforeClass
+	public void copyFilesToDevice() throws  IOException, ParseException, ParseException, ParseException, ParseException, ParseException, ParseException  {
+		System.out.println("Executing clear log screen");
+		File dir = new File("src/test/resources/adbLogs");
+		if(dir.isDirectory() == false) {
+			System.out.println("Not a directory. Do nothing");
+			return;
+		}
+
+		File[] listFiles = dir.listFiles();
+		for(File file : listFiles){
+			System.out.println("Deleting "+file.getName());
+			file.delete();
+
+		}
+
 	}
 
 	@AfterMethod()
-	public void tearDown(ITestResult result,Method method) throws IOException, InterruptedException
+	public void tearDown(ITestResult result,Method method) throws  IOException, ParseException, ParseException, ParseException, ParseException, ParseException, ParseException , InterruptedException
 	{
 		if(result.getStatus()==ITestResult.FAILURE)
-		{	String screenshot_path=captureScreenshot(method.getName());
-		String image= test.addScreenCapture(screenshot_path);		
-		test.log(LogStatus.FAIL,result.getThrowable());			
-		test.log(LogStatus.FAIL, "screenshot for failure: "+test.addScreenCapture(image));
-		// clear screen
-		clearRecentApps();
+		{
+
+			String screenshot_path=captureScreenshot(method.getName());
+			String image= test.addScreenCapture(screenshot_path);		
+			test.log(LogStatus.FAIL,result.getThrowable());	
+			clearRecentApps();
 		}
 		extent.endTest(test);
 		extent.flush();
@@ -77,345 +121,113 @@ public class XP8_PhoneDialer_Test extends XP8_PhoneDialer_Util{
 		PageFactory.initElements(new AppiumFieldDecorator(aDriver),loc1);
 		excel=new ExcelReader(ExcelConstants.XP5S_XL_PATH);	
 	}
-	//=========================================================Test Scripts================================================================
+
+//=====================================================Test cases===========================================================================
 	@Test(priority=1,dataProvider="XP8_PhoneDialer", dataProviderClass=DataProviders.class)
-	public void XP8_PhoneDialer_01_Validate_Phone_Application_Launch(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException
+	public void XP8_PhoneDialer_001_Validate_Phone_Application_Launch(Hashtable<String, String> data) throws InterruptedException, AWTException,  IOException, ParseException
 	{
-		APP_LOGS.info("===========XP8_PhoneDialer_01============");
-		startAdbLog("XP8_PhoneDialer_01");
-		//("XP8_PhoneDialer_01");
+		APP_LOGS.info("===========XP8_PhoneDialer_001_Validate_Phone_Application_Launch============");
+		startAdbLog("XP8_PhoneDialer_001");
 		launch_an_app("phone");
 		beforeExecution();
 		validatePhoneAppLaunch();
 	}
 
 	@Test(priority=2,dataProvider="XP8_PhoneDialer", dataProviderClass=DataProviders.class)
-	public void XP8_PhoneDialer_02_Validate_Phone_App_Home_Page_Without_call_Log(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException
+	public void XP8_PhoneDialer_002_Validate_Phone_App_Home_Page_Without_call_Log(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException
 	{
-		APP_LOGS.info("===========XP8_PhoneDialer_02============");
-		startAdbLog("XP8_PhoneDialer_02");
-		//("XP8_PhoneDialer_02");
+		APP_LOGS.info("===========XP8_PhoneDialer_002_Validate_Phone_App_Home_Page_Without_call_Log============");
+		startAdbLog("XP8_PhoneDialer_002");
 		launch_an_app("phone");
 		validatePhoneAppHomePage();
 	}
 
 	@Test(priority=3,dataProvider="XP8_PhoneDialer", dataProviderClass=DataProviders.class)
-	public void XP8_PhoneDialer_03_Validate_Make_A_Call(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException
+	public void XP8_PhoneDialer_003_Validate_Make_A_Call(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException
 	{
-		APP_LOGS.info("===========XP8_PhoneDialer_02============");
-		startAdbLog("XP8_PhoneDialer_03");
-		
+		APP_LOGS.info("===========XP8_PhoneDialer_003_Validate_Make_A_Call============");
+		startAdbLog("XP8_PhoneDialer_003");	
 		launch_an_app("phone");
 		validateMakeACall();
+		clickBackButton(1);
+		validateCallFromCallLog();
+		clickBackButton(1);
 	}
 
 	@Test(priority=4,dataProvider="XP8_PhoneDialer", dataProviderClass=DataProviders.class)
-	public void XP8_PhoneDialer_04_Validate_Call_From_CallLog(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException
+	public void XP8_PhoneDialer_004_Save_contact_from_phone_dialer(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException
 	{
-		APP_LOGS.info("===========XP8_PhoneDialer_04============");
-		startAdbLog("XP8_PhoneDialer_04");
-		//("XP8_PhoneDialer_04");
+		APP_LOGS.info("===========XP8_PhoneDialer_004_Save_contact_from_phone_dialer============");
+		startAdbLog("XP8_PhoneDialer_004");	
 		launch_an_app("phone");
-		validateCallFromCallLog();
+		validateCreateNewContactFromCallLog(data.get("name"));
+		minWait();
+		validateCreateNewContactFromDialpad(data.get("phone"),data.get("test"));
+		minWait();
+		validate_number_saved_with_plusSymbol();
+		minWait();
+		validate_contacts_added_in_list();
 	}
 
 	@Test(priority=5,dataProvider="XP8_PhoneDialer", dataProviderClass=DataProviders.class)
-	public void XP8_PhoneDialer_05_Validate_Add_A_Contact_In_Contact_Page(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException
+	public void XP8_PhoneDialer_005_Validate_favourite_or_frequent_contact_list(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException
 	{
-		APP_LOGS.info("===========XP8_PhoneDialer_05============");
-		startAdbLog("XP8_PhoneDialer_05");
-		//("XP8_PhoneDialer_05");
+		APP_LOGS.info("===========XP8_PhoneDialer_005_Validate_favourite_or_frequently_contact_list============");
+		startAdbLog("XP8_PhoneDialer_005");	
 		launch_an_app("phone");
-		validateAddAContactFromContactPage(data.get("name"), data.get("phone"));
+		validate_frequent_list();
+		minWait();
+		validate_clear_frequents();
 	}
-	
+
 	@Test(priority=6,dataProvider="XP8_PhoneDialer", dataProviderClass=DataProviders.class)
-	public void XP8_PhoneDialer_06_Validate_Add_Contacts_From_Contacts_Page(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException
+	public void XP8_PhoneDialer_006_Validate_Search_option(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException
 	{
-		APP_LOGS.info("===========XP8_PhoneDialer_06============");
-		startAdbLog("XP8_PhoneDialer_06");
-		//("XP8_PhoneDialer_06");
+		APP_LOGS.info("===========XP8_PhoneDialer_006_Validate_Search_option============");
+		startAdbLog("XP8_PhoneDialer_006");	
 		launch_an_app("phone");
-		minWait();
-		validateAddContactFromContactsPage(data.get("name"), data.get("phone"));
+		validate_search(data.get("contactName"));
+		validate_recent_contact_in_list(data.get("contactName"));
 	}
-
+	
 	@Test(priority=7,dataProvider="XP8_PhoneDialer", dataProviderClass=DataProviders.class)
-	public void XP8_PhoneDialer_07_Validate_Create_New_Contact_From_Call_Log(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException
+	public void XP8_PhoneDialer_007_Validate_Send_SMS_from_recent_call_Log(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException
 	{
-		APP_LOGS.info("===========XP8_PhoneDialer_07============");
-		startAdbLog("XP8_PhoneDialer_07");
-		//("XP8_PhoneDialer_07");
+		APP_LOGS.info("===========XP8_PhoneDialer_007_Validate_Send_SMS_from_recent_call_Log============");
+		startAdbLog("XP8_PhoneDialer_007");	
 		launch_an_app("phone");
-		validateCreateNewContactFromCallLog(data.get("name"));
+		validate_send_message(data.get("textMessage"));
 	}
-
+	
 	@Test(priority=8,dataProvider="XP8_PhoneDialer", dataProviderClass=DataProviders.class)
-	public void XP8_PhoneDialer_08_Validate_Create_New_Contact_From_Dialpad(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException
+	public void XP8_PhoneDialer_008_Validate_Add_New_Contact(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException
 	{
-		APP_LOGS.info("===========XP8_PhoneDialer_08============");
-		startAdbLog("XP8_PhoneDialer_08");
-		//("XP8_PhoneDialer_08");
+		APP_LOGS.info("===========XP8_PhoneDialer_008_Validate_Add_New_Contact============");
+		startAdbLog("XP8_PhoneDialer_008");	
+		launch_an_app("settings");
+		remove_GoogleAcccount();
 		launch_an_app("phone");
-		validateCreateNewContactFromDialpad(data.get("phone"),data.get("name"));
+		validate_add_new_contact(data.get("phone"),data.get("name"));
+		validate_link_contact();
+		add_picture_to_contact();
+		validateKeepEditingAndDiscard(data.get("number"));
 	}
-
+	
 	@Test(priority=9,dataProvider="XP8_PhoneDialer", dataProviderClass=DataProviders.class)
-	public void XP8_PhoneDialer_09_Validate_Add_To_A_Contact_From_Call_Log(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException
+	public void XP8_PhoneDialer_009_Validate_Call_blocking_and_unblocking_functionality(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException
 	{
-		APP_LOGS.info("===========XP8_PhoneDialer_09============");
-		startAdbLog("XP8_PhoneDialer_09");
-		//("XP8_PhoneDialer_09");
+		APP_LOGS.info("===========XP8_PhoneDialer_009_Validate_Call_blocking_and_unblocking_functionality============");
+		startAdbLog("XP8_PhoneDialer_009");	
 		launch_an_app("phone");
-		validateAddToContactFromCallLog(data.get("name"));
-	}
-
-	@Test(priority=10,dataProvider="XP8_PhoneDialer", dataProviderClass=DataProviders.class)
-	public void XP8_PhoneDialer_10_Validate_Add_To_A_Contact_From_Dialpad(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException
-	{
-		APP_LOGS.info("===========XP8_PhoneDialer_10============");
-		startAdbLog("XP8_PhoneDialer_10");
-		//("XP8_PhoneDialer_10");
-		launch_an_app("phone");
-		validateAddToContactFromDialpad(data.get("phone"), data.get("name"));
-	}
-
-	@Test(priority=11,dataProvider="XP8_PhoneDialer", dataProviderClass=DataProviders.class)
-	public void XP8_PhoneDialer_11_Validate_Send_Message_From_call_Log(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException
-	{
-		APP_LOGS.info("===========XP8_PhoneDialer_11============");
-		startAdbLog("XP8_PhoneDialer_11");
-		//("XP8_PhoneDialer_11");
-		launch_an_app("phone");
-		validateSendMessageFromCallLog(data.get("textMessage"));
-	}
-
-	@Test(priority=12,dataProvider="XP8_PhoneDialer", dataProviderClass=DataProviders.class)
-	public void XP8_PhoneDialer_12_Validate_Send_Message_From_Dialpad(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException
-	{
-		APP_LOGS.info("===========XP8_PhoneDialer_12============");
-		startAdbLog("XP8_PhoneDialer_12");
-		//("XP8_PhoneDialer_12");
-		launch_an_app("phone");
-		validateSendMessageFromDialpad(data.get("phone"), data.get("textMessage"));
+		validate_block_option_in_call_log();	
+		navigate_to_block_number_in_call_settings();
+		blockNumberAndValidate();
+		unblockNumberAndValidate();
+		clickBackButton(3);
 	}
 	
-	@Test(priority=13,dataProvider="XP8_PhoneDialer", dataProviderClass=DataProviders.class)
-	public void XP8_PhoneDialer_13_Validate_Call_Details_With_outgoing_Call_Log(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException
-	{
-		APP_LOGS.info("===========XP8_PhoneDialer_13============");
-		startAdbLog("XP8_PhoneDialer_13");
-		//("XP8_PhoneDialer_13");
-		launch_an_app("phone");
-		navigateToCallDetails(Locators_PhoneDialer.addedContactCallLog);
-		minWait();
-		validateCallDetailsWithOutgoingCallLog();
-	}
-
-	@Test(priority=14,dataProvider="XP8_PhoneDialer", dataProviderClass=DataProviders.class)
-	public void XP8_PhoneDialer_14_Validate_Block_And_unblock_Number(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException
-	{
-		APP_LOGS.info("===========XP8_PhoneDialer_14============");
-		startAdbLog("XP8_PhoneDialer_14");
-		//("XP8_PhoneDialer_14");
-		launch_an_app("phone");
-		navigateToCallDetails(Locators_PhoneDialer.addedContactCallLog);
-		minWait();
-		blockAndUnblockNumber();
-		test.log(LogStatus.PASS, "Test case Status is PASS");
-	}
-
-	@Test(priority=15,dataProvider="XP8_PhoneDialer", dataProviderClass=DataProviders.class)
-	public void XP8_PhoneDialer_15_Validate_Copy_number(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException
-	{
-		APP_LOGS.info("===========XP8_PhoneDialer_15============");
-		startAdbLog("XP8_PhoneDialer_15");
-		//("XP8_PhoneDialer_15");
-		launch_an_app("phone");
-		navigateToCallDetails(Locators_PhoneDialer.addedContactCallLog);
-		minWait();
-		validateCopyNumber();
-	}
-
-	@Test(priority=16,dataProvider="XP8_PhoneDialer", dataProviderClass=DataProviders.class)
-	public void XP8_PhoneDialer_16_Validate_Edit_Number_Before_Call(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException
-	{
-		APP_LOGS.info("===========XP8_PhoneDialer_16============");
-		startAdbLog("XP8_PhoneDialer_16");
-		//("XP8_PhoneDialer_16");
-		launch_an_app("phone");
-		navigateToCallDetails(Locators_PhoneDialer.addedContactCallLog);
-		minWait();
-		validateEditBeforeCall(data.get("phone"));
-	}
-
-	@Test(priority=17,dataProvider="XP8_PhoneDialer", dataProviderClass=DataProviders.class)
-	public void XP8_PhoneDialer_17_Validate_Delete(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException
-	{
-		APP_LOGS.info("===========XP8_PhoneDialer_17============");
-		startAdbLog("XP8_PhoneDialer_17");
-		//("XP8_PhoneDialer_17");
-		launch_an_app("phone");
-		navigateToCallDetails(Locators_PhoneDialer.editedNumber);
-		minWait();
-		validateDelete();
-	}
-
-	@Test(priority=18,dataProvider="XP8_PhoneDialer", dataProviderClass=DataProviders.class)
-	public void XP8_PhoneDialer_18_Validate_Add_A_Favorite(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException
-	{
-		APP_LOGS.info("===========XP8_PhoneDialer_18============");
-		startAdbLog("XP8_PhoneDialer_18");
-		//("XP8_PhoneDialer_18");
-		launch_an_app("phone");
-		validateAddFavorite();
-	}
-
-	@Test(priority=19,dataProvider="XP8_PhoneDialer", dataProviderClass=DataProviders.class)
-	public void XP8_PhoneDialer_19_Validate_Call_From_Favorites(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException
-	{
-		APP_LOGS.info("===========XP8_PhoneDialer_19============");
-		startAdbLog("XP8_PhoneDialer_19");
-		//("XP8_PhoneDialer_19");
-		launch_an_app("phone");
-		validateCallFromFavorites();
-	}
-
-	@Test(priority=20,dataProvider="XP8_PhoneDialer", dataProviderClass=DataProviders.class)
-	public void XP8_PhoneDialer_20_Validate_Remove_From_Favorites(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException
-	{
-		APP_LOGS.info("===========XP8_PhoneDialer_20============");
-		startAdbLog("XP8_PhoneDialer_20");
-		//("XP8_PhoneDialer_20");
-		launch_an_app("phone");
-		validateRemoveFromFavorite();
-	}
-
-	@Test(priority=21,dataProvider="XP8_PhoneDialer", dataProviderClass=DataProviders.class)
-	public void XP8_PhoneDialer_21_Validate_Clear_Frequents(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException
-	{
-		APP_LOGS.info("===========XP8_PhoneDialer_21============");
-		startAdbLog("XP8_PhoneDialer_21");
-		//("XP8_PhoneDialer_21");
-		launch_an_app("phone");
-		validateClearFrequents();
-	}
-
-	@Test(priority=22,dataProvider="XP8_PhoneDialer", dataProviderClass=DataProviders.class)
-	public void XP8_PhoneDialer_22_Validate_Import_Export_Contacts(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException
-	{
-		APP_LOGS.info("===========XP8_PhoneDialer_22============");
-		startAdbLog("XP8_PhoneDialer_22");
-		//("XP8_PhoneDialer_22");
-		launch_an_app("phone");
-		validateImportExportContacts(data.get("contactName"));
-	}
-
-	@Test(priority=23,dataProvider="XP8_PhoneDialer", dataProviderClass=DataProviders.class)
-	public void XP8_PhoneDialer_23_Validate_Settings_And_Display_Options(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException
-	{
-		APP_LOGS.info("===========XP8_PhoneDialer_23============");
-		startAdbLog("XP8_PhoneDialer_23");
-		//("XP8_PhoneDialer_23");
-		launch_an_app("phone");
-		minWait();
-		validateSettingsAndDisplayOptions();
-		test.log(LogStatus.PASS, "Test case Status is PASS");
-	}
-
-	@Test(priority=24,dataProvider="XP8_PhoneDialer", dataProviderClass=DataProviders.class)
-	public void XP8_PhoneDialer_24_Validate_Sounds_And_Vibration(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException
-	{
-		APP_LOGS.info("===========XP8_PhoneDialer_24============");
-		startAdbLog("XP8_PhoneDialer_24");
-		//("XP8_PhoneDialer_24");
-		launch_an_app("phone");
-		navigateToSettingsAndElement(Locators_PhoneDialer.soundsAndVibration);
-		minWait();
-		validatePhoneRingtone();
-		minWait();
-		validateSoundsAndVibrationSubOptions();
-		minWait();
-		validatePresenceOfDialpadToneLength();
-		test.log(LogStatus.PASS, "Test case Status is PASS");
-	}
-
-	@Test(priority=25,dataProvider="XP8_PhoneDialer", dataProviderClass=DataProviders.class)
-	public void XP8_PhoneDialer_25_Validate_Quick_Responses(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException
-	{
-		APP_LOGS.info("===========XP8_PhoneDialer_25============");
-		startAdbLog("XP8_PhoneDialer_25");
-		//("XP8_PhoneDialer_25");
-		launch_an_app("phone");
-		navigateToSettingsAndElement(Locators_PhoneDialer.quickResponseOpt);
-		minWait();
-		validateQuickResponses(data.get("textMessage"));
-		test.log(LogStatus.PASS, "Test case Status is PASS");
-	}
-
-	@Test(priority=26,dataProvider="XP8_PhoneDialer", dataProviderClass=DataProviders.class)
-	public void XP8_PhoneDialer_26_Validate_Speed_Dial_Settings(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException
-	{
-		APP_LOGS.info("===========XP8_PhoneDialer_26============");
-		startAdbLog("XP8_PhoneDialer_26");
-		//("XP8_PhoneDialer_26");
-		launch_an_app("phone");
-		navigateToSettingsAndElement(Locators_PhoneDialer.speedDialSettingsOpt);
-		minWait();
-		validateSpeedDialSettings(data.get("phone"), data.get("name"));
-		test.log(LogStatus.PASS, "Test case Status is PASS");
-	}
-
-
-	@Test(priority=27,dataProvider="XP8_PhoneDialer", dataProviderClass=DataProviders.class)
-	public void XP8_PhoneDialer_27_Validate_keepEditing_and_Discard(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException
-	{
-		APP_LOGS.info("===========XP8_PhoneDialer_27============");
-		startAdbLog("XP8_PhoneDialer_27");
-		//("XP8_PhoneDialer_27");
-		launch_an_app("phone");
-		minWait();
-		validateKeepEditingAndDiscard(data.get("phone"));
-		test.log(LogStatus.PASS, "Test case Status is PASS");
-	}
-
-	@Test(priority=28,dataProvider="XP8_PhoneDialer", dataProviderClass=DataProviders.class)
-	public void XP8_PhoneDialer_28_Validate_Cancel(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException
-	{
-		APP_LOGS.info("===========XP8_PhoneDialer_28============");
-		startAdbLog("XP8_PhoneDialer_28");
-		//("XP8_PhoneDialer_28");
-		launch_an_app("phone");
-		minWait();
-		validateCancel();
-	}
 	
-	@Test(priority=29,dataProvider="XP8_PhoneDialer", dataProviderClass=DataProviders.class)
-	public void XP8_PhoneDialer_29_Validate_Call_History(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException
-	{
-		APP_LOGS.info("===========XP8_PhoneDialer_29============");
-		startAdbLog("XP8_PhoneDialer_29");
-		//("XP8_PhoneDialer_29");
-		launch_an_app("phone");
-		navigateTocallHistory();
-		minWait();
-		validateCallHistory();
-		test.log(LogStatus.PASS, "Test case Status is PASS");
-	}
 	
-	@Test(priority=30,dataProvider="XP8_PhoneDialer", dataProviderClass=DataProviders.class)
-	public void XP8_PhoneDialer_30_Validate_Call_History_Settings(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException
-	{
-		APP_LOGS.info("===========XP8_PhoneDialer_29============");
-		startAdbLog("XP8_PhoneDialer_29");
-		//("XP8_PhoneDialer_29");
-		launch_an_app("phone");
-		navigateTocallHistory();
-		minWait();
-		validateSearchCallLog(data.get("name"));
-		minWait();
-		validateClearCallHistory();
-		test.log(LogStatus.PASS, "Test case Status is PASS");
-	}
-
+	
+	
 }
