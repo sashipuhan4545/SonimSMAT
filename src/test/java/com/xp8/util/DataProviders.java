@@ -163,7 +163,7 @@ public class DataProviders {
 	  System.out.println(m.getName());
 	  ExcelReader excel = new ExcelReader(ExcelConstants.XP5S_XL_PATH);
 	  String testcase = m.getName();
-	  return ExcelUtils.getData_aosp(testcase, excel,"XP8_PhoneDialer");
+	  return ExcelUtils.getData_aosp(testcase, excel,"XP8_PhoneDialer_new");
 	 }
 	
 	@DataProvider(name = "Stability")

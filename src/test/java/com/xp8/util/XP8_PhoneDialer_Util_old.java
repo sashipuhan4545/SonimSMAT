@@ -17,7 +17,7 @@ import application.AllQA;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidKeyCode;
 
-public class XP8_PhoneDialer_Util extends BaseUtil{
+public class XP8_PhoneDialer_Util_old extends BaseUtil{
 
 	public boolean check = false;
 	boolean check0 = false;
@@ -57,7 +57,7 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
  * Receive Call in Reference device
  */
 		try {
-			if (!isElementExist(Locators_PhoneDialer.turnOff_Airplane_PopUp)) {
+			if (!isElementExist(Locators_PhoneDialer_old.turnOff_Airplane_PopUp)) {
 				try {
 					for(int j=1;j<=100;j++){
 						Process child = null;
@@ -99,12 +99,12 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		 */
 		try {
 			minWait();
-			clickBtn(Locators_PhoneDialer.settingsIcon);
+			clickBtn(Locators_PhoneDialer_old.settingsIcon);
 			minWait();
-			if(isElementExist(Locators_PhoneDialer.clearFrequentsOpt)){
-				clickBtn(Locators_PhoneDialer.clearFrequentsOpt);
+			if(isElementExist(Locators_PhoneDialer_old.clearFrequentsOpt)){
+				clickBtn(Locators_PhoneDialer_old.clearFrequentsOpt);
 				minWait();
-				clickBtn(Locators_PhoneDialer.okBtn);
+				clickBtn(Locators_PhoneDialer_old.okBtn);
 				customWait(2000);
 			}else{
 				clickBackButton(1);
@@ -114,24 +114,24 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 			launch_an_app("phone");
 			navigateTocallHistory();
 			minWait();
-			clickBtn(Locators_PhoneDialer.moreOptionsInCallHistory);
+			clickBtn(Locators_PhoneDialer_old.moreOptionsInCallHistory);
 			minWait();
-			if(isElementExist(Locators_PhoneDialer.clearCallHistoryOpt)){
-				clickBtn(Locators_PhoneDialer.clearCallHistoryOpt);
+			if(isElementExist(Locators_PhoneDialer_old.clearCallHistoryOpt)){
+				clickBtn(Locators_PhoneDialer_old.clearCallHistoryOpt);
 				minWait();
-				clickBtn(Locators_PhoneDialer.selectOpt);
+				clickBtn(Locators_PhoneDialer_old.selectOpt);
 				minWait();
-				clickBtn(Locators_PhoneDialer.selectAllOpt);
+				clickBtn(Locators_PhoneDialer_old.selectAllOpt);
 				minWait();
-				clickBtn(Locators_PhoneDialer.clearOptInCallHistory);
+				clickBtn(Locators_PhoneDialer_old.clearOptInCallHistory);
 				minWait();
-				clickBtn(Locators_PhoneDialer.okBtn);
+				clickBtn(Locators_PhoneDialer_old.okBtn);
 				customWait(3000);
 				launch_an_app("contacts");
 				setDefaultSavingAccount();
 				minWait();
 				deleteIfContactsPresent();
-			}else if(!isElementExist(Locators_PhoneDialer.clearCallHistoryOpt)){
+			}else if(!isElementExist(Locators_PhoneDialer_old.clearCallHistoryOpt)){
 				launch_an_app("contacts");
 				setDefaultSavingAccount();
 				minWait();
@@ -150,13 +150,13 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		 */
 		try {
 			minWait();
-			clickBtn(Locators_PhoneDialer.ContactsMoreOptions);
+			clickBtn(Locators_PhoneDialer_old.ContactsMoreOptions);
 			minWait();
-			clickBtn(Locators_PhoneDialer.contactsSettingsOPt);
+			clickBtn(Locators_PhoneDialer_old.contactsSettingsOPt);
 			minWait();
-			clickBtn(Locators_PhoneDialer.contactsDefaultAccountSettings);
+			clickBtn(Locators_PhoneDialer_old.contactsDefaultAccountSettings);
 			minWait();
-			clickBtn(Locators_PhoneDialer.contactsDefaultPhone);
+			clickBtn(Locators_PhoneDialer_old.contactsDefaultPhone);
 			minWait();
 			clickBackButton(1);
 		} catch (NoSuchElementException e) {
@@ -171,26 +171,26 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		 * deletes contacts if present in contacts application
 		 */
 		try {
-			clickBtn(Locators_PhoneDialer.contactsPageAll);
+			clickBtn(Locators_PhoneDialer_old.contactsPageAll);
 			 minWait();
-			if(isElementExist(Locators_PhoneDialer.contact)){
+			if(isElementExist(Locators_PhoneDialer_old.contact)){
 				minWait();
 				TouchAction touchaction = new TouchAction(aDriver);
-				touchaction.longPress(Locators_PhoneDialer.contact).perform().release();
+				touchaction.longPress(Locators_PhoneDialer_old.contact).perform().release();
 				minWait();
-				clickBtn(Locators_PhoneDialer.selectContact);
+				clickBtn(Locators_PhoneDialer_old.selectContact);
 				minWait();
-				if(isElementExist(Locators_PhoneDialer.selectAllOpt)){
-					clickBtn(Locators_PhoneDialer.selectAllOpt);
+				if(isElementExist(Locators_PhoneDialer_old.selectAllOpt)){
+					clickBtn(Locators_PhoneDialer_old.selectAllOpt);
 					minWait();
 				}else{
 					clickBackButton(1);
 				}
-				clickBtn(Locators_PhoneDialer.moreSettings);
+				clickBtn(Locators_PhoneDialer_old.moreSettings);
 				minWait();
-				clickBtn(Locators_PhoneDialer.delete);
+				clickBtn(Locators_PhoneDialer_old.delete);
 				minWait();
-				clickBtn(Locators_PhoneDialer.okBtn);
+				clickBtn(Locators_PhoneDialer_old.okBtn);
 				customWait(5000);
 			}
 		} catch (NoSuchElementException e) {
@@ -209,7 +209,7 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 			minWait();
 			launch_an_app("phone");
 			minWait();
-			if(isElementExist(Locators_PhoneDialer.phoneFrame)){
+			if(isElementExist(Locators_PhoneDialer_old.phoneFrame)){
 				check = true;
 				APP_LOGS.info("Phone Application launched successfully");
 				test.log(LogStatus.INFO, "Phone Application launched successfully");
@@ -238,7 +238,7 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		SoftAssert SA= new SoftAssert();
 		try {
 			customWait(2000);
-			if(isElementExist(Locators_PhoneDialer.favoriteEmptyPage) || isElementExist(Locators_PhoneDialer.callLogEmptyPage) || isElementExist(Locators_PhoneDialer.contactsEmptyPage))
+			if(isElementExist(Locators_PhoneDialer_old.favoriteEmptyPage) || isElementExist(Locators_PhoneDialer_old.callLogEmptyPage) || isElementExist(Locators_PhoneDialer_old.contactsEmptyPage))
 			{
 				check = true ;
 				APP_LOGS.info("Phone App Home page is verified");
@@ -267,13 +267,13 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		 */
 		try {
 			minWait();
-			clickBtn(Locators_PhoneDialer.callLogPage);
+			clickBtn(Locators_PhoneDialer_old.callLogPage);
 			minWait();
-			clickBtn(Locators_PhoneDialer.makeACallOption);
+			clickBtn(Locators_PhoneDialer_old.makeACallOption);
 			minWait();
-			enterTextToInputField(Locators_PhoneDialer.dialpadEditFld, refNum);
+			enterTextToInputField(Locators_PhoneDialer_old.dialpadEditFld, refNum);
 			minWait();
-			clickBtn(Locators_PhoneDialer.callBtn);
+			clickBtn(Locators_PhoneDialer_old.callBtn);
 			customWait(5000);
 			validateMOCall("from Make a call option", refNum);
 		} catch (NoSuchElementException e) {
@@ -289,9 +289,9 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		 */
 		try {
 			minWait();
-			clickBtn(Locators_PhoneDialer.callLogPage);
+			clickBtn(Locators_PhoneDialer_old.callLogPage);
 			minWait();
-			clickBtn(Locators_PhoneDialer.callBtnInCallLog);
+			clickBtn(Locators_PhoneDialer_old.callBtnInCallLog);
 			customWait(5000);
 			validateMOCall("from Call Log", refNum);
 		} catch (NoSuchElementException e) {
@@ -309,13 +309,13 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		try {
 			reciveCallInRefDevice(refNum);
 			customWait(2000);
-			clickBtn(Locators_PhoneDialer.endCallBtn);
+			clickBtn(Locators_PhoneDialer_old.endCallBtn);
 			minWait();
-			clickBtn(Locators_PhoneDialer.firstDialedNumber);
+			clickBtn(Locators_PhoneDialer_old.firstDialedNumber);
 			minWait();
-			clickBtn(Locators_PhoneDialer.callDetailsOpt);
+			clickBtn(Locators_PhoneDialer_old.callDetailsOpt);
 			minWait();
-			String[] callDuration = Locators_PhoneDialer.durationInSec.getText().split(" ");
+			String[] callDuration = Locators_PhoneDialer_old.durationInSec.getText().split(" ");
 			int callDur = Integer.parseInt(callDuration[0]);
 			if(callDur>=0)	{
 				check = true;
@@ -345,9 +345,9 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		 * clicks dialpad and enters number
 		 */
 		try {
-			clickBtn(Locators_PhoneDialer.dialpadBtn);
+			clickBtn(Locators_PhoneDialer_old.dialpadBtn);
 			customWait(2000);
-			enterTextToInputField(Locators_PhoneDialer.dialpadEditFld, Phone);
+			enterTextToInputField(Locators_PhoneDialer_old.dialpadEditFld, Phone);
 			customWait(2000);
 		} catch (NoSuchElementException e) {
 			e.printStackTrace();
@@ -359,9 +359,9 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 	{
 		try {
 			minWait();
-			clickBtn(Locators_PhoneDialer.contactPage);
+			clickBtn(Locators_PhoneDialer_old.contactPage);
 			minWait();
-			clickBtn(Locators_PhoneDialer.addAContactOpt);
+			clickBtn(Locators_PhoneDialer_old.addAContactOpt);
 			minWait();
 			createContactWithNameandPhone(name, phone);
 			minWait();
@@ -379,19 +379,19 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		 */
 		try {
 			minWait();
-			clickBtn(Locators_PhoneDialer.callLogPage);
+			clickBtn(Locators_PhoneDialer_old.callLogPage);
 			customWait(2000);
 			CreateNewContactValidateSavedContact(name,"from call Log");
 			minWait();
-			clickBtn(Locators_PhoneDialer.contactPage);
+			clickBtn(Locators_PhoneDialer_old.contactPage);
 			minWait();
-			clickBtn(Locators_PhoneDialer.addedContactCallLog);
+			clickBtn(Locators_PhoneDialer_old.addedContactCallLog);
 			minWait();
-			clickBtn(Locators_PhoneDialer.moreSettings);
+			clickBtn(Locators_PhoneDialer_old.moreSettings);
 			minWait();
-			clickBtn(Locators_PhoneDialer.delete);
+			clickBtn(Locators_PhoneDialer_old.delete);
 			minWait();
-			clickBtn(Locators_PhoneDialer.deleteBtn);
+			clickBtn(Locators_PhoneDialer_old.deleteBtn);
 			minWait();
 		} catch (NoSuchElementException e) {
 			e.printStackTrace();
@@ -407,7 +407,7 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		SoftAssert SA= new SoftAssert();
 		try {
 			customWait(2000);
-			String savedContact = Locators_PhoneDialer.savedContact.getText();
+			String savedContact = Locators_PhoneDialer_old.savedContact.getText();
 			if(savedContact.contains(name)){
 				clickBackButton(1);
 				check = true;
@@ -439,11 +439,11 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 			minWait();
 			CreateNewContactAndSave(name);
 			customWait(2000);
-			if(isElementExist(Locators_PhoneDialer.permissionPopUp)) {
+			if(isElementExist(Locators_PhoneDialer_old.permissionPopUp)) {
 				minWait();
 				for(int i=0;i<3;i++){
 					minWait();
-					clickBtn(Locators_PhoneDialer.allowBtn);
+					clickBtn(Locators_PhoneDialer_old.allowBtn);
 				}
 				validateSavedContact(name,location);
 			}else{
@@ -462,11 +462,11 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		 */
 		try {
 			minWait();
-			clickBtn(Locators_PhoneDialer.createNewContactOpt);
+			clickBtn(Locators_PhoneDialer_old.createNewContactOpt);
 			customWait(2000);
-			enterTextToInputField(Locators_PhoneDialer.nameEditFld,name);
+			enterTextToInputField(Locators_PhoneDialer_old.nameEditFld,name);
 			customWait(2000);
-			clickBtn(Locators_PhoneDialer.saveOpt);
+			clickBtn(Locators_PhoneDialer_old.saveOpt);
 		} catch (NoSuchElementException e) {
 			e.printStackTrace();
 			test.log(LogStatus.ERROR, "Element Not Found");
@@ -479,7 +479,7 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		 * Validates Create New contact from dialpad
 		 */
 		try {
-			clickBtn(Locators_PhoneDialer.callLogPage);
+			clickBtn(Locators_PhoneDialer_old.callLogPage);
 			minWait();
 			enterNumberInDialpad(Phone);
 			minWait();
@@ -499,19 +499,19 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		 */
 		try {
 			minWait();
-			clickBtn(Locators_PhoneDialer.callLogPage);
+			clickBtn(Locators_PhoneDialer_old.callLogPage);
 			customWait(2000);
-			clickBtn(Locators_PhoneDialer.firstDialedNumber);
+			clickBtn(Locators_PhoneDialer_old.firstDialedNumber);
 			minWait();
-			clickBtn(Locators_PhoneDialer.addToContactOpt);
+			clickBtn(Locators_PhoneDialer_old.addToContactOpt);
 			minWait();
 			CreateNewContactAndSave(name);
 			customWait(2000);
-			clickBtn(Locators_PhoneDialer.addedContactCallLog);
+			clickBtn(Locators_PhoneDialer_old.addedContactCallLog);
 			minWait();
-			clickBtn(Locators_PhoneDialer.contactPage);
+			clickBtn(Locators_PhoneDialer_old.contactPage);
 			minWait();
-			clickBtn(Locators_PhoneDialer.addedContactCallLog);
+			clickBtn(Locators_PhoneDialer_old.addedContactCallLog);
 			minWait();
 			validateSavedContact(name, "from Call Log");
 		} catch (NoSuchElementException e) {
@@ -527,18 +527,18 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		 */
 		try {
 			minWait();
-			clickBtn(Locators_PhoneDialer.callLogPage);
+			clickBtn(Locators_PhoneDialer_old.callLogPage);
 			customWait(2000);
 			enterNumberInDialpad(Phone);
 			minWait();
-			clickBtn(Locators_PhoneDialer.addToContactOpt);
+			clickBtn(Locators_PhoneDialer_old.addToContactOpt);
 			minWait();
 			CreateNewContactAndSave(name);
 			customWait(2000);
 			clickBackButton(2);
-			clickBtn(Locators_PhoneDialer.contactPage);
+			clickBtn(Locators_PhoneDialer_old.contactPage);
 			minWait();
-			clickBtn(Locators_PhoneDialer.addedContactDialpad);
+			clickBtn(Locators_PhoneDialer_old.addedContactDialpad);
 			minWait();
 			validateSavedContact(name, "from Dialpad");
 		} catch (NoSuchElementException e) {
@@ -554,16 +554,16 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		 */
 		try {
 			minWait();
-			clickBtn(Locators_PhoneDialer.callLogPage);
+			clickBtn(Locators_PhoneDialer_old.callLogPage);
 			minWait();
-			clickBtn(Locators_PhoneDialer.addedContactCallLog);
+			clickBtn(Locators_PhoneDialer_old.addedContactCallLog);
 			minWait();
-			clickBtn(Locators_PhoneDialer.sendMessageInCallLog);
+			clickBtn(Locators_PhoneDialer_old.sendMessageInCallLog);
 			minWait();
 			sendMessageAndValidate(textMessage, "from call Log");
 			clickBackButton(2);
 			minWait();
-			clickBtn(Locators_PhoneDialer.addedContactCallLog);
+			clickBtn(Locators_PhoneDialer_old.addedContactCallLog);
 		} catch (NoSuchElementException e) {
 			e.printStackTrace();
 			test.log(LogStatus.ERROR, "Element Not Found");
@@ -577,11 +577,11 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		 */
 		try {
 			minWait();
-			clickBtn(Locators_PhoneDialer.callLogPage);
+			clickBtn(Locators_PhoneDialer_old.callLogPage);
 			customWait(2000);
 			element.click();
 			minWait();
-			clickBtn(Locators_PhoneDialer.callDetailsOpt);
+			clickBtn(Locators_PhoneDialer_old.callDetailsOpt);
 			minWait();
 		} catch (NoSuchElementException e) {
 			e.printStackTrace();
@@ -602,12 +602,12 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 				sendMessageAndValidateATTAndReskin(textMessage);
 			}else{
 				customWait(2000);
-				enterTextToInputField(Locators_PhoneDialer.messageEditFld, textMessage);
+				enterTextToInputField(Locators_PhoneDialer_old.messageEditFld, textMessage);
 				customWait(2000);
-				clickBtn(Locators_PhoneDialer.sendMessageBtn);
+				clickBtn(Locators_PhoneDialer_old.sendMessageBtn);
 				customWait(2000);
 			}
-			if(isElementExist(Locators_PhoneDialer.messageSentNowOpt) || isElementExist(Locators_PhoneDialer.messageSentNowReskin))
+			if(isElementExist(Locators_PhoneDialer_old.messageSentNowOpt) || isElementExist(Locators_PhoneDialer_old.messageSentNowReskin))
 			{
 				check = true;
 				APP_LOGS.info("Message sent successfully "+location);
@@ -635,13 +635,13 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		 * Enters text message,send and validate in ATT and Reskin device
 		 */
 		try {
-			if(isElementExist(Locators_PhoneDialer.nextOptInMessaging)) {
+			if(isElementExist(Locators_PhoneDialer_old.nextOptInMessaging)) {
 				minWait();
-				clickBtn(Locators_PhoneDialer.nextOptInMessaging);
+				clickBtn(Locators_PhoneDialer_old.nextOptInMessaging);
 				minWait();
-				if(isElementExist(Locators_PhoneDialer.permissionPopUp)) {
+				if(isElementExist(Locators_PhoneDialer_old.permissionPopUp)) {
 					minWait();
-					clickBtn(Locators_PhoneDialer.allowBtn);
+					clickBtn(Locators_PhoneDialer_old.allowBtn);
 					minWait();
 					sendMessageReskin(textMessage);
 				}else{
@@ -664,9 +664,9 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		try {
 			minWait();
 			customWait(2000);
-			enterTextToInputField(Locators_PhoneDialer.messageEditFldReskin, textMessage);
+			enterTextToInputField(Locators_PhoneDialer_old.messageEditFldReskin, textMessage);
 			customWait(2000);
-			clickBtn(Locators_PhoneDialer.sendMessageReskin);
+			clickBtn(Locators_PhoneDialer_old.sendMessageReskin);
 			customWait(2000);
 		} catch (NoSuchElementException e) {
 			e.printStackTrace();
@@ -699,7 +699,7 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 			minWait();
 			enterNumberInDialpad(phone);
 			minWait();
-			clickBtn(Locators_PhoneDialer.sendMessageInDialpad);
+			clickBtn(Locators_PhoneDialer_old.sendMessageInDialpad);
 			minWait();
 			sendMessageAndValidate(textMessage, "from Dialpad");
 			minWait();
@@ -718,7 +718,7 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		SoftAssert SA= new SoftAssert();
 		try {
 			minWait();
-			if(isElementExist(Locators_PhoneDialer.addedContactCallLog) && isElementExist(Locators_PhoneDialer.outgoingCallText) && isElementExist(Locators_PhoneDialer.callTypeArrowIcon))
+			if(isElementExist(Locators_PhoneDialer_old.addedContactCallLog) && isElementExist(Locators_PhoneDialer_old.outgoingCallText) && isElementExist(Locators_PhoneDialer_old.callTypeArrowIcon))
 			{
 				check = true;
 				APP_LOGS.info("Verified call details with outgoing  call option");
@@ -733,7 +733,7 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 			}
 			clickBackButton(1);
 			minWait();
-			clickBtn(Locators_PhoneDialer.addedContactCallLog);
+			clickBtn(Locators_PhoneDialer_old.addedContactCallLog);
 		} catch (NoSuchElementException e) {
 			e.printStackTrace();
 			APP_LOGS.info("Element Not Found");
@@ -750,17 +750,17 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		 */
 		try {
 			minWait();
-			blockUnblockNumber(Locators_PhoneDialer.blockNumberOpt, Locators_PhoneDialer.blockBtn);
+			blockUnblockNumber(Locators_PhoneDialer_old.blockNumberOpt, Locators_PhoneDialer_old.blockBtn);
 			minWait();
-			validateBlockAndUnblockNumber(Locators_PhoneDialer.unblockNumberOpt, "blocked");
+			validateBlockAndUnblockNumber(Locators_PhoneDialer_old.unblockNumberOpt, "blocked");
 			minWait();
-			blockUnblockNumber(Locators_PhoneDialer.unblockNumberOpt, Locators_PhoneDialer.unblockBtn);
+			blockUnblockNumber(Locators_PhoneDialer_old.unblockNumberOpt, Locators_PhoneDialer_old.unblockBtn);
 			minWait();
-			validateBlockAndUnblockNumber(Locators_PhoneDialer.blockNumberOpt, "Unblocked");
+			validateBlockAndUnblockNumber(Locators_PhoneDialer_old.blockNumberOpt, "Unblocked");
 			minWait();
 			clickBackButton(1);
 			minWait();
-			clickBtn(Locators_PhoneDialer.addedContactCallLog);
+			clickBtn(Locators_PhoneDialer_old.addedContactCallLog);
 		} catch (NoSuchElementException e) {
 			e.printStackTrace();
 			test.log(LogStatus.ERROR, "Element Not Found");
@@ -793,7 +793,7 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		try {
 			clickBackButton(1);
 			minWait();
-			clickBtn(Locators_PhoneDialer.callDetailsOpt);
+			clickBtn(Locators_PhoneDialer_old.callDetailsOpt);
 			minWait();
 			if(isElementExist(element)){
 				check = true;
@@ -822,16 +822,16 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		SoftAssert SA= new SoftAssert();
 		try {
 			minWait();
-			clickBtn(Locators_PhoneDialer.copyNumberOpt);
+			clickBtn(Locators_PhoneDialer_old.copyNumberOpt);
 			minWait();
 			clickBackButton(1);
-			clickBtn(Locators_PhoneDialer.dialpadBtn);
+			clickBtn(Locators_PhoneDialer_old.dialpadBtn);
 			minWait();
-			clickBtn(Locators_PhoneDialer.dialpadEditFld);
+			clickBtn(Locators_PhoneDialer_old.dialpadEditFld);
 			minWait();
 			aDriver.longPressKeyCode(50,28672);
 			minWait();
-			String copiedNumber = Locators_PhoneDialer.dialpadEditFld.getText().replaceAll(" ", "");
+			String copiedNumber = Locators_PhoneDialer_old.dialpadEditFld.getText().replaceAll(" ", "");
 			if(copiedNumber.contains(refNum)){
 				check = true;
 				APP_LOGS.info("Copy Number option is validated successfully");
@@ -846,7 +846,7 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 			}
 			clickBackButton(2);
 			minWait();
-			clickBtn(Locators_PhoneDialer.addedContactCallLog);
+			clickBtn(Locators_PhoneDialer_old.addedContactCallLog);
 		} catch (NoSuchElementException e) {
 			e.printStackTrace();
 			APP_LOGS.info("Element Not Found");
@@ -864,17 +864,17 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		SoftAssert SA= new SoftAssert();
 		try {
 			minWait();
-			clickBtn(Locators_PhoneDialer.editBeforeCallOpt);
+			clickBtn(Locators_PhoneDialer_old.editBeforeCallOpt);
 			minWait();
-			Locators_PhoneDialer.dialpadEditFld.clear();
+			Locators_PhoneDialer_old.dialpadEditFld.clear();
 			minWait();
-			enterTextToInputField(Locators_PhoneDialer.dialpadEditFld,pryNum);
+			enterTextToInputField(Locators_PhoneDialer_old.dialpadEditFld,pryNum);
 			minWait();
-			clickBtn(Locators_PhoneDialer.callBtn);
+			clickBtn(Locators_PhoneDialer_old.callBtn);
 			customWait(5000);
-			clickBtn(Locators_PhoneDialer.endCallBtn);
+			clickBtn(Locators_PhoneDialer_old.endCallBtn);
 			customWait(2000);
-			String editedNumber = Locators_PhoneDialer.editedNumber.getText().replaceAll(" ", "");
+			String editedNumber = Locators_PhoneDialer_old.editedNumber.getText().replaceAll(" ", "");
 			if(editedNumber.contains(pryNum)) {
 				check = true;
 				APP_LOGS.info("Validated edit number before call option successfully");
@@ -888,7 +888,7 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 				SA.fail();
 			}
 			customWait(2000);
-			clickBtn(Locators_PhoneDialer.addedContactCallLog);
+			clickBtn(Locators_PhoneDialer_old.addedContactCallLog);
 		} catch (NoSuchElementException e) {
 			e.printStackTrace();
 			APP_LOGS.info("Element Not Found");
@@ -906,9 +906,9 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		SoftAssert SA= new SoftAssert();
 		try {
 			minWait();
-			clickBtn(Locators_PhoneDialer.deleteOpt);
+			clickBtn(Locators_PhoneDialer_old.deleteOpt);
 			minWait();
-			String contact = Locators_PhoneDialer.editedNumber.getText().replace(" ", "");
+			String contact = Locators_PhoneDialer_old.editedNumber.getText().replace(" ", "");
 			if(!contact.contains(pryNum)){
 				check = true;
 				APP_LOGS.info("Contact deleted successfully");
@@ -938,18 +938,18 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		SoftAssert SA= new SoftAssert();
 		try {
 			minWait();
-			clickBtn(Locators_PhoneDialer.favoritePage);
+			clickBtn(Locators_PhoneDialer_old.favoritePage);
 			minWait();
-			clickBtn(Locators_PhoneDialer.addAFavorite);
+			clickBtn(Locators_PhoneDialer_old.addAFavorite);
 			minWait();
-			clickBtn(Locators_PhoneDialer.addedContactCallLog);
+			clickBtn(Locators_PhoneDialer_old.addedContactCallLog);
 			minWait();
-			clickBtn(Locators_PhoneDialer.favoriteIcon);
+			clickBtn(Locators_PhoneDialer_old.favoriteIcon);
 			minWait();
 			clickBackButton(1);
-			clickBtn(Locators_PhoneDialer.favoritePage);
+			clickBtn(Locators_PhoneDialer_old.favoritePage);
 			minWait();
-			if(isElementExist(Locators_PhoneDialer.addedContactCallLog)){
+			if(isElementExist(Locators_PhoneDialer_old.addedContactCallLog)){
 				check = true;
 				APP_LOGS.info("Contact added to favorite successfully");
 				test.log(LogStatus.INFO, "Contact added to favorite successfully");
@@ -978,15 +978,15 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		SoftAssert SA= new SoftAssert();
 		try {
 			minWait();
-			clickBtn(Locators_PhoneDialer.favoritePage);
+			clickBtn(Locators_PhoneDialer_old.favoritePage);
 			minWait();
-			clickBtn(Locators_PhoneDialer.addedContactCallLog);
+			clickBtn(Locators_PhoneDialer_old.addedContactCallLog);
 			minWait();
 			customWait(5000);
-			if(isElementExist(Locators_PhoneDialer.callingViaOpt))
+			if(isElementExist(Locators_PhoneDialer_old.callingViaOpt))
 			{
 				customWait(5000);
-				clickBtn(Locators_PhoneDialer.endCallBtn);
+				clickBtn(Locators_PhoneDialer_old.endCallBtn);
 				check = true;
 				APP_LOGS.info("MO call placed successfully from Favorites");
 				test.log(LogStatus.INFO, "MO call placed successfully from Favorites ");
@@ -1015,15 +1015,15 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		SoftAssert SA= new SoftAssert();
 		try {
 			minWait();
-			clickBtn(Locators_PhoneDialer.favoritePage);
+			clickBtn(Locators_PhoneDialer_old.favoritePage);
 			minWait();
-			if(isElementExist(Locators_PhoneDialer.addedContactCallLog)){
-				clickBtn(Locators_PhoneDialer.settingInFavorite);
+			if(isElementExist(Locators_PhoneDialer_old.addedContactCallLog)){
+				clickBtn(Locators_PhoneDialer_old.settingInFavorite);
 				minWait();
-				clickBtn(Locators_PhoneDialer.favoriteIcon);
+				clickBtn(Locators_PhoneDialer_old.favoriteIcon);
 				minWait();
 				clickBackButton(1);
-				if(!isElementExist(Locators_PhoneDialer.favoriteIconInFavoritePage)){
+				if(!isElementExist(Locators_PhoneDialer_old.favoriteIconInFavoritePage)){
 					check = true;
 					APP_LOGS.info("Contact removed from favorite successfully");
 					test.log(LogStatus.INFO, "Contact removed from favorite successfully");
@@ -1058,14 +1058,14 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		SoftAssert SA= new SoftAssert();
 		try {
 			minWait();
-			if(!isElementExist(Locators_PhoneDialer.favoriteEmptyPage)){
-				clickBtn(Locators_PhoneDialer.settingsIcon);
+			if(!isElementExist(Locators_PhoneDialer_old.favoriteEmptyPage)){
+				clickBtn(Locators_PhoneDialer_old.settingsIcon);
 				minWait();
-				clickBtn(Locators_PhoneDialer.clearFrequentsOpt);
+				clickBtn(Locators_PhoneDialer_old.clearFrequentsOpt);
 				minWait();
-				clickBtn(Locators_PhoneDialer.okBtn);
+				clickBtn(Locators_PhoneDialer_old.okBtn);
 				customWait(2000);
-				if(isElementExist(Locators_PhoneDialer.favoriteEmptyPage)){
+				if(isElementExist(Locators_PhoneDialer_old.favoriteEmptyPage)){
 					check = true;
 					APP_LOGS.info("Clear frequents is validated successfully");
 					test.log(LogStatus.INFO, "Clear frequents is validated successfully");
@@ -1102,13 +1102,13 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 			minWait();
 			//=============Export to SIM card================
 			launch_an_app("phone");
-			navigateToImportExport(Locators_PhoneDialer.exportToSIMCard);
+			navigateToImportExport(Locators_PhoneDialer_old.exportToSIMCard);
 			minWait();
 			selectContactToImportExport();
 			minWait();
-			clickBtn(Locators_PhoneDialer.contactPage);
+			clickBtn(Locators_PhoneDialer_old.contactPage);
 			searchContact(contactName);
-			if(isElementExist(Locators_PhoneDialer.matchedContactOne) && isElementExist(Locators_PhoneDialer.matchedContactTwo)){
+			if(isElementExist(Locators_PhoneDialer_old.matchedContactOne) && isElementExist(Locators_PhoneDialer_old.matchedContactTwo)){
 				check1 = true ;
 				APP_LOGS.info("Contacts Exported to SIM successfully");
 				test.log(LogStatus.INFO, "Contacts Exported to SIM successfully");
@@ -1119,10 +1119,10 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 			clickBackButton(2);
 			//=============Import from SIM card================
 			minWait();
-			navigateToImportExport(Locators_PhoneDialer.importFromSIMCard);
+			navigateToImportExport(Locators_PhoneDialer_old.importFromSIMCard);
 			minWait();
-			if(isElementExist(Locators_PhoneDialer.phoneOptInImport)){
-				clickBtn(Locators_PhoneDialer.phoneOptInImport);
+			if(isElementExist(Locators_PhoneDialer_old.phoneOptInImport)){
+				clickBtn(Locators_PhoneDialer_old.phoneOptInImport);
 				minWait();
 				importFromSIMCard(contactName);
 			}else{
@@ -1131,50 +1131,50 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 			clickBackButton(2);
 			//=============Share all contacts================
 			minWait();
-			clickBtn(Locators_PhoneDialer.callLogPage);
+			clickBtn(Locators_PhoneDialer_old.callLogPage);
 			minWait();
-			navigateToImportExport(Locators_PhoneDialer.shareAllContacts);
+			navigateToImportExport(Locators_PhoneDialer_old.shareAllContacts);
 			minWait();
-			clickBtn(Locators_PhoneDialer.selectOpt);
+			clickBtn(Locators_PhoneDialer_old.selectOpt);
 			minWait();
-			clickBtn(Locators_PhoneDialer.selectAllOpt);
+			clickBtn(Locators_PhoneDialer_old.selectAllOpt);
 			minWait();
-			clickBtn(Locators_PhoneDialer.okOptInImportExport);
+			clickBtn(Locators_PhoneDialer_old.okOptInImportExport);
 			minWait();
-			if(isElementExist(Locators_PhoneDialer.messagesOpt)) {
-				clickBtn(Locators_PhoneDialer.messagesOpt);
+			if(isElementExist(Locators_PhoneDialer_old.messagesOpt)) {
+				clickBtn(Locators_PhoneDialer_old.messagesOpt);
 				minWait();
-				clickBtn(Locators_PhoneDialer.justOnceOpt);
-			}else if(isElementExist(Locators_PhoneDialer.messagingOptReskin)){
-				clickBtn(Locators_PhoneDialer.messagingOptReskin);
+				clickBtn(Locators_PhoneDialer_old.justOnceOpt);
+			}else if(isElementExist(Locators_PhoneDialer_old.messagingOptReskin)){
+				clickBtn(Locators_PhoneDialer_old.messagingOptReskin);
 				minWait();
-				clickBtn(Locators_PhoneDialer.justOnceOpt);
+				clickBtn(Locators_PhoneDialer_old.justOnceOpt);
 			}else{
-				clickBtn(Locators_PhoneDialer.justOnceOpt);
+				clickBtn(Locators_PhoneDialer_old.justOnceOpt);
 			}
 			minWait();
-			if(isElementExist(Locators_PhoneDialer.addedContactCallLog))
+			if(isElementExist(Locators_PhoneDialer_old.addedContactCallLog))
 			{
-				clickBtn(Locators_PhoneDialer.addedContactCallLog);
+				clickBtn(Locators_PhoneDialer_old.addedContactCallLog);
 				minWait();
 			}else
 			{
-				clickBtn(Locators_PhoneDialer.toFldReskin);
+				clickBtn(Locators_PhoneDialer_old.toFldReskin);
 				customWait(3000);
 				Runtime.getRuntime().exec("adb -s "+ p_Id +" shell input text "+ contactName);
 				customWait(3000);
-				clickBtn(Locators_PhoneDialer.toFldContactSelect);
+				clickBtn(Locators_PhoneDialer_old.toFldContactSelect);
 				customWait(2000);
 			}
-			if(isElementExist(Locators_PhoneDialer.mmsOpt)){
+			if(isElementExist(Locators_PhoneDialer_old.mmsOpt)){
 				minWait();
-				clickBtn(Locators_PhoneDialer.mmsOpt);
+				clickBtn(Locators_PhoneDialer_old.mmsOpt);
 			}else{
 				minWait();
-				clickBtn(Locators_PhoneDialer.mmsOptReskin);
+				clickBtn(Locators_PhoneDialer_old.mmsOptReskin);
 			}
 			customWait(2000);
-			if(isElementExist(Locators_PhoneDialer.messageSentNowOpt) || isElementExist(Locators_PhoneDialer.sendingTextOpt) || isElementExist(Locators_PhoneDialer.sendingTextReskin) || isElementExist(Locators_PhoneDialer.messageSentNowReskin))
+			if(isElementExist(Locators_PhoneDialer_old.messageSentNowOpt) || isElementExist(Locators_PhoneDialer_old.sendingTextOpt) || isElementExist(Locators_PhoneDialer_old.sendingTextReskin) || isElementExist(Locators_PhoneDialer_old.messageSentNowReskin))
 			{
 				check4 = true ;
 				APP_LOGS.info("Share all contacts is validated successfully");
@@ -1212,11 +1212,11 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		 */
 		try {
 			selectContactToImportExport();
-			clickBtn(Locators_PhoneDialer.okBtn);
+			clickBtn(Locators_PhoneDialer_old.okBtn);
 			minWait();
-			clickBtn(Locators_PhoneDialer.contactPage);
+			clickBtn(Locators_PhoneDialer_old.contactPage);
 			searchContact(contactName);
-			if(isElementExist(Locators_PhoneDialer.matchedContactOne) && isElementExist(Locators_PhoneDialer.matchedContactTwo) && isElementExist(Locators_PhoneDialer.matchedContactThree))
+			if(isElementExist(Locators_PhoneDialer_old.matchedContactOne) && isElementExist(Locators_PhoneDialer_old.matchedContactTwo) && isElementExist(Locators_PhoneDialer_old.matchedContactThree))
 			{
 				check2 = true ;
 				APP_LOGS.info("Contacts Imported from SIM successfully");
@@ -1237,10 +1237,10 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		 * validates import from VCF file
 		 */
 		try {
-			clickBtn(Locators_PhoneDialer.exportedContact);
+			clickBtn(Locators_PhoneDialer_old.exportedContact);
 			minWait();
 			searchContact(contactName);
-			if(isElementExist(Locators_PhoneDialer.matchedContactOne) && isElementExist(Locators_PhoneDialer.matchedContactTwo) && isElementExist(Locators_PhoneDialer.matchedContactThree)  && isElementExist(Locators_PhoneDialer.matchedContactFour))
+			if(isElementExist(Locators_PhoneDialer_old.matchedContactOne) && isElementExist(Locators_PhoneDialer_old.matchedContactTwo) && isElementExist(Locators_PhoneDialer_old.matchedContactThree)  && isElementExist(Locators_PhoneDialer_old.matchedContactFour))
 			{
 				check3 = true ;
 				APP_LOGS.info("Contacts Imported from .vcf file successfully");
@@ -1262,9 +1262,9 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		 */
 		try {
 			minWait();
-			clickBtn(Locators_PhoneDialer.settingsIcon);
+			clickBtn(Locators_PhoneDialer_old.settingsIcon);
 			minWait();
-			clickBtn(Locators_PhoneDialer.importOrExportOpt);
+			clickBtn(Locators_PhoneDialer_old.importOrExportOpt);
 			minWait();
 			element.click();
 			minWait();
@@ -1281,9 +1281,9 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		 */
 		try {
 			minWait();
-			clickBtn(Locators_PhoneDialer.addedContactCallLog);
+			clickBtn(Locators_PhoneDialer_old.addedContactCallLog);
 			minWait();
-			clickBtn(Locators_PhoneDialer.okOptInImportExport);
+			clickBtn(Locators_PhoneDialer_old.okOptInImportExport);
 			minWait();
 		} catch (NoSuchElementException e) {
 			e.printStackTrace();
@@ -1297,7 +1297,7 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		 * search contact 
 		 */
 		try {
-			clickBtn(Locators_PhoneDialer.searchContactsFld);
+			clickBtn(Locators_PhoneDialer_old.searchContactsFld);
 			customWait(3000);
 			Runtime.getRuntime().exec("adb -s "+ p_Id +" shell input text "+ contactName);
 			customWait(2000);
@@ -1314,15 +1314,15 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		 */
 		try {
 			minWait();
-			clickBtn(Locators_PhoneDialer.contactPage);
+			clickBtn(Locators_PhoneDialer_old.contactPage);
 			minWait();
-			validateSortByAndNameFormat(Locators_PhoneDialer.sortByOpt,Locators_PhoneDialer.firstNameOpt,Locators_PhoneDialer.firstNameContact, "Abc Auto");
+			validateSortByAndNameFormat(Locators_PhoneDialer_old.sortByOpt,Locators_PhoneDialer_old.firstNameOpt,Locators_PhoneDialer_old.firstNameContact, "Abc Auto");
 			minWait();
-			validateSortByAndNameFormat(Locators_PhoneDialer.sortByOpt,Locators_PhoneDialer.lastNameOpt,Locators_PhoneDialer.lastNameAndFirstNameFirstContact, "Test A");
+			validateSortByAndNameFormat(Locators_PhoneDialer_old.sortByOpt,Locators_PhoneDialer_old.lastNameOpt,Locators_PhoneDialer_old.lastNameAndFirstNameFirstContact, "Test A");
 			minWait();
-			validateSortByAndNameFormat(Locators_PhoneDialer.nameFormatOpt, Locators_PhoneDialer.firstNameFirstOpt,Locators_PhoneDialer.lastNameAndFirstNameFirstContact, "Test A");
+			validateSortByAndNameFormat(Locators_PhoneDialer_old.nameFormatOpt, Locators_PhoneDialer_old.firstNameFirstOpt,Locators_PhoneDialer_old.lastNameAndFirstNameFirstContact, "Test A");
 			minWait();
-			validateSortByAndNameFormat(Locators_PhoneDialer.nameFormatOpt, Locators_PhoneDialer.lastNameFirstOpt,Locators_PhoneDialer.lastNameFirstContact, "A, Test");
+			validateSortByAndNameFormat(Locators_PhoneDialer_old.nameFormatOpt, Locators_PhoneDialer_old.lastNameFirstOpt,Locators_PhoneDialer_old.lastNameFirstContact, "A, Test");
 			minWait();
 		} catch (NoSuchElementException e) {
 			e.printStackTrace();
@@ -1337,9 +1337,9 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		 */
 		try {
 			minWait();
-			clickBtn(Locators_PhoneDialer.settingsIcon);
+			clickBtn(Locators_PhoneDialer_old.settingsIcon);
 			minWait();
-			clickBtn(Locators_PhoneDialer.settingsOpt);
+			clickBtn(Locators_PhoneDialer_old.settingsOpt);
 			minWait();
 			element.click();
 			minWait();
@@ -1354,7 +1354,7 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		/*
 		 * Navigates to display options and clicks on given sub element
 		 */
-		navigateToSettingsAndElement(Locators_PhoneDialer.displayOptions);
+		navigateToSettingsAndElement(Locators_PhoneDialer_old.displayOptions);
 		minWait();
 		element.click();
 		minWait();
@@ -1401,11 +1401,11 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		 */
 		try {
 			minWait();
-			checkOtherSoundOptionsCheckboxStatus(Locators_PhoneDialer.alsoVibrateForCallsOpt, Locators_PhoneDialer.alsoVibrateCheckbox);
+			checkOtherSoundOptionsCheckboxStatus(Locators_PhoneDialer_old.alsoVibrateForCallsOpt, Locators_PhoneDialer_old.alsoVibrateCheckbox);
 			customWait(2000);
-			checkOtherSoundOptionsCheckboxStatus(Locators_PhoneDialer.dialpadTonesOpt, Locators_PhoneDialer.dialpadToneCheckbox);
+			checkOtherSoundOptionsCheckboxStatus(Locators_PhoneDialer_old.dialpadTonesOpt, Locators_PhoneDialer_old.dialpadToneCheckbox);
 			customWait(2000);
-			checkOtherSoundOptionsCheckboxStatus(Locators_PhoneDialer.callEndToneOpt, Locators_PhoneDialer.callEndToneCheckbox);
+			checkOtherSoundOptionsCheckboxStatus(Locators_PhoneDialer_old.callEndToneOpt, Locators_PhoneDialer_old.callEndToneCheckbox);
 			minWait();
 		}catch (NoSuchElementException e) {
 			e.printStackTrace();
@@ -1420,15 +1420,15 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		SoftAssert SA= new SoftAssert();
 		try {
 			minWait();
-			clickBtn(Locators_PhoneDialer.phoneRingtoneOpt);
+			clickBtn(Locators_PhoneDialer_old.phoneRingtoneOpt);
 			minWait();
-			clickBtn(Locators_PhoneDialer.ringtoneOpt);
+			clickBtn(Locators_PhoneDialer_old.ringtoneOpt);
 			minWait();
-			String expectedRingtone = Locators_PhoneDialer.ringtoneOpt.getText();
+			String expectedRingtone = Locators_PhoneDialer_old.ringtoneOpt.getText();
 			minWait();
-			clickBtn(Locators_PhoneDialer.okBtn);
+			clickBtn(Locators_PhoneDialer_old.okBtn);
 			customWait(2000);
-			String selectedRingtone = Locators_PhoneDialer.ringtoneSelected.getText();
+			String selectedRingtone = Locators_PhoneDialer_old.ringtoneSelected.getText();
 			minWait();
 			if(selectedRingtone.equals(expectedRingtone)){
 				check = true;
@@ -1486,8 +1486,8 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		SoftAssert SA= new SoftAssert();
 		try {
 			minWait();
-			clickBtn(Locators_PhoneDialer.dialPadTonelengthOpt);
-			if(isElementExist(Locators_PhoneDialer.dialpadToneLengthNormal) && isElementExist(Locators_PhoneDialer.dialpadToneLengthLong))			
+			clickBtn(Locators_PhoneDialer_old.dialPadTonelengthOpt);
+			if(isElementExist(Locators_PhoneDialer_old.dialpadToneLengthNormal) && isElementExist(Locators_PhoneDialer_old.dialpadToneLengthLong))			
 			{
 				check = true;
 				APP_LOGS.info("Dialpad tone length with Normal and Long options is present");
@@ -1515,9 +1515,9 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		 */
 		try {
 			minWait();
-			clickBtn(Locators_PhoneDialer.moreSettings);
+			clickBtn(Locators_PhoneDialer_old.moreSettings);
 			minWait();
-			clickBtn(Locators_PhoneDialer.restoreDefaultsInQuickResponse);
+			clickBtn(Locators_PhoneDialer_old.restoreDefaultsInQuickResponse);
 			customWait(2000);
 			getAndValidateQuickResponsesList();
 			minWait();
@@ -1538,13 +1538,13 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		 */
 		try {
 			minWait();
-			getQuickResonseText(Locators_PhoneDialer.quickResponseTextOne,"Can't talk now. What's up?");
+			getQuickResonseText(Locators_PhoneDialer_old.quickResponseTextOne,"Can't talk now. What's up?");
 			minWait();
-			getQuickResonseText(Locators_PhoneDialer.quickResponseTextTwo,"I'll call you right back.");
+			getQuickResonseText(Locators_PhoneDialer_old.quickResponseTextTwo,"I'll call you right back.");
 			minWait();
-			getQuickResonseText(Locators_PhoneDialer.quickResponseTextThree,"I'll call you later.");
+			getQuickResonseText(Locators_PhoneDialer_old.quickResponseTextThree,"I'll call you later.");
 			minWait();
-			getQuickResonseText(Locators_PhoneDialer.quickResponseTextFour,"Can't talk now. Call me later?");
+			getQuickResonseText(Locators_PhoneDialer_old.quickResponseTextFour,"Can't talk now. Call me later?");
 		}catch (NoSuchElementException e) {
 			e.printStackTrace();
 			test.log(LogStatus.ERROR, "Element Not Found");
@@ -1588,15 +1588,15 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		SoftAssert SA= new SoftAssert(); 
 		try{
 			minWait();
-			Locators_PhoneDialer.quickResponseText.click();
+			Locators_PhoneDialer_old.quickResponseText.click();
 			minWait();
-			Locators_PhoneDialer.quickResponseEditField.clear();
+			Locators_PhoneDialer_old.quickResponseEditField.clear();
 			minWait();
-			enterTextToInputField(Locators_PhoneDialer.quickResponseEditField, data);
+			enterTextToInputField(Locators_PhoneDialer_old.quickResponseEditField, data);
 			minWait();
-			Locators_PhoneDialer.okBtn.click();
+			Locators_PhoneDialer_old.okBtn.click();
 			minWait();
-			String actualEditedMessage = Locators_PhoneDialer.quickResponseText.getText();
+			String actualEditedMessage = Locators_PhoneDialer_old.quickResponseText.getText();
 			if(actualEditedMessage.contains("Hello Sonim")){
 				check = true;
 				APP_LOGS.info("Edited and validated Quick Response text");
@@ -1622,11 +1622,11 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		 */
 		SoftAssert SA= new SoftAssert();
 		try{
-			clickBtn(Locators_PhoneDialer.moreSettings);
+			clickBtn(Locators_PhoneDialer_old.moreSettings);
 			minWait();
-			clickBtn(Locators_PhoneDialer.restoreDefaultsInQuickResponse);
+			clickBtn(Locators_PhoneDialer_old.restoreDefaultsInQuickResponse);
 			customWait(2000);
-			String actualString = Locators_PhoneDialer.quickResponseText.getText();
+			String actualString = Locators_PhoneDialer_old.quickResponseText.getText();
 			if(actualString.equals("Can't talk now. What's up?")){
 				check = true;
 				APP_LOGS.info("Default settings Restored");
@@ -1682,7 +1682,7 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		SoftAssert SA= new SoftAssert();
 		try
 		{
-			if(isElementExist(Locators_PhoneDialer.voiceMailOpt)){
+			if(isElementExist(Locators_PhoneDialer_old.voiceMailOpt)){
 				check = true;
 				APP_LOGS.info("Voicemail Option is present in Speed Dail settings");
 				test.log(LogStatus.INFO, "Voicemail Option is present in Speed Dail settings");
@@ -1707,13 +1707,13 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		SoftAssert SA= new SoftAssert();
 		try
 		{
-			clickBtn(Locators_PhoneDialer.notSetInSpeedDialSettings);
+			clickBtn(Locators_PhoneDialer_old.notSetInSpeedDialSettings);
 			minWait();
-			enterTextToInputField(Locators_PhoneDialer.editFldInSpeedDialSettings, Phone);
+			enterTextToInputField(Locators_PhoneDialer_old.editFldInSpeedDialSettings, Phone);
 			minWait();
-			clickBtn(Locators_PhoneDialer.okBtn);
+			clickBtn(Locators_PhoneDialer_old.okBtn);
 			minWait();
-			if(isElementExist(Locators_PhoneDialer.addedContactInSpeedDialSettings))
+			if(isElementExist(Locators_PhoneDialer_old.addedContactInSpeedDialSettings))
 			{
 				check = true;
 				APP_LOGS.info("Contact added in Speed Dail settings");
@@ -1739,19 +1739,19 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		SoftAssert SA= new SoftAssert();
 		try
 		{
-			clickBtn(Locators_PhoneDialer.addedContactInSpeedDialSettings);
+			clickBtn(Locators_PhoneDialer_old.addedContactInSpeedDialSettings);
 			minWait();
-			clickBtn(Locators_PhoneDialer.replaceOptInSpeedDialSettings);
+			clickBtn(Locators_PhoneDialer_old.replaceOptInSpeedDialSettings);
 			minWait();
-			clickBtn(Locators_PhoneDialer.selectContactInSpeedDialSettings);
+			clickBtn(Locators_PhoneDialer_old.selectContactInSpeedDialSettings);
 			minWait();
-			clickBtn(Locators_PhoneDialer.searchOpt);
+			clickBtn(Locators_PhoneDialer_old.searchOpt);
 			customWait(4000);
 			Runtime.getRuntime().exec("adb -s "+ p_Id +" shell input text "+name);
 			customWait(3000);
-			clickBtn(Locators_PhoneDialer.firstNameContact);
+			clickBtn(Locators_PhoneDialer_old.firstNameContact);
 			minWait();
-			if(isElementExist(Locators_PhoneDialer.firstNameContact)){
+			if(isElementExist(Locators_PhoneDialer_old.firstNameContact)){
 				check = true;
 				APP_LOGS.info("Contact replaced in Speed Dail settings");
 				test.log(LogStatus.INFO, "Contact replaced in Speed Dail settings");
@@ -1776,11 +1776,11 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		SoftAssert SA= new SoftAssert();
 		try
 		{
-			clickBtn(Locators_PhoneDialer.firstNameContact);
+			clickBtn(Locators_PhoneDialer_old.firstNameContact);
 			minWait();
-			clickBtn(Locators_PhoneDialer.delete);
+			clickBtn(Locators_PhoneDialer_old.delete);
 			minWait();
-			if(isElementExist(Locators_PhoneDialer.notSetInSpeedDialSettings)){
+			if(isElementExist(Locators_PhoneDialer_old.notSetInSpeedDialSettings)){
 				check = true;
 				APP_LOGS.info("Contact deleted in Speed Dail settings");
 				test.log(LogStatus.INFO, "Contact deleted in Speed Dail settings");
@@ -1803,19 +1803,19 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		 */
 		try
 		{
-			clickBtn(Locators_PhoneDialer.callLogPage);
+			clickBtn(Locators_PhoneDialer_old.callLogPage);
 			minWait();
 			enterNumberInDialpad(Phone);
 			minWait();
-			clickBtn(Locators_PhoneDialer.createNewContactOpt);
+			clickBtn(Locators_PhoneDialer_old.createNewContactOpt);
 			minWait();
 			clickBackButton(1);
 			minWait();
-			KeepEditingAndDiscard(Locators_PhoneDialer.keepEditingOpt, Locators_PhoneDialer.nameEditFld);
+			KeepEditingAndDiscard(Locators_PhoneDialer_old.keepEditingOpt, Locators_PhoneDialer_old.nameEditFld);
 			minWait();
 			clickBackButton(1);
 			minWait();
-			KeepEditingAndDiscard(Locators_PhoneDialer.discardBtn, Locators_PhoneDialer.dialpadEditFld);
+			KeepEditingAndDiscard(Locators_PhoneDialer_old.discardBtn, Locators_PhoneDialer_old.dialpadEditFld);
 			minWait();
 			clickBackButton(2);
 		}catch (NoSuchElementException e) {
@@ -1861,9 +1861,9 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		try
 		{
 			minWait();
-			clickBtn(Locators_PhoneDialer.contactPage);
+			clickBtn(Locators_PhoneDialer_old.contactPage);
 			minWait();
-			clickBtn(Locators_PhoneDialer.createNewContactInContactPage);
+			clickBtn(Locators_PhoneDialer_old.createNewContactInContactPage);
 			createContactWithNameandPhone(name, phone);
 			minWait();
 			validateSavedContact(name, "from Contacts page");
@@ -1880,12 +1880,12 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		 */
 		try {
 			customWait(2000);
-			enterTextToInputField(Locators_PhoneDialer.nameEditFld, name);
+			enterTextToInputField(Locators_PhoneDialer_old.nameEditFld, name);
 			minWait();
 			clickBackButton(1);
-			enterTextToInputField(Locators_PhoneDialer.phoneNumberEditFld, phone);
+			enterTextToInputField(Locators_PhoneDialer_old.phoneNumberEditFld, phone);
 			minWait();
-			clickBtn(Locators_PhoneDialer.saveOpt);
+			clickBtn(Locators_PhoneDialer_old.saveOpt);
 			minWait();
 		} catch (NoSuchElementException e) {
 			e.printStackTrace();
@@ -1902,12 +1902,12 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		try {
 			//============================Block scenario==========================
 			minWait();
-			navigateToCallDetails(Locators_PhoneDialer.addedContactCallLog);
+			navigateToCallDetails(Locators_PhoneDialer_old.addedContactCallLog);
 			minWait();
-			clickBtn(Locators_PhoneDialer.blockNumberOpt);
+			clickBtn(Locators_PhoneDialer_old.blockNumberOpt);
 			minWait();
-			if(isElementExist(Locators_PhoneDialer.cancelBtn)){
-				clickBtn(Locators_PhoneDialer.cancelBtn);
+			if(isElementExist(Locators_PhoneDialer_old.cancelBtn)){
+				clickBtn(Locators_PhoneDialer_old.cancelBtn);
 				check5 = true;
 				APP_LOGS.info("Cancel Option is verified in Block scenario");
 				test.log(LogStatus.INFO, "Cancel Option is verified in Block scenario");
@@ -1915,41 +1915,41 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 			clickBackButton(1);
 			//============================Unblock Scenario==========================
 			minWait();
-			clickBtn(Locators_PhoneDialer.callDetailsOpt);
+			clickBtn(Locators_PhoneDialer_old.callDetailsOpt);
 			minWait();
-			blockUnblockNumber(Locators_PhoneDialer.blockNumberOpt, Locators_PhoneDialer.blockBtn);
+			blockUnblockNumber(Locators_PhoneDialer_old.blockNumberOpt, Locators_PhoneDialer_old.blockBtn);
 			minWait();
 			clickBackButton(1);
-			clickBtn(Locators_PhoneDialer.callDetailsOpt);
+			clickBtn(Locators_PhoneDialer_old.callDetailsOpt);
 			minWait();
-			clickBtn(Locators_PhoneDialer.unblockNumberOpt);
+			clickBtn(Locators_PhoneDialer_old.unblockNumberOpt);
 			minWait();
-			if(isElementExist(Locators_PhoneDialer.cancelBtn)){
-				clickBtn(Locators_PhoneDialer.cancelBtn);
+			if(isElementExist(Locators_PhoneDialer_old.cancelBtn)){
+				clickBtn(Locators_PhoneDialer_old.cancelBtn);
 				check6 = true;
 				APP_LOGS.info("Cancel Option is verified in Unblock scenario");
 				test.log(LogStatus.INFO, "Cancel Option is verified in Unblock scenario");
 			}
 			clickBackButton(1);
 			minWait();
-			clickBtn(Locators_PhoneDialer.callDetailsOpt);
+			clickBtn(Locators_PhoneDialer_old.callDetailsOpt);
 			minWait();
-			blockUnblockNumber(Locators_PhoneDialer.unblockNumberOpt, Locators_PhoneDialer.unblockBtn);
+			blockUnblockNumber(Locators_PhoneDialer_old.unblockNumberOpt, Locators_PhoneDialer_old.unblockBtn);
 			clickBackButton(1);
 			//=============================Clear call history scenario===============================
 			minWait();
 			navigateTocallHistory();
 			minWait();
-			clickBtn(Locators_PhoneDialer.moreOptionsInCallHistory);
+			clickBtn(Locators_PhoneDialer_old.moreOptionsInCallHistory);
 			minWait();
-			clickBtn(Locators_PhoneDialer.clearCallHistoryOpt);
+			clickBtn(Locators_PhoneDialer_old.clearCallHistoryOpt);
 			minWait();
-			clickBtn(Locators_PhoneDialer.addedContactCallLog);
+			clickBtn(Locators_PhoneDialer_old.addedContactCallLog);
 			minWait();
-			clickBtn(Locators_PhoneDialer.clearOptInCallHistory);
+			clickBtn(Locators_PhoneDialer_old.clearOptInCallHistory);
 			minWait();
-			if(isElementExist(Locators_PhoneDialer.cancelBtn)){
-				clickBtn(Locators_PhoneDialer.cancelBtn);
+			if(isElementExist(Locators_PhoneDialer_old.cancelBtn)){
+				clickBtn(Locators_PhoneDialer_old.cancelBtn);
 				check7 = true;
 				APP_LOGS.info("Cancel Option is verified in clear call log scenario");
 				test.log(LogStatus.INFO, "Cancel Option is verified in clear call log scenario");
@@ -1957,22 +1957,22 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 			clickBackButton(2);
 			//==========================Phone Ringtone scenario===================================
 			minWait();
-			navigateToSettingsAndElement(Locators_PhoneDialer.soundsAndVibration);
+			navigateToSettingsAndElement(Locators_PhoneDialer_old.soundsAndVibration);
 			minWait();
-			clickBtn(Locators_PhoneDialer.phoneRingtoneOpt);
+			clickBtn(Locators_PhoneDialer_old.phoneRingtoneOpt);
 			minWait();
-			if(isElementExist(Locators_PhoneDialer.cancelBtn)){
-				clickBtn(Locators_PhoneDialer.cancelBtn);
+			if(isElementExist(Locators_PhoneDialer_old.cancelBtn)){
+				clickBtn(Locators_PhoneDialer_old.cancelBtn);
 				check8 = true;
 				APP_LOGS.info("Cancel Option is verified in Phone ringtone scenario");
 				test.log(LogStatus.INFO, "Cancel Option is verified in Phone ringtone scenario");
 			}
 			//========================Dialpad  tone length========================================
 			minWait();
-			clickBtn(Locators_PhoneDialer.dialPadTonelengthOpt);
+			clickBtn(Locators_PhoneDialer_old.dialPadTonelengthOpt);
 			minWait();
-			if(isElementExist(Locators_PhoneDialer.cancelBtn)){
-				clickBtn(Locators_PhoneDialer.cancelBtn);
+			if(isElementExist(Locators_PhoneDialer_old.cancelBtn)){
+				clickBtn(Locators_PhoneDialer_old.cancelBtn);
 				check9 = true;
 				APP_LOGS.info("Cancel Option is verified in Dialpad tone length scenario");
 				test.log(LogStatus.INFO, "Cancel Option is verified in Dialpad tone length scenario");
@@ -1980,12 +1980,12 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 			clickBackButton(1);
 			//==========================Quick responses===========================================
 			minWait();
-			clickBtn(Locators_PhoneDialer.quickResponseOpt);
+			clickBtn(Locators_PhoneDialer_old.quickResponseOpt);
 			minWait();
-			clickBtn(Locators_PhoneDialer.quickResponseText);
+			clickBtn(Locators_PhoneDialer_old.quickResponseText);
 			minWait();
-			if(isElementExist(Locators_PhoneDialer.cancelBtn)){
-				clickBtn(Locators_PhoneDialer.cancelBtn);
+			if(isElementExist(Locators_PhoneDialer_old.cancelBtn)){
+				clickBtn(Locators_PhoneDialer_old.cancelBtn);
 				check10 = true;
 				APP_LOGS.info("Cancel Option is verified in Quick responses scenario");
 				test.log(LogStatus.INFO, "Cancel Option is verified in Quick responses scenario");
@@ -1993,12 +1993,12 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 			clickBackButton(1);
 			//=========================Speed dial settings=========================================
 			minWait();
-			clickBtn(Locators_PhoneDialer.speedDialSettingsOpt);
+			clickBtn(Locators_PhoneDialer_old.speedDialSettingsOpt);
 			minWait();
-			clickBtn(Locators_PhoneDialer.notSetInSpeedDialSettings);
+			clickBtn(Locators_PhoneDialer_old.notSetInSpeedDialSettings);
 			minWait();
-			if(isElementExist(Locators_PhoneDialer.cancelBtn)){
-				clickBtn(Locators_PhoneDialer.cancelBtn);
+			if(isElementExist(Locators_PhoneDialer_old.cancelBtn)){
+				clickBtn(Locators_PhoneDialer_old.cancelBtn);
 				check11 = true;
 				APP_LOGS.info("Cancel Option is verified in Speed dial settings scenario");
 				test.log(LogStatus.INFO, "Cancel Option is verified in Speed dial settings scenario");
@@ -2006,17 +2006,17 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 			clickBackButton(2);
 			//=======================Import from SIM card scenario================================
 			minWait();
-			navigateToImportExport(Locators_PhoneDialer.importFromSIMCard);
+			navigateToImportExport(Locators_PhoneDialer_old.importFromSIMCard);
 			minWait();
-			if(isElementExist(Locators_PhoneDialer.phoneOptInImport)){
-				clickBtn(Locators_PhoneDialer.phoneOptInImport);
+			if(isElementExist(Locators_PhoneDialer_old.phoneOptInImport)){
+				clickBtn(Locators_PhoneDialer_old.phoneOptInImport);
 				selectContactToImportExport();
 				minWait();
 			}else{
 				selectContactToImportExport();
 			}
-			if(isElementExist(Locators_PhoneDialer.cancelBtn)){
-				clickBtn(Locators_PhoneDialer.cancelBtn);
+			if(isElementExist(Locators_PhoneDialer_old.cancelBtn)){
+				clickBtn(Locators_PhoneDialer_old.cancelBtn);
 				check12 = true;
 				APP_LOGS.info("Cancel Option is verified in Import from SIM card scenario");
 				test.log(LogStatus.INFO, "Cancel Option is verified in Import from SIM Card scenario");
@@ -2024,16 +2024,16 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 			clickBackButton(1);
 			//=======================Export to SIm Card===========================================
 			minWait();
-			navigateToImportExport(Locators_PhoneDialer.exportToSIMCard);
+			navigateToImportExport(Locators_PhoneDialer_old.exportToSIMCard);
 			minWait();
-			clickBtn(Locators_PhoneDialer.selectOpt);
+			clickBtn(Locators_PhoneDialer_old.selectOpt);
 			minWait();
-			clickBtn(Locators_PhoneDialer.selectAllOpt);
+			clickBtn(Locators_PhoneDialer_old.selectAllOpt);
 			minWait();
-			clickBtn(Locators_PhoneDialer.okOptInImportExport);
+			clickBtn(Locators_PhoneDialer_old.okOptInImportExport);
 			minWait();
-			if(isElementExist(Locators_PhoneDialer.cancelBtn)){
-				clickBtn(Locators_PhoneDialer.cancelBtn);
+			if(isElementExist(Locators_PhoneDialer_old.cancelBtn)){
+				clickBtn(Locators_PhoneDialer_old.cancelBtn);
 				check13 = true;
 				APP_LOGS.info("Cancel Option is verified in Export to SIM card scenario");
 				test.log(LogStatus.INFO, "Cancel Option is verified in EXport to SIM Card scenario");
@@ -2046,26 +2046,26 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 				check14 = true;
 			}else {
 				minWait();
-				navigateToImportExport(Locators_PhoneDialer.shareAllContacts);
+				navigateToImportExport(Locators_PhoneDialer_old.shareAllContacts);
 				minWait();
-				clickBtn(Locators_PhoneDialer.addedContactCallLog);
+				clickBtn(Locators_PhoneDialer_old.addedContactCallLog);
 				minWait();
-				clickBtn(Locators_PhoneDialer.okOptInImportExport);
+				clickBtn(Locators_PhoneDialer_old.okOptInImportExport);
 				minWait();
-				if(isElementExist(Locators_PhoneDialer.messagesOpt)){
-					clickBtn(Locators_PhoneDialer.messagesOpt);
+				if(isElementExist(Locators_PhoneDialer_old.messagesOpt)){
+					clickBtn(Locators_PhoneDialer_old.messagesOpt);
 					minWait();
-					clickBtn(Locators_PhoneDialer.justOnceOpt);
-				}else if(isElementExist(Locators_PhoneDialer.messagingOptReskin)){
-					clickBtn(Locators_PhoneDialer.messagingOptReskin);
+					clickBtn(Locators_PhoneDialer_old.justOnceOpt);
+				}else if(isElementExist(Locators_PhoneDialer_old.messagingOptReskin)){
+					clickBtn(Locators_PhoneDialer_old.messagingOptReskin);
 					minWait();
-					clickBtn(Locators_PhoneDialer.justOnceOpt);
+					clickBtn(Locators_PhoneDialer_old.justOnceOpt);
 				}else{
-					clickBtn(Locators_PhoneDialer.justOnceOpt);
+					clickBtn(Locators_PhoneDialer_old.justOnceOpt);
 				}
 				minWait();
-				if(isElementExist(Locators_PhoneDialer.cancelBtn)){
-					clickBtn(Locators_PhoneDialer.cancelBtn);
+				if(isElementExist(Locators_PhoneDialer_old.cancelBtn)){
+					clickBtn(Locators_PhoneDialer_old.cancelBtn);
 					check14 = true;
 					APP_LOGS.info("Cancel Option is verified in Share all contacts scenario");
 					test.log(LogStatus.INFO, "Cancel Option is verified in Share all contacts scenario");
@@ -2098,9 +2098,9 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		 */
 		try {
 			minWait();
-			clickBtn(Locators_PhoneDialer.settingsIcon);
+			clickBtn(Locators_PhoneDialer_old.settingsIcon);
 			minWait();
-			clickBtn(Locators_PhoneDialer.callHistoryOpt);
+			clickBtn(Locators_PhoneDialer_old.callHistoryOpt);
 			minWait();
 		} catch (NoSuchElementException e) {
 			e.printStackTrace();
@@ -2116,17 +2116,17 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 			String deviceBaseband = p_b_No;
 			minWait();
 			if(deviceBaseband.contains("8A.0.0-01-7.1.1-30.")){
-				validateCallHistoryReskin(Locators_PhoneDialer.allCallsReskin);
+				validateCallHistoryReskin(Locators_PhoneDialer_old.allCallsReskin);
 				minWait();
-				validateCallHistoryReskin(Locators_PhoneDialer.incomingCallsReskin);
+				validateCallHistoryReskin(Locators_PhoneDialer_old.incomingCallsReskin);
 				minWait();
-				validateCallHistoryReskin(Locators_PhoneDialer.outgoingCallsReskin);
+				validateCallHistoryReskin(Locators_PhoneDialer_old.outgoingCallsReskin);
 				minWait();
-				validateCallHistoryReskin(Locators_PhoneDialer.missedCallsReskin);
+				validateCallHistoryReskin(Locators_PhoneDialer_old.missedCallsReskin);
 			}else{
-				validateCallHistoryAllOperator(Locators_PhoneDialer.allOptInCallHistory);
+				validateCallHistoryAllOperator(Locators_PhoneDialer_old.allOptInCallHistory);
 				minWait();
-				validateCallHistoryAllOperator(Locators_PhoneDialer.missedOptInCallHistory);
+				validateCallHistoryAllOperator(Locators_PhoneDialer_old.missedOptInCallHistory);
 			}
 			clickBackButton(1);
 		} catch (NoSuchElementException e) {
@@ -2147,7 +2147,7 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 			minWait();
 			String callHistoryPage = element.getText();
 			minWait();
-			if(isElementExist(Locators_PhoneDialer.todayOptInCallHistory) || isElementExist(Locators_PhoneDialer.olderOptInCallHistory) || isElementExist(Locators_PhoneDialer.callLogEmptyPage) || isElementExist(Locators_PhoneDialer.noMissedCallsInCallHistory))
+			if(isElementExist(Locators_PhoneDialer_old.todayOptInCallHistory) || isElementExist(Locators_PhoneDialer_old.olderOptInCallHistory) || isElementExist(Locators_PhoneDialer_old.callLogEmptyPage) || isElementExist(Locators_PhoneDialer_old.noMissedCallsInCallHistory))
 			{
 				check = true;
 				APP_LOGS.info(callHistoryPage + " calls Option in Call History is verified successfully");
@@ -2175,7 +2175,7 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		try
 		{
 			minWait();
-			clickBtn(Locators_PhoneDialer.logTypeSelectReskin);
+			clickBtn(Locators_PhoneDialer_old.logTypeSelectReskin);
 			minWait();
 			String callHistoryPage = element.getText();
 			minWait();
@@ -2185,7 +2185,7 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 				clickBackButton(1);
 				navigateTocallHistory();
 			}
-			if(isElementExist(Locators_PhoneDialer.todayOptInCallHistory) || isElementExist(Locators_PhoneDialer.olderOptInCallHistory) || isElementExist(Locators_PhoneDialer.noCallsInCallHistory) || isElementExist(Locators_PhoneDialer.noIncomingCallsInCallHistory) || isElementExist(Locators_PhoneDialer.noOutgoingCallsInCallHistory) || isElementExist(Locators_PhoneDialer.noMissedCallsInCallHistory))
+			if(isElementExist(Locators_PhoneDialer_old.todayOptInCallHistory) || isElementExist(Locators_PhoneDialer_old.olderOptInCallHistory) || isElementExist(Locators_PhoneDialer_old.noCallsInCallHistory) || isElementExist(Locators_PhoneDialer_old.noIncomingCallsInCallHistory) || isElementExist(Locators_PhoneDialer_old.noOutgoingCallsInCallHistory) || isElementExist(Locators_PhoneDialer_old.noMissedCallsInCallHistory))
 			{
 				check = true;
 				APP_LOGS.info(callHistoryPage + " calls Option in Call History is verified successfully");
@@ -2213,15 +2213,15 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		try
 		{
 			minWait();
-			clickBtn(Locators_PhoneDialer.moreOptionsInCallHistory);
+			clickBtn(Locators_PhoneDialer_old.moreOptionsInCallHistory);
 			minWait();
-			clickBtn(Locators_PhoneDialer.searchCallLogOpt);
+			clickBtn(Locators_PhoneDialer_old.searchCallLogOpt);
 			minWait();
-			if(!isElementExist(Locators_PhoneDialer.callLogEmptyPage)){
+			if(!isElementExist(Locators_PhoneDialer_old.callLogEmptyPage)){
 				minWait();
 				Runtime.getRuntime().exec("adb -s "+ p_Id +" shell input text "+ name);
 				minWait();
-				if(isElementExist(Locators_PhoneDialer.addedContactCallLog)){
+				if(isElementExist(Locators_PhoneDialer_old.addedContactCallLog)){
 					clickBackButton(2);
 					check = true;
 					APP_LOGS.info( "Search call log Option in Call History is verified successfully");
@@ -2253,20 +2253,20 @@ public class XP8_PhoneDialer_Util extends BaseUtil{
 		try
 		{
 			minWait();
-			clickBtn(Locators_PhoneDialer.moreOptionsInCallHistory);
+			clickBtn(Locators_PhoneDialer_old.moreOptionsInCallHistory);
 			minWait();
-			if(isElementExist(Locators_PhoneDialer.clearCallHistoryOpt)){
-				clickBtn(Locators_PhoneDialer.clearCallHistoryOpt);
+			if(isElementExist(Locators_PhoneDialer_old.clearCallHistoryOpt)){
+				clickBtn(Locators_PhoneDialer_old.clearCallHistoryOpt);
 				minWait();
-				clickBtn(Locators_PhoneDialer.selectOpt);
+				clickBtn(Locators_PhoneDialer_old.selectOpt);
 				minWait();
-				clickBtn(Locators_PhoneDialer.selectAllOpt);
+				clickBtn(Locators_PhoneDialer_old.selectAllOpt);
 				minWait();
-				clickBtn(Locators_PhoneDialer.clearOptInCallHistory);
+				clickBtn(Locators_PhoneDialer_old.clearOptInCallHistory);
 				minWait();
-				clickBtn(Locators_PhoneDialer.okBtn);
+				clickBtn(Locators_PhoneDialer_old.okBtn);
 				customWait(3000);
-				if(isElementExist(Locators_PhoneDialer.noCallLogInCallHistory) || isElementExist(Locators_PhoneDialer.callLogEmptyPage))
+				if(isElementExist(Locators_PhoneDialer_old.noCallLogInCallHistory) || isElementExist(Locators_PhoneDialer_old.callLogEmptyPage))
 				{
 					check = true;
 					APP_LOGS.info("Call logs are cleared successfully");
