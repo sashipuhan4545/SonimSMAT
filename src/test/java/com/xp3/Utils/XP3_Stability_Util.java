@@ -1093,7 +1093,7 @@ public class XP3_Stability_Util extends BaseUtil {
 			}			
 		} catch (Exception e) {
 			e.printStackTrace();
-			APP_LOGS.info("WIFI : No such Element found");
+//			APP_LOGS.info("WIFI : No such Element found");
 			test.log(LogStatus.ERROR, "Unable to find Secured Wifi or Wifi is Not Found");
 		}
 	}
@@ -1145,7 +1145,7 @@ public class XP3_Stability_Util extends BaseUtil {
 			customWait(3000);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+//			e.printStackTrace();
 //			test.log(LogStatus.ERROR, "Unable to find Secured Wifi or Wifi is Not Found");
 		}
 	}
@@ -1945,7 +1945,7 @@ public class XP3_Stability_Util extends BaseUtil {
 			}
 			else {
 				System.out.println("Browser");
-				validate_launchofApp(Locators_DeviceStability.first_No_In_CallLog, "Phone",soft,n);
+				validate_launchofApp(Locators_DeviceStability.first_No_In_CallLog1, "Phone",soft,n);
 			}
 			launch_an_app("contacts");
 			if(isElementExist(Locators_DeviceStability.contact_FindContacts)) {
@@ -2140,8 +2140,8 @@ public class XP3_Stability_Util extends BaseUtil {
 			else {
 				check = false;
 				APP_LOGS.info(  " is not found");
-				test.log(LogStatus.FAIL,  "HomePage is not Loaded ");
-				soft.fail();
+				test.log(LogStatus.ERROR,  "HomePage is not Loaded ");
+//				soft.fail();
 			}
 
 		} catch (Exception e) {
