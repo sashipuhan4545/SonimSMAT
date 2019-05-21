@@ -145,15 +145,15 @@ public class Stability_Email_Util extends BaseUtil {
 			OCRScreencapture("pic");
 			int i=0;
 			while(searchStringOCR("Filling Internal Memory", "OCR")) {				
-				
+
 				System.out.println("Screenshot  "+ i);
 				i++;
 				customWait(10000);
 				OCRScreencapture("pic");
-			
+
 				if(aDriver.isLocked()){
 					minWait();
-					 Runtime.getRuntime().exec("adb -s "+p_Id+" shell input keyevent 3");
+					Runtime.getRuntime().exec("adb -s "+p_Id+" shell input keyevent 3");
 					minWait();
 					Runtime.getRuntime().exec("adb -s "+p_Id+" shell input keyevent 82");
 					customWait(500);
@@ -313,7 +313,7 @@ public class Stability_Email_Util extends BaseUtil {
 
 		}
 	}
-	
+
 	public void enable_MobileData() throws InterruptedException, IOException {
 		/* 
 		 * This Method is to enable MobileData.
@@ -354,7 +354,7 @@ public class Stability_Email_Util extends BaseUtil {
 			}	
 		}	
 	}
-	
+
 	public void clickOnWifi() {
 		try {
 			minWait();
@@ -383,7 +383,7 @@ public class Stability_Email_Util extends BaseUtil {
 		} catch (Exception e) {
 		}
 	}
-	
+
 	public void navigateTo_CellularNetworks() throws InterruptedException, IOException {
 		/* This Method will Navigate to Cellular Netwotks option. */ 
 		minWait();
@@ -410,14 +410,14 @@ public class Stability_Email_Util extends BaseUtil {
 			enterTextToInputField(Locators_Stability.password_googleAcnt, password);
 			customWait(5000);
 			clickBtn(Locators_Stability.next);
-		customWait(3000);
-		scroll() ;
-		scroll() ;
-		minWait();
-		clickBtn(Locators_Stability.skip_);
-//		aDriver.findElementByAndroidUIAutomator("new UiScrollable(new UiSelector().className(\"android.widget.Button\")).scrollIntoView(new UiSelector().textContains(\"Skip\"))").click();
-		minWait();
-//		    scrollToText("Skip");
+			customWait(3000);
+			scroll() ;
+			scroll() ;
+			minWait();
+			clickBtn(Locators_Stability.skip_);
+			//		aDriver.findElementByAndroidUIAutomator("new UiScrollable(new UiSelector().className(\"android.widget.Button\")).scrollIntoView(new UiSelector().textContains(\"Skip\"))").click();
+			minWait();
+			//		    scrollToText("Skip");
 			if (p_b_No.contains("-11.")||p_b_No.contains("-12.")||p_b_No.contains("-18.")||p_b_No.contains("-26.")||p_b_No.contains("-29.")) {
 				try {
 					aDriver.findElementByAndroidUIAutomator("new UiScrollable(new UiSelector().className(\"android.webkit.WebView\")).scrollIntoView(new UiSelector().textContains(\"Yes\"))").click();
@@ -585,7 +585,7 @@ public class Stability_Email_Util extends BaseUtil {
 		}
 
 	}
-	
+
 	public void validate_OpenMail(String validationText, int n) throws InterruptedException {
 		WebDriverWait wt = new WebDriverWait(aDriver, 60);
 		try {
@@ -663,7 +663,7 @@ public class Stability_Email_Util extends BaseUtil {
 		try {
 			launch_an_app("soundRecorder");		
 			if(isElementExist(Locators_Stability.recording_ListTitle)) {	
-			    minWait();
+				minWait();
 				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
 			}
 			minWait();
@@ -674,7 +674,7 @@ public class Stability_Email_Util extends BaseUtil {
 			clearAllow();
 			clickOn_Record();
 			clearAllow();
-   customWait(1000);
+			customWait(1000);
 			clickOn_StopRecord();
 			clickOn_Save(fileName);
 			customWait(3000);
@@ -692,36 +692,36 @@ public class Stability_Email_Util extends BaseUtil {
 		}
 	}
 
-	
+
 	public void deleteAllFile() throws InterruptedException {
 		//delete all recorded file
 		try {
 			if(isElementExist(Locators_Stability.file_list_SoundRec)){
 				System.out.println("In if ");
-			for(int i=1; i<=10; i++) {
-			minWait();
-			TouchAction action = new TouchAction(aDriver);
-			action.longPress(Locators_Stability.file_list_SoundRec).release().perform();
-			minWait();
-			Locators_Stability.DeleteIcon.click();
-			APP_LOGS.info("Pressed Delete Icon sucessfully");
-			minWait();
-			Locators_Stability.DeleteBtn.click();
-			APP_LOGS.info("Pressed Delete Button sucessfully");
-			Thread.sleep(2000);
-			minWait();	
-			break;
-			}
+				for(int i=1; i<=10; i++) {
+					minWait();
+					TouchAction action = new TouchAction(aDriver);
+					action.longPress(Locators_Stability.file_list_SoundRec).release().perform();
+					minWait();
+					Locators_Stability.DeleteIcon.click();
+					APP_LOGS.info("Pressed Delete Icon sucessfully");
+					minWait();
+					Locators_Stability.DeleteBtn.click();
+					APP_LOGS.info("Pressed Delete Button sucessfully");
+					Thread.sleep(2000);
+					minWait();	
+					break;
+				}
 			}
 			customWait(2000);
-		clickBtn(Locators_Stability.NavigateUpSrchEng);
+			clickBtn(Locators_Stability.NavigateUpSrchEng);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
-	
+
 
 
 }
