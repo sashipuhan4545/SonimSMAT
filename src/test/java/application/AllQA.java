@@ -97,7 +97,7 @@ public class AllQA  extends CommonConfig {
 	ObservableList<String> Settings = FXCollections.observableArrayList("Settings","Programmable Key","Power ON/OFF","All");
 	ObservableList<String> Tools = FXCollections.observableArrayList("Calculator","Calendar","Clock","SoundRecorder","Downloads","FileManager","All");
 	ObservableList<String> Contacts = FXCollections.observableArrayList("PhoneContacts");
-	ObservableList<String> call = FXCollections.observableArrayList("PhoneDialer");
+	ObservableList<String> call = FXCollections.observableArrayList("PhoneDialer","CallHistory");
 	//ObservableList<String> ScoutApps = FXCollections.observableArrayList("AppUpdater","SafeGuard","SonimCare","SonimWarranty","ContactTransfer","All");
 	ObservableList<String> ScoutApps = FXCollections.observableArrayList("SafeGuard","SonimCare","ContactTransfer","WarrantyRegistration");
 
@@ -1413,6 +1413,23 @@ public class AllQA  extends CommonConfig {
 
 
 					switch (itemvalue) {
+					
+					
+					case "CallHistory":
+
+						Thread CallHis=new Thread(new Runnable() {
+							public void run() {
+								TestNG runner=new TestNG();
+								List<String> suitefiles=new ArrayList<String>();
+								suitefiles.add("src/test/resources/drivers/XP8_WiFi_Stability_O.xml");
+								runner.setTestSuites(suitefiles);
+								runner.run();	
+
+
+							}
+						});
+						CallHis.start();
+						break;
 
 					case "Wifi":
 
@@ -3050,6 +3067,37 @@ public class AllQA  extends CommonConfig {
 
 
 				switch (itemvalue) {
+				
+				
+
+				case "CallHistory":
+
+					File CallHistory = new File("src/test/resources/extentreport/XP8_CallHistory_TestReport.html");
+					File CH = new File(System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog");
+					String CAHPh=System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog";
+					try {
+						FileUtils.copyFileToDirectory(CallHistory, CH);
+					} catch (IOException e) {
+
+						e.printStackTrace();
+					}
+					if(CallHistory.exists()) {
+
+						try {
+							BaseUtil.openReportPath(CAHPh);
+						} catch (IOException e) {
+
+							e.printStackTrace();
+						}
+
+
+
+					}
+					else {
+						executionReportDoesnotExist("Test Report is not generated yet");
+					}
+
+					break;
 
 
 
@@ -4763,6 +4811,10 @@ public class AllQA  extends CommonConfig {
 							}else if (newValue.contains("SafeGuard")) {
 
 								EMAILID="src/test/resources/extentreport/XP8_SCOUT_SafeGuard_TestReport.html";
+							}else if (newValue.contains("CallHistory")) {
+								EMAILID="src/test/resources/extentreport/XP8_CallHistory_TestReport.html";
+
+								
 							}
 
 						}else if (JsonFileReaderAndWriter.primaryDevModelReader().contains("xp3800") || JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("3A")) {

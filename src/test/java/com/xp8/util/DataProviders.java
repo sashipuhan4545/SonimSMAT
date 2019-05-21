@@ -210,6 +210,15 @@ public class DataProviders {
 		return ExcelUtils.getData_aosp(testcase, excel,"XP8_SafeGuard");		
 	}
 	
+	@DataProvider(name ="XP8_CallHistory")
+	public static Object[][] XP8_CallHistory(Method m) throws Exception {
+		
+		System.out.println(m.getName());
+		ExcelReader excel = new ExcelReader(ExcelConstants.XP5S_XL_PATH);
+		String testcase = m.getName();
+		return ExcelUtils.getData_aosp(testcase, excel,"XP8_CallHistory");		
+	}	
+	
 
 
 }
