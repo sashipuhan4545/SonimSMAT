@@ -81,7 +81,7 @@ import javafx.util.Pair;
 public class AllQA  extends CommonConfig {
 
 	//ObservableList<String> items=FXCollections.observableArrayList("Sanity Test","MultiMedia","Messaging","Connectivity","GMS","Browser","Settings","Tools","Contacts","Call","ScoutApps","Performance","DeviceFunctionality");
-	ObservableList<String> items=FXCollections.observableArrayList("Sanity Test","VOLTE-CallPerformance","3G-CallPerformance","Stability","SCOUT"/*,"Stability_AT&T-15595"*/);
+	ObservableList<String> items=FXCollections.observableArrayList("Sanity Test","VOLTE-CallPerformance","3G-CallPerformance","Stability","SCOUT","Call"/*,"Stability_AT&T-15595"*/);
 
 	//ObservableList<String> items=FXCollections.observableArrayList("Quick Sanity","Performance");
 	//	ObservableList<String> Sanity = FXCollections.observableArrayList("Sanity");
@@ -2159,9 +2159,7 @@ public class AllQA  extends CommonConfig {
 
 						Thread telephony=new Thread(new Runnable() {
 							public void run() {
-
-
-								timer1.cancel();
+                           	timer1.cancel();
 								timer2.cancel();
 								timer3_failure.cancel();
 								onfinish.cancel();
@@ -3053,6 +3051,39 @@ public class AllQA  extends CommonConfig {
 
 				switch (itemvalue) {
 				
+				
+				
+				case "PhoneDialer":
+
+					File Phone_Dialer = new File("src/test/resources/extentreport/XP8_PhoneDialer_TestReport.html");
+					File PD = new File(System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog");
+					String PDPath=System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog";
+					try {
+						FileUtils.copyFileToDirectory(Phone_Dialer, PD);
+					} catch (IOException e) {
+
+						e.printStackTrace();
+					}
+					if(Phone_Dialer.exists()) {
+
+						try {
+							BaseUtil.openReportPath(PDPath);
+						} catch (IOException e) {
+
+							e.printStackTrace();
+						}
+
+
+
+					}
+					else {
+						executionReportDoesnotExist("Test Report is not generated yet");
+					}
+
+					break;
+
+
+
 				
 
 				case "CallHistory":
@@ -4773,6 +4804,11 @@ public class AllQA  extends CommonConfig {
 								EMAILID="src/test/resources/extentreport/XP8_SCOUT_SafeGuard_TestReport.html";
 							}else if (newValue.contains("CallHistory")) {
 								EMAILID="src/test/resources/extentreport/XP8_CallHistory_TestReport.html";
+
+								
+							}else if (newValue.contains("PhoneDialer")) {
+								
+								EMAILID="src/test/resources/extentreport/XP8_PhoneDialer_TestReport.html";
 
 								
 							}
