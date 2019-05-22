@@ -967,6 +967,24 @@ public class BaseUtil extends CommonConfig
 		   }
 		  return destFile;
 	 }
+	  public boolean scrollTo(String phoneNum) {
+			/*
+			  Method used to select an element on the page by scrolling the Scroll View/List View
+			 */
+
+			boolean check = false;
+			try {  
+				String scrollable = "new UiScrollable(new UiSelector().scrollable(true))";
+				String textElement = ".scrollIntoView(new UiSelector().text(\""+ phoneNum +"\"))";
+				aDriver.findElementByAndroidUIAutomator(scrollable+textElement);
+				APP_LOGS.info("Searched application is found sucessfully : ");
+				check = true;
+				return check;
+			}
+			catch(Exception e) {
+				return check;
+			}
+			}
 	  
 	  public void scrollToElements(WebElement e) throws InterruptedException {
 		  

@@ -822,7 +822,24 @@ public class BaseUtil extends CommonConfig {
 				"new UiScrollable(new UiSelector())" + ".scrollIntoView(new UiSelector().text(\"" + str + "\"))");
 
 	}
+	public boolean scrollTo(String phoneNum) {
+		/*
+		  Method used to select an element on the page by scrolling the Scroll View/List View
+		 */
 
+		boolean check = false;
+		try {  
+			String scrollable = "new UiScrollable(new UiSelector().scrollable(true))";
+			String textElement = ".scrollIntoView(new UiSelector().text(\""+ phoneNum +"\"))";
+			aDriver.findElementByAndroidUIAutomator(scrollable+textElement);
+			APP_LOGS.info("Searched application is found sucessfully : ");
+			check = true;
+			return check;
+		}
+		catch(NoSuchElementException e) {
+			return check;
+		}
+	}
 
 
 	public void navigateToSettingsFeature(WebElement option,String name) throws InterruptedException, IOException {
