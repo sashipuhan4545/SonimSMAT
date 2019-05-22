@@ -97,7 +97,7 @@ public class AllQA  extends CommonConfig {
 	ObservableList<String> Settings = FXCollections.observableArrayList("Settings","Programmable Key","Power ON/OFF","All");
 	ObservableList<String> Tools = FXCollections.observableArrayList("Calculator","Calendar","Clock","SoundRecorder","Downloads","FileManager","All");
 	ObservableList<String> Contacts = FXCollections.observableArrayList("PhoneContacts");
-	ObservableList<String> call = FXCollections.observableArrayList("PhoneDialer","CallHistory");
+	ObservableList<String> call = FXCollections.observableArrayList("PhoneDialer","CallHistory","CallSettings");
 	//ObservableList<String> ScoutApps = FXCollections.observableArrayList("AppUpdater","SafeGuard","SonimCare","SonimWarranty","ContactTransfer","All");
 	ObservableList<String> ScoutApps = FXCollections.observableArrayList("SafeGuard","SonimCare","ContactTransfer","WarrantyRegistration");
 
@@ -1413,6 +1413,23 @@ public class AllQA  extends CommonConfig {
 
 
 					switch (itemvalue) {
+					
+					
+					case "CallSettings":
+
+						Thread CS=new Thread(new Runnable() {
+							public void run() {
+								TestNG runner=new TestNG();
+								List<String> suitefiles=new ArrayList<String>();
+								suitefiles.add("src/test/resources/drivers/XP8_CallSettings_O.xml");
+								runner.setTestSuites(suitefiles);
+								runner.run();	
+
+
+							}
+						});
+						CS.start();
+						break;
 					
 					
 					case "CallHistory":
@@ -3050,6 +3067,38 @@ public class AllQA  extends CommonConfig {
 
 
 				switch (itemvalue) {
+				
+				
+				
+				case "CallSettings":
+
+					File CallSettings = new File("src/test/resources/extentreport/XP8_PhoneDialer_TestReport.html");
+					File Call = new File(System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog");
+					String callsettingspath=System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog";
+					try {
+						FileUtils.copyFileToDirectory(CallSettings, Call);
+					} catch (IOException e) {
+
+						e.printStackTrace();
+					}
+					if(CallSettings.exists()) {
+
+						try {
+							BaseUtil.openReportPath(callsettingspath);
+						} catch (IOException e) {
+
+							e.printStackTrace();
+						}
+
+
+
+					}
+					else {
+						executionReportDoesnotExist("Test Report is not generated yet");
+					}
+
+					break;
+				
 				
 				
 				
@@ -4811,6 +4860,10 @@ public class AllQA  extends CommonConfig {
 								EMAILID="src/test/resources/extentreport/XP8_PhoneDialer_TestReport.html";
 
 								
+							}else if (newValue.contains("Callsettings")) {
+								
+								EMAILID="src/test/resources/extentreport/XP8_Call_Settings_TestReport.html";
+
 							}
 
 						}else if (JsonFileReaderAndWriter.primaryDevModelReader().contains("xp3800") || JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("3A")) {
