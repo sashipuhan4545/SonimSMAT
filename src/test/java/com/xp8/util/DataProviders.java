@@ -211,6 +211,14 @@ public class DataProviders {
 		return ExcelUtils.getData_aosp(testcase, excel,"XP8_CallHistory");		
 	}	
 	
+	@DataProvider(name ="XP8_Call_Settings")
+	public static Object[][] XP8_Call_Settings(Method m) throws Exception{
+		System.out.println(m.getName());
+		ExcelReader excel = new ExcelReader(ExcelConstants.XP5S_XL_PATH);
+		String testcase = m.getName();
+		return ExcelUtils.getData_aosp(testcase, excel,"XP8_Call_Settings");
+	}	
+	
 
 
 }

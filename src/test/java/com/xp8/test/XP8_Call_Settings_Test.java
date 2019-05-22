@@ -106,7 +106,7 @@ public class XP8_Call_Settings_Test extends XP8_Call_Settings_Util {
 		navigate_to_call_settings();
 	}
 
-	@Test(priority=-2,dataProvider="XP8_Call_Settings", dataProviderClass=DataProviders.class)
+	@Test(priority=2,dataProvider="XP8_Call_Settings", dataProviderClass=DataProviders.class)
 	public void XP8_TC_02_Call_Settings_ValidateSettings_and_Displayoption(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException
 	{
 		APP_LOGS.info("===========XP8_TC_02_Call_Settings_ValidateSettings_and_Displayoption============");
@@ -357,7 +357,7 @@ public class XP8_Call_Settings_Test extends XP8_Call_Settings_Util {
 		}
 		sa5.assertAll();
 	}
-	@Test(priority=-11,dataProvider="XP8_Call_Settings", dataProviderClass=DataProviders.class)
+	@Test(priority=11,dataProvider="XP8_Call_Settings", dataProviderClass=DataProviders.class)
 	public void  XP8_TC_11_Call_Settings_block_Unblock_Calldetails(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException
 
 	// Verify blocking numbers from Call details
