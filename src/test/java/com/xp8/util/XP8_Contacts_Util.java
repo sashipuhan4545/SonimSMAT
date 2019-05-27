@@ -239,7 +239,7 @@ public class XP8_Contacts_Util extends BaseUtil {
 	}
     
     public void recieve_Call_PrimaryDev_O() throws IOException, InterruptedException {
-    	
+    	SoftAssert SA = new SoftAssert();
 		/*try {
 			for(int j=1;j<=100;j++){
 				Process child = null;
