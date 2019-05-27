@@ -183,6 +183,14 @@ public class DataProviders {
 		String testcase = m.getName();
 		return ExcelUtils.getData_aosp(testcase, excel,"Contact_Transfer");		
 	}
+	
+	@DataProvider(name ="XP8_Contacts")
+	public static Object[][] XP8_Contacts(Method m) throws Exception{
+		System.out.println(m.getName());
+		ExcelReader excel = new ExcelReader(ExcelConstants.XP5S_XL_PATH);
+		String testcase = m.getName();
+		return ExcelUtils.getData_aosp(testcase, excel,"XP8_Contacts");
+	}
   
 	@DataProvider(name ="XP8_ContactTransfer")
 	public static Object[][] XP8_ContactTransfer(Method m) throws Exception {

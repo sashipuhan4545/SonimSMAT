@@ -137,6 +137,9 @@ public class Locators_DeviceStability {
 	@FindBy(how=How.XPATH, using ="//android.widget.LinearLayout[contains(@resource-id,'com.android.dialer:id/primary_action_view')]/../..//android.widget.TextView[@text='Test1']")
 	public static AndroidElement first_No_In_CallLog;
 	
+	@FindBy(how=How.XPATH, using ="//android.widget.LinearLayout[contains(@resource-id,'com.android.dialer:id/primary_action_view')]/../..//android.widget.TextView[@resource-id='com.android.dialer:id/name']")
+	public static AndroidElement first_No_In_CallLog1;
+	
 	@FindBy(how=How.XPATH, using ="//android.widget.FrameLayout[contains(@resource-id,'com.android.dialer:id/call_detail')]/../..//android.widget.LinearLayout[@resource-id='com.android.dialer:id/caller_information']")
 	public static AndroidElement first_No_Info;
 

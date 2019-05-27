@@ -104,8 +104,8 @@ public class XP3_MultiTasking_Stability_Test extends XP3_Stability_Util{
 		endcall_();
 		sa1.assertAll();
 	}	
-	
-	
+
+
 	@Test(priority=2,dataProvider="DeviceStability", dataProviderClass=DataProviders.class)
 	public void XP3_TC_002_Stability_Browser_Load_HomePage_and_SwitchTo_All_Applications(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException 
 	{
@@ -122,16 +122,18 @@ public class XP3_MultiTasking_Stability_Test extends XP3_Stability_Util{
 		navigateToApplication("Settings");
 		enableData();
 		launch_an_app("browser");	
-//		enterUrl(data.get("url"));
-		 loadHomePage();
-		 validateloadHomePage(sa2);
-		 
+		//		enterUrl(data.get("url"));
+		loadHomePage();
+		validateloadHomePage(sa2);
+
 		for (int i = 1; i <= itr; i++) {					
 			validateLaunch_All_Applications(sa2,i,"browser");	
 		} 
 		launch_an_app("browser");
 		pressEnter();
-		 validateloadHomePage(sa2);
+		//		 loadHomePage();
+		customWait(4000);
+		validateloadHomePage(sa2);
 		back(1);
 		sa2.assertAll();
 	}	

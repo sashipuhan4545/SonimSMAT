@@ -1532,6 +1532,21 @@ public class AllQA  extends CommonConfig {
 						});
 						APkD.start();
 						break;
+						
+					case "Contacts":
+
+						Thread Contacts=new Thread(new Runnable() {
+							public void run() {
+								TestNG runner=new TestNG();
+								List<String> suitefiles=new ArrayList<String>();
+								suitefiles.add("src/test/resources/drivers/XP8_Contacts_O.xml");
+
+								runner.setTestSuites(suitefiles);
+								runner.run();	
+							}
+						});
+						Contacts.start();
+						break;
 
 					case "Phone":
 						Thread Dev_Sanity=new Thread(new Runnable() {
@@ -3418,6 +3433,31 @@ public class AllQA  extends CommonConfig {
 
 						try {
 							BaseUtil.openReportPath(connectivitypath);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+					else {
+						executionReportDoesnotExist("Test Report is not generated yet");
+					}
+
+					break;
+					
+				case "Contacts":
+
+					File Contacts = new File("src/test/resources/extentreport/XP8_CallModule_Contacts_TestReport.html");
+					File contactsdest = new File(System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog");
+					String contactspath=System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog";
+					try {
+						FileUtils.copyFileToDirectory(Contacts, contactsdest);
+					} catch (IOException e) {
+
+						e.printStackTrace();
+					}
+					if(Contacts.exists()) {
+
+						try {
+							BaseUtil.openReportPath(contactspath);
 						} catch (IOException e) {
 							e.printStackTrace();
 						}

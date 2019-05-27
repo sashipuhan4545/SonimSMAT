@@ -246,8 +246,9 @@ public class XP8_PhoneDialer_util extends BaseUtil {
 				check = true ;
 				APP_LOGS.info("Phone App Home page is verified");
 				test.log(LogStatus.INFO, "Phone App Home page is verified");
-				test.log(LogStatus.PASS, "Test case Status is PASS");
 				SA.assertTrue(check, "Phone App Home page Verfied");
+				test.log(LogStatus.PASS, "Test case Status is PASS");
+
 			}else{
 				APP_LOGS.info("Phone App Home page is not verified");
 				test.log(LogStatus.ERROR, "Phone App Home page is not verified");
@@ -346,7 +347,7 @@ public class XP8_PhoneDialer_util extends BaseUtil {
 				test.log(LogStatus.ERROR, "Recent Call Log not available");
 				SA.fail();
 			}
-		} catch (NoSuchElementException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			test.log(LogStatus.ERROR, "Element Not Found");
 		}
