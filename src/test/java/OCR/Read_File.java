@@ -16,7 +16,8 @@ import com.xp5S.util.CommonConfig;
 
 
 
-public class Read_File extends CommonConfig{
+
+public class Read_File {
 	
 	
 	public static String read_a_file(String file_name) {
@@ -45,9 +46,9 @@ public class Read_File extends CommonConfig{
 	
 	public static void takeScreenShotForOcr(String imageName) {
 		
-	
+		
 
-		File scrFile = ((TakesScreenshot)CommonConfig.aDriver).getScreenshotAs(OutputType.FILE);
+		File scrFile = ((TakesScreenshot)CommonConfig.getDriver()).getScreenshotAs(OutputType.FILE);
 		try {
 			
 			String ocrImageFilePath = System.getProperty("user.dir") + "\\src\\test\\resources\\OCR_FILES\\" +imageName+".jpeg";
