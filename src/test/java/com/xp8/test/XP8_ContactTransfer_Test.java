@@ -73,6 +73,7 @@ public class XP8_ContactTransfer_Test extends XP8_ContactTransfer_Util {
 			e.printStackTrace();
 		}
 		
+		
 	}
 
 	@BeforeClass

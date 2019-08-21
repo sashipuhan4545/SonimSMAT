@@ -85,25 +85,22 @@ public class BaseUtil extends CommonConfig
 		executor.executeScript("arguments[0].click();", e);
 	}
 
-	public boolean clickBtn(WebElement e) {
-		try {
+	public void clickBtn(WebElement e) {
+	//	try {
 			e.click();
-			return true;
+		//	return true;
 
-		} catch (Exception s) {
-			return false;
-		}
+		//} catch (Exception s) {
+		//
+		//}
 
 	}
 
-	public boolean clickBtn(AndroidElement e) {
-		try {
+	public void clickBtn(AndroidElement e) {
+		
 			e.click();
-			return true;
-
-		} catch (Exception s) {
-			return false;
-		}
+			
+	
 
 	}
 
@@ -281,26 +278,6 @@ public class BaseUtil extends CommonConfig
 
 
 
-	public boolean isAlertPresent() {
-		try {
-			getDriver().switchTo().alert();
-			return true;
-
-		} catch (NoAlertPresentException ex) {
-			return false;
-		}
-	}
-
-	public Alert getAlertbox() {
-
-		try {
-			return getDriver().switchTo().alert();
-
-		} catch (NoAlertPresentException ex) {
-			return null;
-		}
-	}
-
 	public static void waituntilnew(WebElement e, int timeinSeconds) {
 
 		WebDriverWait wait = new WebDriverWait(getDriver(), timeinSeconds);
@@ -330,14 +307,12 @@ public class BaseUtil extends CommonConfig
 	public boolean isElementExist(WebElement e) {
 
 		boolean isPresent = false;
-		try {
-			isPresent = e.isDisplayed();
-		} catch (NoSuchElementException s) {
-			isPresent = false;
-		} catch (NullPointerException npe) {
-			isPresent = false;
-		}catch (Exception e2) {
+		isPresent = e.isDisplayed();
+		if(isPresent) {
+			isPresent=true;
+		}else {
 			isPresent=false;
+			
 		}
 		return isPresent;
 
@@ -345,16 +320,13 @@ public class BaseUtil extends CommonConfig
 
 	public boolean isElementExist(AndroidElement e) {
 		boolean isPresent = false;
-		try {
-			isPresent = e.isDisplayed();
-		} catch (NoSuchElementException s) {
-			isPresent = false;
-		} catch (NullPointerException npe) {
-			isPresent = false;
-		}
-		catch (Exception ex){
-			ex.printStackTrace();
-			isPresent =false;
+		
+		isPresent = e.isDisplayed();
+		if(isPresent) {
+			isPresent=true;
+		}else {
+			isPresent=false;
+			
 		}
 		return isPresent;
 	}
@@ -479,7 +451,7 @@ public class BaseUtil extends CommonConfig
 
 			}
 
-		} catch (RemoteException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -507,7 +479,7 @@ public class BaseUtil extends CommonConfig
 
 			}
 
-		} catch (RemoteException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}	
@@ -517,8 +489,7 @@ public class BaseUtil extends CommonConfig
 	public boolean searchString(String searchstring, String fileName) {
 
 		boolean check = false;
-		boolean check1=false;
-		boolean check2=false;
+		
 
 		try {
 
@@ -545,7 +516,7 @@ public class BaseUtil extends CommonConfig
 			}
 			bf.close();
 		}
-		catch (IOException e) {
+		catch (Exception e) {
 			APP_LOGS.info("IO Error Occurred: " + e.toString());
 		}
 		return check;
@@ -556,8 +527,7 @@ public class BaseUtil extends CommonConfig
 	public boolean searchStringOCR(String searchstring, String fileName) {
 
 		boolean check = false;
-		boolean check1=false;
-		boolean check2=false;
+		
 
 		try {
 
@@ -757,19 +727,19 @@ public class BaseUtil extends CommonConfig
 
 			}
 
-		} catch (NoSuchElementException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}	
 
 
-	public boolean longpress(int keyCode){
-		try {
+	public void longpress(int keyCode){
+		//try {
 			aDriver.longPressKeyCode(keyCode);
-			return true;
-		} catch (NoSuchElementException s) {
-			return false;
-		}
+		//	return true;
+		//} catch (NoSuchElementException s) {
+		//	return false;
+		//}
 	}
 
 	public void recordVideo(String TC_Name) throws InterruptedException, IOException{
@@ -794,7 +764,7 @@ public class BaseUtil extends CommonConfig
 
 
 
-		} catch (IOException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -806,12 +776,12 @@ public class BaseUtil extends CommonConfig
 
 		Desktop desktop = Desktop.getDesktop();
 		File dirToOpen = null;
-		try {
+		//try {
 			dirToOpen = new File(path);
 			desktop.open(dirToOpen);
-		} catch (IllegalArgumentException iae) {
-			System.out.println("File Not Found");
-		}
+		//} catch (IllegalArgumentException iae) {
+		//	System.out.println("File Not Found");
+		//}
 	}
 	
 	public void launchAppThroughABD(String adbCommand) throws InterruptedException, IOException {
@@ -876,7 +846,7 @@ public class BaseUtil extends CommonConfig
 
 	//This method is used to navigate to notification screen only
 	public void navigate_to_NotificationScreen() throws InterruptedException{
-		try {
+	//	try {
 			minWait();
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_MENU);
 			APP_LOGS.info("Pressed MENU button");
@@ -884,9 +854,9 @@ public class BaseUtil extends CommonConfig
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_DPAD_CENTER);
 			APP_LOGS.info("You are in Notification screen");
 			minWait();
-		} catch (NoSuchElementException e) {
+	//	} catch (NoSuchElementException e) {
 			// TODO: handle exception
-		}
+		//}
 	}
 
 
@@ -1520,18 +1490,18 @@ public class BaseUtil extends CommonConfig
 
 
 		//		boolean check = false;
-		try {		
+	//	try {		
 			/*String scrollable = "new UiScrollable(new UiSelector().scrollable(true))";
 			String textElement = ".scrollIntoView(new UiSelector().description(\""+ text +"\"))";
 			aDriver.findElementByAndroidUIAutomator(scrollable+textElement);*/
 
 			return ((AndroidElement)element).findElementByAndroidUIAutomator("new UiScrollable(new UiSelector())"
 					+ ".scrollIntoView(new UiSelector().description(\""+str+"\"))");
-		}
-		catch(NoSuchElementException e) {
+	//	}
+	//	catch(NoSuchElementException e) {
 			//			return check;
-		}
-		return null;
+		//}
+		//return null;
 	}
 
 
@@ -1541,24 +1511,24 @@ public class BaseUtil extends CommonConfig
 		 */
 
 		boolean check = false;
-		try {		
+	//	try {		
 			String scrollable = "new UiScrollable(new UiSelector().scrollable(true))";
 			String textElement = ".scrollIntoView(new UiSelector().text(\""+ text +"\"))";
 			aDriver.findElementByAndroidUIAutomator(scrollable+textElement).click();
 			APP_LOGS.info("Searched application is found sucessfully : ");
 			check = true;
 			return check;
-		}
-		catch(Exception e) {
-			return check;
-		}
+		//}
+	//	catch(Exception e) {
+		//	return check;
+		//}
 	}
 
 	public boolean navigateUsingText(String text) {
 		/*
 		Method used to select an element on the page using the text attribute value
 		 */
-		try{
+	//	try{
 			boolean check = false;	
 			String template = "new UiSelector().className(\"android.widget.TextView\")";
 			String textElement = ".text(\""+text+ "\")";
@@ -1566,10 +1536,10 @@ public class BaseUtil extends CommonConfig
 
 			check = true;
 			return check; 
-		}
-		catch(Exception e1) {
-			return check;
-		}
+		//}
+		//catch(Exception e1) {
+		//	return check;
+		//}
 	}
 
 
@@ -1579,39 +1549,39 @@ public class BaseUtil extends CommonConfig
 		 */
 
 		boolean check = false;
-		try {		
+	//	try {		
 			String scrollable = "new UiScrollable(new UiSelector().scrollable(true))";
 			String textElement = ".scrollIntoView(new UiSelector().text(\""+ text +"\"))";
 			aDriver.findElementByAndroidUIAutomator(scrollable+textElement);
 			APP_LOGS.info("Searched application is found sucessfully : ");
 			check = true;
 			return check;
-		}
-		catch(NoSuchElementException e) {
-			return check;
-		}
+		//}
+		//catch(NoSuchElementException e) {
+		//	return check;
+		//}
 	}
 
 
 	public void scroll() {
-		try {
+	//	try {
 			org.openqa.selenium.Dimension size =aDriver.manage().window().getSize();
 			System.out.println(size);
 			int x=size.getWidth()/2;
 			int starty=(int)(size.getHeight()*0.60);
 			int endy=(int)(size.getHeight()*0.10);
 			aDriver.swipe(x, starty, x, endy, 2000);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		//} catch (Exception e) {
+			//e.printStackTrace();
+		//}
 	}
 
 
-	public boolean selectFromList(String option ) {
+	public boolean selectFromList(String option ) throws InterruptedException {
 		/*
 		Method used to select an element from a list
 		 */
-		try {
+	//	try {
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_MENU);
 			customWait(2000);
 			boolean check = false;
@@ -1623,12 +1593,12 @@ public class BaseUtil extends CommonConfig
 			System.out.println(check);
 			return check;
 		}
-		catch(Exception e) {
-			System.out.println(check);
-			return check;
+	//	catch(Exception e) {
+		//	System.out.println(check);
+		//	return check;
 
-		}
-	}
+		//}
+	//}
 	
 	
 	public boolean scrollToAirplaneModeOption(String text) {
@@ -1637,7 +1607,7 @@ public class BaseUtil extends CommonConfig
 		*/
 		
 		boolean check = false;
-		try {		
+		//try {		
 			String scrollable = "new UiScrollable(new UiSelector().scrollable(true))";
 			String textElement = ".scrollIntoView(new UiSelector().text(\""+ text +"\"))";
 			aDriver.findElementByAndroidUIAutomator(scrollable+textElement);
@@ -1645,14 +1615,16 @@ public class BaseUtil extends CommonConfig
 			check = true;
 			return check;
 	}
-		catch(Exception e) {
-			return check;
-			}
-		}		
+		//catch(Exception e) {
+		//	return check;
+			//}
+	//	}		
 	
 	
-
 }
+
+
+
 
 
 

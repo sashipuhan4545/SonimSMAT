@@ -6,25 +6,30 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
+import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Map;
 import java.util.Properties;
 
 import org.json.simple.parser.ParseException;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+import org.testng.collections.Lists;
 
 import com.graphics.gui.JsonFileReaderAndWriter;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTestInterruptedException;
 import com.relevantcodes.extentreports.LogStatus;
 import com.xp5S.util.GetMethods;
+
 import com.xp5S.util.appiumService;
 import com.xp8.util.DataProviders;
 import com.xp8.util.ExcelConstants;
@@ -33,9 +38,9 @@ import com.xp8.util.Locators_BaseUtil;
 import com.xp8.util.Locators_DeviceStability;
 import com.xp8.util.Locators_Stability;
 import com.xp8.util.Stability_Browser_Util;
-import com.xp8.util.XP8_Stability_Util_orio;
 
 import application.AllQA;
+//import application.AllQA;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 
 public class XP8_Browser_Stability_Test_Orio extends Stability_Browser_Util{
@@ -52,7 +57,7 @@ public class XP8_Browser_Stability_Test_Orio extends Stability_Browser_Util{
 
 		fetch_Devices_Details();	
 
-		extent = new ExtentReports("src/test/resources/extentreport/XP8_Browser_Stability_Orio_TestReport.html",false); //Provide Desired Report Directory Location and Name
+		extent = new ExtentReports("src/test/resources/extentreport/XP8_Stability_Orio_TestReport.html",true); //Provide Desired Report Directory Location and Name
 		extent.loadConfig(new File("src/test/resources/StorageFile/ReportsConfig.xml"));
 		extent.addSystemInfo("Build #",JsonFileReaderAndWriter.primaryDevFirmwareReader())
 		.addSystemInfo("Product",JsonFileReaderAndWriter.primaryDevModelReader())
@@ -73,7 +78,7 @@ public class XP8_Browser_Stability_Test_Orio extends Stability_Browser_Util{
 	public  void beforeMethod(Method method) 
 	{
 		test = extent.startTest( (this.getClass().getSimpleName() +" :: "+  method.getName()),method.getName()); //Test Case Start Here
-		test.assignAuthor("Farheen Taj"); //Test Script Author Name
+		//test.assignAuthor("Farheen Taj"); //Test Script Author Name
 	}
 
 
@@ -114,6 +119,19 @@ public class XP8_Browser_Stability_Test_Orio extends Stability_Browser_Util{
 		PageFactory.initElements(new AppiumFieldDecorator(aDriver),loc1);
 		excel=new ExcelReader(ExcelConstants.XP5S_XL_PATH);	
 	}
+	
+	@AfterTest
+	public void closeTabs() throws InterruptedException{
+		launch_an_app("browser");
+		minWait();
+		if(isElementExist(multi_Loc_Strategy(Locators_Stability.tabSwitcherButton, Locators_Stability.tabSwitcherButtonById, Locators_Stability.tabSwitcherButtonByContectDesc, Locators_Stability.tabSwitcherButtonByXpath, null, 936, 240))){
+			clickBtn((multi_Loc_Strategy(Locators_Stability.tabSwitcherButton, Locators_Stability.tabSwitcherButtonById, Locators_Stability.tabSwitcherButtonByContectDesc, Locators_Stability.tabSwitcherButtonByXpath, null, 936, 240)));
+			minWait();
+			clickBtn((multi_Loc_Strategy(Locators_Stability.MoreOptnsIcn, Locators_Stability.MoreOptnsIcnById, Locators_Stability.MoreOptnsIcnByContectDesc, Locators_Stability.MoreOptnsIcnByXpath, null, 936,72)));
+			minWait();
+			clickBtn(multi_Loc_Strategy(Locators_Stability.closeAllBrowserTabs, Locators_Stability.closeAllBrowserTabsById, Locators_Stability.closeAllBrowserTabsByUiSelectorId, Locators_Stability.closeAllBrowserTabsByContectDesc, Locators_Stability.closeAllBrowserTabsByXpath, 337, 377));
+		}
+	}
 
 	@Test(priority=1,dataProvider="XP8_Stability", dataProviderClass=DataProviders.class)
 	public void XP8_TC_001_Stability_Load_Website_Google(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException
@@ -124,17 +142,15 @@ public class XP8_Browser_Stability_Test_Orio extends Stability_Browser_Util{
 		launch_an_app("settings");
 		clickOn_Networks_and_Internet();
 		scrollToText("Mobile network");
-		ON_Switch("data");
-		clickBtn(Locators_Stability.OK);
-		launch_an_app("settings");
-		clickOn_Networks_and_Internet();
+		enable_Mobile_Data();
+		minWait();
+		clickBackButton(1);
 		scrollToTextContains("Wi");
-		ON_Switch("Off");
-		selectSSIDwifi();	
-		enterPassword();
+		setUp_And_Enable_WiFi();
 		launch_an_app("browser");
-		clearChromePermission();			
-		launch_an_app("browser");
+		if(isElementExist(multi_Loc_Strategy(Locators_Stability.ACCEPTCONTINUE, Locators_Stability.ACCEPTCONTINUEByID, Locators_Stability.ACCEPTCONTINUEByResourceId, Locators_Stability.ACCEPTCONTINUEByText, Locators_Stability.ACCEPTCONTINUEByXpath, 332, 1764))){
+			clearChromePermission();		
+		}
 		for(int i=1; i<=itr;i++) {	  
 
 			for(int j=1; j<=1; j++) {
@@ -145,9 +161,7 @@ public class XP8_Browser_Stability_Test_Orio extends Stability_Browser_Util{
 			minWait();		
 		}
 		sa1.assertAll();
-
 	}
-
 
 	@Test(priority=2,dataProvider="XP8_Stability", dataProviderClass=DataProviders.class)
 	public void XP8_TC_002_Stability_Load_Website_Yahoo(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException
@@ -167,7 +181,7 @@ public class XP8_Browser_Stability_Test_Orio extends Stability_Browser_Util{
 	}
 
 	@Test(priority=3,dataProvider="XP8_Stability", dataProviderClass=DataProviders.class)
-	public void XP8_TC_003_Stability_Load_Website_Bingo(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException
+	public void XP8_TC_003_Stability_Load_Website_Bing(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException
 	{
 		APP_LOGS.info("===========XP8_Stability_03_Browser============");
 		SoftAssert sa3 = new SoftAssert();
@@ -176,6 +190,7 @@ public class XP8_Browser_Stability_Test_Orio extends Stability_Browser_Util{
 
 			for(int j=3; j<=3; j++) {
 				navigateBrowserMenu(data.get("Web"+j));	
+				System.out.println(data.get("Web3"));
 				validateUrlEntered(data.get("Web"+j),i,j,sa3);
 			}
 			minWait();		
@@ -217,7 +232,7 @@ public class XP8_Browser_Stability_Test_Orio extends Stability_Browser_Util{
 	}
 
 	@Test(priority=6,dataProvider="XP8_Stability", dataProviderClass=DataProviders.class)
-	public void XP8_TC_006_Stability_Load_Website_CitiBank(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException
+	public void XP8_TC_006_Stability_Load_Website_AxisBank(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException
 	{
 		APP_LOGS.info("===========XP8_Stability_06_Browser============");
 		SoftAssert sa6 = new SoftAssert();
@@ -284,7 +299,7 @@ public class XP8_Browser_Stability_Test_Orio extends Stability_Browser_Util{
 	}
 
 	@Test(priority=10,dataProvider="XP8_Stability", dataProviderClass=DataProviders.class)
-	public void XP8_TC_010_Stability_Load_Website_Ebay(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException
+	public void XP8_TC_010_Stability_Load_Website_Flipkart(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException
 	{
 		APP_LOGS.info("===========XP8_Stability_10_Browser============");
 		SoftAssert sa10 = new SoftAssert();
@@ -382,7 +397,7 @@ public class XP8_Browser_Stability_Test_Orio extends Stability_Browser_Util{
 
 
 	@Test(priority=16,dataProvider="XP8_Stability", dataProviderClass=DataProviders.class)
-	public void XP8_TC_016_Stability_Load_Website_TigerdirectBuisness(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException
+	public void XP8_TC_016_Stability_Load_Website_Lenskart(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException
 	{
 		APP_LOGS.info("===========XP8_Stability_16_Browser============");
 		SoftAssert sa16 = new SoftAssert();
@@ -464,7 +479,7 @@ public class XP8_Browser_Stability_Test_Orio extends Stability_Browser_Util{
 	}
 
 	@Test(priority=21,dataProvider="XP8_Stability", dataProviderClass=DataProviders.class)
-	public void XP8_TC_021_Stability_Load_Website_Grocery(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException
+	public void XP8_TC_021_Stability_Load_Website_Telenor(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException
 	{
 		APP_LOGS.info("===========XP8_Stability_21_Browser============");
 		SoftAssert sa21 = new SoftAssert();

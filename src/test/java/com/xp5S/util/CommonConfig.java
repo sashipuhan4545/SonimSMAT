@@ -67,23 +67,22 @@ public class CommonConfig extends appiumService {
 
 				deviceId=JsonFileReaderAndWriter.primaryDevIdReader(); 
 			}
-
-
-			
-
-			DesiredCapabilities capabilities = new DesiredCapabilities().android();
+		
+			DesiredCapabilities capabilities = new DesiredCapabilities();
 			capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, deviceName_);
 			capabilities.setCapability(MobileCapabilityType.UDID, deviceId);
-			
+		//	capabilities.setCapability("automationName", "UiAutomator2");
+			//capabilities.setCapability("orientation","PORTRAIT");
 			capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, platformVersion_);
-			capabilities.setCapability("autoAcceptAlerts", true);
+			capabilities.setCapability("autoGrantPermissions", true);
 			capabilities.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, COMMAND_TIMEOUT);
 			//	capabilities.setCapability("autoGrantPermissions", true);
 			capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
-			capabilities.setCapability(MobileCapabilityType.APP_PACKAGE, App_Package_Name_);
-			capabilities.setCapability(MobileCapabilityType.APP_ACTIVITY, App_Activity_Name_);
+			capabilities.setCapability("appPackage", App_Package_Name_);
+			capabilities.setCapability("appActivity", App_Activity_Name_);
 
 
+			
 
 
 
@@ -91,6 +90,7 @@ public class CommonConfig extends appiumService {
 			aDriver = new AndroidDriver<AndroidElement>(appiumServerURL, capabilities);
 
 			aDriver.manage().timeouts().implicitlyWait(120, TimeUnit.SECONDS);
+			
 
 
 

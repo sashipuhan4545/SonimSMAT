@@ -57,6 +57,7 @@ public class XP3_Device_QA_Stability_Test extends XP3_Stability_Util{
 		fetch_Devices_Details();
 	}
 
+	
 	@BeforeMethod()
 	public  void beforeMethod(Method method) throws InterruptedException {
 

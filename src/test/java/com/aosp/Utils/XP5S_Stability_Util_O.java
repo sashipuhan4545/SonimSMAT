@@ -89,6 +89,7 @@ public class XP5S_Stability_Util_O extends BaseUtil{
 			enterTextToInputField(Locators_Stability.contact_Phone, num);
 			scrollText("Email");
 			minWait();	
+			
 			enterTextToInputField(Locators_Stability.contact_Email, "Sonim");
 
 			Runtime.getRuntime().exec("adb -s "+p_Id+" shell input keyevent --longpress KEYCODE_1");

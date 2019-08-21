@@ -1,4 +1,4 @@
-package SikuliHelper;
+/*package SikuliHelper;
 
 public class SikuliConstants {
 	
@@ -380,3 +380,4 @@ public class SikuliConstants {
 	
 
 
+*/

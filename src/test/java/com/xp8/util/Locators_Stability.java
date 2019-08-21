@@ -1,6 +1,6 @@
 package com.xp8.util;
 
-import org.openqa.selenium.WebElement;
+//import org.openqa.selenium.AndroidElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 
@@ -17,7 +17,7 @@ public class Locators_Stability {
 
 	}
 
-	//	 @FindBy(how=How.XPATH, using =("//android.widget.LinearLayout[@resource-id='com.android.dialer:id/empty_list_view']"))
+	//	 @AndroidFindBy(xpath =("//android.widget.LinearLayout[@resource-id='com.android.dialer:id/empty_list_view']"))
 
 	@AndroidFindBy(xpath ="//android.widget.ImageView[@content-desc='Apps list']")
 	public static AndroidElement app_List;
@@ -26,7 +26,7 @@ public class Locators_Stability {
 	public static AndroidElement fillmemoryIcon;
 	
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.LinearLayout\").resourceId(\"android:id/parentPanel\")")
-	public static WebElement memory_Panel;
+	public static AndroidElement memory_Panel;
 	
 	
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.LinearLayout\").resourceId(\"com.android.dialer:id/empty_list_view\")")
@@ -48,15 +48,15 @@ public class Locators_Stability {
 	public static AndroidElement ALL_Selection_menu;
 
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"1\")")
-	public static WebElement one_Selection_menu;
+	public static AndroidElement one_Selection_menu;
 
-	@FindBy(how=How.XPATH, using =("//android.widget.ImageButton[@content-desc='More options']"))
-	public static AndroidElement MoreOptnsIcn;
+	@AndroidFindBy(xpath =("//android.widget.ImageButton[@content-desc='More options']"))
+	public static AndroidElement MoreOptnsIcnByXpath;
 
-	@FindBy(how=How.XPATH, using =("//android.widget.TextView[@text='Delete']"))
+	@AndroidFindBy(xpath =("//android.widget.TextView[@text='Delete']"))
 	public static AndroidElement deleteContactOptn;
 
-	@FindBy(how=How.XPATH, using =("//android.widget.LinearLayout[@index='0']/../..//android.widget.Button[@text='OK']"))
+	@AndroidFindBy(xpath =("//android.widget.LinearLayout[@index='0']/../..//android.widget.Button[@text='OK']"))
 	public static AndroidElement OKBtn;
 
 	/*@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.Button\").text(\"OK\")")
@@ -84,7 +84,7 @@ public class Locators_Stability {
 	public static AndroidElement Save_ConatctIcon;
 
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").resourceId(\"com.android.contacts:id/large_title\")")
-	public static WebElement ContactTitle;
+	public static AndroidElement ContactTitle;
 
 	@AndroidFindBy(xpath = "//*[@resource-id='com.android.contacts:id/header']")
 	public static AndroidElement contact_phnNum;
@@ -93,7 +93,7 @@ public class Locators_Stability {
 	public static AndroidElement contact_Emailid;
 
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").resourceId(\"com.android.contacts:id/menu_search\")")
-	public static WebElement Search_ConatctIcon;
+	public static AndroidElement Search_ConatctIcon;
 
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.EditText\").text(\"Find contacts\")")
 	public static AndroidElement findContacts;
@@ -101,22 +101,22 @@ public class Locators_Stability {
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"Test1\")")
 	public static AndroidElement SavedContact;
 
-	@FindBy(how=How.XPATH, using =("//android.widget.Button[@text='ALLOW']"))
+	@AndroidFindBy(xpath =("//android.widget.Button[@text='ALLOW']"))
 	public static AndroidElement AllowOptn;
 
-	@FindBy(how=How.XPATH, using =("//android.widget.ImageView[@content-desc='Call History']"))
+	@AndroidFindBy(xpath =("//android.widget.ImageView[@content-desc='Call History']"))
 	public static AndroidElement callHistoryImage;
 
-	@FindBy(how=How.XPATH, using =("//android.widget.TextView[@text='Call History']"))
-	public static WebElement callHistory;
+	@AndroidFindBy(xpath =("//android.widget.TextView[@text='Call History']"))
+	public static AndroidElement callHistory;
 
-	@FindBy(how=How.XPATH, using =("//android.widget.RelativeLayout[@index='1']/../..//android.widget.ImageView[@resource-id='com.android.dialer:id/icon']"))
+	@AndroidFindBy(xpath =("//android.widget.RelativeLayout[@index='1']/../..//android.widget.ImageView[@resource-id='com.android.dialer:id/icon']"))
 	public static AndroidElement callHistry_notification;
 
-	@FindBy(how=How.XPATH, using =("//android.widget.TextView[@text='Test1']"))
+	@AndroidFindBy(xpath =("//android.widget.TextView[@text='Test1']"))
 	public static AndroidElement  contactTest;
 
-	@FindBy(how=How.XPATH, using =("//android.widget.TextView[@text='Test1']/../..//android.widget.ImageView[@content-desc='Call Test1']"))
+	@AndroidFindBy(xpath =("//android.widget.TextView[@text='Test1']/../..//android.widget.ImageView[@content-desc='Call Test1']"))
 	public static AndroidElement Call_Contact;
 
 	@AndroidFindBy(xpath="//android.widget.TextView[@text='Airplane mode']/../..//android.widget.Switch[@text='ON']")
@@ -173,29 +173,35 @@ public class Locators_Stability {
 	@AndroidFindBy(xpath="//android.widget.TextView[@text='Refresh']")
 	public static AndroidElement RefreshOptn;
 
-	@FindBy(how=How.XPATH, using =("//android.widget.TextView[@text='Wi-Fi']/../..//android.widget.TextView[@resource-id='android:id/summary']"))
+	@AndroidFindBy(xpath =("//android.widget.TextView[@text='Wi-Fi']/../..//android.widget.TextView[@resource-id='android:id/summary']"))
 	public static AndroidElement connectedWIFI;
 
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"Wi-Fi\")")
 	public static AndroidElement WiFi_feature;
 
-	@FindBy(how=How.XPATH, using ="//android.view.View[contains(@content-desc,'Webpage not available')]")
-	public static WebElement networkNotAvailable;
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.view.View\").text(\"No Internet\")")
+	public static AndroidElement networkNotAvailable;
 	
-	@FindBy(how=How.XPATH, using ="//android.view.View[contains(@text,'Web Page Blocked')]")
-	public static WebElement WebPageBlocked;
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.view.View\").text(\"Web Page Blocked\")")
+	public static AndroidElement WebPageBlocked;
 	
-	@FindBy(how=How.XPATH, using ="//android.widget.Button[contains(@text,'BLOCK')]")
-	public static WebElement BlockBtn;
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.view.View\").text(\"This site can’t be reached\")")
+	public static AndroidElement siteNotloaded;
+	
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.view.View\").text(\"404\")")
+	public static AndroidElement site404Error;
+	
+	@AndroidFindBy(xpath ="//android.widget.Button[contains(@text,'BLOCK')]")
+	public static AndroidElement BlockBtn;
 
-	@FindBy(how=How.XPATH, using ="//android.widget.Button[contains(@text,'ACCEPT & CONTINUE')]")
-	public static WebElement AccptBtn;
+	@AndroidFindBy(xpath ="//android.widget.Button[contains(@text,'ACCEPT & CONTINUE')]")
+	public static AndroidElement AccptBtn;
 
-	@FindBy(how=How.XPATH, using ="//android.widget.Button[contains(@text,'NEXT')]")
-	public static WebElement NextIcon;
+	@AndroidFindBy(xpath ="//android.widget.Button[contains(@text,'NEXT')]")
+	public static AndroidElement NextIcon;
 
-	@FindBy(how=How.XPATH, using ="//android.widget.Button[contains(@text,'NO THANKS')]")
-	public static WebElement NothanksBtn;
+	@AndroidFindBy(xpath ="//android.widget.Button[contains(@text,'NO THANKS')]")
+	public static AndroidElement NothanksBtn;
 
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.LinearLayout\").resourceId(\"com.google.android.apps.messaging:id/swipeableContent\")")
 	public static AndroidElement first_sms_Thread; // Locator for First SMS Thread in INBOX.
@@ -278,17 +284,17 @@ public class Locators_Stability {
 	@AndroidFindBy(xpath="//android.widget.TextView[@text='External audio']")
 	public static AndroidElement External_Txt;
 
-	@FindBy(how=How.XPATH, using =("//android.widget.RelativeLayout/../..//android.widget.TextView[@text='RecordingSample']"))
+	@AndroidFindBy(xpath =("//android.widget.RelativeLayout/../..//android.widget.TextView[@text='RecordingSample']"))
 	public static AndroidElement selectAudio;
 	
 	@AndroidFindBy(xpath="//android.widget.ImageView[@resource-id='org.codeaurora.snapcam:id/shutter_button']")
-	public static WebElement cameraIcon;
+	public static AndroidElement cameraIcon;
 
 	@AndroidFindBy(xpath="//android.widget.ImageView[@content-desc='Review done']")
-	public static WebElement OK_btn_resultConfirmation_dialog;
+	public static AndroidElement OK_btn_resultConfirmation_dialog;
 
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.ImageView\").resourceId(\"com.android.mms:id/image_content\")")
-	//			@FindBy(how=How.XPATH, using =("//android.widget.LinearLayout[@resource-id='com.android.mms:id/image_attachment_view']/../..//android.widget.ImageView[@resource-id='com.android.mms:id/image_content']"))
+	//			@AndroidFindBy(xpath =("//android.widget.LinearLayout[@resource-id='com.android.mms:id/image_attachment_view']/../..//android.widget.ImageView[@resource-id='com.android.mms:id/image_content']"))
 	public static AndroidElement image_Attachment;
 
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.ImageView\").resourceId(\"com.android.mms:id/video_thumbnail\")")
@@ -298,13 +304,13 @@ public class Locators_Stability {
 	public static AndroidElement captureVideo;
 
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.ImageView\").resourceId(\"com.borqs.camera:id/video_capture\")")
-	public static WebElement videoCaptureIcon;
+	public static AndroidElement videoCaptureIcon;
 
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.ImageView\").resourceId(\"org.codeaurora.snapcam:id/video_button\")")
-	public static WebElement videoStopIcon;
+	public static AndroidElement videoStopIcon;
 
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.ImageView\").resourceId(\"org.codeaurora.snapcam:id/video_pause\")")
-	public static WebElement videopauseIcon;
+	public static AndroidElement videopauseIcon;
 
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"com.android.internal.widget.AccessibleTextView\").text(\"Attach others\")")
 	public static AndroidElement attachOthers;
@@ -333,14 +339,14 @@ public class Locators_Stability {
 	@AndroidFindBy(xpath="//android.widget.TextView[@text='Not sent, touch to try again']")
 	public static AndroidElement not_Sent_Text;
 
-	@FindBy(how=How.XPATH, using =("//android.view.ViewGroup[@index='1']/../..//android.widget.TextView[@resource-id='com.android.dialer:id/cliv_name_textview']"))
+	@AndroidFindBy(xpath =("//android.view.ViewGroup[@index='1']/../..//android.widget.TextView[@resource-id='com.android.dialer:id/cliv_name_textview']"))
 	public static AndroidElement Phonebook_firstContact;
 
-	@FindBy(how=How.XPATH, using =("//android.widget.ImageView[@content-desc='Speed dial']"))
-	public static WebElement speedDail;
+	@AndroidFindBy(xpath =("//android.widget.ImageView[@content-desc='Speed dial']"))
+	public static AndroidElement speedDail;
 
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").resourceId(\"com.android.dialer:id/search_box_start_search\")")
-	public static WebElement Search_ConatctDailer;
+	public static AndroidElement Search_ConatctDailer;
 
 	@AndroidFindBy(xpath="//android.widget.EditText[@text='Enter percentage of memory to fill']")
 	public static AndroidElement enterFill_Memory;
@@ -348,19 +354,19 @@ public class Locators_Stability {
 	@AndroidFindBy(xpath="//android.widget.Button[@text='Start Filling']")
 	public static AndroidElement startFilling;
 
-	@FindBy(how=How.XPATH, using =("//android.widget.LinearLayout[@resource-id='com.cyanogenmod.filemanager:id/navigation_view_details_item']/../..//android.widget.TextView[@text='FilledContent']"))
+	@AndroidFindBy(xpath =("//android.widget.LinearLayout[@resource-id='com.cyanogenmod.filemanager:id/navigation_view_details_item']/../..//android.widget.TextView[@text='FilledContent']"))
 	public static AndroidElement filedContact_File;
 
-	@FindBy(how=How.XPATH, using =("//android.widget.LinearLayout[@resource-id='com.cyanogenmod.filemanager:id/navigation_view_details_item']/../..//andrandroid.widget.ImageButton[@resoucre-id='com.cyanogenmod.filemanager:id/navigation_view_item_check']"))
+	@AndroidFindBy(xpath =("//android.widget.LinearLayout[@resource-id='com.cyanogenmod.filemanager:id/navigation_view_details_item']/../..//andrandroid.widget.ImageButton[@resoucre-id='com.cyanogenmod.filemanager:id/navigation_view_item_check']"))
 	public static AndroidElement checkbox;
 
-	@FindBy(how=How.XPATH, using =("//android.widget.RelativeLayout[@resource-id='com.cyanogenmod.filemanager:id/navigation_actionbar']/../..//android.widget.ImageButton[@resource-id='com.cyanogenmod.filemanager:id/ab_search']"))
-	public static WebElement SearchOptn;
+	@AndroidFindBy(xpath =("//android.widget.RelativeLayout[@resource-id='com.cyanogenmod.filemanager:id/navigation_actionbar']/../..//android.widget.ImageButton[@resource-id='com.cyanogenmod.filemanager:id/ab_search']"))
+	public static AndroidElement SearchOptn;
 
-	@FindBy(how=How.XPATH, using ="//android.widget.EditText[contains(@text,'Type your search')]")
-	public static WebElement SearchTxt;
+	@AndroidFindBy(xpath ="//android.widget.EditText[contains(@text,'Type your search')]")
+	public static AndroidElement SearchTxt;
 
-	@FindBy(how=How.XPATH, using =("//android.widget.LinearLayout[@index='1']/../..//android.widget.Button[@text='ALLOW']"))
+	@AndroidFindBy(xpath =("//android.widget.LinearLayout[@index='1']/../..//android.widget.Button[@text='ALLOW']"))
 	public static AndroidElement Allow_FileExplorer;
 
 	@AndroidFindBy(xpath="//android.widget.ImageButton[@content-desc='add new contact']")
@@ -381,25 +387,25 @@ public class Locators_Stability {
 	@AndroidFindBy(xpath="//android.widget.TextView[@content-desc='Save']")
 	public static AndroidElement save_Icon;
 	
-	@FindBy(how=How.XPATH, using =("//android.view.View[@index='0']/../..//android.view.View[@content-desc=' me, Email_Open,']"))
+	@AndroidFindBy(xpath =("//android.view.View[@index='0']/../..//android.view.View[@content-desc=' me, Email_Open,']"))
 	public static AndroidElement receive_mail;
 	
-	@FindBy(how=How.XPATH, using =("//android.widget.FrameLayout[@index='2']/../..//android.widget.TextView[@text='GOT IT']"))
+	@AndroidFindBy(xpath =("//android.widget.FrameLayout[@index='2']/../..//android.widget.TextView[@text='GOT IT']"))
 	public static AndroidElement gmail_gotIt;
 
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").textContains(\"Add an email address\")")
 	public static AndroidElement add_email_address;
 	
-	@FindBy(how=How.XPATH, using =("//android.widget.LinearLayout[@index='0']/../..//android.widget.TextView[@text='Google']"))
+	@AndroidFindBy(xpath =("//android.widget.LinearLayout[@index='0']/../..//android.widget.TextView[@text='Google']"))
 	public static AndroidElement googleAccount;
 	
-	@FindBy(how=How.XPATH, using =("//android.widget.LinearLayout[@index='0']/../..//android.widget.TextView[@text='Google']"))
+	@AndroidFindBy(xpath =("//android.widget.LinearLayout[@index='0']/../..//android.widget.TextView[@text='Google']"))
 	public static AndroidElement enetrEmailId;
 
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Add account\")")
 	public static AndroidElement add_Account;
 	
-	@FindBy(how=How.XPATH, using =("//android.widget.LinearLayout[@index='2']/../..//android.widget.TextView[contains(@text,'@gmail.com')]"))
+	@AndroidFindBy(xpath =("//android.widget.LinearLayout[@index='2']/../..//android.widget.TextView[contains(@text,'@gmail.com')]"))
 	public static AndroidElement connectedAccount;
 
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Google\")")
@@ -462,7 +468,7 @@ public class Locators_Stability {
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").resourceId(\"com.google.android.gm:id/delete\")")
 	public static AndroidElement delete_gmail;
 
-	@FindBy(how=How.XPATH, using =("//android.widget.LinearLayout[@index='1']/../..//android.widget.ImageView[@content-desc='More options']"))
+	@AndroidFindBy(xpath =("//android.widget.LinearLayout[@index='1']/../..//android.widget.ImageView[@content-desc='More options']"))
 	public static AndroidElement moreOptions_Mail;
 	
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Forward\")")
@@ -477,10 +483,10 @@ public class Locators_Stability {
 	@AndroidFindBy(xpath="//*[contains(@content-desc,'Open navigation drawer')]")
 	public static AndroidElement navigate_OptionMail;
 	
-	@FindBy(how=How.XPATH, using =("//android.widget.LinearLayout[@index='8']/../..//android.widget.TextView[@text='Sent']"))
+	@AndroidFindBy(xpath =("//android.widget.LinearLayout[@index='8']/../..//android.widget.TextView[@text='Sent']"))
 	public static AndroidElement sent_MailOptn;
 	
-	@FindBy(how=How.XPATH, using =("//android.widget.LinearLayout[@index='8']/../..//android.widget.TextView[@text='Drafts']"))
+	@AndroidFindBy(xpath =("//android.widget.LinearLayout[@index='8']/../..//android.widget.TextView[@text='Drafts']"))
 	public static AndroidElement draft_MailOptn;
 
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").resourceId(\"com.google.android.gm:id/add_attachment\")")
@@ -489,7 +495,7 @@ public class Locators_Stability {
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Attach file\")")
 	public static AndroidElement attach_File;
 	
-	@FindBy(how=How.XPATH, using =("//android.widget.LinearLayout[@index='0']/../..//*[contains(@text,'ATT_Stability_Email')]"))
+	@AndroidFindBy(xpath =("//android.widget.LinearLayout[@index='0']/../..//*[contains(@text,'ATT_Stability_Email')]"))
 	public static AndroidElement File;
 	
 	@AndroidFindBy(xpath="//*[@content-desc='More options']")
@@ -528,16 +534,16 @@ public class Locators_Stability {
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Gmail\")")
 	public static AndroidElement gmail_Share;
 	
-	@FindBy(how=How.XPATH, using =("//android.widget.LinearLayout[@index='4']/../..//android.widget.ImageButton[@content-desc='Save']"))
+	@AndroidFindBy(xpath =("//android.widget.LinearLayout[@index='4']/../..//android.widget.ImageButton[@content-desc='Save']"))
 	public static AndroidElement saveOptions;// This Locator is for download 
 	
-	@FindBy(how=How.XPATH, using =("//android.support.v7.widget.RecyclerView[@resource-id='com.google.android.gm:id/thread_list_view']/../..//android.view.View[@index='3']"))
+	@AndroidFindBy(xpath =("//android.support.v7.widget.RecyclerView[@resource-id='com.google.android.gm:id/thread_list_view']/../..//android.view.View[@index='3']"))
 	public static AndroidElement drafts_Audio;
 	
-	@FindBy(how=How.XPATH, using =("//android.support.v7.widget.RecyclerView[@resource-id='com.google.android.gm:id/thread_list_view']/../..//android.view.View[@index='1']"))
+	@AndroidFindBy(xpath =("//android.support.v7.widget.RecyclerView[@resource-id='com.google.android.gm:id/thread_list_view']/../..//android.view.View[@index='1']"))
 	public static AndroidElement drafts_Video;
 	
-	@FindBy(how=How.XPATH, using =("//android.support.v7.widget.RecyclerView[@resource-id='com.google.android.gm:id/thread_list_view']/../..//android.view.View[@index='2']"))
+	@AndroidFindBy(xpath =("//android.support.v7.widget.RecyclerView[@resource-id='com.google.android.gm:id/thread_list_view']/../..//android.view.View[@index='2']"))
 	public static AndroidElement drafts_Image;
 	
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Recording list\")")
@@ -565,13 +571,17 @@ public class Locators_Stability {
 	public static AndroidElement OK;
 	
 	@AndroidFindBy(xpath="//*[@text='IDCSONWAP']/..//*[@text='Connected']")
-	public static AndroidElement wifi_ConnecteState;
+	public static AndroidElement wifi_ConnectedState;
+	
+	@AndroidFindBy(uiAutomator = "new uiSelector().className(\"android.widget.TextView\").text(\"IDCSONWAP\").textContains(\"Connected\")")
+	public static AndroidElement wifi_ConnectedStateByUiAutomator;
 
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.Switch\").text(\"OFF\")")
 	public static AndroidElement switch_OffState;
 
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.Switch\").text(\"ON\")")
 	public static AndroidElement switch_OnState;
+
 	
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.EditText\").resourceId(\"com.android.settings:id/password\")")
 	public static AndroidElement wifiPasswordTextBox;
@@ -582,10 +592,10 @@ public class Locators_Stability {
 	@AndroidFindBy(xpath="//*[@text='Battery is full' or @text='Sonim AppKey Policy']")
 	public static AndroidElement batteryFullorAppKey;
 	
-	@FindBy(how=How.XPATH, using ="//android.widget.TextView[contains(@resource-id,'com.android.soundrecorder:id/action_delete')]")
+	@AndroidFindBy(xpath ="//android.widget.TextView[contains(@resource-id,'com.android.soundrecorder:id/action_delete')]")
 	 public static AndroidElement DeleteIcon;
 	
-	@FindBy(how=How.XPATH, using =("//android.widget.LinearLayout[@index='0']/android.widget.Button[@index='1']"))
+	@AndroidFindBy(xpath =("//android.widget.LinearLayout[@index='0']/android.widget.Button[@index='1']"))
 	public static AndroidElement DeleteBtn;
 	
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.Button\").textContains(\"ACCEPT\")")
@@ -594,22 +604,22 @@ public class Locators_Stability {
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.Button\").resourceId(\"com.android.chrome:id/next_button\")")
 	public static AndroidElement NEXT;  //This Locator is in Chrome Breowser.	
 
-	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.Button\").text(\"NO THANKS\")")
+	@AndroidFindBy(uiAutomator="new UiSelector().resourceId(\"com.android.chrome:id/negative_button\")")
 	public static AndroidElement NO_THANKS;  //This L
 	
 	@AndroidFindBy(xpath="//android.widget.Switch[@text='OFF']")
 	public static AndroidElement switch_Off_State;
 	
-	@FindBy(how=How.XPATH, using ="//android.widget.ImageButton[contains(@resource-id,'com.android.chrome:id/menu_button')]")
+	@AndroidFindBy(xpath ="//android.widget.ImageButton[contains(@resource-id,'com.android.chrome:id/menu_button')]")
 	public static AndroidElement MenuChrome;
 	
-	@FindBy(how=How.XPATH, using ="//android.widget.TextView[contains(@text,'Settings')]")
+	@AndroidFindBy(xpath ="//android.widget.TextView[contains(@text,'Settings')]")
 	public static AndroidElement SettgsOptn;
 
-	@FindBy(how=How.XPATH, using ="//android.widget.TextView[contains(@text,'Home page')]")
+	@AndroidFindBy(xpath ="//android.widget.TextView[contains(@text,'Home page')]")
 	public static AndroidElement Homepage;
 
-	@FindBy(how=How.XPATH, using ="//android.widget.Switch[contains(@text,'ON')]")
+	@AndroidFindBy(xpath ="//android.widget.Switch[contains(@text,'ON')]")
 	public static AndroidElement OnHomepge;
 	
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.Button\").text(\"SAVE\")")
@@ -618,13 +628,13 @@ public class Locators_Stability {
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.Button\").text(\"Save\")")
 	public static AndroidElement SaveOptns;
 	
-	@FindBy(how=How.XPATH, using =("//android.widget.ImageButton[@content-desc='Navigate up']"))
+	@AndroidFindBy(xpath =("//android.widget.ImageButton[@content-desc='Navigate up']"))
 	public static AndroidElement NavigateUpSrchEng;
 		
-	@FindBy(how=How.XPATH, using =("//android.widget.ImageButton[@content-desc='Go back']"))
+	@AndroidFindBy(xpath =("//android.widget.ImageButton[@content-desc='Go back']"))
 	public static AndroidElement NavigateBack;	
 	
-	@FindBy(how=How.XPATH, using ="//android.widget.TextView[contains(@text,'Open this page')]")
+	@AndroidFindBy(xpath ="//android.widget.TextView[contains(@text,'Open this page')]")
 	public static AndroidElement OpnPage;
 
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.EditText\").resourceId(\"com.android.chrome:id/homepage_url_edit\")")
@@ -633,13 +643,13 @@ public class Locators_Stability {
 	@AndroidFindBy(xpath="//android.widget.TextView[@text='www.google.co.in']")
 	public static AndroidElement googleCoIn_Text;
 	
-	@FindBy(how=How.XPATH, using =("//android.widget.ImageButton[@content-desc='Bookmark this page']"))
+	@AndroidFindBy(xpath =("//android.widget.ImageButton[@content-desc='Bookmark this page']"))
 	public static AndroidElement BookmarkIcon;
 	
-	@FindBy(how=How.XPATH, using =("//android.widget.ImageButton[@content-desc='Edit bookmark']"))
+	@AndroidFindBy(xpath =("//android.widget.ImageButton[@content-desc='Edit bookmark']"))
 	public static AndroidElement editBookmark;
 	
-	@FindBy(how=How.XPATH, using =("//android.widget.TextView[@content-desc='Bookmarks']"))
+	@AndroidFindBy(xpath =("//android.widget.TextView[@content-desc='Bookmarks']"))
 	public static AndroidElement Bookmarksoptn;
 	
 	@AndroidFindBy(xpath="//android.widget.EditText[@resource-id='com.android.chrome:id/url_bar']")
@@ -693,26 +703,26 @@ public class Locators_Stability {
 	@AndroidFindBy(xpath="//android.widget.LinearLayout[@resource-id='com.android.chrome:id/bookmark_row']/../..//android.widget.TextView[contains(@text,'www.nytimescom - Google Search')")
 	public static AndroidElement nyTimesPage;
 
-	@FindBy(how=How.XPATH, using ="//android.widget.Button[contains(@text,'CLEAR BROWSING DATAï¿½')]")
-	public static WebElement ClearBrowsngDataOptn;
+	@AndroidFindBy(xpath ="//android.widget.Button[contains(@text,'CLEAR BROWSING DATAï¿½')]")
+	public static AndroidElement ClearBrowsngDataOptn;
 
-	@FindBy(how=How.XPATH, using ="//android.widget.Spinner[contains(@resource-id,'com.android.chrome:id/spinner')]")
-	public static WebElement ClrDataDropdown;
+	@AndroidFindBy(xpath ="//android.widget.Spinner[contains(@resource-id,'com.android.chrome:id/spinner')]")
+	public static AndroidElement ClrDataDropdown;
 
-	@FindBy(how=How.XPATH, using ="//android.widget.CheckedTextView[contains(@text,'All time')]")
-	public static WebElement begningTimeOptn;
+	@AndroidFindBy(xpath ="//android.widget.CheckedTextView[contains(@text,'All time')]")
+	public static AndroidElement begningTimeOptn;
 
-	@FindBy(how=How.XPATH, using ="//android.widget.Button[contains(@text,'CLEAR DATA')]")
-	public static WebElement ClrDataBtn;
+	@AndroidFindBy(xpath ="//android.widget.Button[contains(@text,'CLEAR DATA')]")
+	public static AndroidElement ClrDataBtn;
 
-	@FindBy(how=How.XPATH, using =("//android.widget.TextView[@content-desc='Search']"))
-	public static WebElement HistrySearchIcon;
+	@AndroidFindBy(xpath =("//android.widget.TextView[@content-desc='Search']"))
+	public static AndroidElement HistrySearchIcon;
 
-	@FindBy(how=How.XPATH, using ="//android.widget.EditText[contains(@text,'Search your history')]")
-	public static WebElement SearchField;
+	@AndroidFindBy(xpath ="//android.widget.EditText[contains(@text,'Search your history')]")
+	public static AndroidElement SearchField;
 
-	@FindBy(how=How.XPATH, using ="//android.widget.Button[contains(@text,'CLEAR')]")
-	public static WebElement HistryClear;
+	@AndroidFindBy(xpath ="//android.widget.Button[contains(@text,'CLEAR')]")
+	public static AndroidElement HistryClear;
 	
 	@AndroidFindBy(xpath="//*[@text='SIGN UP']") 
 	public static AndroidElement SignUpLink;
@@ -733,7 +743,7 @@ public class Locators_Stability {
 	
 //	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.Button\").text(\"MOVE TO TRASH\")")
 	
-	@FindBy(how=How.XPATH, using ="//android.widget.Button[contains(@text,'MOVE TO TRASH')]")
+	@AndroidFindBy(xpath ="//android.widget.Button[contains(@text,'MOVE TO TRASH')]")
 	public static AndroidElement move_To_Trash;
 	
 	@AndroidFindBy(xpath="//*[contains(@content-desc,'Cancel')]")
@@ -744,4 +754,146 @@ public class Locators_Stability {
 	
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").resourceId(\"com.google.android.apps.photos:id/move_to_trash\")")
 	public static AndroidElement delete_Icon_photo; //
+	
+	//---------------------------------------------Stabilization starts from here---------------------------------------------// 
+	
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.Switch\").instance(0).text(\"ON\")")
+	public static AndroidElement mobileDataOption;
+	
+	@AndroidFindBy(id ="terms_accept")
+	public static AndroidElement ACCEPTCONTINUEByID;
+	
+	@AndroidFindBy(uiAutomator = "new UiSelector().text(\"ACCEPT & CONTINUE\")")
+	public static AndroidElement ACCEPTCONTINUEByText;
+	
+	@AndroidFindBy(uiAutomator = "new UiSelector().text(\"ACCEPT & CONTINUE\")")
+	public static AndroidElement ACCEPTCONTINUEByResourceId;	
+	
+	@AndroidFindBy(xpath = "//android.widget.Button[@text='ACCEPT & CONTINUE']")
+	public static AndroidElement ACCEPTCONTINUEByXpath;	
+	
+	@AndroidFindBy(xpath = "//android.widget.Switch[@text='OFF']")
+	public static AndroidElement switch_OffStateByXpath;
+		
+	@AndroidFindBy(id="password")
+	public static AndroidElement wifiPasswordTextBoxById;
+	
+	@AndroidFindBy(uiAutomator = "new UiSelector.className(\"android.widget.EditText\").index(\"1\")")
+	public static AndroidElement wifiPasswordTextBoxByIndex;
+	
+	@AndroidFindBy(xpath = "//android.widget.EditText[@id='password']")
+	public static AndroidElement wifiPasswordTextBoxByXpath;
+	
+	@AndroidFindBy(id="button1")
+	public static AndroidElement connectById;
+	
+	@AndroidFindBy(uiAutomator = "new UiSelector.className(\"android.widget.Button\").textContains(\"CONNECT\")")
+	public static AndroidElement connectByContains;
+	
+	@AndroidFindBy(xpath = "//android.widget.Button[@text='CONNECT']")
+	public static AndroidElement connectByXpath;
+	
+	@AndroidFindBy(id="next_button")
+	public static AndroidElement NEXTById;
+	
+	@AndroidFindBy(uiAutomator = "new UiSelector.className(\"android.widget.Button\").textContains(\"NEX\")")
+	public static AndroidElement NEXTByContains;
+	
+	@AndroidFindBy(uiAutomator = "new UiSelector.className(\"android.widget.Button\").text(\"NEXT\")")
+	public static AndroidElement NEXTByText;
+	
+	@AndroidFindBy(xpath ="//android.widget.Button[@text='NEXT']")
+	public static AndroidElement NEXTByXpath;
+	
+	@AndroidFindBy(id="com.android.chrome:id/negative_button")
+	public static AndroidElement NO_THANKS_By_Id;
+	
+	@AndroidFindBy(uiAutomator = "new UiSelector.className(\"android.widget.Button\").textContains(\"thank\")")
+	public static AndroidElement NO_THANKS_By_Contains;
+	
+	@AndroidFindBy(uiAutomator = "new UiSelector.className(\"android.widget.Button\").text(\"No, thanks\")")
+	public static AndroidElement NO_THANKS_By_Text;
+	
+	@AndroidFindBy(xpath ="//android.widget.Button[@text='No, thanks']")
+	public static AndroidElement NO_THANKS_By_Xpath;
+	
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.view.View\").textContains(\"DOWNLOAD WHEN\")")
+	public static AndroidElement networkNotAvailableByContains;
+	
+	@AndroidFindBy(xpath = "//android.view.View[@text='No Internet']")
+	public static AndroidElement networkNotAvailableByXpath;
+	
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.view.View\").textContains(\"Blocked\")")
+	public static AndroidElement WebPageBlockedByContains;
+	
+	@AndroidFindBy(xpath ="//android.view.View[@text='Web Page Blocked']")
+	public static AndroidElement WebPageBlockedByXpath;
+	
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.view.View\").textContains(\"ERR_CONNECTION_RESET\")")
+	public static AndroidElement siteNotloadedByContains;
+	
+	@AndroidFindBy(xpath = "//android.view.View[@text='ERR_CONNECTION_RESET']")
+	public static AndroidElement siteNotloadedByXpath;
+	
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.view.View\").textContains(\"The site you were\")")
+	public static AndroidElement site404ErrorByContains;
+	
+	@AndroidFindBy(xpath = "//android.view.View[@text='404']")
+	public static AndroidElement site404ErrorByXpath;
+	
+	@AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.android.chrome:id/tab_switcher_button\")")
+	public static AndroidElement tabSwitcherButton;
+	
+	@AndroidFindBy(id="com.android.chrome:id/tab_switcher_button")
+	public static AndroidElement tabSwitcherButtonById;
+	
+	@AndroidFindBy(xpath = "//android.widget.ImageButton[@id='tab_switcher_button']")
+	public static AndroidElement tabSwitcherButtonByXpath;
+	
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.ImageButton\").descriptionContains(\"open tabs, tap to switch tabs\")")
+	public static AndroidElement tabSwitcherButtonByContectDesc;
+	
+	@AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.android.chrome:id/menu_button\")")
+	public static AndroidElement MoreOptnsIcn;
+	
+	@AndroidFindBy(id = "menu_button")
+	public static AndroidElement MoreOptnsIcnById;
+	
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.ImageButton\").descriptionContains(\"More options\")")
+	public static AndroidElement MoreOptnsIcnByContectDesc;
+	
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"Close all tabs\")")
+	public static AndroidElement closeAllBrowserTabs;
+	
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").resourceId(\"com.android.chrome:id/menu_item_text\")")
+	public static AndroidElement closeAllBrowserTabsByUiSelectorId;
+	
+	@AndroidFindBy(id = "menu_item_text")
+	public static AndroidElement closeAllBrowserTabsById;
+	
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").descriptionContains(\"Close all tabs\")")
+	public static AndroidElement closeAllBrowserTabsByContectDesc;
+	
+	@AndroidFindBy(xpath = "//android.widget.TextView[@id='menu_item_text']")
+	public static AndroidElement closeAllBrowserTabsByXpath;
+	
+	//Locators for wifi password textfield
+	@AndroidFindBy(xpath="//android.widget.EditText[@resource-id='com.android.settings:id/password']")
+	public static AndroidElement wifi_PsswdBx; // Resource ID
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.EditText\").index(1)")
+	public static AndroidElement wifi_PsswdBx_index; // index
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.EditText\").instance(0)")
+	public static AndroidElement wifi_PsswdBx_instance; // Instance
+	
+	
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.view.View\").text(\"Your connection is not private\")")
+	public static AndroidElement connectionNotPrivate;
+	
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"IDCSONWAP\")")
+	public static AndroidElement Wifi_IDC_UiSelector;
+	
+	
+	
 }

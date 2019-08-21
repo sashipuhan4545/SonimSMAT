@@ -144,6 +144,7 @@ public class XP3_Stability_Util extends BaseUtil {
 				minWait();
 				clickBtn(Locators_DeviceStability.contact_addContactsOptn);
 			}
+			
 
 			enterTextToInputField(Locators_DeviceStability.contactName, name);
 			minWait();	

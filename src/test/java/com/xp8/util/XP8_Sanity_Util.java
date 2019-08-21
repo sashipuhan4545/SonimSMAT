@@ -4622,11 +4622,11 @@ public class XP8_Sanity_Util extends BaseUtil {
 	public void clearRecentApps_O() throws InterruptedException, IOException {		
 		// For Android O.
 		try {
-			customWait(3000);
+			minWait();
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_HOME);
 			minWait();
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
-			customWait(3000);
+			customWait(2000);
 			if(isElementExist(Locators_BaseUtil.no_Recent_Items)) {
 				APP_LOGS.info("No Recent Applications Present");
 				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_HOME);

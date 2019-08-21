@@ -2,22 +2,29 @@ package com.xp8.util;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 import org.json.simple.parser.ParseException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
+import com.google.common.collect.ImmutableMap;
 import com.graphics.gui.JsonFileReaderAndWriter;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
+
 import com.xp8.util.BaseUtil;
+
 import application.AllQA;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.android.AndroidKeyCode;
@@ -32,13 +39,18 @@ public class Stability_Browser_Util extends BaseUtil {
 	public boolean check1 = false;
 	public boolean check2 = false;
 	boolean value = false;
-	public  String p_Id	 = "";								// Primary Device Serial Number.
+	public String p_Id	 = "";								// Primary Device Serial Number.
 	public String r_Id	 = "";								// Reference Device Serial Number.
 	public String p_b_No = "";			   					// Primary Device Build Number.
 	public String r_b_No = ""; 								// Reference Device Build Number.
 	public String pryNum = AllQA.PRIMARYDEVMDN;	// Reference Device MDN. 
 	public String refNum = AllQA.REFERENCEDEVMDN;	// Reference Device MDN.
+	public String SSID=AllQA.SSID;
+	public String WIFIPASSWORD=AllQA.WIFIPASSWORD;
 
+	/*public String pryNum = AllQA.PRIMARYDEVMDN;	// Reference Device MDN. 
+	public String refNum = AllQA.REFERENCEDEVMDN;	// Reference Device MDN.
+*/
 
 	public void fetch_Devices_Details() throws InterruptedException, FileNotFoundException, IOException, ParseException {
 
@@ -84,10 +96,14 @@ public class Stability_Browser_Util extends BaseUtil {
 			customWait(15000);
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
 			minWait();
-		} catch (NoSuchElementException e) {
-			// TODO Auto-generated catch block
+		} 
+		catch (org.openqa.selenium.NoSuchElementException e) {
+			test.log(LogStatus.ERROR, "Error in the locators->performAction()");
 			e.printStackTrace();
-			test.log(LogStatus.ERROR, " Airplane settings page is not found");
+		}
+		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in performAction() ");
+			e.printStackTrace();
 		}
 	}
 
@@ -147,11 +163,14 @@ public class Stability_Browser_Util extends BaseUtil {
 			}   
 			System.out.println("Out ");
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+			test.log(LogStatus.ERROR, "Error in the locators->memoryFill()");
 			e.printStackTrace();
-			Assert.fail();
-		}									
+		}
+		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in memoryFill() ");
+			e.printStackTrace();
+		}			
 	}
 
 
@@ -160,42 +179,158 @@ public class Stability_Browser_Util extends BaseUtil {
 			minWait();
 			aDriver.findElementByAndroidUIAutomator("new UiScrollable(new UiSelector().className(\"android.support.v7.widget.RecyclerView\")).scrollIntoView(new UiSelector().text(\"Wi-Fi\"))").click();
 			minWait();
-		} catch (Exception e) {
+		}  catch (org.openqa.selenium.NoSuchElementException e) {
+			test.log(LogStatus.ERROR, "Error in the locators->clickOnWifi()");
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in clickOnWifi() ");
+			e.printStackTrace();
+		}	
+	}
+
+	public void enable_Mobile_Data() {
+		try {
+			minWait();
+			if (!isElementExist(Locators_Stability.mobileDataOption)) {
+				System.out.println("Mobile data is OFF");
+				WebDriverWait wait = new WebDriverWait(aDriver, 60);
+				minWait();
+				clickBtn(multi_Loc_Strategy(Locators_Stability.switch_OffState, Locators_Stability.switch_OffStateByXpath, null, null, null, 892, 1032));
+				System.out.println("Mobile data is turned ON");
+				wait.until(ExpectedConditions.visibilityOf(Locators_Stability.mobileDataOption));
+			}		
+			else{
+				System.out.println("Mobile data is turned ON");
+			}
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+			test.log(LogStatus.ERROR, "Error in the locators->setUp_And_Enable_Mobile_Data()");
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in setUp_And_Enable_Mobile_Data() ");
+			e.printStackTrace();
+		}
+	}
+	
+	/*public void setUp_And_Enable_WiFi() {
+		try {
+			WebDriverWait wait = new WebDriverWait(aDriver, 60);
+			minWait();
+			if (!isElementExist(multi_Loc_Strategy(Locators_Stability.wifi_ConnectedState, Locators_Stability.wifi_ConnectedStateByUiAutomator, null, null, null, 0, 0))) {
+				System.out.println("Wifi is not connected");
+				customWait(2000);
+				if(isElementExist(Locators_Stability.switch_OffState)) {
+					clickBtn(Locators_Stability.switch_OffState);
+					System.out.println("Wifi is turned ON");
+					wait.until(ExpectedConditions.visibilityOf(Locators_Stability.wifi_IDC));
+				}
+				clickBtn(multi_Loc_Strategy(Locators_Stability.switch_OffState, Locators_Stability.switch_OffStateByXpath, null, null, null, 892, 1032));
+				//customWait(5000);
+				if (!isElementExist(multi_Loc_Strategy(Locators_Stability.wifi_ConnectedStateByUiAutomator, Locators_Stability.wifi_ConnectedState, null, null, null, 0, 0))) {
+					customWait(2000);
+					scrollToText(SSID);
+				//	aDriver.findElementByAndroidUIAutomator("new UiScrollable(new UiSelector().className(\"android.support.v7.widget.RecyclerView\")).scrollIntoView(new UiSelector().text(\""+SSID+"\")").click();
+					
+					minWait();
+					enterTextToInputField(multi_Loc_Strategy(Locators_Stability.wifi_PsswdBx, Locators_Stability.wifi_PsswdBx_index, Locators_Stability.wifi_PsswdBx_instance, null, null, 135, 424),WIFIPASSWORD);
+					minWait();
+					clickBtn(multi_Loc_Strategy(Locators_Stability.connect, Locators_Stability.connectById, Locators_Stability.connectByContains, Locators_Stability.connectByXpath, null, 705, 881));
+					customWait(7000);
+					wait.until(ExpectedConditions.visibilityOf(multi_Loc_Strategy(Locators_Stability.wifi_ConnectedStateByUiAutomator, Locators_Stability.wifi_ConnectedState, null, null, null, 0, 0)));
+				}
+			}
+			
+			else{
+				System.out.println("Wifi is ON");
+			}
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+			test.log(LogStatus.ERROR, "Error in the locators->setUp_And_Enable_WiFi()");
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in setUp_And_Enable_WiFi() ");
+			e.printStackTrace();
+		}
+	}*/
+	
+	public void setUp_And_Enable_WiFi() {
+		try {
+			WebDriverWait wait = new WebDriverWait(aDriver, 60);
+			minWait();
+			if (!isElementExist(multi_Loc_Strategy(Locators_Stability.wifi_ConnectedState, Locators_Stability.wifi_ConnectedStateByUiAutomator, null, null, null, 0, 0))) {
+				System.out.println("Wifi is not connected");
+				customWait(2000);
+				if(isElementExist(Locators_Stability.switch_OffState)){
+					clickBtn(Locators_Stability.switch_OffState);
+					System.out.println("Wifi is turned ON");
+				}
+				else{
+					System.out.println("Wifi is ON but not connected");
+				}
+				
+				//wait.until(ExpectedConditions.visibilityOf(Locators_Stability.wifi_IDC));
+				if (!isElementExist(multi_Loc_Strategy(Locators_Stability.wifi_ConnectedStateByUiAutomator, Locators_Stability.wifi_ConnectedState, null, null, null, 0, 0))) {
+					customWait(5000);
+					if(isElementExist(Locators_Stability.Wifi_IDC_UiSelector)){
+						//scrollToElements(Locators_Stability.Wifi_IDC_UiSelector);
+						scrollToText(SSID);
+						clickBtn(Locators_Stability.Wifi_IDC_UiSelector);
+						//aDriver.findElementByAndroidUIAutomator("new UiScrollable(new UiSelector().className(\"android.support.v7.widget.RecyclerView\")).scrollIntoView(new UiSelector().text(\"IDCSONWAP\"))").click();
+						System.out.println("Clicked on IDCSONWAP");	
+					}
+					else{
+						clickBackButton(2);
+						//scrollToElements(Locators_Stability.Wifi_IDC_UiSelector);
+						scrollToText(SSID);
+						clickBtn(Locators_Stability.Wifi_IDC_UiSelector);
+						//aDriver.findElementByAndroidUIAutomator("new UiScrollable(new UiSelector().className(\"android.support.v7.widget.RecyclerView\")).scrollIntoView(new UiSelector().text(\"IDCSONWAP\"))").click();
+						System.out.println("Clicked on IDCSONWAP");
+					}
+					minWait();
+					enterTextToInputField(multi_Loc_Strategy(Locators_Stability.wifiPasswordTextBox, Locators_Stability.wifiPasswordTextBoxById, Locators_Stability.wifiPasswordTextBoxByIndex, Locators_Stability.wifiPasswordTextBoxByXpath, null, 135, 424),"1dcS0n1md0tc0MbLr");
+					System.out.println("Entered PWD");
+					customWait(3000);
+					clickBtn(multi_Loc_Strategy(Locators_Stability.connect, Locators_Stability.connectById, Locators_Stability.connectByContains, Locators_Stability.connectByXpath, null, 705, 881));
+					System.out.println("Clicked on CONNECT");
+					
+					wait.until(ExpectedConditions.visibilityOf(multi_Loc_Strategy(Locators_Stability.wifi_ConnectedStateByUiAutomator, Locators_Stability.wifi_ConnectedState, null, null, null, 0, 0)));
+					System.out.println("Waited for Visibility of Connect");
+				}
+			}
+			
+			else{
+				System.out.println("Wifi is turned ON");
+			}
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+			test.log(LogStatus.ERROR, "Error in the locators->setUp_And_Enable_WiFi()");
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in setUp_And_Enable_WiFi() ");
+			e.printStackTrace();
 		}
 	}
 
-	public void setUp_And_Enable_WiFi() {
-		try {
-			minWait();
-			if (!isElementExist(Locators_Stability.wifi_ConnecteState)) {
-				customWait(2000);
-				clickBtn(Locators_Stability.switch_OffState);
-				customWait(10000);
-				if (!isElementExist(Locators_Stability.wifi_ConnecteState)) {
-					aDriver.findElementByAndroidUIAutomator("new UiScrollable(new UiSelector().className(\"android.support.v7.widget.RecyclerView\")).scrollIntoView(new UiSelector().text(\"IDCSONWAP\"))").click();
-					minWait();
-					enterTextToInputField(Locators_Stability.wifiPasswordTextBox,"1dcS0n1md0tc0MbLr");
-					minWait();
-					clickBtn(Locators_Stability.connect);
-					customWait(7000);
-				}
-			}			
-		} catch (Exception e) {
-		}
-	}
 
 	public void clearChromePermission() {
 		try {
-			if (isElementExist(Locators_Stability.ACCEPTCONTINUE)) {
-				customWait(3000);
-				clickBtn(Locators_Stability.ACCEPTCONTINUE);
-				customWait(5000);
-				clickBtn(Locators_Stability.NEXT);
-				customWait(3000);
-				clickBtn(Locators_Stability.NO_THANKS);
-				customWait(2000);
+			WebDriverWait wait = new WebDriverWait(aDriver, 60);
+			if (isElementExist(multi_Loc_Strategy(Locators_Stability.ACCEPTCONTINUE, Locators_Stability.ACCEPTCONTINUEByID, Locators_Stability.ACCEPTCONTINUEByResourceId, Locators_Stability.ACCEPTCONTINUEByText, Locators_Stability.ACCEPTCONTINUEByXpath, 332, 1764))) {
+				wait.until(ExpectedConditions.visibilityOf(multi_Loc_Strategy(Locators_Stability.ACCEPTCONTINUE, Locators_Stability.ACCEPTCONTINUEByID, Locators_Stability.ACCEPTCONTINUEByResourceId, Locators_Stability.ACCEPTCONTINUEByText, Locators_Stability.ACCEPTCONTINUEByXpath, 332, 1764)));
+				clickBtn(multi_Loc_Strategy(Locators_Stability.ACCEPTCONTINUE, Locators_Stability.ACCEPTCONTINUEByID, Locators_Stability.ACCEPTCONTINUEByResourceId, Locators_Stability.ACCEPTCONTINUEByText, Locators_Stability.ACCEPTCONTINUEByXpath, 332, 1764));
+				wait.until(ExpectedConditions.visibilityOf(multi_Loc_Strategy(Locators_Stability.NEXT, Locators_Stability.NEXTById, Locators_Stability.NEXTByContains, Locators_Stability.NEXTByText, Locators_Stability.NEXTByXpath, 48, 1764)));
+				clickBtn(multi_Loc_Strategy(Locators_Stability.NEXT, Locators_Stability.NEXTById, Locators_Stability.NEXTByContains, Locators_Stability.NEXTByText, Locators_Stability.NEXTByXpath, 48, 1764));
+				wait.until(ExpectedConditions.visibilityOf(multi_Loc_Strategy(Locators_Stability.NO_THANKS, Locators_Stability.NO_THANKS_By_Id, Locators_Stability.NO_THANKS_By_Contains, Locators_Stability.NO_THANKS_By_Text, Locators_Stability.NO_THANKS_By_Xpath, 48, 1764)));
+				minWait();
+				clickBtn(multi_Loc_Strategy(Locators_Stability.NO_THANKS, Locators_Stability.NO_THANKS_By_Id, Locators_Stability.NO_THANKS_By_Contains, Locators_Stability.NO_THANKS_By_Text, Locators_Stability.NO_THANKS_By_Xpath, 48, 1764));
 			}
-		} catch (Exception e) {	 	
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+			test.log(LogStatus.ERROR, "Error in the locators->clearChromePermission()");
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in clearChromePermission() ");
 			e.printStackTrace();
 		}			
 	}
@@ -209,8 +344,12 @@ public class Stability_Browser_Util extends BaseUtil {
 			else if(isElementExist(Locators_Stability.moreUpdateOptions)) {
 				clickBtn(Locators_Stability.moreUpdateOptions);
 			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+			test.log(LogStatus.ERROR, "Error in the locators->moreOptions()");
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in moreOptions() ");
 			e.printStackTrace();
 		}
 	}
@@ -231,8 +370,14 @@ public class Stability_Browser_Util extends BaseUtil {
 			minWait();
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
 			minWait();
-		} catch (Exception e) {
-		}		
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+			test.log(LogStatus.ERROR, "Error in the locators->setDataSaver_On()");
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in setDataSaver_On() ");
+			e.printStackTrace();
+		}	
 	}
 
 	public void editHomepageOpen(String newUrl) throws InterruptedException 
@@ -254,8 +399,13 @@ public class Stability_Browser_Util extends BaseUtil {
 			customWait(2000);
 			Locators_Stability.SaveOptns.click();
 			navigateback();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
+		} 
+		catch (org.openqa.selenium.NoSuchElementException e) {
+			test.log(LogStatus.ERROR, "Error in the locators->editHomepageOpen()");
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in editHomepageOpen() ");
 			e.printStackTrace();
 			navigateback();
 		}
@@ -291,8 +441,12 @@ public class Stability_Browser_Util extends BaseUtil {
 					minWait(); 
 				}
 			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+			test.log(LogStatus.ERROR, "Error in the locators->navigateback()");
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in navigateback() ");
 			e.printStackTrace();
 		}
 	}
@@ -312,8 +466,12 @@ public class Stability_Browser_Util extends BaseUtil {
 				minWait();
 				clickBtn(Locators_Stability.BookmarkIcon);
 			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+			test.log(LogStatus.ERROR, "Error in the locators->checkBookmarkPage()");
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in checkBookmarkPage() ");
 			e.printStackTrace();
 		}
 
@@ -323,16 +481,24 @@ public class Stability_Browser_Util extends BaseUtil {
 	public void navigateBrowserMenu(String url) throws InterruptedException {
 		//Navigate to Browser menu to any option
 		try {
-			System.out.println("Entering URL");
+			System.out.println("Entering URL:-"+url);
 			customWait(2000);
-			Runtime.getRuntime().exec("adb -s "+p_Id+" shell am start -a android.intent.action.VIEW -d http:/"+url);
+			
+			/*List<String> removePicsArgs = Arrays.asList("-a android.intent.action.VIEW -d https://"+url);
+			Map<String, Object> removePicsCmd = ImmutableMap.of("command", "am start", "args", removePicsArgs);
+			aDriver.executeScript("mobile: shell", removePicsCmd);*/
+			
+			Runtime.getRuntime().exec("adb -s "+p_Id+" shell am start -a android.intent.action.VIEW -d https://"+url);
 			customWait(3000);
 //			enterTextToInputField(Locators_Stability.urlBar_Chrome, url);
-			customWait(4000);
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_ENTER);
 			minWait();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+			test.log(LogStatus.ERROR, "Error in the locators->navigateBrowserMenu()");
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in navigateBrowserMenu() ");
 			e.printStackTrace();
 		}
 
@@ -345,27 +511,33 @@ public class Stability_Browser_Util extends BaseUtil {
 		 */
 		SoftAssert S2= new SoftAssert();
 		try { 
-			customWait(25000);
-			if(isElementExist(Locators_Stability.BlockBtn)) {
+			customWait(5000);
+			/*if(isElementExist(Locators_Stability.BlockBtn)) {
 				clickBtn(Locators_Stability.BlockBtn);
 				minWait();
-			}
-			if(isElementExist(Locators_Stability.networkNotAvailable)||isElementExist(Locators_Stability.WebPageBlocked)){
-			
+			}*/
+			//if(isElementExist(Locators_Stability.networkNotAvailable)||isElementExist(Locators_Stability.site404Error)|| isElementExist(Locators_Stability.siteNotloaded)|| isElementExist(Locators_Stability.WebPageBlocked)){
+			/*if(isElementExist(multi_Loc_Strategy(Locators_Stability.networkNotAvailable, Locators_Stability.networkNotAvailableByContains, Locators_Stability.networkNotAvailableByXpath, null, null, 0, 0))||isElementExist(multi_Loc_Strategy(Locators_Stability.WebPageBlocked, Locators_Stability.WebPageBlockedByContains, Locators_Stability.WebPageBlockedByXpath, null, null, 0, 0)) || isElementExist(multi_Loc_Strategy(Locators_Stability.siteNotloaded, Locators_Stability.siteNotloadedByContains, Locators_Stability.siteNotloadedByXpath, null, null, 0, 0)) || isElementExist(multi_Loc_Strategy(Locators_Stability.site404Error, Locators_Stability.site404ErrorByContains, Locators_Stability.site404ErrorByXpath, null, null, 0, 0))){*/
+
+			if(isElementExist(multi_Loc_Strategy(Locators_Stability.networkNotAvailable, null, null, null, null, 0, 0))||isElementExist(multi_Loc_Strategy(Locators_Stability.WebPageBlocked,null, null, null, null, 0, 0)) || isElementExist(multi_Loc_Strategy(Locators_Stability.siteNotloaded,null,null, null, null, 0, 0)) || isElementExist(multi_Loc_Strategy(Locators_Stability.site404Error,null,null, null, null, 0, 0))|| isElementExist(multi_Loc_Strategy(Locators_Stability.connectionNotPrivate, null, null, null, null, 0, 0))){
 				test.log(LogStatus.FAIL, "Entered Website page " + "\""+ web +"\"" + " not Loaded successfully at iteration: "+n);
 			     soft.fail();
 			} 
 			else {
 				check = true;
 				APP_LOGS.info("Url entered sucessfully.");
+				System.out.println("Url entered sucessfully.");
 				test.log(LogStatus.PASS, "Entered Website page " + "\""+ web +"\"" + " Loaded Successfully at iteration: "+n);
 				soft.assertTrue(check, " ");
 			}
 		}
+		catch (org.openqa.selenium.NoSuchElementException e) {
+			test.log(LogStatus.ERROR, "Error in the locators->validateUrlEntered()");
+			e.printStackTrace();
+		}
 		catch (Exception e) {
-			APP_LOGS.info("Element not Found");
-//			e.printStackTrace();
-			soft.fail();
+			test.log(LogStatus.ERROR, "Exception in validateUrlEntered() ");
+			e.printStackTrace();
 		} 
 	}
 
@@ -399,8 +571,12 @@ public class Stability_Browser_Util extends BaseUtil {
 			}
 
 		}
+		catch (org.openqa.selenium.NoSuchElementException e) {
+			test.log(LogStatus.ERROR, "Error in the locators->navigateBookmark()");
+			e.printStackTrace();
+		}
 		catch (Exception e) {
-			// TODO Auto-generated catch block
+			test.log(LogStatus.ERROR, "Exception in navigateBookmark() ");
 			e.printStackTrace();
 		}
 
@@ -465,8 +641,12 @@ public class Stability_Browser_Util extends BaseUtil {
 			else {
 				test.log(LogStatus.ERROR, "Unverified Navigation Link to Link at iteration : "+n);
 			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+			test.log(LogStatus.ERROR, "Error in the locators->linkToLink()");
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in linkToLink() ");
 			e.printStackTrace();
 		}
 	}
@@ -484,8 +664,12 @@ public class Stability_Browser_Util extends BaseUtil {
 				System.out.println("AT&T Homepage");
 				test.log(LogStatus.ERROR, "AT&T Homepage not loaded at iteration : "+n);
 			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+			test.log(LogStatus.ERROR, "Error in the locators->validateHomePageLoad()");
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in validateHomePageLoad() ");
 			e.printStackTrace();
 		}
 	}
@@ -502,8 +686,12 @@ public class Stability_Browser_Util extends BaseUtil {
 			if(isElementExist(Locators_Stability.toolbarSlider)) {
 				test.log(LogStatus.INFO, "Website "+webPage+" loaded successfully at iteration : "+n);
 			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+			test.log(LogStatus.ERROR, "Error in the locators->validateLoadWebsites()");
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in validateLoadWebsites() ");
 			e.printStackTrace();
 		}
 	}
@@ -517,7 +705,12 @@ public class Stability_Browser_Util extends BaseUtil {
 			scrollToText("History");
 			APP_LOGS.info("History Option is Selected sucessfully");
 		}
+		catch (org.openqa.selenium.NoSuchElementException e) {
+			test.log(LogStatus.ERROR, "Error in the locators->selectHistoryPg()");
+			e.printStackTrace();
+		}
 		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in selectHistoryPg() ");
 			e.printStackTrace();
 		}
 	}
@@ -547,7 +740,12 @@ public class Stability_Browser_Util extends BaseUtil {
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_HOME);
 		}
+		catch (org.openqa.selenium.NoSuchElementException e) {
+			test.log(LogStatus.ERROR, "Error in the locators->clearHistry()");
+			e.printStackTrace();
+		}
 		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in clearHistry() ");
 			e.printStackTrace();
 		}
 	}
@@ -558,7 +756,13 @@ public class Stability_Browser_Util extends BaseUtil {
 			minWait();
 			scrollToText("Network & Internet");
 			minWait();
-		} catch (Exception e) {
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+			test.log(LogStatus.ERROR, "Error in the locators->clickOn_Networks_and_Internet()");
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in clickOn_Networks_and_Internet() ");
+			e.printStackTrace();
 		}
 	}
 	
@@ -599,12 +803,44 @@ public class Stability_Browser_Util extends BaseUtil {
 		}
 	}
 
-	public void ON_Switch(String switch_To_ON) {
+	/*public void ON_Switch(String switch_To_ON) {
 		try {
 			minWait();
 			aDriver.findElementByXPath("//*[contains(@text,'"+switch_To_ON+"')]/../..//*[@text='OFF']").click();
 			minWait();
-		} catch (Exception e) {
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+			test.log(LogStatus.ERROR, "Error in the locators->ON_Switch()");
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in ON_Switch() ");
+			e.printStackTrace();
+		}
+	}*/
+	
+	public void ON_Switch(String switch_To_ON) {
+		try {
+			minWait();
+			if(isElementExist(aDriver.findElementByXPath("//*[contains(@text,'"+switch_To_ON+"')]/../..//*[@text='OFF']"))){
+				String s = (aDriver.findElementByXPath("//*[contains(@text,'"+switch_To_ON+"')]/../..//*[@text='OFF']")).getText();
+				System.out.println(s);
+				if(s.equals("OFF")){
+					clickBtn(aDriver.findElementByXPath("//*[contains(@text,'"+switch_To_ON+"')]/../..//*[@text='OFF']"));
+				}
+				else{
+					System.out.println("Mobile Data is ON");
+				}
+			}
+			else{
+				System.out.println("ELSE");
+			}
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+			test.log(LogStatus.ERROR, "Error in the locators->ON_Switch()");
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in ON_Switch()");
+			e.printStackTrace();
 		}
 	}
 
@@ -613,7 +849,13 @@ public class Stability_Browser_Util extends BaseUtil {
 			minWait();
 			aDriver.findElementByXPath("//*[contains(@text,'"+switch_To_OFF+"')]/../..//*[@text='ON']").click();
 			minWait();
-		} catch (Exception e) {
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+			test.log(LogStatus.ERROR, "Error in the locators->OFF_Switch()");
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in OFF_Switch() ");
+			e.printStackTrace();
 		}
 	}
 	
@@ -649,10 +891,13 @@ public class Stability_Browser_Util extends BaseUtil {
 					continue;
 				}
 			}
-		} catch (Exception e) {
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+			test.log(LogStatus.ERROR, "Error in the locators->selectSSIDwifi()");
 			e.printStackTrace();
-			APP_LOGS.info("WIFI : No such Element found");
-			test.log(LogStatus.ERROR, "Wi-Fi is not available : No such Element found");
+		}
+		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in selectSSIDwifi() ");
+			e.printStackTrace();
 		}
 	}
 	
@@ -686,9 +931,13 @@ public class Stability_Browser_Util extends BaseUtil {
 			clickBtn(Locators_Stability.wifi_IDC_ConnectBtn);
 			customWait(3000);
 			}
-		} catch (Exception e) {
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+			test.log(LogStatus.ERROR, "Error in the locators->enterPassword()");
 			e.printStackTrace();
-			APP_LOGS.info("Wi-Fi Forget button: No such Element found");
+		}
+		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in enterPassword() ");
+			e.printStackTrace();
 		}
 	}
 	
@@ -707,9 +956,13 @@ public class Stability_Browser_Util extends BaseUtil {
 				}
 			}
 			Locators_Stability.wifi_IDC_Psswd.clear();
-		} catch (Exception e) {
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+			test.log(LogStatus.ERROR, "Error in the locators->changeToNumberMode()");
 			e.printStackTrace();
-			APP_LOGS.info("Wi-Fi Forget button: No such Element found");
+		}
+		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in changeToNumberMode() ");
+			e.printStackTrace();
 		}
 	}
 
@@ -739,6 +992,27 @@ public class Stability_Browser_Util extends BaseUtil {
 	    
 	}
 	
+	//==================Stabilization for SMAT========================================//
 	
+	public void clickBackButton(int number)
+	{
+		/*
+		 * clicks on back button with iteration as user input
+		 */
+		try {
+			for(int i=0;i<number;i++){
+				minWait();
+				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
+				minWait();
+			}
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+			test.log(LogStatus.ERROR, "Error in the locators->clickBackButton()");
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in clickBackButton() ");
+			e.printStackTrace();
+		}
+	}
 
 }

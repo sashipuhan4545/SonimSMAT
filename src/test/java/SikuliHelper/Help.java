@@ -1,4 +1,4 @@
-package SikuliHelper;
+/*package SikuliHelper;
 
 import java.io.IOException;
 
@@ -45,3 +45,4 @@ public class Help extends CommonConfig{
 }
 	
 }
+*/

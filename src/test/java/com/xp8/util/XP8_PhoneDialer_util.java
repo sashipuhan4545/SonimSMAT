@@ -8,6 +8,8 @@ import java.io.InputStreamReader;
 import java.util.NoSuchElementException;
 
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.asserts.SoftAssert;
 
 import com.graphics.gui.JsonFileReaderAndWriter;
@@ -39,11 +41,23 @@ public class XP8_PhoneDialer_util extends BaseUtil {
 		r_b_No=JsonFileReaderAndWriter.ReadRefDeviceFirmWare();
 	}
 
-	public void reciveCallInRefDevice(String refNum) throws InterruptedException, IOException {
-		/*
-		 * Receive Call in Reference device
+	public void reciveCallInRefDevice(String refNum) throws InterruptedException, IOException, NoSuchElementException {
+		/* Receive Call in Reference device
 		 */
-		try {
+			/*try {
+				System.out.println("Inside Make a call");
+				Runtime.getRuntime().exec("adb -s "+r_Id+"shell input keyevent 5 "+pryNum);
+				customWait(10000);			
+				System.out.println("Call is accepted");
+				minWait();
+
+			}catch (Exception e) {
+				test.log(LogStatus.ERROR, "Exeption in -> reciveCallInRefDevice()");
+
+			}
+	}
+		*/
+		
 			if (!isElementExist(Locators_XP8_Sanity.turnOff_Airplane_PopUp)) {
 				try {
 					for(int j=1;j<=100;j++){
@@ -75,60 +89,57 @@ public class XP8_PhoneDialer_util extends BaseUtil {
 					Thread.sleep(2000);
 				}
 			}
-			APP_LOGS.info("Number dailed is: "+refNum);
-		}catch (NoSuchElementException e) {
-			APP_LOGS.info("Selected Page is not displayed.");
-			e.printStackTrace();
-		}
-	}
-
-	public void beforeExecution() throws InterruptedException, IOException
-	{
+}
+	
+	public void clearcallhistory()throws InterruptedException, IOException{
+	
 		/*
 		 * clear frequents,all call log  and delete contacts before test
 		 */
-		try {
-			minWait();
-			navigateTocallHistory();
-			minWait();
-			clickBtn(Locators_PhoneDialer.moreOptionsInCallHistory);
-			minWait();
-			if(isElementExist(Locators_PhoneDialer.clearCallHistoryOpt)){
-				clickBtn(Locators_PhoneDialer.clearCallHistoryOpt);
+		 
+			try {
+				launch_an_app("phone");
+				clickBtn(Locators_PhoneDialer.callLogPage1);
 				minWait();
-				clickBtn(Locators_PhoneDialer.okBtn);
-				customWait(3000);
-				launch_an_app("contacts");
-				setDefaultSavingAccount();
-				minWait();
-				deleteIfContactsPresent();
-			}else if(!isElementExist(Locators_PhoneDialer.clearCallHistoryOpt)){
-				launch_an_app("contacts");
-				setDefaultSavingAccount();
-				minWait();
-				deleteIfContactsPresent();
+				if(isElementExist(Locators_PhoneDialer.dailedFirstNum)){
+					clickBtn(Locators_PhoneDialer.settingsIcon);
+					minWait();
+					clickBtn(Locators_PhoneDialer.callHistoryOpt);
+					minWait();
+					clickBtn(Locators_PhoneDialer.moreOptionsInCallHistory);
+					minWait();
+					clickBtn(Locators_PhoneDialer.clearCallHistoryOpt);
+					minWait();
+					clickBtn(Locators_PhoneDialer.okBtn);
+					
+
+				}else{
+
+					clickBackButton_without_trycatch(2);
+				}
+			} catch (org.openqa.selenium.NoSuchElementException e) {
+
+				test.log(LogStatus.ERROR, "Error in the locators->clearcallhistory()");
+				e.printStackTrace();
+
+			}catch (Exception e) {
+				test.log(LogStatus.ERROR, "Exception in ->clearcallhistory()");
+
 			}
-		} catch (NoSuchElementException e) {
-			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
 		}
-	}
+
 
 	public void navigateTocallHistory() throws InterruptedException, IOException
 	{
 		/*
 		 * navigate to call History page
 		 */
-		try {
-			minWait();
+		
 			clickBtn(Locators_PhoneDialer.settingsIcon);
 			minWait();
 			clickBtn(Locators_PhoneDialer.call_history);
 			minWait();
-		} catch (NoSuchElementException e) {
-			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
-		}
+		
 	}
 
 	public void setDefaultSavingAccount() throws InterruptedException
@@ -137,7 +148,7 @@ public class XP8_PhoneDialer_util extends BaseUtil {
 		 * Set default saving account as phone in contacts application
 		 */
 		try {
-			minWait();
+			
 			clickBtn(Locators_PhoneDialer.ContactsMoreOptions);
 			minWait();
 			clickBtn(Locators_PhoneDialer.contactsSettingsOPt);
@@ -146,75 +157,91 @@ public class XP8_PhoneDialer_util extends BaseUtil {
 			minWait();
 			clickBtn(Locators_PhoneDialer.contactsDefaultPhone);
 			minWait();
-			clickBackButton(1);
-		} catch (NoSuchElementException e) {
-			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
-		}
-	}
 
-	public void deleteIfContactsPresent() throws InterruptedException
+
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->setDefaultSavingAccount()");
+			e.printStackTrace();
+
+		}
+		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in setDefaultSavingAccount()");
+		}
+	}       
+			
+		
+
+
+	public void deleteIfContactsPresent(SoftAssert sa) throws InterruptedException
 	{
-		/*
-		 * deletes contacts if present in contacts application
-		 */
+
 		try {
-			clickBtn(Locators_PhoneDialer.delete_option);
-			minWait();
-			if(isElementExist(Locators_PhoneDialer.zero_selected)){
+			launch_an_app("contacts");
+			if(isElementExist(Locators_PhoneDialer.deletefirstcontact))
+			{
+				clickBtn(Locators_PhoneDialer.delete_option);
 				minWait();
-				/*TouchAction touchaction = new TouchAction(aDriver);
-				touchaction.longPress(Locators_PhoneDialer.zero_selected).perform().release();
-				minWait();*/
 				clickBtn(Locators_PhoneDialer.zero_selected);
 				minWait();
-				if(isElementExist(Locators_PhoneDialer.selectAllOpt)){
-					clickBtn(Locators_PhoneDialer.selectAllOpt);
-					minWait();
-				}else{
-					clickBackButton(1);
-				}
+				clickBtn(Locators_PhoneDialer.selectAllOpt);
+				minWait();
 				clickBtn(Locators_PhoneDialer.Ok_option);
 				minWait();
 				clickBtn(Locators_PhoneDialer.okBtn);
 				customWait(5000);
-				clickBackButton(2);
+				APP_LOGS.info("Contacts are deleted successfully");
+				sa.assertTrue(true, "Contacts are deleted successfully");
+				test.log(LogStatus.PASS, "Contacts are deleted successfully");	
+
+
+			}else{
+				minWait();
 			}
-		} catch (NoSuchElementException e) {
+
+		}  catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->deleteIfContactsPresent()");
 			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+
 		}
+		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->deleteIfContactsPresent()");
+		}
+
 	}
 
-	public void validatePhoneAppLaunch() throws InterruptedException
+
+
+	public void validatePhoneAppLaunch(SoftAssert sa) throws InterruptedException
 	{
 		/*
 		 * Validates Phone application Launch
 		 */
-		SoftAssert SA= new SoftAssert();
+		
 		try {
 			minWait();
 			launch_an_app("phone");
 			minWait();
 			if(isElementExist(Locators_PhoneDialer.phoneFrame)){
-				check = true;
 				APP_LOGS.info("Phone Application launched successfully");
-				test.log(LogStatus.INFO, "Phone Application launched successfully");
-				test.log(LogStatus.PASS, "Test case Status is PASS");
-				SA.assertTrue(check, "Phone Application launched successfully");	
+				sa.assertTrue(true, "Phone Application launched successfully");	
+			    test.log(LogStatus.PASS, "Phone Application launched successfully");
+				
 			}else {
 				APP_LOGS.info("Phone Application not launched");
-				test.log(LogStatus.ERROR, "Phone Application not launched" );
-				test.log(LogStatus.FAIL, "Test case Status is FAIL");
-				SA.fail();			
+				sa.fail();
+				test.log(LogStatus.FAIL, "Phone Application not launched" );
+				
+							
 			}
-		} catch (NoSuchElementException e) {
-			e.printStackTrace();
-			APP_LOGS.info("Element Not Found");
-			test.log(LogStatus.ERROR, "Element Not Found");
-			SA.fail();
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR,"Error in locators->validatePhoneAppLaunch()");
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR,"Exeption in ->validatePhoneAppLaunch()");
 		}
-		SA.assertAll();
+		
 	}
 
 	public void clickBackButton(int number)
@@ -232,36 +259,47 @@ public class XP8_PhoneDialer_util extends BaseUtil {
 			e.printStackTrace();
 		}
 	}
+	public void clickBackButton_without_trycatch(int number) throws InterruptedException
+	{
+		/*
+		 * clicks on back button with iteration as user input
+		 */
+		
+			for(int i=0;i<number;i++){
+				minWait();
+				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
+				minWait();
+			}	
+		
+	}
 
-	public void validatePhoneAppHomePage() throws InterruptedException
+	public void validatePhoneAppHomePage(SoftAssert sa) throws InterruptedException
 	{
 		/*
 		 * Validates Phone application home page 
 		 */
-		SoftAssert SA= new SoftAssert();
+		
 		try {
 			customWait(2000);
 			if(isElementExist(Locators_PhoneDialer.favoriteEmptyPage) || isElementExist(Locators_PhoneDialer.callLogEmptyPage) || isElementExist(Locators_PhoneDialer.contactsEmptyPage))
 			{
-				check = true ;
-				APP_LOGS.info("Phone App Home page is verified");
-				test.log(LogStatus.INFO, "Phone App Home page is verified");
-				SA.assertTrue(check, "Phone App Home page Verfied");
-				test.log(LogStatus.PASS, "Test case Status is PASS");
+			    APP_LOGS.info("Phone App Home page is verified");
+				sa.assertTrue(true, "Phone App Home page Verfied");
+				test.log(LogStatus.PASS, "Phone App Home page is verified");
 
 			}else{
 				APP_LOGS.info("Phone App Home page is not verified");
-				test.log(LogStatus.ERROR, "Phone App Home page is not verified");
-				test.log(LogStatus.FAIL, "Test case Status is FAIL");
-				SA.fail();
+				sa.fail();
+				test.log(LogStatus.FAIL, "Phone App Home page is not verified");
 			}
-		} catch (NoSuchElementException e) {
-			e.printStackTrace();
-			APP_LOGS.info("Element Not Found");
-			test.log(LogStatus.ERROR, "Element Not Found");
-			SA.fail();
+			
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+                 test.log(LogStatus.ERROR,"Error in locators->validatePhoneAppHomePage()");
+                 
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR,"Exeption in ->validatePhoneAppHomePage()");
 		}
-		SA.assertAll();
+		
 	}
 
 	public void validateMakeACall() throws InterruptedException, IOException
@@ -269,32 +307,57 @@ public class XP8_PhoneDialer_util extends BaseUtil {
 		/*
 		 * Validates Make a call option (Clicks Make a call --> Enters number--> Dial --> validate MO call with UI )
 		 */
-		try {
-			minWait();
+		try{
 			clickBtn(Locators_PhoneDialer.callLogPage);
 			minWait();
 			clickBtn(Locators_PhoneDialer.makeACallOption);
 			minWait();
 			enterTextToInputField(Locators_PhoneDialer.dialpadEditFld, refNum);
 			minWait();
+			System.out.println("coming");
 			clickBtn(Locators_PhoneDialer.callBtn);
 			customWait(5000);
-			validateMOCall("from Make a call option", refNum);
-		} catch (NoSuchElementException e) {
-			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
-		}
+			
+			//validateMOCall("from Make a call option", refNum);
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+				test.log(LogStatus.ERROR,"Error in locators->validateMakeACall()");
+			}catch (Exception e) {
+				test.log(LogStatus.ERROR,"Exeption in ->validateMakeACall()");
+			}
+	}
+	public void validateMakeACall_sprint() throws InterruptedException, IOException
+	{
+		/*
+		 * Validates Make a call option (Clicks Make a call --> Enters number--> Dial --> validate MO call with UI )
+		 */
+		try{
+			clickBtn(Locators_PhoneDialer.callLogPage);
+			minWait();
+			clickBtn(Locators_PhoneDialer.makeACallOption);
+			minWait();
+			enterTextToInputField(Locators_PhoneDialer.dialpadEditFld, refNum);
+			minWait();
+			System.out.println("coming");
+		    clickBtn(Locators_PhoneDialer.sprintcallBtn);
+		   customWait(5000);
+			
+			//validateMOCall("from Make a call option", refNum);
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+				test.log(LogStatus.ERROR,"Error in locators->validateMakeACall_sprint()");
+			}catch (Exception e) {
+				test.log(LogStatus.ERROR,"Exeption in ->validateMakeACall_sprint()");
+			}
 	}
 
-	public void validateMOCall(String call,String phone) throws InterruptedException, IOException
+	public void validateMOCall(String call,String phone,SoftAssert sa) throws InterruptedException, IOException
 	{
 		/*
 		 * validate MO call with UI
 		 */
-		SoftAssert SA= new SoftAssert();
-		try {
-			reciveCallInRefDevice(refNum);
-			customWait(2000);
+		try{
+			
 			clickBtn(Locators_PhoneDialer.endCallBtn);
 			minWait();
 			clickBtn(Locators_PhoneDialer.firstDialedNumber);
@@ -306,33 +369,64 @@ public class XP8_PhoneDialer_util extends BaseUtil {
 			int callDur = Integer.parseInt(callDuration[0]);
 			System.out.println(callDur);
 			if(callDur>=0)	{
-				check = true;
+				
 				APP_LOGS.info("MO call placed successfully "+call);
-				test.log(LogStatus.INFO, "MO call placed successfully "+call);
-				test.log(LogStatus.PASS, "Test case Status is PASS");
-				SA.assertTrue(check, "MO call placed successfully "+call);
+				sa.assertTrue(true, "MO call placed successfully "+call);
+				test.log(LogStatus.PASS, "MO call placed successfully "+call);
+				
 			} else	{
 				APP_LOGS.info("MO call not placed "+call);
-				test.log(LogStatus.ERROR, "MO call not placed "+call);
-				test.log(LogStatus.FAIL, "Test case Status is FAIL");
-				SA.fail();
+				sa.fail();
+				test.log(LogStatus.FAIL, "MO call not placed "+call);
+				
 			}	
 
-		} catch (NoSuchElementException e) {
-			e.printStackTrace();
-			APP_LOGS.info("Element Not Found");
-			test.log(LogStatus.ERROR, "Element Not Found");
-			SA.fail();
-		}
-		SA.assertAll();
-	}
+		} catch (org.openqa.selenium.NoSuchElementException e) {
 
-	public void validateCallFromCallLog() throws InterruptedException, IOException
+			test.log(LogStatus.ERROR,"Error in locators->validateMOCall()");
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR,"Exeption in ->validateMOCall()");
+		}
+		
+	}
+	public void validateMOCall_without_trycatch(String call,String phone,SoftAssert sa) throws InterruptedException, IOException
+	{
+		/*
+		 * validate MO call with UI
+		 */
+		
+			
+			clickBtn(Locators_PhoneDialer.endCallBtn);
+			minWait();
+			clickBtn(Locators_PhoneDialer.firstDialedNumber);
+			minWait();
+			clickBtn(Locators_PhoneDialer.callDetailsOpt);
+			minWait();
+			String[] callDuration = Locators_PhoneDialer.durationInSec.getText().split(" ");
+			System.out.println(callDuration);
+			int callDur = Integer.parseInt(callDuration[0]);
+			System.out.println(callDur);
+			if(callDur>=0)	{
+				
+				APP_LOGS.info("MO call placed successfully "+call);
+				sa.assertTrue(true, "MO call placed successfully "+call);
+				test.log(LogStatus.PASS, "MO call placed successfully "+call);
+				
+			} else	{
+				APP_LOGS.info("MO call not placed "+call);
+				sa.fail();
+				test.log(LogStatus.FAIL, "MO call not placed "+call);
+				
+			}	
+
+		} 
+
+	public void validateCallFromCallLog(SoftAssert sa) throws InterruptedException, IOException
 	{
 		/*
 		 * Validates call from call Log(Call to a number from call log)
 		 */
-		SoftAssert SA = new SoftAssert();
+		
 		try {
 			minWait();
 			clickBtn(Locators_PhoneDialer.callLogPage);
@@ -340,18 +434,25 @@ public class XP8_PhoneDialer_util extends BaseUtil {
 			if(isElementExist(Locators_PhoneDialer.recentCallLogNumber)) {
 				clickBtn(Locators_PhoneDialer.callBtnInCallLog);
 				customWait(5000);
-				validateMOCall("from recent Call Log", refNum);
-				clickBackButton(1);
+				validateMOCall_without_trycatch("from recent Call Log", refNum,sa);
+				clickBackButton_without_trycatch(1);
 				clickBtn(Locators_PhoneDialer.recentCallLogNumber);
+				APP_LOGS.info("Call from call log is validated successfuly");
+				sa.assertTrue(true, "Call from call log is validated successfuly");
+				test.log(LogStatus.PASS, "Call from call log is validated successfuly");	
 			}else {
-				test.log(LogStatus.ERROR, "Recent Call Log not available");
-				SA.fail();
+
+				APP_LOGS.info("Call from call log is not validated ");
+				sa.fail();
+				test.log(LogStatus.FAIL, "Call from call log is not validated ");
+
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR,"Error in locators-> validateCallFromCallLog()");
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR,"Exeption in -> validateCallFromCallLog()");
 		}
-		SA.assertAll();
 	}
 
 	public void CreateNewContactValidateSavedContact(String name,String location) throws InterruptedException
@@ -359,10 +460,8 @@ public class XP8_PhoneDialer_util extends BaseUtil {
 		/*
 		 * Validates Create New contact and validate saved contact
 		 */
-		try {
-			minWait();
-			CreateNewContactAndSave(name);
-			customWait(2000);
+		try{
+			
 			if(isElementExist(Locators_PhoneDialer.permissionPopUp)) {
 				minWait();
 				for(int i=0;i<3;i++){
@@ -370,59 +469,55 @@ public class XP8_PhoneDialer_util extends BaseUtil {
 					clickBtn(Locators_PhoneDialer.allowBtn);
 				}
 			}
-			validateSavedContact(name,location);
-		} catch (NoSuchElementException e) {
-			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+				test.log(LogStatus.ERROR, "Error in the locators->CreateNewContactValidateSavedContact()");
+				e.printStackTrace();
+
+			}catch (Exception e) {
+				test.log(LogStatus.ERROR, "Exeption in ->CreateNewContactValidateSavedContact()");
+
+			}
 		}
-	}
 
 	public void CreateNewContactAndSave(String name) throws InterruptedException
 	{
 		/*
 		 * Clicks on Create New contact -->enter name --> save
 		 */
-		try {
-			minWait();
-			clickBtn(Locators_PhoneDialer.createNewContactOpt);
-			customWait(3000);
+		
+		
+			
 			enterTextToInputField(Locators_PhoneDialer.nameEditFld,name);
 			customWait(2000);
 			clickBtn(Locators_PhoneDialer.saveOpt);
-		} catch (NoSuchElementException e) {
-			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
-		}
+		
 	}
 
-	public void validateSavedContact(String name,String location) throws InterruptedException
+	public void validateSavedContact(String name,String location,SoftAssert sa) throws InterruptedException
 	{
 		/*
 		 * validates saved contact
 		 */
-		SoftAssert SA= new SoftAssert();
+		
 		try {
 			customWait(2000);
 			String savedContact = Locators_PhoneDialer.savedContact.getText();
 			if(savedContact.contains(name)){
-				check = true;
-				APP_LOGS.info("Contact saved "+ location +"successfully");
-				test.log(LogStatus.INFO, "Contact saved  "+ location +" successfully");
-				test.log(LogStatus.PASS, "Test case Status is PASS");
-				SA.assertTrue(check, "Contact saved "+ location +" successfully");
+				APP_LOGS.info("Contact saved successfully");
+				sa.assertTrue(true, "Contact saved "+ location +" successfully");
+				test.log(LogStatus.PASS, "Contact save successfully");
 			} else	{
 				APP_LOGS.info("Contact not saved" + location);
-				test.log(LogStatus.ERROR, "Contact not saved" + location);
-				test.log(LogStatus.FAIL, "Test case Status is FAIL");
-				SA.fail();
+				sa.fail();
+				test.log(LogStatus.FAIL, "Contact not saved" + location);
 			}		
-		} catch (NoSuchElementException e) {
-			e.printStackTrace();
-			APP_LOGS.info("Element Not Found");
-			test.log(LogStatus.ERROR, "Element Not Found");
-			SA.fail();
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR,"Error in locators->validateSavedContact()");
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR,"Exeption in ->validateSavedContact()");
 		}
-		SA.assertAll();
 	}
 
 	public void validateCreateNewContactFromCallLog(String name) throws InterruptedException
@@ -436,12 +531,17 @@ public class XP8_PhoneDialer_util extends BaseUtil {
 			customWait(2000);
 			clickBtn(Locators_PhoneDialer.recentCallLogNumber);
 			minWait();
-			CreateNewContactValidateSavedContact(name,"from call Log");
-			minWait();
-			clickBackButton(1);
-		} catch (NoSuchElementException e) {
+			clickBtn(Locators_PhoneDialer.createNewContactOpt);
+			customWait(3000);
+			
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->validateCreateNewContactFromCallLog()");
 			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->validateCreateNewContactFromCallLog()");
+
 		}
 	}
 
@@ -455,11 +555,18 @@ public class XP8_PhoneDialer_util extends BaseUtil {
 			minWait();
 			enterNumberInDialpad(Phone);
 			minWait();
-			CreateNewContactValidateSavedContact(name,"from Dialpad");
+			clickBtn(Locators_PhoneDialer.createnewconttxt_dialpad);
 			minWait();
-		} catch (NoSuchElementException e) {
-			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+			enterTextToInputField(Locators_PhoneDialer.nameEditFld,name);
+			customWait(2000);
+			clickBtn(Locators_PhoneDialer.saveOpt);
+			
+			
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR,"Error in locators->validateCreateNewContactFromDialpad()");
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR,"Exeption in ->validateCreateNewContactFromDialpad()");
 		}
 	}
 
@@ -468,70 +575,71 @@ public class XP8_PhoneDialer_util extends BaseUtil {
 		/*
 		 * clicks dialpad and enters number
 		 */
-		try {
+		
 			clickBtn(Locators_PhoneDialer.dialpadBtn);
 			customWait(2000);
 			enterTextToInputField(Locators_PhoneDialer.dialpadEditFld, Phone);
 			customWait(2000);
-		} catch (NoSuchElementException e) {
-			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
-		}
-	}
+		} 
+	
 
-	public void validate_number_saved_with_plusSymbol(){
-		SoftAssert SA = new SoftAssert();
+	public void validate_number_saved_with_plusSymbol(SoftAssert sa){
+		
 		try {
 			String number = Locators_PhoneDialer.savedContactNumber.getText();
 			minWait();
 			if(number.contains("+")) {
-				check = true;
-				clickBackButton(3);
+				clickBackButton_without_trycatch(3);
 				APP_LOGS.info("Contact saved with '+' successfully");
-				test.log(LogStatus.INFO, "Contact saved with '+' successfully");
-				test.log(LogStatus.PASS, "Test case Status is PASS");
-				SA.assertTrue(check, "Contact saved with '+' successfully");
+				sa.assertTrue(true, "Contact saved with '+' successfully");
+				test.log(LogStatus.PASS, "Contact saved with '+' successfully");
+				
+				
 			} else	{
 				APP_LOGS.info("Failed to save Contact with '+'" );
-				test.log(LogStatus.ERROR, "Failed to save Contact with '+'");
-				test.log(LogStatus.FAIL, "Test case Status is FAIL");
-				SA.fail();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+				sa.fail();
+				test.log(LogStatus.FAIL, "Failed to save Contact with '+'");
+				}
+		} 
+		catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR,"Error in locators->validate_number_saved_with_plusSymbol()");
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR,"Exeption in ->validate_number_saved_with_plusSymbol()");
 		}
-		SA.assertAll();
 	}
 
-	public void validate_contacts_added_in_list() {
-		SoftAssert SA = new SoftAssert();
+	public void validate_contacts_added_in_list(SoftAssert sa) {
+		
 		try {
+			launch_an_app("phone");
 			clickBtn(Locators_PhoneDialer.contactPage);
 			minWait();
 			if(isElementExist(Locators_PhoneDialer.contact_one) && isElementExist(Locators_PhoneDialer.contact_two)) {
-				check = true;
-				clickBackButton(1);
+				clickBackButton_without_trycatch(1);
 				APP_LOGS.info("Added list of contacts are available");
-				test.log(LogStatus.INFO, "Added list of contacts are available");
-				test.log(LogStatus.PASS, "Test case Status is PASS");
-				SA.assertTrue(check, "Added list of contacts are available");
+				sa.assertTrue(true, "Added list of contacts are available");
+				test.log(LogStatus.PASS, "Added list of contacts are available");
+				
+				
 			} else	{
 				APP_LOGS.info("Added list of contacts are not available" );
-				test.log(LogStatus.ERROR, "Added list of contacts are not available");
-				test.log(LogStatus.FAIL, "Test case Status is FAIL");
-				SA.fail();
+				sa.fail();
+				test.log(LogStatus.FAIL, "Added list of contacts are not available");
+				
+				
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR,"Error in locators->validate_contacts_added_in_list()");
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR,"Exeption in ->validate_contacts_added_in_list()");
 		}
-		SA.assertAll();
 	}
 
 	public void validate_frequent_list() {
 		try {
-			minWait();
+			
 			clickBtn(Locators_PhoneDialer.callLogPage);
 			minWait();
 			clickBtn(Locators_PhoneDialer.callBtnInCallLog);
@@ -543,42 +651,48 @@ public class XP8_PhoneDialer_util extends BaseUtil {
 			clickBtn(Locators_PhoneDialer.contact_two);
 			minWait();
 			clickBtn(Locators_PhoneDialer.fav_add_star_option);
-			clickBackButton(1);
+			clickBackButton_without_trycatch(1);
 			minWait();
 			clickBtn(Locators_PhoneDialer.FrequentPage);
 			minWait();
-			validate_Fav_contacts_added_in_list();
-		} catch (Exception e) {
-			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+			
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR,"Error in locators->validate_frequent_list()");
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR,"Exeption in ->validate_frequent_list()");
 		}
 	}
 
-	public void validate_Fav_contacts_added_in_list() {
-		SoftAssert SA = new SoftAssert();
+	public void validate_Fav_contacts_added_in_list(SoftAssert sa) {
+		
 		try {
 			minWait();
 			if(isElementExist(Locators_PhoneDialer.contact_one) && isElementExist(Locators_PhoneDialer.contact_two)) {
-				check = true;
+				
 				APP_LOGS.info("Favourite/Frequent list of contacts are available");
-				test.log(LogStatus.INFO, "Favourite/Frequent list of contacts are available");
-				test.log(LogStatus.PASS, "Test case Status is PASS");
-				SA.assertTrue(check, "Favourite/Frequent list of contacts are available");
+				sa.assertTrue(true, "Favourite/Frequent list of contacts are available");
+				test.log(LogStatus.PASS, "Favourite/Frequent list of contacts are available");
+				
+				
 			} else	{
 				APP_LOGS.info("Favourite/Frequent list of contacts are not available" );
-				test.log(LogStatus.ERROR, "Favourite/Frequent list of contacts are not available");
-				test.log(LogStatus.FAIL, "Test case Status is FAIL");
-				SA.fail();
+				sa.fail();
+				test.log(LogStatus.FAIL, "Favourite/Frequent list of contacts are not available");
+				
+				
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR,"Error in locators->validate_Fav_contacts_added_in_list()");
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR,"Exeption in ->validate_Fav_contacts_added_in_list()");
 		}
-		SA.assertAll();
+		
 	}
 
-	public void validate_clear_frequents() {
-		SoftAssert SA = new SoftAssert();
+	public void validate_clear_frequents(SoftAssert sa) {
+		
 		try {
 			minWait();
 			clickBtn(Locators_PhoneDialer.contactPage);
@@ -586,43 +700,41 @@ public class XP8_PhoneDialer_util extends BaseUtil {
 			clickBtn(Locators_PhoneDialer.contact_two);
 			minWait();
 			clickBtn(Locators_PhoneDialer.fav_add_star_option);
-			clickBackButton(1);
+			clickBackButton_without_trycatch(1);
 			clickBtn(Locators_PhoneDialer.FrequentPage);
 			minWait();
 			clickBtn(Locators_PhoneDialer.settingsIcon);
 			minWait();
-		//	SikuliHelper.clickByImage(SikuliConstants.ClearFrequents);
-			clickBtn(Locators_PhoneDialer.clearFrequentsOpt);
+	       clickBtn(Locators_PhoneDialer.clearFrequentsOpt);
 			minWait();
 			clickBtn(Locators_PhoneDialer.okBtn);
-	//		SikuliHelper.clickByImage(SikuliConstants.OK_Btn);
+	
 			if(isElementExist(Locators_PhoneDialer.favoriteEmptyPage)) {
-				check = true;
 				APP_LOGS.info("Favourite/Frequent list cleared successfully");
-				test.log(LogStatus.INFO, "Favourite/Frequent list cleared successfully");
-				test.log(LogStatus.PASS, "Test case Status is PASS");
-				SA.assertTrue(check, "Favourite/Frequent list cleared successfully");
+				sa.assertTrue(true, "Favourite/Frequent list cleared successfully");
+				test.log(LogStatus.PASS, "Favourite/Frequent list cleared successfully");
+				
+				
 			} else	{
 				APP_LOGS.info("Failed to clear Favourite/Frequent list" );
+				sa.fail();
 				test.log(LogStatus.ERROR, "Failed to clear Favourite/Frequent list");
-				test.log(LogStatus.FAIL, "Test case Status is FAIL");
-				SA.fail();
+				
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR,"Error in locators-> validate_clear_frequents()");
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR,"Exeption in -> validate_clear_frequents()");
 		}
-		SA.assertAll();
 	}
 
-	public void validate_search(String ContactName) {
-		SoftAssert SA = new SoftAssert();
+	public void validate_search(String ContactName,SoftAssert sa) {
+		
 		try {
 			clickBtn(Locators_PhoneDialer.callLogPage);
 			minWait();
-		//	enterTextToInputField(Locators_PhoneDialer.search_bar, ContactName);
-		//	SikuliHelper.typeTextIntoTextBox(SikuliConstants.Search_contacts, ContactName);
-			clickBtn(Locators_PhoneDialer.searchContactsFld);
+		    clickBtn(Locators_PhoneDialer.searchContactsFld);
 			customWait(3000);
 			Runtime.getRuntime().exec("adb -s "+ p_Id +" shell input text "+ ContactName);
 			customWait(2000);
@@ -630,60 +742,66 @@ public class XP8_PhoneDialer_util extends BaseUtil {
 				String searched_contact = Locators_PhoneDialer.searched_contact.getText();
 				minWait();
 				if(ContactName.equals(searched_contact)) {
-					check = true;
-					clickBackButton(2);
+					clickBackButton_without_trycatch(2);
 					APP_LOGS.info("Searched contact is available,search option validated successfully");
-					test.log(LogStatus.INFO, "Searched contact is available,search option validated successfully");
-					test.log(LogStatus.PASS, "Test case Status is PASS");
-					SA.assertTrue(check, "Searched contact is available,search option validated successfully");
+					sa.assertTrue(true, "Searched contact is available,search option validated successfully");
+					test.log(LogStatus.PASS, "Searched contact is available,search option validated successfully");
+					
+					
 				} else	{
 					APP_LOGS.info("Failed to validate search option" );
-					test.log(LogStatus.ERROR, "Failed to validate search option");
-					test.log(LogStatus.FAIL, "Test case Status is FAIL");
-					SA.fail();
+					sa.fail();
+					test.log(LogStatus.FAIL, "Failed to validate search option");
+					
+					
 				}
 			}else {
 				APP_LOGS.info("Contact not available" );
-				test.log(LogStatus.ERROR, "Contact not available");
-				test.log(LogStatus.FAIL, "Test case Status is FAIL");
-				SA.fail();
+				sa.fail();
+				test.log(LogStatus.FAIL, "Contact not available");
+				
+				
 			}
 			
-		} catch (Exception e) {
-			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR,"Error in locators->validate_search()");
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR,"Exeption in ->validate_search()");
 		}
-		SA.assertAll();
 	}
 
-	public void validate_recent_contact_in_list(String ContactName) {
-		SoftAssert SA = new SoftAssert();
+	public void validate_recent_contact_in_list(String ContactName,SoftAssert sa) {
+		
 		try {
 			clickBtn(Locators_PhoneDialer.callLogPage);
 			minWait();
 			String recent_contact = Locators_PhoneDialer.recentCallLogNumber.getText();
 			minWait();
 			if(recent_contact.equals(ContactName)) {
-				check = true;
+				
 				APP_LOGS.info("Recently used contact details displayed at the top of phone dialer call logs ");
-				test.log(LogStatus.INFO, "Recently used contact details displayed at the top of phone dialer call logs");
-				test.log(LogStatus.PASS, "Test case Status is PASS");
-				SA.assertTrue(check, "Recently used contact details displayed at the top of phone dialer call logs");
+				sa.assertTrue(true, "Recently used contact details displayed at the top of phone dialer call logs");
+				test.log(LogStatus.PASS, "Recently used contact details displayed at the top of phone dialer call logs");
+				
+				
 			} else	{
 				APP_LOGS.info("Recently used contact details is not displayed at the top of phone dialer call logs" );
+				sa.fail();	
 				test.log(LogStatus.ERROR, "Recently used contact details is not displayed at the top of phone dialer call logs");
-				test.log(LogStatus.FAIL, "Test case Status is FAIL");
-				SA.fail();	
+				
+				
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR,"Error in locators->validate_recent_contact_in_list()");
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR,"Exeption in ->validate_recent_contact_in_list()");
 		}
-		SA.assertAll();
 	}
 	
-	public void validate_send_message(String textMessage) {
-		SoftAssert SA = new SoftAssert();
+	public void validate_send_message(String textMessage,SoftAssert sa) {
+		
 		try {
 			clickBtn(Locators_PhoneDialer.callLogPage);
 			minWait();
@@ -691,77 +809,159 @@ public class XP8_PhoneDialer_util extends BaseUtil {
 			minWait();
 			clickBtn(Locators_PhoneDialer.Send_message);
 			minWait();
-			if(isElementExist(Locators_PhoneDialer.permissionPopUp)) {
-				minWait();
-				for(int i=0;i<3;i++){
-					minWait();
-					clickBtn(Locators_PhoneDialer.allowBtn);
-				}
-			}
+			clickBtn(Locators_PhoneDialer.messageEditFld);
+			minWait();
 			enterTextToInputField(Locators_PhoneDialer.messageEditFld, textMessage);
-			customWait(3000);
-		/*	clickBtn(Locators_PhoneDialer.messageEditFld);
-			customWait(2000);
-			Runtime.getRuntime().exec("adb -s "+ p_Id +" shell input text "+ textMessage);*/
-			clickBtn(Locators_PhoneDialer.sendMessage);
-			customWait(2000);
+			customWait(8000);
+		    clickBtn(Locators_PhoneDialer.sendMessage);
+		    WebDriverWait wait = new WebDriverWait(aDriver, 30);
+		   wait.until(ExpectedConditions.visibilityOf(Locators_PhoneDialer.messageSentNow));
 			if(isElementExist(Locators_PhoneDialer.messageSentNow))
 			{
-				check = true;
+				
 				APP_LOGS.info("Message sent successfully ");
-				test.log(LogStatus.INFO, "Message sent successfully ");
-				test.log(LogStatus.PASS, "Test case Status is PASS");
-				SA.assertTrue(check, "Message sent successfully ");	
+				sa.assertTrue(true, "Message sent successfully ");	
+				test.log(LogStatus.PASS, "Message sent successfully ");
+				
+				
 			}else {
 				APP_LOGS.info("Message not sent");
-				test.log(LogStatus.ERROR, "Message not sent");
-				test.log(LogStatus.FAIL, "Test case Status is FAIL");
-				SA.fail();
+				sa.fail();
+				test.log(LogStatus.FAIL, "Message not sent");
+				
 			}	
-		} catch (Exception e) {
-			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR,"Error in locators->validate_send_message()");
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR,"Exeption in ->validate_send_message()");
 		}
-		SA.assertAll();
 	}
+public void validate_send_message_sprint(String textMessage,SoftAssert sa) {
+		
+		try {
+			launch_an_app("Message+");
+		
+			if(isElementExist(Locators_SMS_DeviceStability.vzw_Start_msg))
+			{
+				Runtime.getRuntime().exec("adb -s "+p_Id+" shell pm clear com.verizon.messaging.vzmsgs");
+				launch_an_app("Message+");
+				clickBtn(Locators_SMS_DeviceStability.vzw_Start_msg);
+				clickBtn(Locators_SMS_DeviceStability.vzw_msg_skipprovisioing);
+			}else{
+				
+			launch_an_app("phone");
+			clickBtn(Locators_PhoneDialer.callLogPage);
+			minWait();
+			clickBtn(Locators_PhoneDialer.recentCallLogNumber);
+			minWait();
+			clickBtn(Locators_PhoneDialer.Send_message);
+			minWait();
+			/*clickBtn(Locators_PhoneDialer.messageEditFld);
+			minWait();*/
+			enterTextToInputField(Locators_PhoneDialer.sprintmessageEditFld, textMessage);
+			customWait(8000);
+		    clickBtn(Locators_PhoneDialer.sprintsendMessage);
+		    WebDriverWait wait = new WebDriverWait(aDriver, 30);
+		   wait.until(ExpectedConditions.visibilityOf(Locators_PhoneDialer.sprintmessageSentNow));
+			}
+			if(isElementExist(Locators_PhoneDialer.sprintmessageSentNow))
+			{
+				
+				APP_LOGS.info("Message sent successfully ");
+				sa.assertTrue(true, "Message sent successfully ");	
+				test.log(LogStatus.PASS, "Message sent successfully ");
+				
+				
+			}else {
+				APP_LOGS.info("Message not sent");
+				sa.fail();
+				test.log(LogStatus.FAIL, "Message not sent");
+				
+			}	
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR,"Error in locators->validate_send_message_sprint()");
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR,"Exeption in ->validate_send_message_sprint()");
+		}
+	}
+public void validate_send_message_verizon(String textMessage,SoftAssert sa) {
 	
+	try {
+		
+		clickBtn(Locators_PhoneDialer.callLogPage);
+		minWait();
+		clickBtn(Locators_PhoneDialer.recentCallLogNumber);
+		minWait();
+		clickBtn(Locators_PhoneDialer.Send_message);
+		minWait();
+		if(isElementExist(Locators_PhoneDialer.vzwstartmsg))
+		{
+			clickBtn(Locators_PhoneDialer.vzwstartmsg);
+			clickBtn(Locators_PhoneDialer.vzwskip);
+		}
+		enterTextToInputField(Locators_PhoneDialer.sprintmessageEditFld, textMessage);
+		customWait(8000);
+	    clickBtn(Locators_PhoneDialer.sprintsendMessage);
+	    WebDriverWait wait = new WebDriverWait(aDriver, 30);
+	   wait.until(ExpectedConditions.visibilityOf(Locators_PhoneDialer.sprintmessageSentNow));
+		if(isElementExist(Locators_PhoneDialer.sprintmessageSentNow))
+		{
+			
+			APP_LOGS.info("Message sent successfully ");
+			sa.assertTrue(true, "Message sent successfully ");	
+			test.log(LogStatus.PASS, "Message sent successfully ");
+			
+			
+		}else {
+			APP_LOGS.info("Message not sent");
+			sa.fail();
+			test.log(LogStatus.FAIL, "Message not sent");
+			
+		}	
+	} catch (org.openqa.selenium.NoSuchElementException e) {
+
+		test.log(LogStatus.ERROR,"Error in locators->validate_send_message_sprint()");
+	}catch (Exception e) {
+		test.log(LogStatus.ERROR,"Exeption in ->validate_send_message_sprint()");
+	}
+}
 	public void validate_add_new_contact(String Phone,String name) {
 		try {
 			clickBtn(Locators_PhoneDialer.callLogPage);
 			minWait();
-			enterNumberInDialpad(Phone);
-			minWait();
+			clickBtn(Locators_PhoneDialer.dialpadBtn);
+			customWait(2000);
+			enterTextToInputField(Locators_PhoneDialer.dialpadEditFld, Phone);
+			customWait(2000);
 			clickBtn(Locators_PhoneDialer.Add_to_contact);
 			minWait();
-			CreateNewContactAndSave(name);
+			clickBtn(Locators_PhoneDialer.createNewContactOpt);
+			customWait(3000);
+			enterTextToInputField(Locators_PhoneDialer.nameEditFld,name);
 			customWait(2000);
-			if(isElementExist(Locators_PhoneDialer.permissionPopUp)) {
-				minWait();
-				for(int i=0;i<3;i++){
-					minWait();
-					clickBtn(Locators_PhoneDialer.allowBtn);
-				}
-			}
-			clickBackButton(2);
+			clickBtn(Locators_PhoneDialer.saveOpt);
+			customWait(2000);
+		  /* clickBackButton_without_trycatch(2);
 			minWait();
 			clickBtn(Locators_PhoneDialer.contactPage);
 			minWait();
 			clickBtn(Locators_PhoneDialer.Contact_three);
 			minWait();
-			validateSavedContact(name,"");
-			clickBackButton(1);
-		} catch (Exception e) {
-			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+		*/
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR,"Error in locators->validate_add_new_contact()");
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR,"Exeption in ->validate_add_new_contact()");
 		}
 	}
-	
 	public void remove_GoogleAcccount() {
 		//remove added google Account if any 
 		try {
 			scrollToText("Users & accounts");
-//			clickOnAccounts();
-			minWait();
+	        minWait();
 			if(isElementExist(Locators_DeviceStability.connectedAccount)) {
 				System.out.println("Account is present");
 				minWait();
@@ -777,14 +977,16 @@ public class XP8_PhoneDialer_util extends BaseUtil {
 			}
 
 
-		} catch (Exception e) {
-			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR,"Error in locators->remove_GoogleAcccount()");
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR,"Exeption in ->remove_GoogleAcccount()");
 		}
 	}
 	
-	public void validate_link_contact() {
-		SoftAssert SA = new SoftAssert();
+	public void validate_link_contact(SoftAssert sa) {
+		
 		try {
 			clickBtn(Locators_PhoneDialer.contactPage);
 			minWait();
@@ -797,23 +999,54 @@ public class XP8_PhoneDialer_util extends BaseUtil {
 			clickBtn(Locators_PhoneDialer.contact_two);
 			minWait();
 			if(isElementExist(Locators_PhoneDialer.contact_linked_1) && isElementExist(Locators_PhoneDialer.contact_linked_2)) {
-				check = true;
 				APP_LOGS.info("Contact linked successfully");
-				test.log(LogStatus.INFO, "Contact linked successfully");
-				test.log(LogStatus.PASS, "Test case Status is PASS");
-				SA.assertTrue(check, "Contact linked successfully");	
+				sa.assertTrue(true, "Contact linked successfully");
+				test.log(LogStatus.PASS, "Contact linked successfully");
 			}else {
 				APP_LOGS.info("Failed to link Contact");
-				test.log(LogStatus.ERROR, "Failed to link Contact");
-				test.log(LogStatus.FAIL, "Test case Status is FAIL");
-				SA.fail();
+				sa.fail();
+				test.log(LogStatus.FAIL, "Failed to link Contact");
 			}
-			clickBackButton(1);
-		} catch (Exception e) {
-			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+			clickBackButton_without_trycatch(1);
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR,"Error in locators->validate_link_contact()");
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR,"Exeption in ->validate_link_contact()");
 		}
-		SA.assertAll();
+	}
+public void validate_unlink_contact(SoftAssert sa) {
+		
+		try {
+			
+			clickBtn(Locators_PhoneDialer.contactPage);
+			minWait();
+			clickBtn(Locators_PhoneDialer.Contact_three);
+			minWait();
+			clickBtn(Locators_PhoneDialer.contact_more_option);
+			minWait();
+			clickBtn(Locators_PhoneDialer.view_linked_cnts);
+			minWait();
+			clickBtn(Locators_PhoneDialer.unlink_txt);
+			minWait();
+			clickBtn(Locators_PhoneDialer.unlink_txt);
+			minWait();
+			if(isElementExist(Locators_PhoneDialer.after_unlink)){
+				APP_LOGS.info("Contact unlinked successfully");
+				sa.assertTrue(true, "Contact unlinked successfully");
+				test.log(LogStatus.PASS, "Contact unlinked successfully");
+			}else {
+				APP_LOGS.info("Failed to unlink Contact");
+				sa.fail();
+				test.log(LogStatus.FAIL, "Failed to unlink Contact");
+			}
+			clickBackButton_without_trycatch(1);
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR,"Error in locators->validate_unlink_contact()");
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR,"Exeption in ->validate_unlink_contact()");
+		}
 	}
 	
 	public void add_picture_to_contact() {
@@ -826,87 +1059,100 @@ public class XP8_PhoneDialer_util extends BaseUtil {
 			minWait();
 			clickBtn(Locators_PhoneDialer.camera_image);
 			minWait();
-			validate_take_photo();
-			minWait();
-			validate_remove_photo();
-			minWait();
-			validate_Choose_photo();
-			clickBackButton(1);
-		} catch (Exception e) {
-			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+			
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR,"Error in locators->add_picture_to_contact()");
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR,"Exeption in ->add_picture_to_contact()");
 		}
 	}
 	
 	
-	public void validate_take_photo() {
-		SoftAssert SA = new SoftAssert();
+	public void validate_take_photo(SoftAssert sa) {
+		
 		try {
+			
+			clickBtn(Locators_PhoneDialer.contactstab);
+			minWait();
+			clickBtn(Locators_PhoneDialer.contact_one);
+			minWait();
+			clickBtn(Locators_PhoneDialer.edit_contact);
+			minWait();
+			clickBtn(Locators_PhoneDialer.camera_image);
+			minWait();
 			clickBtn(Locators_PhoneDialer.Take_photo);
 			customWait(2000);
-			if(isElementExist(Locators_PhoneDialer.permissionPopUp)) {
+			System.out.println("photo is taken");
+		/*	if(isElementExist(Locators_PhoneDialer.permissionPopUp)) {
 				minWait();
 				for(int i=0;i<3;i++){
 					minWait();
 					clickBtn(Locators_PhoneDialer.allowBtn);
 				}
 			}
-			
+			*/
+			System.out.println("take photo");
 			clickBtn(Locators_PhoneDialer.photo_capture_Btn);
 			customWait(8000);
-			clickBtn(Locators_PhoneDialer.photo_add_Btn);
-			customWait(5000);
+			clickBtn(Locators_PhoneDialer.photo_reviewdone);
+			/*clickBtn(Locators_PhoneDialer.photo_add_Btn);
+			customWait(5000);*/
 			System.out.println("check2");
 			clickBtn(Locators_PhoneDialer.done_btn);
 			customWait(5000);
-			
-			if(isElementExist(Locators_PhoneDialer.added_image)) {
-				check = true;
+		  if(isElementExist(Locators_PhoneDialer.added_image)) {
+				
 				APP_LOGS.info("Image added to saved contact Successfully,Take photo option verified");
-				test.log(LogStatus.INFO, "Image added to saved contact Successfully,Take photo option verified");
-				test.log(LogStatus.PASS, "Test case Status is PASS");
-				SA.assertTrue(check, "Image added to saved contact Successfully,Take photo option verified");	
+				sa.assertTrue(true, "Image added to saved contact Successfully,Take photo option verified");
+				test.log(LogStatus.PASS, "Image added to saved contact Successfully,Take photo option verified");
+				
+				
 			}else {
 				APP_LOGS.info("Failed to add image to saved Contact");
-				test.log(LogStatus.ERROR, "Failed to add image to saved Contact");
-				test.log(LogStatus.FAIL, "Test case Status is FAIL");
-				SA.fail();
+				sa.fail();
+				test.log(LogStatus.FAIL, "Failed to add image to saved Contact");
+				
+				
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR,"Error in locators->validate_take_photo()");
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR,"Exeption in ->validate_take_photo()");
 		}
-		SA.assertAll();
 	}
 	
-	public void validate_remove_photo() {
-		SoftAssert SA = new SoftAssert();
+	public void validate_remove_photo(SoftAssert sa) {
+		
 		try {
 			clickBtn(Locators_PhoneDialer.added_image);
 			customWait(2000);
 			clickBtn(Locators_PhoneDialer.Remove_photo);
 			minWait();
 			if(isElementExist(Locators_PhoneDialer.contact_image_view_without_image)) {
-				check = true;
 				APP_LOGS.info("Image removed from saved contact Successfully,Remove photo option verified");
-				test.log(LogStatus.INFO, "Image removed from saved contact Successfully,Remove photo option verified");
-				test.log(LogStatus.PASS, "Test case Status is PASS");
-				SA.assertTrue(check, "Image removed from saved contact Successfully,Remove photo option verified");	
+				sa.assertTrue(true, "Image removed from saved contact Successfully,Remove photo option verified");	
+				test.log(LogStatus.PASS, "Image removed from saved contact Successfully,Remove photo option verified");
+				
+
 			}else {
 				APP_LOGS.info("Failed to remove image from saved Contact");
+				sa.fail();
 				test.log(LogStatus.ERROR, "Failed to remove image from saved Contact");
-				test.log(LogStatus.FAIL, "Test case Status is FAIL");
-				SA.fail();
+				
+				
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR,"Error in locators->validate_remove_photo()");
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR,"Exeption in ->validate_remove_photo()");
 		}
-		SA.assertAll();
 	}
 
-	public void validate_Choose_photo() {
-		SoftAssert SA = new SoftAssert();
+	public void validate_Choose_photo(SoftAssert sa) {
+		
 		try {
 			launch_an_app("camera");
 			minWait();
@@ -932,29 +1178,32 @@ public class XP8_PhoneDialer_util extends BaseUtil {
 				clickBtn(Locators_PhoneDialer.done_btn);
 				customWait(2000);
 				if(isElementExist(Locators_PhoneDialer.added_image)) {
-					check = true;
 					clickBtn(Locators_PhoneDialer.saveOpt);
 					APP_LOGS.info("Image added to saved contact Successfully,Choose photo option verified");
-					test.log(LogStatus.INFO, "Image added to saved contact Successfully,Choose photo option verified");
-					test.log(LogStatus.PASS, "Test case Status is PASS");
-					SA.assertTrue(check, "Image added to saved contact Successfully,Choose photo option verified");	
+					sa.assertTrue(true, "Image added to saved contact Successfully,Choose photo option verified");	
+					test.log(LogStatus.PASS, "Image added to saved contact Successfully,Choose photo option verified");
+					
+					
 				}else {
 					APP_LOGS.info("Failed to add image to saved Contact");
-					test.log(LogStatus.ERROR, "Failed to add image to saved Contact");
-					test.log(LogStatus.FAIL, "Test case Status is FAIL");
-					SA.fail();
+					sa.fail();
+					test.log(LogStatus.FAIL, "Failed to add image to saved Contact");
+					
+					
 				}
 				
 			}else {
-				test.log(LogStatus.ERROR, "Failed to capture image");
-				test.log(LogStatus.FAIL, "Test case Status is FAIL");
-				SA.fail();
+				APP_LOGS.info("Failed to capture image");
+				sa.fail();
+				test.log(LogStatus.FAIL, "Failed to capture image");
+				
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR,"Error in locators->validate_Choose_photo()");
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR,"Exeption in ->validate_Choose_photo()");
 		}
-		SA.assertAll();
 	}
 
 	public void validateKeepEditingAndDiscard(String Phone) throws InterruptedException, IOException{
@@ -969,27 +1218,22 @@ public class XP8_PhoneDialer_util extends BaseUtil {
 			minWait();
 			clickBtn(Locators_PhoneDialer.createNewContactOpt);
 			minWait();
-			clickBackButton(2);
+			clickBackButton_without_trycatch(2);
 			minWait();
-			KeepEditingAndDiscard(Locators_PhoneDialer.CancelOpt, Locators_PhoneDialer.nameEditFld);
-			minWait();
-			clickBackButton(1);
-			minWait();
-			KeepEditingAndDiscard(Locators_PhoneDialer.discardBtn, Locators_PhoneDialer.dialpadEditFld);
-			minWait();
-			clickBackButton(2);
-		}catch (NoSuchElementException e) {
-			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
-		}
-	}
+		}catch (org.openqa.selenium.NoSuchElementException e) {
 
-	public void KeepEditingAndDiscard(WebElement element,WebElement subElement) throws InterruptedException, IOException
+			test.log(LogStatus.ERROR,"Error in locators->validateKeepEditingAndDiscard()");
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR,"Exeption in ->validateKeepEditingAndDiscard()");
+		}
+		}
+
+	public void KeepEditingAndDiscard(WebElement element,WebElement subElement,SoftAssert sa) throws InterruptedException, IOException
 	{
 		/*
 		 * clicks on keep editing/Discard element and validates
 		 */
-		SoftAssert SA= new SoftAssert();
+		
 		try
 		{
 			String option = element.getText();
@@ -997,49 +1241,51 @@ public class XP8_PhoneDialer_util extends BaseUtil {
 			element.click();
 			customWait(2000);
 			if(isElementExist(subElement)){
-				check = true;
 				APP_LOGS.info(option + " Option is verified successfully");
-				test.log(LogStatus.INFO, option + " Option is verified successfully");
-				test.log(LogStatus.PASS, "Test case Status is PASS");
-				SA.assertTrue(check,option + " Option is verified successfully");
+				sa.assertTrue(true,option + " Option is verified successfully");
+				test.log(LogStatus.PASS, option + " Option is verified successfully");
+				
+				
 			}
 			else{
 				APP_LOGS.info(option + " Option is not available");
-				test.log(LogStatus.INFO,option+ " Option is not available");
-				test.log(LogStatus.FAIL, "Test case Status is FAIL");
-				SA.fail(option +" Option is not available");
+				sa.fail(option +" Option is not available");
+				test.log(LogStatus.FAIL,option+ " Option is not available");
+				
+				
 			}
-		}catch (NoSuchElementException e) {
-			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR,"Error in locators->KeepEditingAndDiscard()");
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR,"Exeption in ->KeepEditingAndDiscard()");
 		}
-		SA.assertAll();
 	}
 	
-	public void validate_block_option_in_call_log() {
-		SoftAssert SA = new SoftAssert();
+	public void validate_block_option_in_call_log(SoftAssert sa) {
+		
 		try {
 			clickBtn(Locators_PhoneDialer.callLogPage);
 			minWait();
 			clickBtn(Locators_PhoneDialer.contact_one);
 			minWait();
 			if(isElementExist(Locators_PhoneDialer.blockNumberOpt)) {
-				check = true;
 				APP_LOGS.info("Block number option is present in call log page");
-				test.log(LogStatus.INFO, "Block number option is present in call log page");
-				test.log(LogStatus.PASS, "Test case Status is PASS");
-				SA.assertTrue(check, "Block number option is present in call log page");	
+				sa.assertTrue(true, "Block number option is present in call log page");
+				test.log(LogStatus.PASS, "Block number option is present in call log page");
 			}else {
 				APP_LOGS.info("Block number option is not present in call log page");
-				test.log(LogStatus.ERROR, "Block number option is not present in call log page");
-				test.log(LogStatus.FAIL, "Test case Status is FAIL");
-				SA.fail();
+				sa.fail();
+				test.log(LogStatus.FAIL, "Block number option is not present in call log page");
+				
+				
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR,"Error in locators->validate_block_option_in_call_log()");
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR,"Exeption in ->validate_block_option_in_call_log()");
 		}
-		SA.assertAll();
 	}
 	
 	public void navigate_to_block_number_in_call_settings() {
@@ -1051,99 +1297,106 @@ public class XP8_PhoneDialer_util extends BaseUtil {
 			clickBtn(Locators_PhoneDialer.Call_screening);
 			minWait();
 			clickBtn(Locators_PhoneDialer.Manage_black_list);
-		} catch (Exception e) {
-			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR,"Error in locators->navigate_to_block_number_in_call_settings()");
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR,"Exeption in ->navigate_to_block_number_in_call_settings()");
 		}
 	}
 	
-	public void blockNumberAndValidate() {
-		SoftAssert SA = new SoftAssert();
+	public void blockNumberAndValidate(SoftAssert sa) {
+		
 		try {
 			clickBtn(Locators_PhoneDialer.add_a_number_to_block);
 			minWait();
-			System.out.println(Locators_PhoneDialer.blockBtn.isEnabled());
-			if(Locators_PhoneDialer.blockBtn.isEnabled()) {
-				APP_LOGS.info("Block option is highlighted before entering Number to block");
-				test.log(LogStatus.ERROR, "Block option is highlighted before entering Number to block");
-				test.log(LogStatus.FAIL, "Test case Status is FAIL");
-				SA.fail();
-			}else {
-				check = true;
-				APP_LOGS.info("Block option is not highlighted before entering Number to block");
-				test.log(LogStatus.INFO, "Block option is not highlighted before entering Number to block");
-				test.log(LogStatus.PASS, "Test case Status is PASS");
-				SA.assertTrue(check, "Block option is not highlighted before entering Number to block");	
-			}
-			
+			System.out.println("blocked");
 			enterTextToInputField(Locators_PhoneDialer.phone_number_fld_to_block, refNum);
 			customWait(2000);
 			clickBtn(Locators_PhoneDialer.blockBtn);
+			//System.out.println(Locators_PhoneDialer.blockBtn.isEnabled());
+			/*if(Locators_PhoneDialer.blockBtn.isEnabled()) {
+				APP_LOGS.info("Block option is highlighted before entering Number to block");
+				test.log(LogStatus.PASS, "Block option is highlighted before entering Number to block");
+				
+				
+			}else {
+				
+				APP_LOGS.info("Block option is not highlighted before entering Number to block");
+				sa.assertTrue(true, "Block option is not highlighted before entering Number to block");
+				test.log(LogStatus.PASS, "Block option is not highlighted before entering Number to block");
+				
+					
+			}
+			*/
 			if(isElementExist(Locators_PhoneDialer.blocked_number)) {
-				check = true;
+				
 				APP_LOGS.info("Number blocked successfully from call settings,blocked number is available in list");
-				test.log(LogStatus.INFO, "Number blocked successfully from call settings,blocked number is available in list");
-				test.log(LogStatus.PASS, "Test case Status is PASS");
-				SA.assertTrue(check, "Number blocked successfully from call settings,blocked number is available in list");	
+				sa.assertTrue(true, "Number blocked successfully from call settings,blocked number is available in list");	
+				test.log(LogStatus.PASS, "Number blocked successfully from call settings,blocked number is available in list");
+				
+				
 			}else {
 				APP_LOGS.info("Failed to block number from call settings");
-				test.log(LogStatus.ERROR, "Failed to block number from call settings");
-				test.log(LogStatus.FAIL, "Test case Status is FAIL");
-				SA.fail();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
-		}
-		SA.assertAll();
-	}
-	
-	public void unblockNumberAndValidate() {
-		SoftAssert SA = new SoftAssert();
-		try {
-			if(isElementExist(Locators_PhoneDialer.blocked_number)) {
-				clickBtn(Locators_PhoneDialer.delete_unblock_number_option);
-				minWait();
-				clickBtn(Locators_PhoneDialer.CancelOpt);
-				if(isElementExist(Locators_PhoneDialer.blocked_number)) {
-					check = true;
-					APP_LOGS.info("Cancel option in Unblock number pop up is verified successfully");
-					test.log(LogStatus.INFO, "Cancel option in Unblock number pop up is verified successfully");
-					test.log(LogStatus.PASS, "Test case Status is PASS");
-					SA.assertTrue(check, "Cancel option in Unblock number pop up is verified successfully");	
-				}else {
-					APP_LOGS.info("Failed to validate Cancel option in Unblock number pop up");
-					test.log(LogStatus.ERROR, "Failed to validate Cancel option in Unblock number pop up");
-					test.log(LogStatus.FAIL, "Test case Status is FAIL");
-					SA.fail();
-				}
+				sa.fail();
+				test.log(LogStatus.FAIL, "Failed to block number from call settings");
 				
-				clickBtn(Locators_PhoneDialer.delete_unblock_number_option);
+				
+			}
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR,"Error in locators-> blockNumberAndValidate()");
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR,"Exeption in -> blockNumberAndValidate()");
+		}
+		}
+		
+	
+	public void unblockNumberAndValidate(SoftAssert sa) {
+		
+		try {
+			clickBtn(Locators_PhoneDialer.settingsIcon);
+			minWait();
+			clickBtn(Locators_PhoneDialer.Settings);
+			minWait();
+			clickBtn(Locators_PhoneDialer.Call_screening);
+			minWait();
+			clickBtn(Locators_PhoneDialer.Manage_black_list);
+			clickBtn(Locators_PhoneDialer.delete_unblock_number_option);
 				minWait();
-				if(!isElementExist(Locators_PhoneDialer.blocked_number)) {
-					check = true;
+			clickBtn(Locators_PhoneDialer.unblocktxt);
+				minWait();
+				if(isElementExist(Locators_PhoneDialer.blocked_no_list)) {
+					
 					APP_LOGS.info("Number Unblocked successfully from call settings");
-					test.log(LogStatus.INFO, "Number Unblocked successfully from call settings");
-					test.log(LogStatus.PASS, "Test case Status is PASS");
-					SA.assertTrue(check, "Number Unblocked successfully from call settings");	
+					sa.assertTrue(true, "Number Unblocked successfully from call settings");	
+					test.log(LogStatus.PASS, "Number Unblocked successfully from call settings");
+					
+					
 				}else {
 					APP_LOGS.info("Failed to Unblock number from call settings");
-					test.log(LogStatus.ERROR, "Failed to Unblock number from call settings");
-					test.log(LogStatus.FAIL, "Test case Status is FAIL");
-					SA.fail();
+					sa.fail();
+					test.log(LogStatus.FAIL, "Failed to Unblock number from call settings");
+					
+					
 				}
-			}else {
-				APP_LOGS.info("Blocked number is not available in list");
-				test.log(LogStatus.ERROR, "Blocked number is not available in list");
-				test.log(LogStatus.FAIL, "Test case Status is FAIL");
-				SA.fail();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+			
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR,"Error in locators->unblockNumberAndValidate()");
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR,"Exeption in ->unblockNumberAndValidate()");
 		}
-		SA.assertAll();
 	}
-	
+	public void endCall_RefDevice() {
+		try {
+			minWait();
+			Runtime.getRuntime().exec("adb -s "+r_Id+" shell input keyevent 6");
+			Thread.sleep(1000);
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->endCall_RefDevice()");
+
+		}
+	}
 	
 }

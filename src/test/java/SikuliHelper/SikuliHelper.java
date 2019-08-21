@@ -1,4 +1,4 @@
-package SikuliHelper;
+/*package SikuliHelper;
 
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Pattern;
@@ -159,3 +159,4 @@ public class SikuliHelper extends CommonConfig{
 	
 
 }
+*/

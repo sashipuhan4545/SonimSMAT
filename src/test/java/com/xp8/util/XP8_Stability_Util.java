@@ -149,6 +149,7 @@ public class XP8_Stability_Util extends BaseUtil{
 				minWait();
 			}
 
+			
 				minWait();		
 				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
 				minWait();

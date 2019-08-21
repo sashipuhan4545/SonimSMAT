@@ -1,26 +1,27 @@
 package com.xp8.util;
 
-import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
-import org.json.simple.parser.ParseException;
+
+
+
 import org.testng.asserts.SoftAssert;
 
+import com.github.javafaker.Faker;
 import com.graphics.gui.JsonFileReaderAndWriter;
+
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 
 import application.AllQA;
-import io.appium.java_client.android.AndroidElement;
+
 import io.appium.java_client.android.AndroidKeyCode;
-import junit.framework.Assert;
+
 
 public class XP8_Contacts_Util extends BaseUtil {
-	
+
 	public static boolean check=false;
 	public static ExtentReports extent;
 	public static ExtentTest test;
@@ -35,19 +36,150 @@ public class XP8_Contacts_Util extends BaseUtil {
 	public String refNum = AllQA.REFERENCEDEVMDN.replaceAll("[^0-9]", "");	// Reference Device MDN.
 
 
-	public void fetch_Devices_Details() throws InterruptedException, FileNotFoundException, IOException, ParseException {
 
-		minWait();
-		p_Id=JsonFileReaderAndWriter.primaryDevIdReader();
-		r_Id=JsonFileReaderAndWriter.ReadRefDeviceId();
-		p_b_No=JsonFileReaderAndWriter.primaryDevFirmwareReader();
-		r_b_No=JsonFileReaderAndWriter.ReadRefDeviceFirmWare();
+
+	public void fetch_Devices_Details() throws InterruptedException, FileNotFoundException, IOException {
+
+
+		try {
+
+			p_Id=JsonFileReaderAndWriter.primaryDevIdReader();
+			r_Id=JsonFileReaderAndWriter.ReadRefDeviceId();
+			p_b_No=JsonFileReaderAndWriter.primaryDevFirmwareReader();
+			r_b_No=JsonFileReaderAndWriter.ReadRefDeviceFirmWare();
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-	
-	public void End() {
+
+
+
+	public void clearDataContact()
+	{
+		try {
+			Runtime.getRuntime().exec("adb -s "+p_Id+" shell pm clear com.android.contacts");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	public void createContactsFromAdbCommands(SoftAssert sa,int n) throws InterruptedException, IOException {
+		try {
+
+			customWait(2000);
+			System.out.println("The value is "+n);
+
+			System.out.println("Id is "+p_Id);
+			Faker faker = new Faker();
+			String fullname = faker.name().fullName();
+			String email=faker.name().firstName()+"@gmail.com";
+
+
+			Runtime.getRuntime().exec("adb -s "+p_Id+" shell am start -a android.intent.action.INSERT -t vnd.android.cursor.dir/contact -e name '"+fullname+"' -e phone 123456789 -e email '"+email+"'");
+			customWait(2000);
+
+			if(JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("-29")) {
+				
+				System.out.println("INDIE SPRINT");
+				clickBtn(Locators_Contacts.Save_Btn1);
+
+			}else {
+				
+				clickBtn(multi_Loc_Strategy(Locators_Contacts.Save_Btn1,Locators_Contacts.Save_Btn2,null,null,null,888,84));
+
+			}
+
+			minWait();
+
+			if(isElementExist(Locators_Contacts.OK)){
+
+				clickBtn(Locators_Contacts.OK);
+
+			}
+			
+			customWait(3000);
+			if(Locators_Contacts.savedContact.isDisplayed() || Locators_Contacts.savedContact_sprint.isDisplayed() 
+					|| Locators_Contacts.FavoriteContact.isDisplayed() || Locators_Contacts.EditContact.isDisplayed()
+					|| Locators_Contacts.More_options.isDisplayed() ) 
+			{
+
+
+				System.out.println("Test Case Pass");
+
+				AllQA.NUM_OF_CALL_ITER= "\n"+"Contact CreatedSsucessfully @iter :"+n;
+				AllQA.CALL_COUNT=n;
+				sa.assertTrue(true, "");
+				test.log(LogStatus.INFO,"Contact created, saved in phone memory at iteration: "+n);
+
+				test.log(LogStatus.PASS, "Contact creation Pass at iteration: " +n);
+
+
+
+			}else {
+
+				System.out.println("Test case failed");
+
+				AllQA.NUM_OF_CALL_ITER="\n"+"Contact Creattion Failed @iter :"+n;
+				AllQA.CALL_COUNT=n;
+
+				sa.fail();
+				test.log(LogStatus.INFO, "Contact creation failed at iteration: "+n);   	
+				test.log(LogStatus.FAIL, "Test cases failed");   
+
+			}
+
+			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
+
+
+
+
+
+
+
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+			
+			AllQA.NUM_OF_CALL_ITER="\n"+"Error in locators @iter : "+n;
+			AllQA.CALL_COUNT=n;
+
+			clearRecentApps();
+
+			System.out.println("999999999999999999999999");
+		
+			
+		   test.log(LogStatus.ERROR, "Locators failure in  createContactsFromAdbCommands()");	
+		    
+		 
+
+		}
+
+		catch (Exception e) {
+			clearRecentApps();
+
+		}
+
+
+
+
+
+
+	}
+
+
+
+	//	public void getStatus(ITestResult res){
+	//		
+	//		Timer t=new Time();
+	//		t.schedule(arg0, arg1);
+	//	}
+
+	/*	public void End() {
 		aDriver.quit();
 	}
-	
+
 	public void launch_APP(AndroidElement appToClick) throws InterruptedException {
 		try {
 			clickOnAppList();
@@ -66,7 +198,7 @@ public class XP8_Contacts_Util extends BaseUtil {
 			e.printStackTrace();
 		}
 	}
-	
+
 
 	public void clickOnAppList() throws InterruptedException {
 
@@ -80,8 +212,8 @@ public class XP8_Contacts_Util extends BaseUtil {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
+
 	public void navigateToMoreOptions(String str) throws InterruptedException {
 		//
 		try {
@@ -91,13 +223,13 @@ public class XP8_Contacts_Util extends BaseUtil {
 			clickBtn(Locators_Contacts.contactsSettingsOPt);
 			minWait();
 			scrollToText(str);
-			
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
+
     public void importContacts() throws InterruptedException {
     	try {
     		minWait();
@@ -124,7 +256,7 @@ public class XP8_Contacts_Util extends BaseUtil {
 			e.printStackTrace();
 		}    	  	
     }
-	
+
     public void exportContacts() throws InterruptedException {
     	//export contacts
     	try {
@@ -134,12 +266,12 @@ public class XP8_Contacts_Util extends BaseUtil {
 			clickBtn(Locators_Contacts.PHONE_RadioBtn);
 			minWait();
 			clickBtn(Locators_Contacts.Save_Btn);
-			
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	
+
     }
     public void deleteContacts() throws InterruptedException {
 		try {
@@ -174,7 +306,7 @@ public class XP8_Contacts_Util extends BaseUtil {
 			test.log(LogStatus.ERROR, "No Such element Found");
 		}
 	}
-	
+
     public void validateImportContacts() throws InterruptedException {
     	// validate Imported contacts 
     	SoftAssert sf = new SoftAssert();
@@ -199,11 +331,11 @@ public class XP8_Contacts_Util extends BaseUtil {
     	sf.assertAll();
     }
 
-    
+
     public boolean scrollToText(String text) {
-		/*
+
 		  Method used to select an element on the page by scrolling the Scroll View/List View
-		 */
+
 		boolean check = false;
 		try {  
 			String scrollable = "new UiScrollable(new UiSelector().scrollable(true))";
@@ -217,7 +349,7 @@ public class XP8_Contacts_Util extends BaseUtil {
 			return check;
 		}
 	}
-    
+
     public void make_Call_from_RefDev() throws InterruptedException, IOException {
 //make a call from ref device to primary device
 		try {
@@ -228,7 +360,7 @@ public class XP8_Contacts_Util extends BaseUtil {
 		}
 	}
 
-    
+
     public void endCall_RefDevice() {
 		try {
 			minWait();
@@ -237,10 +369,10 @@ public class XP8_Contacts_Util extends BaseUtil {
 		} catch (Exception e) {
 		}
 	}
-    
+
     public void recieve_Call_PrimaryDev_O() throws IOException, InterruptedException {
     	SoftAssert SA = new SoftAssert();
-		/*try {
+		try {
 			for(int j=1;j<=100;j++){
 				Process child = null;
 				if (p_b_No.contains("8A.")) {
@@ -268,7 +400,7 @@ public class XP8_Contacts_Util extends BaseUtil {
 			Runtime.getRuntime().exec("adb -s "+p_Id+" shell input keyevent 5");
 			Thread.sleep(2000);
 		}
-		*/
+
 		String value = null;
 		customWait(10000);
 		try {
@@ -325,20 +457,21 @@ public class XP8_Contacts_Util extends BaseUtil {
 				customWait(10000);	
 
 			}
-		/*	aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
+			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
 			minWait();
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
-			minWait();*/
+			minWait();
 		} catch (Exception e) {
 			Thread.sleep(2000);
 			Runtime.getRuntime().exec("adb -s "+r_Id+" shell input keyevent 5");
 			Thread.sleep(2000);
 		}
-		
-		
-	}
-    
-    
 
-	
+
+	}
+
+
+	 */
+
 }
+

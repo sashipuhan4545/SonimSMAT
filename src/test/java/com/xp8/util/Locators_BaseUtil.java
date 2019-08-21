@@ -18,6 +18,53 @@ public class Locators_BaseUtil {
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Gmail\")")
 	public static AndroidElement gmail;
 	
+	//PTT locators below
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").textContains(\"Push To Talk+\")")
+	public static AndroidElement PTT_ptticon;
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").textContains(\"Push-to-Talk\")")
+	public static AndroidElement PTT_ptticon_BELL;
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.view.View\").resourceId(\"ext-tab-3\")")
+	public static AndroidElement PTT_contactlist; 
+	@AndroidFindBy(uiAutomator="new UiSelector().resourceId(\"ext-button-284\")")
+	public static AndroidElement PTT_Back;
+	
+	
+	
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.view.View\").textContains(\"Contact presence Available\")")
+	
+	public static AndroidElement PTT_onlineContact;
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.view.View\").textContains(\"Contact Name Sashi, Contact presence Available, Contact avatar Default Avatar,,\")")
+	public static AndroidElement PTT_onlineContact1;
+	@AndroidFindBy(uiAutomator="new UiSelector().resourceId(\"ext-element-602\")")
+	public static AndroidElement PTT_contactlist2;
+	
+	
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.Button\").textContains(\"Call\")")
+	public static AndroidElement PTT_flooricon;
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.Button\").textContains(\"call end\")")
+	public static AndroidElement PTT_callendcon;
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.Button\").textContains(\"OK\")")
+	public static AndroidElement PTT_OK;
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.Button\").text(\"Back\")")
+	public static AndroidElement PTT_BackBtn;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@FindBy(xpath="//android.widget.TextView[@text='No recent items']")
 	public static AndroidElement no_Recent_Items;
 
@@ -36,6 +83,11 @@ public class Locators_BaseUtil {
 
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"Chrome\")")
 	public static AndroidElement browser_App;
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Chrome\")")
+	public static AndroidElement chrome;
+	
+	
 
 	@AndroidFindBy(xpath = "//android.widget.TextView[@text='Contacts']")
 	public static AndroidElement contacts;

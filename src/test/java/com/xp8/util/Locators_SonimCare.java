@@ -25,7 +25,7 @@ public class Locators_SonimCare {
 	public static WebElement AppListIcon;
 	
 	@AndroidFindBy(xpath ="//android.widget.Button[@text='ACCEPT']")
-	 public static WebElement AcceptBtn;
+	 public static AndroidElement AcceptBtn;
 
 	@FindBy(how=How.XPATH, using =("//android.widget.TextView[@text='CLEAR ALL']"))
 	public static WebElement ClearAll;

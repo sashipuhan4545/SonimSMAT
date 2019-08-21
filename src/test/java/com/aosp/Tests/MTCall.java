@@ -8,6 +8,8 @@ import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.util.Hashtable;
 import java.util.Properties;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.json.simple.parser.ParseException;
 import org.openqa.selenium.support.PageFactory;
@@ -38,6 +40,7 @@ import com.xp8.util.Locators_XP8_Sanity;
 import com.xp8.util.XP8_Sanity_Util;
 
 import application.AllQA;
+import io.appium.java_client.android.AndroidKeyCode;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 
 public class MTCall extends XP5S_Data_Utils {
@@ -93,15 +96,32 @@ public class MTCall extends XP5S_Data_Utils {
 
 			String screenshot_path=captureScreenshot(method.getName());
 			String image= test.addScreenCapture(screenshot_path);
-			test.log(LogStatus.FAIL,result.getThrowable());
+			//test.log(LogStatus.FAIL,result.getThrowable());
 			test.log(LogStatus.FAIL, "screenshot for failure: "+test.addScreenCapture(image));
 						// clear screen
-			clearRecentApps();
+		//	clearRecentApps();
 		}
-		extent.endTest(test);
-		extent.flush();
+		/*extent.endTest(test);
+		extent.flush();*/
 	}
 
+	
+	@BeforeTest
+	public void appendresult() {
+		
+		Timer t=new Timer();
+		t.schedule(new TimerTask() {
+
+			public void run() {
+
+				
+			extent.endTest(test);
+			extent.flush();
+					
+			}
+		},  0, 10*(100*1)); 
+		
+	}
 	@BeforeTest
 	public void a_setupSys() throws MalformedURLException, InterruptedException, FileNotFoundException, AWTException{
 
@@ -140,6 +160,18 @@ public class MTCall extends XP5S_Data_Utils {
 	}
 	
 	
+	@BeforeTest
+	public void b_startAdbLog() {
+		
+		try {
+			System.out.println("Starting Adb Log");
+			startAdbLog("MT-CALL");
+		} catch (AWTException | InterruptedException | IOException | ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public void enableData_Pref_Network_Type_To_LTE() throws Exception {
 
 		try {
@@ -172,12 +204,32 @@ public class MTCall extends XP5S_Data_Utils {
 		{
 
 
-			if(JsonFileReaderAndWriter.RefDeviceModelNum().contains("xp8800") || JsonFileReaderAndWriter.RefDeviceModelNum().contains("80k"))
+			if(JsonFileReaderAndWriter.ReadRefDeviceFirmWare().contains("8A")||JsonFileReaderAndWriter.RefDeviceModelNum().contains("xp8800") || JsonFileReaderAndWriter.RefDeviceModelNum().contains("80k"))
 			{
 
-				if(!JsonFileReaderAndWriter.ReadRefDeviceFirmWare().contains("-10"))
+				if(JsonFileReaderAndWriter.ReadRefDeviceFirmWare().contains("-10"))
 				{     
 
+					/*xp8.launch_APP_Only_For_CallPerformance_For_Primary_Device(Locators_XP8_Sanity.settings);
+					xp8.clickOn_Networks_and_Internet();
+
+					xp8.scrollToText("Mobile network");
+					xp8.clickBtn(Locators_XP8_Sanity.down_Triangle);
+					xp8.scrollToText("Preferred network type");
+					xp8.scrollToTextContains("3G");
+					customWait(10000);
+
+					
+					if(!Locators_XP8_Sanity.PreferrednetworkType_3G.getText().contains("3G"))
+					{
+						throw new RuntimeException();
+					}*/
+
+
+					
+
+				}else {
+					
 					xp8.acceptPlayprotect();
 					xp8.unlock_Phone();
 
@@ -189,15 +241,19 @@ public class MTCall extends XP5S_Data_Utils {
 					xp8.minWait();
 					xp8.scrollToText("Preferred network type");
 					xp8.minWait();
+					
+                    if(JsonFileReaderAndWriter.ReadRefDeviceFirmWare().contains("-26")||JsonFileReaderAndWriter.ReadRefDeviceFirmWare().contains("-11") || JsonFileReaderAndWriter.ReadRefDeviceFirmWare().contains("-15")) {
+						
+					}
 					xp8.scrollToTextContains("3G");
-					customWait(10000);
-
-
-					if(!Locators_XP8_Sanity.PreferrednetworkType_3G.getText().contains("3G"))
+					aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_HOME);
+					customWait(3000);
+					/*if(!Locators_XP8_Sanity.PreferrednetworkType_3G.getText().contains("3G"))
 					{
 						throw new RuntimeException();
-					}
-
+					}*/
+					
+									
 				}
 
 			}else if (JsonFileReaderAndWriter.RefDeviceModelNum().contains("xp5800") || JsonFileReaderAndWriter.RefDeviceModelNum().contains("50k"))
@@ -259,6 +315,7 @@ public class MTCall extends XP5S_Data_Utils {
 
 				try {
 
+					
 					XP3_Device_Sanity_Util xp3=new XP3_Device_Sanity_Util();
 					if(JsonFileReaderAndWriter.ReadRefDeviceFirmWare().contains("-10.")) {
 
@@ -307,7 +364,7 @@ public class MTCall extends XP5S_Data_Utils {
 
 
 
-			if(JsonFileReaderAndWriter.RefDeviceModelNum().contains("xp8800") || JsonFileReaderAndWriter.RefDeviceModelNum().contains("80k"))
+			if(JsonFileReaderAndWriter.ReadRefDeviceFirmWare().contains("8A")||JsonFileReaderAndWriter.RefDeviceModelNum().contains("xp8800") || JsonFileReaderAndWriter.RefDeviceModelNum().contains("80k"))
 			{
 
 
@@ -323,16 +380,33 @@ public class MTCall extends XP5S_Data_Utils {
 					String fN = startRIL_Log_Call_Perfomrance_MT();
 					xp8.launch_APP_Only_For_CallPerformance(Locators_XP8_Sanity.settings);
 					xp8.clickOn_Networks_and_Internet();
-					xp8.ON_Switch("Airplane mode");
-					xp8.clickBtn(Locators_XP8_Sanity.OK);
-					xp8.OFF_Switch("Airplane mode");
-					customWait(7000);
+					
+					if(JsonFileReaderAndWriter.ReadRefDeviceFirmWare().contains("-29")) {
+						//Here scrollin gbecause in sprint device Airplane mode is not visible 
+						xp8.scrollToTextContains("Airplane mode");
+
+					}else {
+
+						xp8.ON_Switch("Airplane mode");
+					}
+					
+					if(JsonFileReaderAndWriter.ReadRefDeviceFirmWare().contains("-18")||JsonFileReaderAndWriter.ReadRefDeviceFirmWare().contains("-12")||JsonFileReaderAndWriter.ReadRefDeviceFirmWare().contains("-29")||JsonFileReaderAndWriter.ReadRefDeviceFirmWare().contains("-11")||JsonFileReaderAndWriter.ReadRefDeviceFirmWare().contains("-26")||JsonFileReaderAndWriter.ReadRefDeviceFirmWare().contains("-10")) {
+						xp8.OFF_Switch("Airplane mode");
+						
+					}else {
+						
+						xp8.clickBtn(Locators_XP8_Sanity.OK);
+						xp8.OFF_Switch("Airplane mode");
+					}
+					
+				
+					customWait(10000);
 
 					if(searchString("RIL_REQUEST_IMS_REGISTRATION_STATE {1, 1} [SUB0]",fN) || searchString("RIL_REQUEST_IMS_REGISTRATION_STATE {1, 2} [SUB0]",fN))
 					{
 
 						System.out.println("ITS IMS ");
-						if(!JsonFileReaderAndWriter.ReadRefDeviceFirmWare().contains("-10"))
+						/*if(!JsonFileReaderAndWriter.ReadRefDeviceFirmWare().contains("-10"))
 						{     
 
 							System.out.println("ATT");
@@ -346,11 +420,12 @@ public class MTCall extends XP5S_Data_Utils {
 							xp8.scrollToTextContains("LTE");
 							customWait(10000);
 						}
-						
+						*/
 					}else {
 
 
 						System.out.println("ITS not");
+						AllQA.NUM_OF_CALL_ITER_UPDATE="NOT IMS";
 						throw new SkipException("Sim is not IMS registred");
 
 					}
@@ -387,8 +462,8 @@ public class MTCall extends XP5S_Data_Utils {
 
 					}else {
 
-
-						System.out.println("SIM is not IMS registred");
+						System.out.println("ITS not");
+						AllQA.NUM_OF_CALL_ITER_UPDATE="NOT IMS";
 						throw new SkipException("Sim is not IMS registred");
 					}
 				} catch (Exception e) {
@@ -402,7 +477,7 @@ public class MTCall extends XP5S_Data_Utils {
 			}else if (JsonFileReaderAndWriter.RefDeviceModelNum().contains("xp3800") || JsonFileReaderAndWriter.RefDeviceModelNum().contains("3A."))
 			{
 
-				try {
+			try {
 
 
 
@@ -421,7 +496,8 @@ public class MTCall extends XP5S_Data_Utils {
 
 					}else {
 
-						System.out.println("SIM is not IMS registred");
+						System.out.println("ITS not");
+						AllQA.NUM_OF_CALL_ITER_UPDATE="NOT IMS";
 						throw new SkipException("Sim is not IMS registred");
 
 					}
@@ -454,7 +530,7 @@ public class MTCall extends XP5S_Data_Utils {
 
 		APP_LOGS.info("===========Aosp_XP5S_TestCases===========");
 
-		if(JsonFileReaderAndWriter.primaryDevModelReader().contains("xp8800") || JsonFileReaderAndWriter.primaryDevModelReader().contains("80k")) {
+		if(JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("8A")||JsonFileReaderAndWriter.primaryDevModelReader().contains("xp8800") || JsonFileReaderAndWriter.primaryDevModelReader().contains("80k")) {
 
 			MT();
 			test.log(LogStatus.PASS, "Test case status is Passed");

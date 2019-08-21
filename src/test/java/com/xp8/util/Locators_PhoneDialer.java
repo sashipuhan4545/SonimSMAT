@@ -23,9 +23,12 @@ public class Locators_PhoneDialer {
 	@AndroidFindBy(xpath="//android.widget.ImageButton[@resource-id='com.android.dialer:id/dialtacts_options_menu_button']")
 	public static WebElement settingsIcon;
 
-	@AndroidFindBy(xpath="//android.widget.Button[@text='OK']")
+	@AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"android:id/button1\")")
 	public static WebElement okBtn;
 
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").resourceId(\"com.android.contacts:id/cliv_name_textview\")")
+	public static AndroidElement deletefirstcontact;
+	
 	@AndroidFindBy(xpath="//android.widget.ImageView[@content-desc='More options']")
 	public static WebElement moreOptionsInCallHistory;
 
@@ -44,7 +47,7 @@ public class Locators_PhoneDialer {
 	@AndroidFindBy(xpath="//android.widget.TextView[@text='CLEAR']")
 	public static WebElement clearOptInCallHistory;
 
-	@AndroidFindBy(xpath="//android.widget.TextView[@text='Call History']")
+	@AndroidFindBy(xpath="//android.widget.TextView[@text='Call history']")
 	public static WebElement callHistoryOpt;
 
 	@AndroidFindBy(xpath="//android.widget.LinearLayout[@index='0']/../..//android.widget.ImageButton[@content-desc='Open navigation drawer']")
@@ -98,10 +101,23 @@ public class Locators_PhoneDialer {
 	@AndroidFindBy(xpath="//android.widget.LinearLayout[@index='0']/../..//android.widget.RelativeLayout[@index='0']")
 	public static WebElement FrequentPage;
 
-	@AndroidFindBy(xpath="//android.widget.LinearLayout[@index='0']/../..//android.widget.RelativeLayout[@index='1']")
+	@AndroidFindBy(xpath="//android.widget.LinearLayout[@index='0']/../..//android.widget.ImageView[@content-desc='Call History tab.']")
 	public static WebElement callLogPage;
 
-	@AndroidFindBy(xpath="//android.widget.LinearLayout[@index='0']/../..//android.widget.RelativeLayout[@index='2']")
+	//@AndroidFindBy(xpath="//android.widget.ImageView[@content-desc='Call History tab.']")
+	@AndroidFindBy(xpath = "//android.widget.ImageView[@content-desc='Call History tab.'or@content-desc='Call History tab. 1 unread item.'or@content-desc='Call History tab. 2 unread items.']")
+	public static WebElement callLogPage1;
+	
+	@AndroidFindBy(xpath = "//android.widget.TextView[@text='Create new contact']")
+	public static AndroidElement createnewconttxt_dialpad;
+	
+	@AndroidFindBy(id="com.android.dialer:id/icon")
+	public static AndroidElement Callhistorytab;
+	
+	@AndroidFindBy(xpath = "//android.widget.LinearLayout[@index='1']/../..//android.widget.TextView[@resource-id='com.android.dialer:id/name']")
+	public static AndroidElement dailedFirstNum;
+	
+	@AndroidFindBy(xpath="//android.widget.LinearLayout[@index='0']/../..//android.widget.ImageView[@content-desc='Contacts tab.']")
 	public static WebElement contactPage;
 
 	@AndroidFindBy(xpath="//android.widget.TextView[@text='MAKE A CALL']")
@@ -113,6 +129,9 @@ public class Locators_PhoneDialer {
 	@AndroidFindBy(xpath="//android.widget.FrameLayout[@resource-id='com.android.dialer:id/dialpad_floating_action_button_container']")
 	public static WebElement callBtn;
 
+	@AndroidFindBy(xpath="//android.widget.ImageButton[@resource-id='com.android.dialer:id/dialpad_floating_action_button']")
+	public static WebElement sprintcallBtn;
+	
 	@AndroidFindBy(xpath="//android.widget.ImageButton[@resource-id='com.android.dialer:id/incall_end_call']")
 	public static WebElement endCallBtn;
 
@@ -124,7 +143,7 @@ public class Locators_PhoneDialer {
 
 	@AndroidFindBy(xpath="//android.widget.TextView[@text='ADD A CONTACT']")
 	public static WebElement addAContactOpt;
-
+	
 	@AndroidFindBy(xpath="//android.widget.TextView[@text='Create new contact']")
 	public static WebElement createNewContactOpt;
 
@@ -137,10 +156,10 @@ public class Locators_PhoneDialer {
 	@AndroidFindBy(xpath="//android.widget.TextView[@resource-id='com.android.dialer:id/call_duration']")
 	public static WebElement durationInSec;
 
-	@AndroidFindBy(xpath="//android.widget.ImageView[@resource-id='com.android.dialer:id/primary_action_button']")
+	@AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.android.dialer:id/primary_action_button\")")
 	public static WebElement callBtnInCallLog;
 
-	@AndroidFindBy(xpath="//android.widget.LinearLayout[@index='1']/../..//android.widget.TextView[@resource-id='com.android.dialer:id/name']")
+	@AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.android.dialer:id/name\")")
 	public static WebElement recentCallLogNumber;
 
 	@AndroidFindBy(xpath="//android.widget.TextView[@resource-id='com.android.packageinstaller:id/permission_message']")
@@ -181,19 +200,47 @@ public class Locators_PhoneDialer {
 
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").resourceId(\"com.android.dialer:id/cliv_name_textview\")")
 	public static WebElement searched_contact;
+	
+	@AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.android.dialer:id/recycler_view\")")
+	public static WebElement after_unlink;
 
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"Send a message\")")
 	public static WebElement Send_message;
+	
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"View linked contacts\")")
+	public static WebElement view_linked_cnts;
 
-	@AndroidFindBy(xpath="//android.widget.EditText[@text='Type message']")
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.Button\").text(\"UNLINK\")")
+	public static WebElement unlink_txt;
+
+	
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.EditText\").resourceId(\"com.android.mms:id/embedded_text_editor\")")
 	public static WebElement messageEditFld;
+	
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.EditText\").resourceId(\"com.google.android.apps.messaging:id/compose_message_text\")")
+	public static WebElement sprintmessageEditFld;
 
-	@AndroidFindBy(xpath="//android.widget.ImageButton[@resource-id='com.android.mms:id/send_button_sms']")
+	@AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.android.mms:id/send_button_sms\").description(\"Send\")")
 	public static WebElement sendMessage;
+	
+	@AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.google.android.apps.messaging:id/send_message_button_icon\")")
+	public static WebElement sprintsendMessage;
+	
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.Button\").text(\"UNBLOCK\")")
+	public static WebElement unblocktxt;
 
 	@AndroidFindBy(xpath="//android.widget.TextView[@text='Now']")
 	public static WebElement messageSentNow;
 
+	@AndroidFindBy(xpath="//android.widget.TextView[@text='Now • SMS']")
+	public static WebElement sprintmessageSentNow;
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Start Messaging\")")
+	public static AndroidElement vzwstartmsg;
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"SKIP PROVISIONING\")")
+	public static AndroidElement vzwskip;
+	
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Search contacts\")")
 	public static AndroidElement searchContactsFld;
 
@@ -205,6 +252,9 @@ public class Locators_PhoneDialer {
 
 	@AndroidFindBy(xpath="//android.widget.ImageButton[@content-desc='More options']")
 	public static WebElement contact_more_option;
+	
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.ImageView\").description(\"Contacts tab.\")")
+	public static WebElement contactstab;
 
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Link\")")
 	public static AndroidElement Link;
@@ -226,6 +276,9 @@ public class Locators_PhoneDialer {
 
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.ImageView\").resourceId(\"org.codeaurora.snapcam:id/shutter_button\")")
 	public static AndroidElement photo_capture_Btn;
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.ImageView\").resourceId(\"org.codeaurora.snapcam:id/done_button\")")
+	public static AndroidElement photo_reviewdone;
 
 	/*@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.ImageView\").resourceId(\"org.codeaurora.snapcam:id/done_button\")")
 	public static AndroidElement photo_add_Btn;
@@ -290,7 +343,7 @@ public class Locators_PhoneDialer {
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.EditText\").resourceId(\"com.android.server.telecom:id/add_blocked_number\")")
 	public static AndroidElement phone_number_fld_to_block;
 	
-	@AndroidFindBy(xpath="//android.widget.RelativeLayout[@index='0']")
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").resourceId(\"com.android.server.telecom:id/blocked_number\")")
 	public static WebElement blocked_number;
 	
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.ImageView\").resourceId(\"com.android.server.telecom:id/delete_blocked_number\")")
@@ -299,6 +352,8 @@ public class Locators_PhoneDialer {
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.Button\").text(\"UNBLOCK\")")
 	public static AndroidElement unblock_btn;
 	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.ListView\").resourceId(\"android:id/list\")")
+	public static AndroidElement blocked_no_list;
 	
 	
 }

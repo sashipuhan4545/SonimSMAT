@@ -106,10 +106,7 @@ public class MainController implements Initializable{
 
 				});
 				
-				
-				
-				
-				
+					
 				if(rememberMe.isSelected()) {
 					
 					

@@ -165,7 +165,6 @@
 			<version>3.0</version>
 		</dependency>
 
-
 		<dependency>
 			<groupId>io.appium</groupId>
 			<artifactId>java-client</artifactId>
@@ -367,7 +366,21 @@
 		</dependency>
 
 
-	
+		<dependency>
+			<groupId>com.github.javafaker</groupId>
+			<artifactId>javafaker</artifactId>
+			<version>0.12</version>
+		</dependency>
+
+
+
+		<!-- https://mvnrepository.com/artifact/com.android.support.test/runner -->
+
+
+
+
+
+
 
 
 	</dependencies>

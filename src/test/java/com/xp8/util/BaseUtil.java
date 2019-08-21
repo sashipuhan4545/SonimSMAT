@@ -8,11 +8,15 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Path;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.TimeZone;
 import java.util.UUID;
@@ -38,13 +42,14 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
+import com.google.common.collect.ImmutableMap;
 import com.graphics.gui.JsonFileReaderAndWriter;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 import com.xp5S.util.CommonConfig;
 
-
+import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.android.AndroidKeyCode;
@@ -59,6 +64,19 @@ public class BaseUtil extends CommonConfig
 	//public static AndroidDriver AndroidDriverWait;
 	public static ExtentReports extent;
 	public static ExtentTest test;
+	
+	
+	
+	
+	public void send_Adb_Command() {
+		
+		List<String> removePicsArgs = Arrays.asList("-a", "android.intent.action.VIEW https://www.facebook.com/");
+		Map<String, Object> removePicsCmd = ImmutableMap.of("command", "am start", "args", removePicsArgs);
+		aDriver.executeScript("mobile: shell", removePicsCmd);
+		
+		
+		
+	}
 	
 
 	
@@ -88,12 +106,12 @@ public class BaseUtil extends CommonConfig
 			 		}
 			 	}
 		} catch (Exception e) {
-			
+			test.log(LogStatus.ERROR, "Exeption occurs in clearRecentApps method");
 			e.printStackTrace();
 		}		 					 	
 	}	
 	
-	/*public void clearRecentApps_O() throws InterruptedException, IOException {		
+	public void clearRecentApps_O() throws InterruptedException, IOException {		
 		// For Android O.
 		try {
 			customWait(3000);
@@ -119,7 +137,7 @@ public class BaseUtil extends CommonConfig
 			e.printStackTrace();
 		}		 					 	
 	}
-	*/
+	
 	
 	
 	
@@ -197,23 +215,56 @@ public class BaseUtil extends CommonConfig
 		}
 	}
 
-	public boolean clickBtn(WebElement e) {
-		try {
+	public void clickBtn(WebElement e) {
+		
 			e.click();
-			return true;
-		} catch (Exception s) {
-			return false;
-		}
+		
 	}
 	
-	public boolean clickBtn(AndroidElement e) {
-		try {
+	public void clickBtn(AndroidElement e) {
+		
 			e.click();
-			return true;
-		} catch (Exception s) {
-			return false;
-		}
+			
+		
 	}
+	
+	
+//This method is used to retun an androidelement based on the match found	
+	public AndroidElement multi_Loc_Strategy(AndroidElement e1,AndroidElement e2,AndroidElement e3,AndroidElement e4,AndroidElement e5,int xCordinate,int yCordinate) {
+		/*
+		 * It takes 5 locators and choose which is Present
+		 */
+		AndroidElement isElementPresentOntheDeviceScreen = null;
+		
+		if (isElementExist(e1)) {
+			System.out.println("Locator 1 is found");
+		isElementPresentOntheDeviceScreen=e1;
+		}else if (isElementExist(e2)) {
+			System.out.println("Locator 2 is found");
+		isElementPresentOntheDeviceScreen=e2;
+		}else if (isElementExist(e3)) {
+			System.out.println("Locator 3 is found");
+		isElementPresentOntheDeviceScreen=e3;
+		}else if (isElementExist(e4)) {
+			System.out.println("Locator 4 is found");
+		isElementPresentOntheDeviceScreen=e4;
+
+		}else if (isElementExist(e5)) {
+			System.out.println("Locator 5 is found");
+		isElementPresentOntheDeviceScreen=e5;
+
+		}else {
+			/*System.out.println("No locator using Coordinates");
+		TouchAction tap=new TouchAction(aDriver);
+		tap.tap(xCordinate, yCordinate).perform();*/
+
+		}
+
+		return isElementPresentOntheDeviceScreen;
+
+
+
+		}
 	
 	public boolean longpress(int keyCode){
 		try {
@@ -244,7 +295,7 @@ public class BaseUtil extends CommonConfig
 		String pkgN = properties.getProperty(pkgName);
 		String actN = properties.getProperty(actName);
 			
-		aDriver.startActivity(pkgN, actN);
+		//aDriver.startActivity(pkgN, actN);
 	}
 
 	public void selectCheckbox(WebElement e) {
@@ -540,12 +591,15 @@ public class BaseUtil extends CommonConfig
 
 	public boolean isElementExist(WebElement e) {
 		boolean isPresent = false;
-		try {
+		
 			isPresent = e.isDisplayed();
-		} catch (Exception nse) {
-			isPresent = false;
-		}
-		return isPresent;
+			if(isPresent) {
+				isPresent= true;
+			}else {
+				isPresent=false;
+			}
+			return isPresent;
+		
 	}
 	
 	public boolean isElementExist(AndroidElement e) {
@@ -672,7 +726,7 @@ public class BaseUtil extends CommonConfig
 	public static void startAdbLog(String fileName) throws AWTException, InterruptedException, FileNotFoundException, IOException, ParseException {
 		String Uid=JsonFileReaderAndWriter.primaryDevIdReader();
 
-		  String path = System.getProperty("user.dir");
+		 // String path = System.getProperty("user.dir");
 	      customWait(1000);
 		  try {
 		   Runtime.getRuntime().exec("adb -s "+Uid+" logcat -c");
@@ -753,7 +807,53 @@ public class BaseUtil extends CommonConfig
 		   e.printStackTrace();
 	   }
 	   return mailscreenshotpath;
+	   
+	   
 	}
+	
+	
+	
+	public static String saveReportWithDateAndTime(String path) throws IOException {
+
+		Calendar cal = new GregorianCalendar();
+		int month = cal.get(Calendar.MONTH);
+		int year = cal.get(Calendar.YEAR);
+		int sec = cal.get(Calendar.SECOND);
+		int min = cal.get(Calendar.MINUTE);
+		int date = cal.get(Calendar.DATE);
+		int day = cal.get(Calendar.HOUR_OF_DAY);
+		String mailscreenshotpath = null;
+
+		
+		try {
+		 mailscreenshotpath =path+"_" + year + "_" + date + "_" + (month + 1) + "_" + day + "_" + min + "_" +sec+ ".html";
+			FileUtils.copyFileToDirectory(new File(mailscreenshotpath), new File("src/test/resources/extentreport"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+		
+		}
+		return mailscreenshotpath;
+	}
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	public void minWait_SonimCare() throws InterruptedException{
 		Thread.sleep(2500);
@@ -986,7 +1086,7 @@ public class BaseUtil extends CommonConfig
 			}
 			}
 	  
-	  public void scrollToElements(WebElement e) throws InterruptedException {
+	  public void scrollToElements(AndroidElement e) throws InterruptedException {
 		  
 		   try {
 			minWait();
@@ -996,10 +1096,14 @@ public class BaseUtil extends CommonConfig
 			   for(int i=1; i<=4;i++)
 			   {
 				   if(isElementExist(e)) {
+					   
+					   System.out.println("------------------------");
 					   customWait(2000);
 					   break;
 				   }
 				   else {
+					   System.out.println("+++++++++++++++++++++++++");
+
 					   scroll();
 					   continue;
 				   }
@@ -1009,16 +1113,49 @@ public class BaseUtil extends CommonConfig
 			e1.printStackTrace();
 		}
 	   }
-				
+	  
+	  
+	 /* public void scrollForPTT(AndroidElement e,AndroidElement e1) throws InterruptedException {
+		  
+		   try {
+			minWait();
+			   WebElement element = e;
+			   ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView(true);",element);
+			   
+			   for(int i=1; i<=4;i++)
+			   {
+				   
+				   customWait(4000);
+				   if(isElementExist(e) || isElementExist(e1)) {
+					   
+					   System.out.println("Coming out of for statement");
+					 
+					   break;
+				   }
+				   else {
+					   System.out.println("Scrolling now ");
+
+					   scroll();
+					   continue;
+				   }
+			   }
+		} catch (Exception e3) {
+			
+			e3.printStackTrace();
+		}
+	   }
+				*/
 	  
 	  public void scroll() {
 			try {
+				
+				System.out.println("2222222222222222222222222222");
 				org.openqa.selenium.Dimension size =aDriver.manage().window().getSize();
 				System.out.println(size);
 				int x=size.getWidth()/2;
 				int starty=(int)(size.getHeight()*0.60);
 				int endy=(int)(size.getHeight()*0.10);
-				aDriver.swipe(x, starty, x, endy, 2000);
+			   aDriver.swipe(x, starty, x, endy, 2000);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -1037,6 +1174,7 @@ public class BaseUtil extends CommonConfig
 				Locators_BaseUtil.AppListIcon.click();
 				customWait(1000);
 				switch (appName) {
+				
 				case "browser":
 					scrollToElements(Locators_BaseUtil.browser_App);
 						clickBtn(Locators_BaseUtil.browser_App);
@@ -1052,6 +1190,7 @@ public class BaseUtil extends CommonConfig
 
 				case "phone":
 						
+					System.out.println("1111111111111111111111");
 					scrollToElements(Locators_BaseUtil.phone_DailerApp);
 					clickBtn(Locators_BaseUtil.phone_DailerApp);
 					APP_LOGS.info("Clicked on Phone successfully.");
@@ -1169,14 +1308,28 @@ public class BaseUtil extends CommonConfig
 
 					APP_LOGS.info("Clicked on Gmail_Icon successfully.");
 					break;
+					
+				case "PTT":
+					
+				  
+					
+					
+				case "chrome":
+					scrollToElements(Locators_BaseUtil.chrome);
+					clickBtn(Locators_BaseUtil.chrome);
+					
+
+					
 				}
+			}catch (org.openqa.selenium.NoSuchElementException e) {
+				test.log(LogStatus.ERROR, "Error in locators->LaunchApp()");
 			}catch (Exception e) {
-				
-				e.printStackTrace();
-				Assert.fail();
+				test.log(LogStatus.ERROR, "Exeption in ->LaunchApp()");
+
 			}
 
 		}
+
 
 
 		public void enableSwitch(WebElement enablebtn, WebElement disablebtn, WebElement switchwidget) throws InterruptedException {

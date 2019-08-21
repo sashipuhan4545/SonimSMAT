@@ -19,6 +19,9 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.BeforeTest;
+
+import com.graphics.gui.JsonFileReaderAndWriter;
 
 import application.AllQA;
 import application.MainController;
@@ -49,7 +52,8 @@ public class appiumService {
 		System.out.println("<------------------------Started Appium Service---------------------------------->");
 		//Set Capabilities
 		cap = new DesiredCapabilities();
-		cap.setCapability("noReset", "false");
+		cap.setCapability("noReset", false);
+		//cap.setCapability("relaxed-security", true);
 
 		//Build the Appium service
 		builder = new AppiumServiceBuilder();
@@ -61,8 +65,9 @@ public class appiumService {
 		builder.usingPort(port);
 
 
-		//builder.withCapabilities(cap);
+	//	builder.withArgument("relaxed-security");
 		builder.withArgument(GeneralServerFlag.SESSION_OVERRIDE);
+		//builder.withArgument(GeneralServerFlag.r);
 		//builder.withArgument(GeneralServerFlag.LOG_LEVEL);
 		builder.withArgument(GeneralServerFlag.LOG_LEVEL,"error");
 
@@ -83,6 +88,10 @@ public class appiumService {
 	//		service.stop();
 	//	}
 
+
+
+	 
+	
 
 	@BeforeSuite
 	public void profileSelectionForQAAndNonQA() {
@@ -142,11 +151,14 @@ public class appiumService {
 
 	//This Method is used to delete all adb logs before Test case execution starts
 	public void deleteAdbLogFiles() {
-		
+
 		try {
 
 
-			System.out.println("<-----------------------DELETING ADB LOG Files----------------->");
+			System.out.println("<-----------------------DELETING ADB LOG Files ----------------->");
+
+			/*File Dir = new File(System.getProperty("user.home") +File.separator +"Desktop"+File.separator+"SMAT_REPORT_LOGS");
+			Dir.delete();*/
 
 			File dir = new File("src/test/resources/adbLogs");
 			if(dir.isDirectory() == false) 
@@ -161,6 +173,9 @@ public class appiumService {
 				System.out.println("Deleting "+file.getName());
 				file.delete();
 			}
+			
+			
+			
 
 		} catch (Exception e) {
 
@@ -214,14 +229,55 @@ public class appiumService {
 
 		}catch (Exception e) {
 
-			System.out.println("Any Kind of Exeption");
+			System.out.println("Exeption in UpdateProgressIndicator method");
 
 		}
 
 
 	}		
-	
-	
+
+	@BeforeTest
+	public void preProcessing_AfterEndOf_TestCase() {
+
+		
+
+		try {
+			/*System.out.println("<------------Initialising the variabl values to its defaulr values----------->");
+			
+			AllQA.NUM_OF_CALL_ITER_UPDATE="";
+			AllQA.NUM_OF_CALL_ITER="";
+			AllQA.NUM_OF_CALL_ITER_INCREMENTOR="";
+			AllQA.TOTAL_NUM_OF_TESTCASES=0;
+			AllQA.INCREMENT_VLAUE=0;
+			AllQA.TESTCASES_INCREMENTER=1;
+			TNGListner.Listner.onFinish="";
+			TNGListner.Listner.onTestSkipped="";
+			TNGListner.Listner.onTestSucess="";
+			TNGListner.Listner.onTestStart="";
+			TNGListner.Listner.onTestFailure="";
+			AllQA. CALL_COUNT=0;
+			AllQA.NUM_OF_CALL_ITER_UPDATE=" ";
+			AllQA.NUM_OF_CALL_ITER=" ";
+			AllQA.NUM_OF_CALL_ITER_INCREMENTOR=" ";
+			System.out.println("<------------Initialising finished----------->");*/
+
+			System.out.println("precondtion for making the screen timer to 30 seconds");
+			Runtime.getRuntime().exec("adb -s "+JsonFileReaderAndWriter.primaryDevIdReader()+" shell settings put system screen_off_timeout 1800000");
+
+
+
+		}catch (Exception e) {
+			
+		}
+
+
+
+	}
+
+
+
+
+
 
 
 

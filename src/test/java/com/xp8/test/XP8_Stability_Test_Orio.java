@@ -1,4 +1,4 @@
-package com.xp8.test;
+/*package com.xp8.test;
 
 import java.awt.AWTException;
 import java.io.File;
@@ -63,6 +63,7 @@ public class XP8_Stability_Test_Orio extends XP8_Stability_Util_orio{
 
 		fetch_Devices_Details();	
 	}
+	
 	
 	
 	@BeforeSuite
@@ -241,7 +242,7 @@ public class XP8_Stability_Test_Orio extends XP8_Stability_Util_orio{
 				launch_APP(Locators_DeviceStability.MessagePlus);
 				navigateTo_NewSMS_O();
 				create_NewSMS(refNum, data.get("typeMessage3"));
-				validate_CharacterAndPageNumber(Locators_DeviceStability.zero_Characters_FirstPage,data.get("expectedChar&PageNum3"),i);
+				validate_CharacterAndPageNumber(Locators_DeviceStability.zero_Characters_FirstPage,data.get("expectedChar&PageNum3"),i,sa2);
 				clickOn_Send();
 				validate_SentMessage(i,sa4) ;
 				delete_SMS();
@@ -591,10 +592,10 @@ public class XP8_Stability_Test_Orio extends XP8_Stability_Util_orio{
 			ON_Switch("Off");
 			launch_an_app("browser");
 			clearChromePermission();
-			validate_And_BrowseIn_Chrome("www.google.com", Locators_DeviceStability.googleCoIn_Text, Locators_DeviceStability.google_Logo, Locators_DeviceStability.google_Logo,i,sa13);
+		//	validate_And_BrowseIn_Chrome("www.google.com", Locators_DeviceStability.googleCoIn_Text, Locators_DeviceStability.google_Logo, Locators_DeviceStability.google_Logo,i,sa13);
 			launch_an_app("settings");
 			clickOn_Networks_and_Internet();
-			wiFi_OFF();
+		//	wiFi_OFF();
 			launch_an_app("browser");
 			validate_MobileData_Disable(i,"WiFi",sa13);
 			customWait(3000);
@@ -633,3 +634,4 @@ public class XP8_Stability_Test_Orio extends XP8_Stability_Util_orio{
 
 
 }
+*/

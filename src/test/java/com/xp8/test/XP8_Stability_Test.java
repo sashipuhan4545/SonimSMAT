@@ -58,6 +58,7 @@ public class XP8_Stability_Test extends XP8_Stability_Util{
 		.addSystemInfo("Operator", JsonFileReaderAndWriter.primaryDevOperatorReader());		fetch_Devices_Details();	
 
 	}
+	
 
 	@BeforeSuite
 	public void numofTestCases() throws ClassNotFoundException {

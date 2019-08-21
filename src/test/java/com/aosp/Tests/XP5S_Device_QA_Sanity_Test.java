@@ -62,6 +62,7 @@ public class XP5S_Device_QA_Sanity_Test extends AOSP_XP5S_Sanity_Util{
 	  }
 
 	 }
+	 
 	
 	 
 	@BeforeSuite

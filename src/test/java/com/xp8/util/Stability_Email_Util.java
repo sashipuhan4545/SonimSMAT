@@ -1,4 +1,4 @@
-package com.xp8.util;
+/*package com.xp8.util;
 
 import java.awt.AWTException;
 import java.io.BufferedReader;
@@ -81,9 +81,9 @@ public class Stability_Email_Util extends BaseUtil {
 	}
 
 	public void performAction() throws IOException, InterruptedException {
-		/*
+		
 		 * Perform action for IMS registered check
-		 */
+		 
 		try {
 			customWait(1000);
 			Runtime.getRuntime().exec("adb -s "+p_Id+" shell am start -a android.settings.AIRPLANE_MODE_SETTINGS");
@@ -102,9 +102,9 @@ public class Stability_Email_Util extends BaseUtil {
 	}
 
 	public boolean validateIMSLog(String str,String fileName) throws IOException, InterruptedException {
-		/*
+		
 		 * Validate via log String that MO-Voice  call initiated 
-		 */
+		 
 		SoftAssert s1 = new SoftAssert();
 
 		if(searchString(str, fileName)) {
@@ -131,9 +131,9 @@ public class Stability_Email_Util extends BaseUtil {
 
 
 	public void memoryFill() throws InterruptedException {
-		/*
+		
 		 * Fillinternal memory to 92%
-		 */
+		 
 
 		try {
 			launch_an_app("fillmemory");
@@ -315,9 +315,9 @@ public class Stability_Email_Util extends BaseUtil {
 	}
 
 	public void enable_MobileData() throws InterruptedException, IOException {
-		/* 
+		 
 		 * This Method is to enable MobileData.
-		 */
+		 
 		if (p_b_No.contains("-11.")||p_b_No.contains("-12.")||p_b_No.contains("-18.")||p_b_No.contains("-26.")||p_b_No.contains("-29.")||p_b_No.contains("-30.")) {
 			try {
 				minWait();
@@ -385,7 +385,7 @@ public class Stability_Email_Util extends BaseUtil {
 	}
 
 	public void navigateTo_CellularNetworks() throws InterruptedException, IOException {
-		/* This Method will Navigate to Cellular Netwotks option. */ 
+		 This Method will Navigate to Cellular Netwotks option.  
 		minWait();
 		try {
 			aDriver.findElementByAndroidUIAutomator("new UiScrollable(new UiSelector().className(\"android.support.v7.widget.RecyclerView\")).scrollIntoView(new UiSelector().text(\"More\"))").click();
@@ -725,3 +725,4 @@ public class Stability_Email_Util extends BaseUtil {
 
 
 }
+*/

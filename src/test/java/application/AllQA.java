@@ -6,9 +6,11 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
-
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import java.util.Optional;
@@ -29,17 +31,16 @@ import com.android.ddmlib.AndroidDebugBridge;
 import com.android.ddmlib.IDevice;
 import com.android.ddmlib.ShellCommandUnresponsiveException;
 import com.android.ddmlib.TimeoutException;
-import com.aosp.Tests.XP5S_Contacts_Test;
-import com.xp5S.test.XP5S_SCOUT_Contact_Transfer_Test;
+import com.aosp.Utils.XP5S_Data_Utils;
 import com.xp5S.util.BaseUtil;
 import com.xp5S.util.CommonConfig;
-import com.xp5S.util.GetMethods;
 import com.xp5S.util.appiumService;
-import com.xp8.test.ATT_Stability_Telephony_Test;
-import com.xp8.test.XP8_ContactTransfer_Test;
-import com.xp8.test.XP8_Dev_Sanity_Test_O;
-import com.xp8.test.XP8_Device_QA_Sanity_Test_O;
+
 import com.android.ddmlib.AndroidDebugBridge.IDeviceChangeListener;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -49,6 +50,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -57,41 +59,50 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.Labeled;
 import javafx.scene.control.ListView;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
+import javafx.util.Duration;
 import javafx.util.Pair;
 
 
 public class AllQA  extends CommonConfig {
 
 	//ObservableList<String> items=FXCollections.observableArrayList("Sanity Test","MultiMedia","Messaging","Connectivity","GMS","Browser","Settings","Tools","Contacts","Call","ScoutApps","Performance","DeviceFunctionality");
-	ObservableList<String> items=FXCollections.observableArrayList("Sanity Test","VOLTE-CallPerformance","3G-CallPerformance","Stability","SCOUT","Call"/*,"Stability_AT&T-15595"*/);
+	ObservableList<String> items=FXCollections.observableArrayList(/*"PTT"*//*"Sanity Test",*/"DataAndConnectivity","VOLTE-CallPerformance","3G-CallPerformance","Stability","PTT","Interaction"/*,"SCOUT"*//*"Call",/*,"Stability_AT&T-15595"*/);
 
 	//ObservableList<String> items=FXCollections.observableArrayList("Quick Sanity","Performance");
 	//	ObservableList<String> Sanity = FXCollections.observableArrayList("Sanity");
 
 
-	ObservableList<String> Sanity = FXCollections.observableArrayList("Device","DEV-QA-Sanity");
+	//ObservableList<String> Sanity = FXCollections.observableArrayList("Device","DEV-QA-Sanity");
+	ObservableList<String> Sanity = FXCollections.observableArrayList("Device");
+
 
 	ObservableList<String> connectivity = FXCollections.observableArrayList("Bluetooth","Wi-Fi","Mobile Data");
 	ObservableList<String> multiMedia = FXCollections.observableArrayList("Photos","Music","FM","All");
-	ObservableList<String> Messaging = FXCollections.observableArrayList("SMS","MMS","Email","All");
+	ObservableList<String> Messaging = FXCollections.observableArrayList("SMS","Email","All");
 	ObservableList<String> GMS = FXCollections.observableArrayList("YouTube","Chrome","Google Apps","All");
 	ObservableList<String> browser = FXCollections.observableArrayList("Native Browser");
 	ObservableList<String> Settings = FXCollections.observableArrayList("Settings","Programmable Key","Power ON/OFF","All");
@@ -103,8 +114,11 @@ public class AllQA  extends CommonConfig {
 
 	//ObservableList<String> performance = FXCollections.observableArrayList("CallPerformance","Stability","Browser","All");
 	ObservableList<String> CallPerformance = FXCollections.observableArrayList("MO-Call","MT-Call","MO-MT-Call");
-	ObservableList<String> stability = FXCollections.observableArrayList("Multitasking","Wifi","Browser Stability","Device Stability","ApkDownload","SMS","Network Stability");
+	ObservableList<String> stability = FXCollections.observableArrayList("Contacts Stability",/*"Multitasking",*/"Wifi","Network Stability","Browser Stability",/*"Device Stability",*/"SMS"/*,*/);
 	ObservableList<String> ATTStablity = FXCollections.observableArrayList("Telephony","Email");
+	ObservableList<String> ptt = FXCollections.observableArrayList("KodiakPTT");
+	ObservableList<String> IOT = FXCollections.observableArrayList("Interaction Cases","Interruption Cases");
+	ObservableList<String> dataconnectivity = FXCollections.observableArrayList("DataUsageSettings","Wi-fi");
 
 
 
@@ -115,13 +129,15 @@ public class AllQA  extends CommonConfig {
 
 	public static AndroidDebugBridge debugBridge;
 	public int i;
-	public String GLOBAL_ONTESTSTART;
-	public String GLOBAL_ONTESTSUCESS;
-	public String GLOBAL_ONTESTFAILURE;
+	public static String GLOBAL_ONTESTSTART;
+	public static String GLOBAL_ONTESTSUCESS;
+	public static String GLOBAL_ONTESTFAILURE;
 	public String GLOBAL_ONTESTSKIPPED;
 	public static String PRIMARYDEVMDN;
 	public static String REFERENCEDEVMDN;
 	public static String EMAILID;
+	public static String SSID;
+	public static String WIFIPASSWORD;
 	public static int NUMOFCALLS;
 	//Here call duration defualt value is 1 minute
 	public static int CALLDURATION=1;
@@ -141,7 +157,11 @@ public class AllQA  extends CommonConfig {
 
 	public static String EMAILREPORT;
 
-	public Button executeFailedTestCases;
+	//	public Button executeFailedTestCases;
+	public static String NUM_OF_CALL_ITER="";
+	public static String NUM_OF_CALL_ITER_UPDATE="";
+	public static String NUM_OF_CALL_ITER_INCREMENTOR="";
+	public static double CALL_COUNT;
 
 
 
@@ -239,10 +259,11 @@ public class AllQA  extends CommonConfig {
 
 	public  Timer currentTcTimer;
 	public  Timer timer1;
+	public Timer call_Iter;
 
 
 	@FXML
-	ListView testCaseDisplay;
+	TextArea testCaseDisplay;
 
 
 
@@ -256,6 +277,7 @@ public class AllQA  extends CommonConfig {
 			JsonFileReaderAndWriter.WriteRefDevIDtoJson(null, null, null, null,null);
 			AndroidDebugBridge.init(false);
 			String SMAT_ADB_PATH=System.getenv("LOCALAPPDATA") +"\\SMAT\\Android\\platform-tools\\adb.exe";
+
 			debugBridge = AndroidDebugBridge.createBridge(SMAT_ADB_PATH, true);
 
 			if (debugBridge == null) {
@@ -416,23 +438,23 @@ public class AllQA  extends CommonConfig {
 
 				else if(JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("-18.")) {
 
-					operator_DUT.setText("Rogers"); 
+					operator_DUT.setText("ROGERS"); 
 
 				}
 				else if(JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("-11.")) {
 
-					operator_DUT.setText("Bell"); 
+					operator_DUT.setText("BELL"); 
 
 				}
 				else if(JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("-12.")) {
 
-					operator_DUT.setText("Telus"); 
+					operator_DUT.setText("TELUS"); 
 
 				}
 				else if(JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("-29.")) {
 
 
-					operator_DUT.setText("Sprint"); 
+					operator_DUT.setText("SPRINT"); 
 				}
 				else if(JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("-26.")) {
 
@@ -450,16 +472,16 @@ public class AllQA  extends CommonConfig {
 
 				}else if(JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("-15.")) {
 
-					operator_DUT.setText("Verizon"); 
+					operator_DUT.setText("VERIZON"); 
 
 				}else if (JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("-00")) {
 
-					operator_DUT.setText("MainLine"); 
+					operator_DUT.setText("MAINLINE"); 
 				}
 
 
 
-			}else if (JsonFileReaderAndWriter.primaryDevModelReader().contains("xp8800") || JsonFileReaderAndWriter.primaryDevModelReader().contains("80k")) {
+			}else if (JsonFileReaderAndWriter.primaryDevModelReader().contains("xp8800") || JsonFileReaderAndWriter.primaryDevModelReader().contains("80k") || JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("8A")) {
 
 				product_DUT.setText("XP8800");
 
@@ -471,17 +493,17 @@ public class AllQA  extends CommonConfig {
 				}
 				else if (JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("-18.")) {
 
-					operator_DUT.setText("Rogers");
+					operator_DUT.setText("ROGERS");
 
 				}
 				else if (JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("-12.")) {
 
-					operator_DUT.setText("Telus");
+					operator_DUT.setText("TELUS");
 
 				}
 				else if (JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("-11.")) {
 
-					operator_DUT.setText("Bell");
+					operator_DUT.setText("BELL");
 
 				}
 				else if (JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("-26.")) {
@@ -491,7 +513,7 @@ public class AllQA  extends CommonConfig {
 				}
 				else if (JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("-29.")) {
 
-					operator_DUT.setText("Sprint");
+					operator_DUT.setText("SPRINT");
 
 				}
 				else if (JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("-30.")) {
@@ -500,11 +522,11 @@ public class AllQA  extends CommonConfig {
 
 				}else if (JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("-15.")) {
 
-					operator_DUT.setText("Verizon");
+					operator_DUT.setText("VERIZON");
 
 				}else if (JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("-00.")) {
 
-					operator_DUT.setText("MainLine");
+					operator_DUT.setText("MAINLINE");
 
 				}else if (JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("-31.")) {
 
@@ -595,11 +617,11 @@ public class AllQA  extends CommonConfig {
 				else if(JsonFileReaderAndWriter.ReadRefDeviceFirmWare().contains("-12.")) {
 
 
-					operator_Ref.setText("Telus");  
+					operator_Ref.setText("TELUS");  
 				}
 				else if(JsonFileReaderAndWriter.ReadRefDeviceFirmWare().contains("-29.")) {
 
-					operator_Ref.setText("Sprint");  
+					operator_Ref.setText("SPRINT");  
 				}
 				else if(JsonFileReaderAndWriter.ReadRefDeviceFirmWare().contains("-26.")) {
 
@@ -608,12 +630,12 @@ public class AllQA  extends CommonConfig {
 				else if(JsonFileReaderAndWriter.ReadRefDeviceFirmWare().contains("-18.")) {
 
 
-					operator_Ref.setText("Rogers");  
+					operator_Ref.setText("ROGERS");  
 				}
 				else if(JsonFileReaderAndWriter.ReadRefDeviceFirmWare().contains("-11.")) {
 
 
-					operator_Ref.setText("Bell");  
+					operator_Ref.setText("BELL");  
 				}
 				else if(JsonFileReaderAndWriter.ReadRefDeviceFirmWare().contains("-32.")) {
 
@@ -627,15 +649,15 @@ public class AllQA  extends CommonConfig {
 				}else if(JsonFileReaderAndWriter.ReadRefDeviceFirmWare().contains("-15.")) {
 
 
-					operator_Ref.setText("Verizon");  
+					operator_Ref.setText("VERIZON");  
 				}else if (JsonFileReaderAndWriter.ReadRefDeviceFirmWare().contains("-00")) {
 
-					operator_Ref.setText("MainLine"); 
+					operator_Ref.setText("MAINLINE"); 
 
 				}
 
 			}
-			else if (JsonFileReaderAndWriter.RefDeviceModelNum().contains("xp8800") || JsonFileReaderAndWriter.primaryDevModelReader().contains("80k")){
+			else if (JsonFileReaderAndWriter.RefDeviceModelNum().contains("xp8800") || JsonFileReaderAndWriter.primaryDevModelReader().contains("80k") || JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("8A")){
 				product_Ref.setText("XP8800");
 
 				if(JsonFileReaderAndWriter.RefDevOperatorName().contains("ATT")) {
@@ -645,19 +667,19 @@ public class AllQA  extends CommonConfig {
 				}
 				else if (JsonFileReaderAndWriter.ReadRefDeviceFirmWare().contains("-18.")) {
 
-					operator_Ref.setText("Rogers"); 
+					operator_Ref.setText("ROGERS"); 
 
 
 				}
 				else if (JsonFileReaderAndWriter.ReadRefDeviceFirmWare().contains("-12.")) {
 
-					operator_Ref.setText("Telus"); 
+					operator_Ref.setText("TELUS"); 
 
 
 				}
 				else if (JsonFileReaderAndWriter.ReadRefDeviceFirmWare().contains("-11.")) {
 
-					operator_Ref.setText("Bell"); 
+					operator_Ref.setText("BELL"); 
 
 
 				}
@@ -669,7 +691,7 @@ public class AllQA  extends CommonConfig {
 				}
 				else if (JsonFileReaderAndWriter.ReadRefDeviceFirmWare().contains("-29.")) {
 
-					operator_Ref.setText("Sprint"); 
+					operator_Ref.setText("SPRINT"); 
 
 
 				}
@@ -680,12 +702,12 @@ public class AllQA  extends CommonConfig {
 
 				}else if (JsonFileReaderAndWriter.ReadRefDeviceFirmWare().contains("-15.")) {
 
-					operator_Ref.setText("Verizon"); 
+					operator_Ref.setText("VERIZON"); 
 
 
 				}else if (JsonFileReaderAndWriter.ReadRefDeviceFirmWare().contains("-00.")) {
 
-					operator_Ref.setText("MainLine"); 
+					operator_Ref.setText("MAINLINE"); 
 
 
 				}else if (JsonFileReaderAndWriter.ReadRefDeviceFirmWare().contains("-31.")) {
@@ -927,6 +949,27 @@ public class AllQA  extends CommonConfig {
 
 				listView.setItems(devicefunctionality);
 				listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+			}else if (comboBoxItems=="PTT") {
+
+				listView.setItems(ptt);
+				listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
+			}else if (comboBoxItems=="Interaction") {
+				
+				listView.setItems(IOT);
+				listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+				
+				
+			}else if (comboBoxItems=="DataAndConnectivity") {
+				
+				listView.setItems(dataconnectivity);
+				listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+				
+			}else if (comboBoxItems=="Wi-fi") {
+				
+				listView.setItems(dataconnectivity);
+				listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+				
 			}
 
 
@@ -947,6 +990,11 @@ public class AllQA  extends CommonConfig {
 
 		try {
 
+
+
+
+			//Here at every run reseting the global variable values to its defualt value
+			//resetAllValues(); 
 			ProgressIndicator(); 
 			progressAction();
 			fetchExecutionStatus();
@@ -1059,7 +1107,7 @@ public class AllQA  extends CommonConfig {
 						sms.start();
 						break;
 
-					case "DEV-QA-Sanity":
+						/*case "DEV-QA-Sanity":
 
 						if(JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("-7.1")) {
 
@@ -1099,6 +1147,8 @@ public class AllQA  extends CommonConfig {
 						}
 
 						break;
+
+						 */
 
 					case "PhoneContacts":
 						Thread PC=new Thread(new Runnable() {
@@ -1399,7 +1449,7 @@ public class AllQA  extends CommonConfig {
 
 
 			}
-			else if(JsonFileReaderAndWriter.primaryDevModelReader().contains("xp8800") || JsonFileReaderAndWriter.primaryDevModelReader().contains("80k")) {
+			else if(JsonFileReaderAndWriter.primaryDevModelReader().contains("xp8800") || JsonFileReaderAndWriter.primaryDevModelReader().contains("80k") || JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("8A")) {
 
 
 
@@ -1415,6 +1465,62 @@ public class AllQA  extends CommonConfig {
 					switch (itemvalue) {
 					
 					
+					
+					case "DataUsageSettings":
+						Thread usage=new Thread(new Runnable() {
+							public void run() {
+
+								TestNG runner=new TestNG();
+								List<String> suitefiles=new ArrayList<String>();
+								suitefiles.add("src/test/resources/drivers/XP8_DataUsageSettings.xml");
+								runner.setTestSuites(suitefiles);
+								runner.run();	
+
+
+							}
+						});
+						usage.start();
+						break;
+
+					
+					
+					case "Interaction Cases":
+
+						Thread inter=new Thread(new Runnable() {
+							public void run() {
+
+								TestNG runner=new TestNG();
+								List<String> suitefiles=new ArrayList<String>();
+								suitefiles.add("src/test/resources/drivers/XP8_Interaction.xml");
+								runner.setTestSuites(suitefiles);
+								runner.run();	
+
+
+							}
+						});
+						inter.start();
+						break;
+
+
+
+					case "Contacts Stability":
+
+						Thread C_S=new Thread(new Runnable() {
+							public void run() {
+
+								TestNG runner=new TestNG();
+								List<String> suitefiles=new ArrayList<String>();
+								suitefiles.add("src/test/resources/drivers/XP8_Contact_Stability.xml");
+								runner.setTestSuites(suitefiles);
+								runner.run();	
+
+
+							}
+						});
+						C_S.start();
+						break;
+
+
 					case "CallSettings":
 
 						Thread CS=new Thread(new Runnable() {
@@ -1430,15 +1536,32 @@ public class AllQA  extends CommonConfig {
 						});
 						CS.start();
 						break;
-					
-					
+
+					case "KodiakPTT":
+
+						Thread ptt=new Thread(new Runnable() {
+							public void run() {
+								TestNG runner=new TestNG();
+								List<String> suitefiles=new ArrayList<String>();
+								suitefiles.add("src/test/resources/drivers/XP8_KodiakPTT.xml");
+								runner.setTestSuites(suitefiles);
+								runner.run();	
+
+
+							}
+						});
+						ptt.start();
+						break;
+
+
+
 					case "CallHistory":
 
 						Thread CallHis=new Thread(new Runnable() {
 							public void run() {
 								TestNG runner=new TestNG();
 								List<String> suitefiles=new ArrayList<String>();
-								suitefiles.add("src/test/resources/drivers/XP8_WiFi_Stability_O.xml");
+								suitefiles.add("src/test/resources/drivers/XP8_CallHistory_O.xml");
 								runner.setTestSuites(suitefiles);
 								runner.run();	
 
@@ -1447,6 +1570,25 @@ public class AllQA  extends CommonConfig {
 						});
 						CallHis.start();
 						break;
+						
+						
+						
+					case "Wi-fi":
+
+						Thread wifi=new Thread(new Runnable() {
+							public void run() {
+								TestNG runner=new TestNG();
+								List<String> suitefiles=new ArrayList<String>();
+								suitefiles.add("src/test/resources/drivers/XP8_Wi-Fi.xml");
+								runner.setTestSuites(suitefiles);
+								runner.run();	
+
+
+							}
+						});
+						wifi.start();
+						break;
+
 
 					case "Wifi":
 
@@ -1532,7 +1674,7 @@ public class AllQA  extends CommonConfig {
 						});
 						APkD.start();
 						break;
-						
+
 					case "Contacts":
 
 						Thread Contacts=new Thread(new Runnable() {
@@ -1581,7 +1723,7 @@ public class AllQA  extends CommonConfig {
 						PhoneDialer.start();
 						break;
 
-					case "DEV-QA-Sanity":
+						/*	case "DEV-QA-Sanity":
 
 						if(JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("-7.1")) {
 
@@ -1619,7 +1761,7 @@ public class AllQA  extends CommonConfig {
 						}
 
 						break;
-
+						 */
 					case "Telephony":
 						Thread attStability=new Thread(new Runnable() {
 							public void run() {
@@ -1638,7 +1780,7 @@ public class AllQA  extends CommonConfig {
 
 
 
-
+						/*
 					case "Email":
 						Thread email=new Thread(new Runnable() {
 							public void run() {
@@ -1653,7 +1795,7 @@ public class AllQA  extends CommonConfig {
 							}
 						});
 						email.start();
-						break;		
+						break;		*/
 
 					case "Device":
 
@@ -2094,7 +2236,7 @@ public class AllQA  extends CommonConfig {
 						MTCALL.start();	
 						break;
 
-					case "DEV-QA-Sanity":
+						/*case "DEV-QA-Sanity":
 
 						Thread NotImplemented=new Thread(new Runnable() {
 							public void run() {
@@ -2123,7 +2265,7 @@ public class AllQA  extends CommonConfig {
 							}
 						});
 						NotImplemented.start();
-						break;
+						break;*/
 
 					case "Device Stability":
 						Thread stability=new Thread(new Runnable() {
@@ -2191,7 +2333,7 @@ public class AllQA  extends CommonConfig {
 
 						Thread telephony=new Thread(new Runnable() {
 							public void run() {
-                           	timer1.cancel();
+								timer1.cancel();
 								timer2.cancel();
 								timer3_failure.cancel();
 								onfinish.cancel();
@@ -2251,6 +2393,11 @@ public class AllQA  extends CommonConfig {
 
 
 			}
+
+
+
+
+
 		}catch (Exception e) {
 			e.printStackTrace();
 			AlertDialog("Exeption while executing test cases.Please restart the tool");
@@ -2267,14 +2414,42 @@ public class AllQA  extends CommonConfig {
 
 		try {
 
-			File Dir = new File(System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog");
+
+
+
+			File Dir = new File(System.getProperty("user.home") +File.separator +"Desktop"+File.separator+"SMAT-REPORTS-LOGS");
+
+			System.out.println("++++++++++++++++"+Dir);
 			if(!Dir.exists()) {
 				Dir.mkdir();
 
 			}
-			File src=new File("src/test/resources/extentreport");
 
-			FileUtils.copyDirectory(src,Dir);
+
+			Timer storereport= new Timer(); 
+			storereport.schedule( new TimerTask() 
+			{ 
+				public void run() { 
+
+
+					System.out.println("Fetching report at every 3 mins");
+					File fetchhtmlreport=new File("src/test/resources/extentreport");
+					File fetchadblogs=new File("src/test/resources/adbLogs");
+
+
+
+					try {
+						FileUtils.copyDirectory(fetchhtmlreport,Dir);
+						FileUtils.copyDirectory(fetchadblogs,Dir);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+				} 
+			}, 0, 18000*(10*1));
+
+
 		}catch(Exception e) {
 
 			System.out.println("Problem occurs in SaveReportAndLogsIn Local System");
@@ -2365,7 +2540,8 @@ public class AllQA  extends CommonConfig {
 
 		try {
 
-
+			//Here once user press the stop button it will cancel the onfinish timer so that it will not display anythink on status text area
+			onfinish.cancel();
 			loadingScreen();
 
 			Platform.runLater(()->currentTestCases.clear());
@@ -2401,23 +2577,29 @@ public class AllQA  extends CommonConfig {
 
 		try {
 
-			CommonConfig.COMMAND_TIMEOUT=100;
+		
+			
+			
+            CommonConfig.COMMAND_TIMEOUT=100;
+			NUM_OF_CALL_ITER_UPDATE="";
+			NUM_OF_CALL_ITER="";
+			NUM_OF_CALL_ITER_INCREMENTOR="";
+			
 			combobox.getSelectionModel().clearSelection();
 			listView.refresh();
 			ObservableList<String> empty = FXCollections.observableArrayList("");
-			listView.setItems(empty);	
+			listView.setItems(empty);
 
-			//listView.setPlaceholder(new Label("No Content In List"));
-			//AllQA.CALL_MODULE="";
+
 			GLOBAL_ONTESTFAILURE="";
 			GLOBAL_ONTESTSTART="";
 			GLOBAL_ONTESTSUCESS="";
-			//	PROGRESSPERCENTAGE_CONSTANT=0;
-			//	PROGRESSPERCENTAGE=0;
+
 			TOTAL_NUM_OF_TESTCASES=0;
 			INCREMENT_VLAUE=0;
 			TESTCASES_INCREMENTER=1;
 			progressIndicator.setProgress(0);
+			testCaseDisplay.clear();
 			TNGListner.Listner.onFinish="";
 			TNGListner.Listner.onTestSkipped="";
 			TNGListner.Listner.onTestSucess="";
@@ -2426,18 +2608,84 @@ public class AllQA  extends CommonConfig {
 			Platform.runLater(()->status.setText(" "));
 			Platform.runLater(()->currentTestCases.setText(""));
 			Platform.runLater(()->ExecutedTC.clear());
-			failedTC.clear();
+			Platform.runLater(()->failedTC.clear());
 			combobox.setDisable(false);
 			listView.setDisable(false);
 
 			start.setDisable(true);
+			
+			
+			
+			onskip.cancel();
+			timer1.cancel();
+		    timer2.cancel();
+		    timer3_failure.cancel();
+		    onfinish.cancel();
+            percentageCalculator.cancel();
+		    call_Iter.cancel();
+		    CALL_COUNT=0;
+			NUM_OF_CALL_ITER_UPDATE=" ";
+			NUM_OF_CALL_ITER=" ";
+			NUM_OF_CALL_ITER_INCREMENTOR=" ";
+			
+			/*    onskip.cancel();
+			timer1.cancel();
+		    timer2.cancel();
+		    timer3_failure.cancel();
+		    onfinish.cancel();
+
+		    percentageCalculator.cancel();
+		    call_Iter.cancel();
 
 
+
+
+			CommonConfig.COMMAND_TIMEOUT=100;
+        	combobox.getSelectionModel().clearSelection();
+
+			listView.refresh();
+
+			ObservableList<String> empty = FXCollections.observableArrayList("");
+			Platform.runLater(()->listView.setItems(empty));
+			CALL_COUNT=0;
+			NUM_OF_CALL_ITER_UPDATE=" ";
+			NUM_OF_CALL_ITER=" ";
+			NUM_OF_CALL_ITER_INCREMENTOR=" ";
+
+			GLOBAL_ONTESTFAILURE="";
+			GLOBAL_ONTESTSTART="";
+			GLOBAL_ONTESTSUCESS="";
+
+			TOTAL_NUM_OF_TESTCASES=0;
+			INCREMENT_VLAUE=0;
+			TESTCASES_INCREMENTER=1;
+
+			TNGListner.Listner.onFinish="";
+			TNGListner.Listner.onTestSkipped="";
+			TNGListner.Listner.onTestSucess="";
+			TNGListner.Listner.onTestStart="";
+			TNGListner.Listner.onTestFailure="";
+			progressIndicator.setProgress(0);
+			Platform.runLater(()->status.setText(" "));
+			Platform.runLater(()->currentTestCases.setText(""));
+			Platform.runLater(()->ExecutedTC.clear());
+			Platform.runLater(()->failedTC.clear());
+			combobox.setDisable(false);
+			listView.setDisable(false);
+
+
+			start.setDisable(true);
+
+			testCaseDisplay.clear();
+
+			//	pi.setVisible(false);
+			 */
 
 
 		} catch(Exception e) {
+			e.printStackTrace();
 
-			System.out.println("Exeption in reset Method.....");
+			System.out.println("Exeption in reset() Method.....");
 
 
 		}
@@ -2452,6 +2700,13 @@ public class AllQA  extends CommonConfig {
 
 		//	Date date=new Date();
 		//	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss") ;
+		/* Calendar cal = new GregorianCalendar();
+		   int month = cal.get(Calendar.MONTH);
+		   int year = cal.get(Calendar.YEAR);
+		   int sec = cal.get(Calendar.SECOND);
+		   int min = cal.get(Calendar.MINUTE);
+		   int date = cal.get(Calendar.DATE);
+		   int day = cal.get(Calendar.HOUR_OF_DAY);*/
 		File Dir = new File(System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog");
 		if(!Dir.exists()) {
 			Dir.mkdir();
@@ -2468,6 +2723,7 @@ public class AllQA  extends CommonConfig {
 				switch (itemvalue) {
 
 				case "SonimCare":
+
 
 					File SC = new File("src/test/resources/extentreport/XP5S_SCOUT_SonimCare_TestReport.html");
 					File Sonimest = new File(System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog");
@@ -2649,7 +2905,7 @@ public class AllQA  extends CommonConfig {
 
 
 
-				case "DEV-QA-Sanity":
+					/*	case "DEV-QA-Sanity":
 
 					File DS = new File("src/test/resources/extentreport/XP5S_Dev_Sanity_O_TestReport.html");
 					File DSdest = new File(System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog");
@@ -2747,7 +3003,7 @@ public class AllQA  extends CommonConfig {
 					}
 
 
-					break;
+					break;*/
 
 				case "MO-MT-Call":
 
@@ -3084,14 +3340,106 @@ public class AllQA  extends CommonConfig {
 				switch (itemvalue) {
 				
 				
+				case "Wi-fi":
+
+					File data_wifi = new File("src/test/resources/extentreport/XP8_Wifi_TestReport.html");
+					File datausage_wifi = new File(System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog");
+					String wifi_path=System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog";
+					try {
+						FileUtils.copyFileToDirectory(data_wifi, datausage_wifi);
+					} catch (IOException e) {
+
+						e.printStackTrace();
+					}
+					if(data_wifi.exists()) {
+
+						try {
+							BaseUtil.openReportPath(wifi_path);
+						} catch (IOException e) {
+
+							e.printStackTrace();
+						}
+
+
+
+					}
+					else {
+						executionReportDoesnotExist("Test Report is not generated yet");
+					}
+
+					break;
+
 				
+				case "DataUsageSettings":
+
+					File datausagesetting = new File("src/test/resources/extentreport/XP8_Data_Usage_Setting_TestReport.html");
+					File datausage = new File(System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog");
+					String usage_path=System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog";
+					try {
+						FileUtils.copyFileToDirectory(datausagesetting, datausage);
+					} catch (IOException e) {
+
+						e.printStackTrace();
+					}
+					if(datausagesetting.exists()) {
+
+						try {
+							BaseUtil.openReportPath(usage_path);
+						} catch (IOException e) {
+
+							e.printStackTrace();
+						}
+
+
+
+					}
+					else {
+						executionReportDoesnotExist("Test Report is not generated yet");
+					}
+
+					break;
+
+
+				case "Contacts Stability":
+
+					File ContactStability = new File("src/test/resources/extentreport/XP8_Contact_Stability.html");
+					File ContStability = new File(System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog");
+					String contact_path=System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog";
+					try {
+						FileUtils.copyFileToDirectory(ContactStability, ContStability);
+					} catch (IOException e) {
+
+						e.printStackTrace();
+					}
+					if(ContactStability.exists()) {
+
+						try {
+							BaseUtil.openReportPath(contact_path);
+						} catch (IOException e) {
+
+							e.printStackTrace();
+						}
+
+
+
+					}
+					else {
+						executionReportDoesnotExist("Test Report is not generated yet");
+					}
+
+					break;
+
+
+
 				case "CallSettings":
 
-					File CallSettings = new File("src/test/resources/extentreport/XP8_PhoneDialer_TestReport.html");
+					//	File CallSettings = new File("src/test/resources/extentreport/XP8_Call_Settings_TestReport.html");
+					File CallSettings = new File("src/test/resources/extentreport/XP8_Call_Settings_TestReport.html");
 					File Call = new File(System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog");
 					String callsettingspath=System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog";
 					try {
-						FileUtils.copyFileToDirectory(CallSettings, Call);
+						FileUtils.copyDirectory(CallSettings, Call);
+
 					} catch (IOException e) {
 
 						e.printStackTrace();
@@ -3113,10 +3461,10 @@ public class AllQA  extends CommonConfig {
 					}
 
 					break;
-				
-				
-				
-				
+
+
+
+
 				case "PhoneDialer":
 
 					File Phone_Dialer = new File("src/test/resources/extentreport/XP8_PhoneDialer_TestReport.html");
@@ -3148,7 +3496,7 @@ public class AllQA  extends CommonConfig {
 
 
 
-				
+
 
 				case "CallHistory":
 
@@ -3307,7 +3655,7 @@ public class AllQA  extends CommonConfig {
 					 */
 
 
-				case "DEV-QA-Sanity":
+					/*	case "DEV-QA-Sanity":
 
 					if(JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("-7.1")) {
 
@@ -3363,7 +3711,7 @@ public class AllQA  extends CommonConfig {
 
 					}
 
-					break;
+					break;*/
 
 				case "Wifi":
 
@@ -3442,7 +3790,7 @@ public class AllQA  extends CommonConfig {
 					}
 
 					break;
-					
+
 				case "Contacts":
 
 					File Contacts = new File("src/test/resources/extentreport/XP8_CallModule_Contacts_TestReport.html");
@@ -3727,6 +4075,35 @@ public class AllQA  extends CommonConfig {
 
 					}
 					break;
+					
+				case "Interaction Cases":
+
+					File inter = new File("src/test/resources/extentreport/XP8_Interactions_TestReport.html");
+					File interDest = new File(System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog");
+					String interpath=System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog";
+					try {
+						FileUtils.copyFileToDirectory(inter, interDest);
+					} catch (IOException e) {
+
+						e.printStackTrace();
+					}
+					if(inter.exists()) {
+
+						try {
+							BaseUtil.openReportPath(interpath);
+						} catch (IOException e) {
+
+							e.printStackTrace();
+						}
+
+					}
+					else {
+						executionReportDoesnotExist("Test Report is not generated yet");
+
+					}
+					break;	
+					
+					
 
 				case "Browser Stability":	
 
@@ -3758,7 +4135,7 @@ public class AllQA  extends CommonConfig {
 					}
 					else if (JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("-8.1")) {
 
-						File Stabilitytest = new File("src/test/resources/extentreport/XP8_Browser_Stability_Orio_TestReport.html");
+						File Stabilitytest = new File("src/test/resources/extentreport/XP8_Stability_Orio_TestReport.html");
 						File StabilityDest = new File(System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog");
 						String Stabilitypath=System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog";
 						try {
@@ -4119,6 +4496,7 @@ public class AllQA  extends CommonConfig {
 
 				case "MO-Call":
 
+
 					File MO = new File("src/test/resources/extentreport/MO_CallPerformance_Report.html");
 					File MODest = new File(System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog");
 					String MOpath=System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog";
@@ -4290,6 +4668,9 @@ public class AllQA  extends CommonConfig {
 			secondAnchorPane.getChildren().add(loadingScreen);
 			anchorPane.setDisable(true);
 
+
+
+
 			/*ImageView imageView = new ImageView();
 			secondAnchorPane.getChildren().add(imageView);
             imageView.setImage(new Image(this.getClass().getResource("/application/loading.gif").toExternalForm()));
@@ -4317,6 +4698,8 @@ public class AllQA  extends CommonConfig {
 			pi.getStyleClass().add("LoadingScreen");*/
 			Platform.runLater(()->pi.setStyle("-fx-progress-color: #3339FF;"));
 
+
+
 			pi.setMinWidth(100);
 			pi.setMinHeight(100);
 			pi.setScaleX(2);
@@ -4326,6 +4709,12 @@ public class AllQA  extends CommonConfig {
 
 			secondAnchorPane.getChildren().add(pi);
 			anchorPane.setDisable(true);
+
+
+
+
+
+
 
 
 
@@ -4543,6 +4932,19 @@ public class AllQA  extends CommonConfig {
 		grid.add(new Label("EMAIL ID:"), 0, 2);
 		grid.add(email, 1, 2);
 
+		final TextField ssid=new TextField();
+		ssid.setPrefWidth(200);
+		ssid.setPromptText("Enter SSID :");
+		grid.add(new Label("Wi-Fi SSID:"), 0, 3);
+		grid.add(ssid, 1, 3);
+
+		final TextField wifipassword=new TextField();
+		wifipassword.setPrefWidth(200);
+		wifipassword.setPromptText("Enter Wi-Fi Password :");
+		grid.add(new Label("Wi-Fi Password:"), 0, 4);
+		grid.add(wifipassword, 1, 4);
+
+
 
 		// Enable/Disable login button depending on whether a username was entered.
 		Node loginButton = dialog.getDialogPane().lookupButton(loginButtonType);
@@ -4602,11 +5004,11 @@ public class AllQA  extends CommonConfig {
 
 			PRIMARYDEVMDN="+"+Dut_Ref_Dut_email.getKey();
 			REFERENCEDEVMDN="+"+Dut_Ref_Dut_email.getValue();
-			EMAILID=email.getText();
-			System.out.println(PRIMARYDEVMDN +"-"+REFERENCEDEVMDN +"Email id is :"+EMAILID);
+			EMAILID=email.getText().trim();
+			SSID=ssid.getText().trim();
+			WIFIPASSWORD=wifipassword.getText().trim();
 
-			//	DUTMDN.setText(PRIMARYDEVMDN);
-			//	RefMDN.setText(REFERENCEDEVMDN);
+			System.out.println(PRIMARYDEVMDN +"-"+REFERENCEDEVMDN +"Email id is :"+EMAILID +"--"+SSID+"--"+WIFIPASSWORD);
 
 
 
@@ -4755,28 +5157,23 @@ public class AllQA  extends CommonConfig {
 
 								EMAILREPORT="src/test/resources/extentreport/XP5S_SCOUT_Contact_Transfer_TestReport.html";
 
-								try {
+								/*	try {
 									testCaseDisplay.setItems(GetMethods.TestCasesMethodName("XP5S_TC_", XP5S_SCOUT_Contact_Transfer_Test.class));
 								} catch (ClassNotFoundException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
-								}
+								}*/
 
 
 							}else if (newValue.contains("PhoneContacts")) {
 								EMAILREPORT="src/test/resources/extentreport/XP5S_Contacts_TestReport.html";
 
-								try {
+								/*	try {
 									testCaseDisplay.setItems(GetMethods.TestCasesMethodName("XP5S", XP5S_Contacts_Test.class));
 								} catch (ClassNotFoundException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
-								}
-
-
-
-							}else if (newValue.contains("DEV-QA-Sanity")) {
-								EMAILREPORT="src/test/resources/extentreport/XP5S_Dev_Sanity_O_TestReport.html";
+								}*/
 
 							}else if (newValue.contains("Device")) {
 
@@ -4815,11 +5212,11 @@ public class AllQA  extends CommonConfig {
 							}
 
 
-						}else if (JsonFileReaderAndWriter.primaryDevModelReader().contains("xp8800") ||  JsonFileReaderAndWriter.primaryDevModelReader().contains("80k")) {
+						}else if (JsonFileReaderAndWriter.primaryDevModelReader().contains("8A")||JsonFileReaderAndWriter.primaryDevModelReader().contains("xp8800") ||  JsonFileReaderAndWriter.primaryDevModelReader().contains("80k")) {
 
 							if(newValue.contains("DEV-QA-Sanity")) {
 
-								if(JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("-7.1")) {
+								/*if(JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("-7.1")) {
 									EMAILREPORT="src/test/resources/extentreport/XP8_Dev_SanityTest.html";
 								}else if (JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("-8.1")) {
 									EMAILREPORT="src/test/resources/extentreport/XP8_Dev_Sanity_Test_O.html";
@@ -4832,17 +5229,17 @@ public class AllQA  extends CommonConfig {
 									}
 
 								}
-
+								 */
 
 							}else if (newValue.contains("Telephony")) {
 								EMAILREPORT="src/test/resources/extentreport/XP8_ATT_Stability_Telephony_TestReport.html";
 
-								try {
+								/*try {
 									testCaseDisplay.setItems(GetMethods.TestCasesMethodName("_Stability_",ATT_Stability_Telephony_Test.class));
 								} catch (ClassNotFoundException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
-								}
+								}*/
 
 							}else if (newValue.contains("Email")) {
 								EMAILREPORT="src/test/resources/extentreport/XP8_ATT_Stability_Email_TestReport.html";
@@ -4855,18 +5252,22 @@ public class AllQA  extends CommonConfig {
 								}else if (JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("-8.1")) {
 									EMAILREPORT="src/test/resources/extentreport/XP8_Device_QA_Sanity_Test_O.html";
 
-									try {
+									/*try {
 										testCaseDisplay.setItems(GetMethods.TestCasesMethodName("XP8_DeviceSanity",XP8_Device_QA_Sanity_Test_O.class));
 									} catch (ClassNotFoundException e) {
 										// TODO Auto-generated catch block
 										e.printStackTrace();
-									}
+									}*/
 
 								}
 							}else if (newValue.contains("MO-MT-Call")) {
+
 								EMAILREPORT="src/test/resources/extentreport/MO_MT_CallPerformanceReport.html";
+
 							}else if (newValue.contains("MO-Call")) {
+
 								EMAILREPORT="src/test/resources/extentreport/MO_CallPerformance_Report.html";
+
 							}else if (newValue.contains("MT-Call")) {
 
 								EMAILREPORT="src/test/resources/extentreport/MT_CallPerformance_Report.html";
@@ -4877,32 +5278,45 @@ public class AllQA  extends CommonConfig {
 								EMAILREPORT="src/test/resources/extentreport/XP8_Browser_Stability_Orio_TestReport.html";
 							}if(newValue.contains("ContactTransfer")) {
 								EMAILREPORT="src/test/resources/extentreport/XP8_SCOUT_Contact_Transfer_TestReport.html";
-
+								/*
 								try {
 									testCaseDisplay.setItems(GetMethods.TestCasesMethodName("XP8_", XP8_ContactTransfer_Test.class));
 								} catch (ClassNotFoundException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
-								}
+								}*/
 
 							}if(newValue.contains("ApkDownload")) {
-								
+
 								EMAILREPORT="src/test/resources/extentreport/XP8_APK_Download_Stability_Orio_TestReport.html";
 							}else if (newValue.contains("SafeGuard")) {
 
-								EMAILID="src/test/resources/extentreport/XP8_SCOUT_SafeGuard_TestReport.html";
+								EMAILREPORT="src/test/resources/extentreport/XP8_SCOUT_SafeGuard_TestReport.html";
 							}else if (newValue.contains("CallHistory")) {
-								EMAILID="src/test/resources/extentreport/XP8_CallHistory_TestReport.html";
+								EMAILREPORT="src/test/resources/extentreport/XP8_CallHistory_TestReport.html";
 
-								
+
 							}else if (newValue.contains("PhoneDialer")) {
-								
-								EMAILID="src/test/resources/extentreport/XP8_PhoneDialer_TestReport.html";
 
-								
+								EMAILREPORT="src/test/resources/extentreport/XP8_PhoneDialer_TestReport.html";
+
+
 							}else if (newValue.contains("Callsettings")) {
-								
-								EMAILID="src/test/resources/extentreport/XP8_Call_Settings_TestReport.html";
+
+								EMAILREPORT="src/test/resources/extentreport/XP8_Call_Settings_TestReport.html";
+
+							}else if (newValue.contains("CallHistory")) {
+
+								EMAILREPORT="src/test/resources/extentreport/XP8_CallHistory_TestReport.html";
+
+							}else if (newValue.contains("SMS")) {
+
+								EMAILREPORT="src/test/resources/extentreport/XP8_SMS_Stability_Orio_TestReport.html";
+
+
+
+							}else if (newValue.contains("Contacts Stability")) {
+								EMAILREPORT="src/test/resources/extentreport/XP8_Contact_Stability.html";
 
 							}
 
@@ -5019,11 +5433,10 @@ public class AllQA  extends CommonConfig {
 						System.out.println("HEY WHATS=");
 						CommonConfig.CALL_MODULE="MT-Call";
 
-					}else if (newValue.equals("Browser Stability") || newValue.equals("Device Stability") || newValue.equals("Network Stability")|| newValue.equals("ApkDownload") || newValue.equals("SMS") ||newValue.equals("Wifi") || newValue.equals("Multitasking")) {
+					}else if (newValue.equals("Contacts Stability") ||newValue.equals("Browser Stability") || newValue.equals("Device Stability") || newValue.equals("Network Stability")|| newValue.equals("ApkDownload") || newValue.equals("SMS") ||newValue.equals("Wifi") || newValue.equals("Multitasking")) {
 						CommonConfig.CALL_MODULE="";
 						System.out.println("Here we are reseting the Call Module to null");
 						iteration_Input_Dialog();
-
 					}else {
 						System.out.println("Here we are reseting the Call Module to null");
 						CommonConfig.CALL_MODULE="";
@@ -5054,6 +5467,8 @@ public class AllQA  extends CommonConfig {
 			timer1.schedule( new TimerTask() 
 			{ 
 				public void run() { 
+					
+					//System.out.println("11111111111111111111111111");
 
 
 					if(TNGListner.Listner.onTestStart.equals("")) {
@@ -5078,6 +5493,8 @@ public class AllQA  extends CommonConfig {
 			timer2.schedule( new TimerTask() 
 			{ 
 				public void run() { 
+					
+					//System.out.println("22222222222222222222");
 
 					if(TNGListner.Listner.onTestSucess.equals("")) {
 
@@ -5089,8 +5506,8 @@ public class AllQA  extends CommonConfig {
 					else 
 					{
 						System.out.println("Tiemr 2---->Sucess of Test cases");
-						ExecutedTC.appendText(TNGListner.Listner.onTestSucess);
-						ExecutedTC.setStyle("-fx-text-inner-color: blue;");
+						Platform.runLater(()->ExecutedTC.appendText(TNGListner.Listner.onTestSucess));
+						Platform.runLater(()->ExecutedTC.setStyle("-fx-text-inner-color: blue;"));	
 						GLOBAL_ONTESTSUCESS=TNGListner.Listner.onTestSucess;
 					}
 				} 
@@ -5102,6 +5519,8 @@ public class AllQA  extends CommonConfig {
 			timer3_failure.schedule( new TimerTask() 
 			{ 
 				public void run() { 
+					
+					//System.out.println("33333333333333333333333333");
 
 
 					if(TNGListner.Listner.onTestFailure.equals("")) {
@@ -5115,19 +5534,21 @@ public class AllQA  extends CommonConfig {
 
 						System.out.println("Timer_failure got failed ");
 
-						failedTC.appendText(TNGListner.Listner.onTestFailure);
+						Platform.runLater(()->failedTC.appendText(TNGListner.Listner.onTestFailure));
+
 						GLOBAL_ONTESTFAILURE=TNGListner.Listner.onTestFailure;
 
 
 					}
 				} 
-			}, 0, 100*(100*1));
+			}, 0, 10*(100*1));
 
 
 			onfinish=new Timer();
 			onfinish.schedule(new TimerTask() {
 				public void run() {
 
+					//System.out.print("555555555555555555555555555555");
 
 					if(TNGListner.Listner.onFinish.equals("TCFINISHED")) {
 
@@ -5152,9 +5573,11 @@ public class AllQA  extends CommonConfig {
 			onskip.schedule(new TimerTask() {
 
 				public void run() {
+
+					//System.out.print("666666666666666666666666");
+					
 					if(TNGListner.Listner.onTestSkipped.equals("TCSKIPPED")) {	
 
-						System.out.println("Calling onskip timer ");
 
 						Platform.runLater(()->status.setText("All test cases are skipped."));
 						onskip.cancel();
@@ -5164,6 +5587,18 @@ public class AllQA  extends CommonConfig {
 						timer3_failure.cancel();
 						stopButton.setDisable(true);
 						ResetBtn.setDisable(false);
+
+						if(NUM_OF_CALL_ITER_UPDATE.equals("NOT IMS")){
+
+							try {
+								Thread.sleep(1000);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+
+							Platform.runLater(()->status.setText("SIM IS NOT IMS REGISTRED/DEVICE IS NOT VOLTE SUPPORTED SKIPPING ALL THE TESTCASES"));
+						}
 
 
 
@@ -5180,13 +5615,54 @@ public class AllQA  extends CommonConfig {
 
 					if(appiumService.INCREMENT_VLAUE!=0.0) {
 
-						progressIndicator.setProgress(INCREMENT_VLAUE);
+						Platform.runLater(()->progressIndicator.setProgress(INCREMENT_VLAUE));
 
 					}
 
 				} 
 			}, 0, 10*(10*1));
 
+
+			call_Iter=new Timer();
+			call_Iter.schedule(new TimerTask() {
+
+				@Override
+				public void run() {
+
+					if(NUM_OF_CALL_ITER.equals("")) {
+
+					}
+					else if (NUM_OF_CALL_ITER.equalsIgnoreCase(NUM_OF_CALL_ITER_INCREMENTOR)) {
+
+					}
+					else 
+					{
+
+						Platform.runLater(()->testCaseDisplay.appendText(NUM_OF_CALL_ITER));
+						Platform.runLater(()->testCaseDisplay.setStyle("-fx-text-inner-color: blue;"));
+						NUM_OF_CALL_ITER_INCREMENTOR=NUM_OF_CALL_ITER;
+
+
+
+
+						double percentagePerCase = (CALL_COUNT/NUMOFCALLS);
+
+
+						DecimalFormat df = new DecimalFormat("#.##");
+						df.setRoundingMode(RoundingMode.FLOOR);
+						String num = df.format(percentagePerCase);
+						System.out.println("CAll count :"+NUMOFCALLS);
+						double value=Double.parseDouble(num);
+						System.out.println("CAll COUNT is "+value);
+						Platform.runLater(()->progressIndicator.setProgress(value));
+
+
+
+
+					}
+
+				}
+			}, 0, 20*(10*1));
 
 
 
@@ -5237,7 +5713,7 @@ public class AllQA  extends CommonConfig {
 		grid.add(new Label("Please Enter number of calls (1-1000):"), 0, 0);
 		grid.add(username, 1, 0);
 
-		grid.add(new Label("Call Duration in Minutes (1-60):"), 0, 1);
+		grid.add(new Label("Call Duration in Seconds (1-3600):"), 0, 1);
 		grid.add(CallDuration, 1, 1);
 
 		grid.add(new Label("Successive Call Gap in Seconds (1-120) :"), 0, 2);
@@ -5335,7 +5811,7 @@ public class AllQA  extends CommonConfig {
 
 
 	//THis Method is used to execute only failed Test cases	
-	@FXML
+	/*@FXML
 	public void ExecuteFailedTestCasesOnly() {
 
 		try {
@@ -5367,7 +5843,7 @@ public class AllQA  extends CommonConfig {
 		}
 
 
-	}
+	}*/
 
 
 	public void progressAction() {
@@ -5460,5 +5936,8 @@ public class AllQA  extends CommonConfig {
 
 
 	}
+
+
+
 
 }

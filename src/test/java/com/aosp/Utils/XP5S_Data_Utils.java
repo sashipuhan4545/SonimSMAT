@@ -34,6 +34,9 @@ public class XP5S_Data_Utils extends BaseUtil{
 	public static ExtentReports extent;
 
 	public static ExtentTest test;
+	
+	
+	
 
 
 
@@ -55,7 +58,7 @@ public class XP5S_Data_Utils extends BaseUtil{
 
 
 
-		for(int i=1;i<=AllQA.NUMOFCALLS;i++)
+		for(int mo_mt=1;mo_mt<=AllQA.NUMOFCALLS;mo_mt++)
 		{
 			try{
 
@@ -85,25 +88,30 @@ public class XP5S_Data_Utils extends BaseUtil{
 
 						System.out.println("MO_MT CALL phone is rining so acceping call made from primary");
 
-						test.log(LogStatus.INFO, "DUT-->REF #"+i  +"     :     "+"  "+AllQA.PRIMARYDEVMDN +"     ===>>>     "+AllQA.REFERENCEDEVMDN);
-
+						test.log(LogStatus.INFO, "DUT-->REF #"+mo_mt  +"     :     "+"  "+AllQA.PRIMARYDEVMDN +"     ===>>>     "+AllQA.REFERENCEDEVMDN);
+						
+						AllQA.NUM_OF_CALL_ITER="\n"+"NUM OF MO_MT CALL : "+mo_mt;
+						
+						AllQA.CALL_COUNT=mo_mt;
 						Runtime.getRuntime().exec("adb -s "+Refdevid+" shell input keyevent 5");
 						break;
 
-					}else if (value.contains("00000000")) {
-
-						System.out.println("Phone is not Ringing ");
+					
 
 					}else {
-						test.log(LogStatus.INFO, "MO CALL #"+i +"     :     Ref Phone is not Ringing because of network issue/Call has be landed . ");
+						test.log(LogStatus.INFO, "MO_MT CALL #"+mo_mt +"     :     Ref Phone is not Ringing because of network issue ");
 						sf.fail();
+						AllQA.NUM_OF_CALL_ITER="\n"+"REF PHONE IS NOT RINGING/MAY BE NETWORK ISSUE : "+mo_mt;
+						
+						AllQA.CALL_COUNT=mo_mt;
+
 
 					}
 
 
 				}
 				//	Thread.sleep(30000);
-				TimeUnit.MINUTES.sleep(AllQA.CALLDURATION);
+				TimeUnit.SECONDS.sleep(AllQA.CALLDURATION);
 
 				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_ENDCALL);
 				Thread.sleep(AllQA.CALLGAP*1000);  
@@ -140,25 +148,26 @@ public class XP5S_Data_Utils extends BaseUtil{
 						System.out.println("MT_MO CALL phone is rining so acceping call made from REf");
 
 
-						test.log(LogStatus.INFO, "REF --> DUT #"+i  +"     :     "+"  "+ AllQA.REFERENCEDEVMDN  +"     ===>>>     "+AllQA.PRIMARYDEVMDN) ;
-
+						test.log(LogStatus.INFO, "REF --> DUT #"+mo_mt  +"     :     "+"  "+ AllQA.REFERENCEDEVMDN  +"     ===>>>     "+AllQA.PRIMARYDEVMDN) ;
+						AllQA.NUM_OF_CALL_ITER="\n"+"NUM OF MT_MO CALL : "+mo_mt;
+					//	AllQA.CALL_COUNT=mo_mt;
 						Runtime.getRuntime().exec("adb -s "+Uid+" shell input keyevent 5");
 						break;
 						
 						
 
-					}else if (value.contains("00000000")) {
-						
-						System.out.println("Phone is not rining ");
+					
 						
 					}else {
-						test.log(LogStatus.INFO, "MO CALL #"+i +"     :     Primary Phone is not Ringing because of network issue/Call has be landed . ");
+						test.log(LogStatus.INFO, "MO CALL #"+mo_mt +"     :     Primary Phone is not Ringing because of network issue/Call has be landed . ");
 						sf.fail();
+						AllQA.NUM_OF_CALL_ITER="\n"+"DUT IS NOT RINGING/MAY BE NETWORK ISSUE : "+mo_mt;
+					//	AllQA.CALL_COUNT=mo_mt;
 
 					}
 				}
 				//	Thread.sleep(30000);
-				TimeUnit.MINUTES.sleep(AllQA.CALLDURATION);
+				TimeUnit.SECONDS.sleep(AllQA.CALLDURATION);
 
 				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_ENDCALL);
 				Thread.sleep(AllQA.CALLGAP*1000); 
@@ -184,8 +193,8 @@ public class XP5S_Data_Utils extends BaseUtil{
 
 		APP_LOGS.info("S@shi:This Method is used to Originate MO call");
 
-		SoftAssert sa=new SoftAssert();
-		boolean checkCall;
+		SoftAssert SA=new SoftAssert();
+		
 
 		String Refdevid=JsonFileReaderAndWriter.ReadRefDeviceId();
 		String mobnumber=AllQA.REFERENCEDEVMDN;
@@ -194,11 +203,11 @@ public class XP5S_Data_Utils extends BaseUtil{
 
 
 
-		for(int k=1;k<=AllQA.NUMOFCALLS;k++)
+		for(int mo=1;mo<=AllQA.NUMOFCALLS;mo++)
 		{
 			Runtime.getRuntime().exec("adb -s "+Uid+" shell am start -a android.intent.action.CALL -d tel:"+AllQA.REFERENCEDEVMDN);
 			Thread.sleep(10000);
-			checkCall = false;
+			
 			try {
 
 				for(int j=1;j<=100;j++){
@@ -219,52 +228,55 @@ public class XP5S_Data_Utils extends BaseUtil{
 					BufferedReader in = new BufferedReader(r);
 					String value=in.readLine();
 
+					
+					
 
 					if(value.contains("00000001")) {
 						System.out.println("Phone is ringing so accepting caall");
-						checkCall = true;
-						//						test.log(LogStatus.INFO, "MO CALL #"+k  +"     :     "+"  "+AllQA.PRIMARYDEVMDN +"     ===>>>     "+AllQA.REFERENCEDEVMDN);
+						
 
+						test.log(LogStatus.INFO, "MT CALL #"+mo  +"     :     "+"  "+AllQA.REFERENCEDEVMDN +"     ===>>>     "+AllQA.REFERENCEDEVMDN);
 
 						Runtime.getRuntime().exec("adb -s "+Refdevid+" shell input keyevent 5");
+						AllQA.NUM_OF_CALL_ITER="\n"+"NUM OF MO CALL : "+mo;
+						AllQA.CALL_COUNT=mo;
 						break;
 
 
-					}/*else if(value.contains("00000000")) {
-
+					
 
 					}else {
-//						test.log(LogStatus.INFO, "MO CALL #"+k +"     :     Primary Phone is not Ringing because of network issue/Call has be landed . ");
-						sa.fail();
+						
+						test.log(LogStatus.INFO, "MO CALL #"+mo +"     :     Reference Phone is not Ringing because of network problem");
+						
+						AllQA.NUM_OF_CALL_ITER="\n"+"REF PHONE IS NOT RINGING/MAY BE NETWORK ISSUE : "+mo;
+						AllQA.CALL_COUNT=mo;
+						SA.fail();
+						
+					}
+						
+					}
+				
+				
+				
+				
 
-					}*/
-				}
-				System.out.println(checkCall+"Call in which state");
-				if(checkCall){
-					test.log(LogStatus.INFO, "MO CALL #"+k  +"     :     "+"  "+AllQA.PRIMARYDEVMDN +"     ===>>>     "+AllQA.REFERENCEDEVMDN);
-
-				}
-				else{
-					test.log(LogStatus.INFO, "MO CALL #"+k +"     :     Primary Phone is not Ringing because of network issue/Call has be landed . ");
-				}
-
-				//	Thread.sleep(30000);
-				System.out.println("2 min timer started");
-				TimeUnit.MINUTES.sleep(AllQA.CALLDURATION);
-				System.out.println("2 min timer ended");
+				TimeUnit.SECONDS.sleep(AllQA.CALLDURATION);
 
 				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_ENDCALL);
 				Thread.sleep(AllQA.CALLGAP*1000); 
 
 			}catch(Exception e) {
 
+				
 				Runtime.getRuntime().exec("adb -s \""+Refdevid+"\" shell input keyevent 5");
 				Thread.sleep(2000);
 				continue;
 			}
-			sa.assertAll();
+			
 
 		}
+		SA.assertAll();
 
 	}
 
@@ -280,7 +292,7 @@ public class XP5S_Data_Utils extends BaseUtil{
 
 
 		SoftAssert sa = new SoftAssert();
-		for(int i=1;i<=AllQA.NUMOFCALLS;i++)
+		for(int mt=1;mt<=AllQA.NUMOFCALLS;mt++)
 		{
 
 			Runtime.getRuntime().exec("adb -s "+Refdevid+" shell am start -a android.intent.action.CALL -d tel:"+AllQA.PRIMARYDEVMDN);
@@ -308,24 +320,26 @@ public class XP5S_Data_Utils extends BaseUtil{
 					InputStreamReader r = new InputStreamReader(lsOut);
 					BufferedReader in = new BufferedReader(r);
 					String value=in.readLine();
+					
 					if(value.contains("00000001")) {
 
 						System.out.println("Phone is rining");
 
-						test.log(LogStatus.INFO, "MT CALL #"+i  +"     :     "+"  "+AllQA.REFERENCEDEVMDN +"     ===>>>     "+AllQA.PRIMARYDEVMDN);
+						test.log(LogStatus.INFO, "MT CALL #"+mt  +"     :     "+"  "+AllQA.REFERENCEDEVMDN +"     ===>>>     "+AllQA.PRIMARYDEVMDN);
 
 						Runtime.getRuntime().exec("adb -s "+Uid+" shell input keyevent 5");
+						AllQA.NUM_OF_CALL_ITER="\n"+"NUM OF MT CALL : "+mt;
+						AllQA.CALL_COUNT=mt;
 						break;
 
-					}else if(value.contains("00000000")) {
-
-						System.out.println("Phone is not rining so TC fail");
-
-
-						//sa.fail();
+					
 					}else {
-						test.log(LogStatus.INFO, "MT CALL #"+i +"     :     Primary Phone is not Ringing because of network issue/Call has be landed . ");
+						test.log(LogStatus.INFO, "MT CALL #"+mt +"     :     Primary Phone is not Ringing because of network issue ");
 						sa.fail();
+
+						AllQA.NUM_OF_CALL_ITER="\n"+"REF PHONE IS NOT RINGING/MAY BE NETWORK ISSUE : "+mt;
+						AllQA.CALL_COUNT=mt;
+
 
 					}
 
@@ -333,7 +347,7 @@ public class XP5S_Data_Utils extends BaseUtil{
 				}
 
 				//	Thread.sleep(30000);
-				TimeUnit.MINUTES.sleep(AllQA.CALLDURATION);
+				TimeUnit.SECONDS.sleep(AllQA.CALLDURATION);
 				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_ENDCALL);
 				Thread.sleep(AllQA.CALLGAP*1000);  
 				continue;	
@@ -386,6 +400,9 @@ public class XP5S_Data_Utils extends BaseUtil{
 
 						System.out.println("Phone is rining");
 						test.log(LogStatus.INFO, "MO CALL #"+i+"     :     "+""+AllQA.PRIMARYDEVMDN +"     ===>>>     "+AllQA.REFERENCEDEVMDN);
+						AllQA.NUM_OF_CALL_ITER="\n"+"NUM OF MO CALL : "+i;
+						
+						AllQA.CALL_COUNT=i;
 
 
 						Runtime.getRuntime().exec("adb -s \""+Refdevid+"\" shell input keyevent 5");
@@ -393,22 +410,22 @@ public class XP5S_Data_Utils extends BaseUtil{
 
 						break;
 
-					}else if(value.contains("00000000")) {
-
-						System.out.println("Phone is not rining so TC fail");
-
-
-
 					}else {
-						test.log(LogStatus.INFO, "MO CALL #"+i +"     :     Primary Phone is not Ringing because of network issue/Call has be landed . ");
+						
+						
+						AllQA.NUM_OF_CALL_ITER="\n"+"REF PHONE IS NOT RINGING/MAY BE NETWORK ISSUE : "+i;
+						AllQA.CALL_COUNT=i;
+
+						test.log(LogStatus.INFO, "MO CALL #"+i +"     :     Reference Phone is not Ringing because of network problem ");
 						sf.fail();
+
 
 					}
 
 
 				}
 				//	Thread.sleep(30000);
-				TimeUnit.MINUTES.sleep(AllQA.CALLDURATION);
+				TimeUnit.SECONDS.sleep(AllQA.CALLDURATION);
 
 				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_ENDCALL);
 				Thread.sleep(AllQA.CALLGAP*1000);  
@@ -466,6 +483,8 @@ public class XP5S_Data_Utils extends BaseUtil{
 						test.log(LogStatus.INFO, "MT CALL #"+i  +"     :     "+"  "+AllQA.REFERENCEDEVMDN +"     ===>>>     "+AllQA.PRIMARYDEVMDN);
 
 						Runtime.getRuntime().exec("adb -s "+Uid+" shell input keyevent 5");
+						AllQA.NUM_OF_CALL_ITER="\n"+"NUM OF MT CALL : "+i;
+						AllQA.CALL_COUNT=i;
 
 						break;
 
@@ -474,10 +493,13 @@ public class XP5S_Data_Utils extends BaseUtil{
 						System.out.println("Phone is not rining so TC fail");
 
 
-						//sa.fail();
+						
 					}else {
 						test.log(LogStatus.INFO, "MT CALL #"+i +"     :     Primary Phone is not Ringing because of network issue/Call has be landed . ");
 						sa.fail();
+
+						AllQA.NUM_OF_CALL_ITER="\n"+"REF PHONE IS NOT RINGING/MAY BE NETWORK ISSUE : "+i;
+						AllQA.CALL_COUNT=i;
 
 					}
 
@@ -486,7 +508,7 @@ public class XP5S_Data_Utils extends BaseUtil{
 				}
 
 				//	Thread.sleep(30000);
-				TimeUnit.MINUTES.sleep(AllQA.CALLDURATION);
+				TimeUnit.SECONDS.sleep(AllQA.CALLDURATION);
 
 				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_ENDCALL);
 				Thread.sleep(AllQA.CALLGAP*1000);  
@@ -538,6 +560,9 @@ public class XP5S_Data_Utils extends BaseUtil{
 
 						test.log(LogStatus.INFO, "DUT-->REF #"+i  +"     :     "+" "+AllQA.PRIMARYDEVMDN +"     ===>>>     "+AllQA.REFERENCEDEVMDN);
 
+						AllQA.NUM_OF_CALL_ITER="\n"+"NUM OF MO-MT CALL : "+i;
+						
+						AllQA.CALL_COUNT=i;
 						Runtime.getRuntime().exec("adb -s "+Refdevid+" shell input keyevent 5");
 						sf.assertTrue(true, "");
 						break;
@@ -551,6 +576,9 @@ public class XP5S_Data_Utils extends BaseUtil{
 						//sa.fail();
 					}else {
 
+						AllQA.NUM_OF_CALL_ITER="\n"+"REF PHONE IS NOT RINGING/MAY BE NETWORK ISSUE : "+i;
+						AllQA.CALL_COUNT=i;
+
 						test.log(LogStatus.INFO, "MO-MT CALL #"+i +"     :     Primary Phone is not Ringing because of network issue/Call has be landed . ");
 						sf.fail();
 
@@ -561,7 +589,7 @@ public class XP5S_Data_Utils extends BaseUtil{
 				}
 
 				//	Thread.sleep(30000);
-				TimeUnit.MINUTES.sleep(AllQA.CALLDURATION);
+				TimeUnit.SECONDS.sleep(AllQA.CALLDURATION);
 
 				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_ENDCALL);
 				Thread.sleep(AllQA.CALLGAP*1000); 
@@ -587,6 +615,9 @@ public class XP5S_Data_Utils extends BaseUtil{
 						test.log(LogStatus.INFO, "REF-->DUT #"+i  +"     :     "+"  "+ AllQA.REFERENCEDEVMDN  +"     ===>>>     "+AllQA.PRIMARYDEVMDN) ;
 
 						Runtime.getRuntime().exec("adb -s "+Uid+" shell input keyevent 5");
+						
+						AllQA.NUM_OF_CALL_ITER="\n"+"NUM OF MT-MO CALL : "+i;
+					//	AllQA.CALL_COUNT=i;
 						sf.assertTrue(true, "");
 						break;
 
@@ -599,6 +630,9 @@ public class XP5S_Data_Utils extends BaseUtil{
 					}else {
 						test.log(LogStatus.INFO, "MT-MO CALL #"+i +"     :     Primary Phone is not Ringing because of network issue/Call has be landed . ");
 						sf.fail();
+						AllQA.NUM_OF_CALL_ITER="\n"+"REF PHONE IS NOT RINGING/MAY BE NETWORK ISSUE : "+i;
+					//	AllQA.CALL_COUNT=i;
+
 
 					}
 
@@ -606,7 +640,7 @@ public class XP5S_Data_Utils extends BaseUtil{
 				}
 
 
-				TimeUnit.MINUTES.sleep(AllQA.CALLDURATION);
+				TimeUnit.SECONDS.sleep(AllQA.CALLDURATION);
 
 				//Thread.sleep(30000);
 				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_ENDCALL);

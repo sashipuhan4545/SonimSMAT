@@ -9,6 +9,9 @@ import com.xp5S.util.ExcelConstants;
 import com.xp5S.util.ExcelReader;
 
 public class DataProviders {
+	
+	
+	
 
 	@DataProvider(name ="LaunchSettingsApp")
 	public static Object[][] LaunchSettingsApp(Method m) throws Exception{
@@ -126,6 +129,7 @@ public class DataProviders {
 	}
 	
 	
+	
 	@DataProvider(name = "XP8_ATTStability")
 	public static Object[][] XP8_ATTStability(Method m) throws Exception {
 		System.out.println(m.getName());
@@ -227,6 +231,36 @@ public class DataProviders {
 		return ExcelUtils.getData_aosp(testcase, excel,"XP8_Call_Settings");
 	}	
 	
+	
+	@DataProvider(name ="XP8_Interactions")
+	public static Object[][] XP8_Interaction_Test(Method m) throws Exception{
+		System.out.println(m.getName());
+		ExcelReader excel = new ExcelReader(ExcelConstants.XP5S_XL_PATH);
+		String testcase = m.getName();
+		return ExcelUtils.getData_aosp(testcase, excel,"XP8_Interactions");
+	}	
+	
+	@DataProvider(name ="XP8_Data_Usage_Setting")
+	public static Object[][] XP8_Data_Usage_Setting(Method m) throws Exception{
+		System.out.println(m.getName());
+		ExcelReader excel = new ExcelReader(ExcelConstants.XP5S_XL_PATH);
+
+		String testcase = m.getName();
+
+		return ExcelUtils.getData_aosp(testcase, excel,"XP8_Data_Usage_Setting");
+	}
+	
+	
+	
+	@DataProvider(name ="XP8_Wifi")
+	public static Object[][] XP8_Wifi(Method m) throws Exception{
+		System.out.println(m.getName());
+		ExcelReader excel = new ExcelReader(ExcelConstants.XP5S_XL_PATH);
+
+		String testcase = m.getName();
+
+		return ExcelUtils.getData_aosp(testcase, excel,"XP8_Wifi");
+	}
 
 
 }

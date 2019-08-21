@@ -33,6 +33,7 @@ import application.AllQA;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.android.AndroidKeyCode;
 
+
 public class AOSP_XP5S_Sanity_Util extends BaseUtil {
 
 	public boolean check = false;
@@ -67,6 +68,8 @@ public class AOSP_XP5S_Sanity_Util extends BaseUtil {
 		r_b_No=JsonFileReaderAndWriter.ReadRefDeviceFirmWare();
 	}
 
+	
+	
 
 	public void OCRScreencapture(String fileName) throws InterruptedException {
 		//Capture required Screen shots for validation
@@ -82,6 +85,8 @@ public class AOSP_XP5S_Sanity_Util extends BaseUtil {
 		 */
 
 		try {
+			
+		
 			clickBtn(Locators_Sanity.Sleep_Optn);
 			minWait();
 			for(int i=1; i<=8; i++) {

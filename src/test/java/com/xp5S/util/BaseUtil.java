@@ -78,13 +78,11 @@ public class BaseUtil extends CommonConfig {
 	public boolean check = false;
 
 
-	public boolean ifAlertPresent() {
-		try {
+	public void ifAlertPresent() {
+		
 			getDriver().switchTo().alert();
-			return true;
-		} catch (NoAlertPresentException ex) {
-			return false;
-		}
+			
+		
 	}
 
 	public void executeJS(String code) {
@@ -97,14 +95,12 @@ public class BaseUtil extends CommonConfig {
 		executor.executeScript("arguments[0].click();", e);
 	}
 
-	public boolean clickBtn(WebElement e) {
-		try {
+	public void clickBtn(WebElement e) {
+		
 			e.click();
-			return true;
+		
 
-		} catch (NoSuchElementException s) {
-			return false;
-		}
+		
 
 	}
 
@@ -257,24 +253,13 @@ public class BaseUtil extends CommonConfig {
 			return true;
 	}
 
-	public boolean isAlertPresent() {
-		try {
-			getDriver().switchTo().alert();
-			return true;
-
-		} catch (NoAlertPresentException ex) {
-			return false;
-		}
-	}
+	
 
 	public Alert getAlertbox() {
 
-		try {
+	
 			return getDriver().switchTo().alert();
 
-		} catch (NoAlertPresentException ex) {
-			return null;
-		}
 	}
 
 	public static void waituntilnew(WebElement e, int timeinSeconds) {
@@ -306,14 +291,15 @@ public class BaseUtil extends CommonConfig {
 
 	public boolean isElementExist(WebElement e) {
 		boolean isPresent = false;
-		try {
+		
 			isPresent = e.isDisplayed();
-		} catch (NoSuchElementException s) {
-			isPresent = false;
-		} catch (NullPointerException npe) {
-			isPresent = false;
-		}
-		return isPresent;
+			if(isPresent) {
+				isPresent=true;
+			}else {
+				isPresent=false;
+			}
+			return isPresent;
+		
 	}
 
 	public boolean isElementNull(WebElement e) {
@@ -390,7 +376,7 @@ public class BaseUtil extends CommonConfig {
 	 */
 	public void clearApp() throws InterruptedException {
 
-		try {
+	
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_HOME);
 			customWait(4000);
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
@@ -411,14 +397,12 @@ public class BaseUtil extends CommonConfig {
 
 			}
 
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
+		
 	}
 
 	public void clearApp_SG() throws InterruptedException {
 
-		try {
+		
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_HOME);
 			customWait(4000);
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
@@ -439,9 +423,7 @@ public class BaseUtil extends CommonConfig {
 
 			}
 
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
+		
 	}
 
 	// This method will provide the user a searched string from the adb log text
@@ -520,19 +502,48 @@ public class BaseUtil extends CommonConfig {
 
 		//This method will take adb log
 
+		Calendar cal = new GregorianCalendar();
+		int month = cal.get(Calendar.MONTH);
+		int year = cal.get(Calendar.YEAR);
+		int sec = cal.get(Calendar.SECOND);
+		int min = cal.get(Calendar.MINUTE);
+		int date = cal.get(Calendar.DATE);
+		int day = cal.get(Calendar.HOUR_OF_DAY);
+		String mailscreenshotpath = null;
+		 mailscreenshotpath ="_" + year + "_" + date + "_" + (month + 1) + "_" + day + "_" + min + "_" +sec;
 
 		customWait(2000);
 		String Uid=JsonFileReaderAndWriter.primaryDevIdReader();
-		try {
+		
 			APP_LOGS.info("Adb log started sucessfully ");
 			Runtime.getRuntime().exec("adb -s "+Uid+" logcat -c");
 
-			Runtime.getRuntime().exec("cmd /C \"adb -s "+Uid+" logcat -v time>src/test/resources/adbLogs/"+fileName+".txt \"");
+			Runtime.getRuntime().exec("cmd /C \"adb -s "+Uid+" logcat -v time>src/test/resources/adbLogs/"+fileName+""+mailscreenshotpath+".txt \"");
 			Thread.sleep(2000);
 		}
-		catch(Exception e) {
-			System.out.println("Something goes Wrong!!!");   e.printStackTrace();  
+		
+	
+	public static String saveReportWithDateAndTime(String path) throws IOException {
+
+		Calendar cal = new GregorianCalendar();
+		int month = cal.get(Calendar.MONTH);
+		int year = cal.get(Calendar.YEAR);
+		int sec = cal.get(Calendar.SECOND);
+		int min = cal.get(Calendar.MINUTE);
+		int date = cal.get(Calendar.DATE);
+		int day = cal.get(Calendar.HOUR_OF_DAY);
+		String mailscreenshotpath = null;
+
+		
+		try {
+		 mailscreenshotpath =path+"_" + year + "_" + date + "_" + (month + 1) + "_" + day + "_" + min + "_" +sec+ ".html";
+			FileUtils.copyFileToDirectory(new File(mailscreenshotpath), new File("src/test/resources/extentreport"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+		
 		}
+		return mailscreenshotpath;
+	}	
 
 
 		/*customWait(1000);
@@ -549,7 +560,7 @@ public class BaseUtil extends CommonConfig {
 		}*/
 
 
-	}
+	
 
 	// This method will stop adb log
 
@@ -590,15 +601,13 @@ public class BaseUtil extends CommonConfig {
 
 		customWait(2000);
 		String Uid=JsonFileReaderAndWriter.primaryDevIdReader();
-		try {
+		
 			APP_LOGS.info("Adb log started sucessfully ");
 			Runtime.getRuntime().exec("cmd /C \"adb -s "+Uid+" logcat -b all -v threadtime>src/test/resources/adbLogs/"+fileName+".txt \"");
 			Thread.sleep(2000);
 		}
-		catch(Exception e) {
-			System.out.println("Something goes Wrong!!!");   e.printStackTrace();  
-		}
-	}
+		
+	
 
 	public String startRIL_Log() throws AWTException, InterruptedException, IOException, ParseException {
 		
@@ -718,12 +727,10 @@ public class BaseUtil extends CommonConfig {
 	}
 
 	public boolean longpress(int keyCode) {
-		try {
+		
 			aDriver.longPressKeyCode(keyCode);
 			return true;
-		} catch (NoSuchElementException s) {
-			return false;
-		}
+	
 	}
 
 	public void recordVideo(String TC_Name) throws InterruptedException, IOException, ParseException {
@@ -760,7 +767,7 @@ public class BaseUtil extends CommonConfig {
 		try {
 			dirToOpen = new File(path);
 			desktop.open(dirToOpen);
-		} catch (IllegalArgumentException iae) {
+		} catch (Exception iae) {
 			System.out.println("File Not Found");
 		}
 
@@ -828,7 +835,7 @@ public class BaseUtil extends CommonConfig {
 		 */
 
 		boolean check = false;
-		try {  
+		
 			String scrollable = "new UiScrollable(new UiSelector().scrollable(true))";
 			String textElement = ".scrollIntoView(new UiSelector().text(\""+ phoneNum +"\"))";
 			aDriver.findElementByAndroidUIAutomator(scrollable+textElement);
@@ -836,10 +843,8 @@ public class BaseUtil extends CommonConfig {
 			check = true;
 			return check;
 		}
-		catch(NoSuchElementException e) {
-			return check;
-		}
-	}
+	
+	
 
 
 	public void navigateToSettingsFeature(WebElement option,String name) throws InterruptedException, IOException {
@@ -873,7 +878,7 @@ public class BaseUtil extends CommonConfig {
 		 * Set sleep mode to maximum
 		 */
 
-		try {
+	//	try {
 			clickBtn(Locators_DevSanity.Sleep_Optn);
 			minWait();
 			for(int i=1; i<=8; i++) {
@@ -883,18 +888,18 @@ public class BaseUtil extends CommonConfig {
 			test.log(LogStatus.INFO, " Sleep Mode is set to maximum");
 			minWait();
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
-		} catch (Exception e) {
+	//	} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-			test.log(LogStatus.ERROR, " No such Element Found");
-		}		
+			//e.printStackTrace();
+			//test.log(LogStatus.ERROR, " No such Element Found");
+		//}		
 	}
 
 
 	// Validates the presence of element
 	public boolean validate_presenceOfElement(WebElement element, String elementName) throws InterruptedException {
 		minWait();
-		try {
+	//	try {
 			if (isElementExist(element)) {
 				check = true;
 				APP_LOGS.info(elementName + " is found succesfully");
@@ -903,9 +908,9 @@ public class BaseUtil extends CommonConfig {
 				APP_LOGS.info(elementName + " is not found");
 				check = false;
 			}
-		} catch (NoSuchElementException e) {
+	//	} catch (NoSuchElementException e) {
 			// TODO: handle exception
-		}
+	//	}
 		return check;
 	}
 
@@ -963,7 +968,7 @@ public class BaseUtil extends CommonConfig {
 
 	//This method is used to navigate to notification screen only
 	public void navigate_to_NotificationScreen() throws InterruptedException{
-		try {
+	//	try {
 			minWait();
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_HOME);
 			minWait();
@@ -973,9 +978,9 @@ public class BaseUtil extends CommonConfig {
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_DPAD_CENTER);
 			APP_LOGS.info("You are in Notification screen");
 			minWait();
-		} catch (NoSuchElementException e) {
+	//	} catch (NoSuchElementException e) {
 			// TODO: handle exception
-		}
+	//	}
 	}
 
 
@@ -986,7 +991,7 @@ public class BaseUtil extends CommonConfig {
 	// Validates the presence of text of the element.
 	public void validate_Displayed_text(WebElement element, String textToFind) throws InterruptedException{
 		minWait();
-		try {
+	//	try {
 			String text = element.getText();
 			if(text.equalsIgnoreCase(textToFind)){
 				check = true;
@@ -999,9 +1004,9 @@ public class BaseUtil extends CommonConfig {
 				Assert.fail();
 			}
 
-		} catch (NoSuchElementException e) {
+	//	} catch (NoSuchElementException e) {
 			// TODO: handle exception
-		}
+	//	}
 
 
 	}
@@ -1009,7 +1014,7 @@ public class BaseUtil extends CommonConfig {
 	// Validates the presence of element 
 	public void validate_presenceOfElement(WebElement element) throws InterruptedException{
 		minWait();
-		try {
+	//	try {
 			if(isElementExist(element)){
 				check = true;
 				APP_LOGS.info("Element is found succesfully");
@@ -1018,9 +1023,9 @@ public class BaseUtil extends CommonConfig {
 				APP_LOGS.info("Element is not found");
 				Assert.fail();
 			}
-		} catch (NoSuchElementException e) {
+	//	} catch (NoSuchElementException e) {
 			// TODO: handle exception
-		}
+	//	}
 	}
 
 
@@ -1316,17 +1321,18 @@ public class BaseUtil extends CommonConfig {
 		 */
 
 		boolean check = false;
-		try {		
+	//	try {		
 			String scrollable = "new UiScrollable(new UiSelector().className(\"android.widget.ScrollView\"))";
 			String textElement = ".scrollIntoView(new UiSelector().text(\""+ text +"\"))";
 			aDriver.findElementByAndroidUIAutomator(scrollable+textElement).click();
 			check = true;
 			return check;
 		}
-		catch(NoSuchElementException e) {
-			return check;
-		}
-	}
+	//	catch(NoSuchElementException e) {
+			
+	//	}
+	
+	
 
 
 	public boolean scrollListWithText(String text) {
@@ -1336,17 +1342,17 @@ public class BaseUtil extends CommonConfig {
 
 
 		boolean check = false;
-		try {		
+	//	try {		
 			String scrollable = "new UiScrollable(new UiSelector().className(\"android.widget.ListView\"))";			
 			String textElement = ".scrollIntoView(new UiSelector().text(\""+ text +"\"))";
 			aDriver.findElementByAndroidUIAutomator(scrollable+textElement).click();
 			check = true;
 			return check;
 		}
-		catch(NoSuchElementException e) {
-			return check;
-		}
-	}
+	//	catch(NoSuchElementException e) {
+			//return check;
+	//	}
+	//}
 
 	public boolean navigateUsingText(String text) {
 
@@ -1354,7 +1360,7 @@ public class BaseUtil extends CommonConfig {
 		/*
 		Method used to select an element on the page using the text attribute value
 		 */
-		try{
+	//	try{
 			boolean check = false;	
 			System.out.println("Navaigation");
 			String template = "new UiSelector().className(\"android.widget.TextView\")";
@@ -1364,11 +1370,9 @@ public class BaseUtil extends CommonConfig {
 			check = true;
 			return check;
 		}
-		catch(NoSuchElementException e1) {
-			return check;
-		}
-	}
-
+	//	catch(NoSuchElementException e1) {
+		//	return check;
+	
 
 	public boolean scrollWithUIAutomatorElement(WebElement e) {
 		/*
@@ -1376,7 +1380,7 @@ public class BaseUtil extends CommonConfig {
 		 */
 
 		boolean check = false;
-		try {		
+	//	try {		
 			String scrollable = "new UiScrollable(new UiSelector().className(\"android.widget.ScrollView\"))";
 			String text = Locators_ScoutSanity.device_Information.getText();
 			System.out.println(text);
@@ -1384,10 +1388,10 @@ public class BaseUtil extends CommonConfig {
 			check = true;
 			return check;
 		}
-		catch(NoSuchElementException e2) {
-			return check;
-		}
-	}
+	//	catch(NoSuchElementException e2) {
+		//	return check;
+		//}
+	
 
 
 	//public String getSummaryText(WebElement e) {
@@ -1398,7 +1402,7 @@ public class BaseUtil extends CommonConfig {
 		 */
 
 		boolean check = false;
-		try {		
+		//try {		
 			String scrollable = "new UiScrollable(new UiSelector().scrollable(true))";
 			String textElement = ".scrollIntoView(new UiSelector().text(\""+ text +"\"))";
 			aDriver.findElementByAndroidUIAutomator(scrollable+textElement);
@@ -1406,14 +1410,14 @@ public class BaseUtil extends CommonConfig {
 			check = true;
 			return check;
 		}
-		catch(NoSuchElementException e) {
-			return check;
-		}
-	}
+	//	catch(NoSuchElementException e) {
+		//	return check;
+	//	}
+	//}
 
 	public boolean clickBtnWithText(String text) {
 		boolean check = false;
-		try {
+		//try {
 			String clickable = "//android.widget.LinearLayout/android.widget.Button[@text=\'";
 			String textElement = text+"\']";
 			System.out.println(clickable+textElement);
@@ -1424,10 +1428,10 @@ public class BaseUtil extends CommonConfig {
 			check = true;
 			return check;
 		}
-		catch(NoSuchElementException e) {
-			return check;
-		}
-	}
+	//	catch(NoSuchElementException e) {
+	//		return check;
+		//}
+	
 
 	public boolean isElementExistWithText(String text) {
 		boolean isPresent = false;

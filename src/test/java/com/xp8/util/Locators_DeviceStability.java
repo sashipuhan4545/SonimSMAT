@@ -1,5 +1,7 @@
 package com.xp8.util;
 
+import java.util.List;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
@@ -28,7 +30,7 @@ public class Locators_DeviceStability {
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").resourceId(\"com.google.android.apps.messaging:id/conversation_timestamp\")")
 	public static AndroidElement message_Summary;
 	
-	@AndroidFindBy(xpath="//android.widget.TextView[@text='Sending…']")
+	@AndroidFindBy(xpath="//android.widget.TextView[@text='Sendingâ€¦']")
 	public static AndroidElement sending_Txt1;
 	
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").resourceId(\"com.google.android.apps.messaging:id/char_counter\")")
@@ -199,6 +201,9 @@ public class Locators_DeviceStability {
 
 	@AndroidFindBy(xpath="//android.widget.EditText[@resource-id='com.android.settings:id/password']")
 	public static AndroidElement wifi_IDC_Psswd;
+	
+	@FindBy(id="android:id/button1")
+	public static AndroidElement Wifi_connectBtn;
 
 	@AndroidFindBy(xpath="//android.widget.CheckBox[@resource-id='com.android.settings:id/show_password']")
 	public static AndroidElement wifi_show_Pswd;
@@ -300,10 +305,10 @@ public class Locators_DeviceStability {
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Now\")")
 	public static AndroidElement now_Text; //To validate after sending SMS.
 	
-	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Now • SMS\")")
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Now â€¢ SMS\")")
 	public static AndroidElement justnow_Text; //To validate after sending SMS.
 
-	@AndroidFindBy(xpath="//android.widget.TextView[@text='Sending…']")
+	@AndroidFindBy(xpath="//android.widget.TextView[@text='Sendingâ€¦']")
 	public static AndroidElement sending_Txt;
 
 	@AndroidFindBy(xpath="//android.widget.ImageButton[@content-desc='Attach']")
@@ -509,7 +514,7 @@ public class Locators_DeviceStability {
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.EditText\").resourceId(\"com.verizon.messaging.vzmsgs:id/curRecip\")")	
 	public static AndroidElement TO_Field_O;
 	
-	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.EditText\").text(\"Type a message…\")")
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.EditText\").text(\"Type a messageâ€¦\")")
 	public static AndroidElement messageField_O;
 	
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Conversations\")")
@@ -756,5 +761,163 @@ public class Locators_DeviceStability {
 	
 	@AndroidFindBy(xpath="//*[@content-desc='End Call' or @content-desc='End call']")
 	public static AndroidElement end_Call;
+	
+	@FindBy(id = "com.android.settings:id/switch_widget")
+	public static AndroidElement Wifi_Switch_Btn; 
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.view.View\").textContains(\"Sign in\")")
+	public static AndroidElement google_signinBtn;
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.view.View\").textContains(\"Google offered in:\")")
+	public static AndroidElement google_offeredInTxt;
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.Button\").textContains(\"Google apps\")")
+	public static AndroidElement google_appsBtn;
+	
+	@AndroidFindBy(id="com.android.chrome:id/url_bar")
+	public static AndroidElement google_urlBar;
+	
+	@AndroidFindBy(id="android:id/alertTitle")
+	public static AndroidElement ssidTitleTx;
+	
+	@AndroidFindBy(xpath="//android.support.v7.widget.RecyclerView[@resource-id='com.android.settings:id/list']/android.widget.LinearLayout")
+	public static List<AndroidElement> wifi_ssidList;
+	
+	@AndroidFindBy(id="com.android.chrome:id/menu_button")
+	public static AndroidElement google_chromeMenuBtn;
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").textContains(\"History\")")
+	public static AndroidElement google_ChromeHistoryLnk;
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").textContains(\"No history here\")")
+	public static AndroidElement google_chromeEmptyHistory_Txt_Id; // resource-Id
+	
+	@AndroidFindBy(id="com.android.chrome:id/clear_browsing_data_button")
+	public static AndroidElement google_chromeClearBrowserBtn;
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").textContains(\"ADVANCED\")")
+	public static AndroidElement google_ChromeAdvancedLnk;
+	
+	@AndroidFindBy(id="com.android.chrome:id/spinner")
+	public static AndroidElement google_chromeTimeRangeMenuDrpDwn;
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.CheckedTextView\").textContains(\"All time\")")
+	public static AndroidElement google_chromeTimeRange_AllTimeCheckBx;
+	
+	@AndroidFindBy(xpath="//android.widget.ListView[@index=0]/android.widget.LinearLayout/android.widget.LinearLayout[@index=2]")
+	public static List<AndroidElement> google_chromeCheckBoxStatus;
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.Button\").resourceId(\"com.android.chrome:id/clear_button\")")
+	public static AndroidElement google_chromeClearBrowser_Clear_Btn_Id; // resource-Id
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").resourceId(\"com.android.chrome:id/location_bar_verbose_status\")")
+	public static AndroidElement google_OfflineStatusTxt;
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.view.View\").textContains(\"No Internet\")")
+	public static AndroidElement google_NoInternetOpt;
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").textContains(\"Alert\")")
+	public static AndroidElement google_Alert_NoInternetOpt;
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").textContains(\"OK\")")
+	public static AndroidElement google_Alert_okBtn;
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").textContains(\"Save data and browse faster\")")
+	public static AndroidElement google_savedDataOpt;
+
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.Button\").textContains(\"NO THANKS\")")
+	public static AndroidElement google_savedDataOpt_OkBtn;
+	
+	
+	/*********************************** Network & Internet*************************************************/
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Network & Internet\")")
+	public static AndroidElement setting_Network_InternetLnk_txt1; // text
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.LinearLayout\").index(2)")
+	public static AndroidElement setting_Network_InternetLnk_ind2; // index
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Wiâ€‘Fi, mobile, data usage, hotspot\")")
+	public static AndroidElement setting_Network_InternetLnk_SubTxt3; // Sub text
+	
+	/*********************************** WIFI Menu*************************************************/
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Wiâ€‘Fi\")")
+	public static AndroidElement network_Internet_Wifi_Lnk_Txt1; // text
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.LinearLayout\").instance(7)")
+	public static AndroidElement network_Internet_Wifi_Lnk_Instance2; // Instance
+	
+	//*********************************Network & Internet/Mobile network *************************/
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Mobile network\")")
+	public static AndroidElement network_Internet_MobileNtwrk_Lnk_Txt1; // text
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.LinearLayout\").instance(12)")
+	public static AndroidElement network_Internet_MobileNtwrk_Lnk_Instance2; // Instance
+	
+	/**************Network & Internet/Mobile network/MobileData********************************/
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").textContains(\"Mobile data\")")
+	public static AndroidElement network_Internet_MobileData_Lnk_Txt1; // text
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.LinearLayout\").instance(1)")
+	public static AndroidElement network_Internet_MobileData_Lnk_Instance2; // Instance
+	
+	//**************Network & Internet/Mobile network/MobileData/DisableMobileData_Alert********************************
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.Button\").resourceId(\"android:id/button1\")")
+	public static AndroidElement network_Internet_MobiledataDisableOK_Btn_Id1; // resource-Id
+	
+	
+	/************************Password Box ****************************************/
+	@AndroidFindBy(xpath="//android.widget.EditText[@resource-id='com.android.settings:id/password']")
+	public static AndroidElement wifi_PsswdBx; // Resource ID
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.EditText\").index(1)")
+	public static AndroidElement wifi_PsswdBx_index; // index
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.EditText\").instance(0)")
+	public static AndroidElement wifi_PsswdBx_instance; // Instance
+	
+	/***************************App & Notification **************************/
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").textContains(\"Apps & notifications\")")
+	public static AndroidElement setting_app_notificationLnk_Txt1; // text
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").textContains(\"See all\")")
+	public static AndroidElement setting_seeAllApps_Txt1; // text
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.Button\").textContains(\"MANAGE SPACE\")")
+	public static AndroidElement setting_manageSpaceBtn_Txt1; // text
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.Button\").textContains(\"CLEAR ALL DATA\")")
+	public static AndroidElement setting_ClearAllBtn_Txt1; // text
+		
+	@AndroidFindBy(id="android:id/button1")
+	public static AndroidElement OkBtn_ID; // text
+	
+	@AndroidFindBy(xpath="//android.widget.FrameLayout[@index=1]//android.widget.ListView[@index=0]//android.widget.TextView[@text='Chrome']")
+	public static AndroidElement setting_chromeEle; // text
+	
+	@AndroidFindBy(id="com.android.chrome:id/negative_button")
+	public static AndroidElement nothanksBtn; // text
+	
+	@AndroidFindBy( xpath ="com.sonim.utilityapp:id/textOk")
+	public static AndroidElement setting_TexkOKBTN; // text
+	
+	
+	@AndroidFindBy(id="com.android.chrome:id/clear_all_data")
+	public static AndroidElement clearAllDataBtn; // text
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").textContains(\"Alert\")")
+	public static AndroidElement alertTextDisplay; // text
+	
+	@AndroidFindBy(xpath="//android.widget.Switch[@instance=0]")
+	public static AndroidElement MobileDataSwitch;
+	
+	
+	
+	
+	
+	
 	
 }

@@ -53,6 +53,7 @@ public class XP5S_Stability_O extends XP5S_Stability_Util_O {
 		fetch_Devices_Details();
 	}
 
+	
 	@BeforeMethod()
 	public  void beforeMethod(Method method) throws InterruptedException, FileNotFoundException, IOException, ParseException 
 	{

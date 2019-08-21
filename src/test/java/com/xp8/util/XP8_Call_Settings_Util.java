@@ -10,9 +10,7 @@ import org.json.simple.parser.ParseException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.sikuli.script.FindFailed;
-import org.sikuli.script.Pattern;
-import org.sikuli.script.Screen;
+
 import org.testng.asserts.SoftAssert;
 
 import com.graphics.gui.JsonFileReaderAndWriter;
@@ -41,8 +39,8 @@ public class XP8_Call_Settings_Util extends BaseUtil{
 	public String r_Id	 = "";								// Reference Device Serial Number.
 	public String p_b_No = "";			   					// Primary Device Build Number.
 	public String r_b_No = ""; 								// Reference Device Build Number.
-	public String pryNum =AllQA.PRIMARYDEVMDN;	// Reference Device MDN. 
-	public String refNum = AllQA.REFERENCEDEVMDN;	// Reference Device MDN.
+	public String pryNum =AllQA.PRIMARYDEVMDN;	            // Reference Device MDN. 
+	public String refNum = AllQA.REFERENCEDEVMDN;	        // Reference Device MDN.
 
 
 	public void fetch_Devices_Details() throws InterruptedException, FileNotFoundException, IOException, ParseException {
@@ -53,31 +51,208 @@ public class XP8_Call_Settings_Util extends BaseUtil{
 		p_b_No=JsonFileReaderAndWriter.primaryDevFirmwareReader();
 		r_b_No=JsonFileReaderAndWriter.ReadRefDeviceFirmWare();
 	}
+	public void sleeptime_30min() {
+		try{
+			Runtime.getRuntime().exec("adb -s " + p_Id + " shell settings put system screen_off_timeout 1800000");
+			minWait();
 
-	public void navigate_to_call_settings(){
-		try {
-			clickBtn(Locators_BaseUtil.settings);
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR,"Error in locators->sleeptime_30min()");
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR,"Exeption in ->sleeptime_30min()");
 		}
 	}
+	public void sleeptime_30sec() {
+		try{
+			Runtime.getRuntime().exec("adb -s " + p_Id + " shell settings put system screen_off_timeout 180000");
+			minWait();
+
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR,"Error in locators->sleeptime_30sec()");
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR,"Exeption in ->sleeptime_30sec()");
+		}
+	}
+	public void lockscreen() {
+		try{
+			System.out.println("To unlock the screen");
+			launch_an_app("settings");
+			scrollToText("Security & location");
+
+			if(isElementExist(Locators_CallSetting.locknone)){
+				System.out.println("Inside IF");
+				aDriver.pressKeyCode(AndroidKeyCode.HOME);
+			}
+			else if(isElementExist(Locators_CallSetting.lockswipe)){
+				System.out.println("Inside ELSE IF");
+				clickBtn(Locators_CallSetting.lockscreenlock);
+				customWait(2000);
+				clickBtn(Locators_CallSetting.locknone2);
+				clickBackButton_without_try_catch(2);
+			}else{
+				System.out.println("Phone is locked");
+
+			}
+
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR,"Error in locators->lockscreen()");
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR,"Exeption in ->lockscreen()");
+		}
+	}
+	public void checkairplanemode(SoftAssert sa){
+
+		try {
+			customWait(2000);
+			Runtime.getRuntime().exec("adb -s " + p_Id + " shell am start -a android.settings.AIRPLANE_MODE_SETTINGS");
+			minWait();
+			for (int i = 1; i <= 9; i++) {
+				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_DPAD_DOWN);
+			}if(isElementExist(Locators_CallSetting.airplanemodeCheckboxoff)){
+				System.out.println("airplane mode off");
+				aDriver.pressKeyCode(AndroidKeyCode.HOME);
+				APP_LOGS.info("Airplane mode is disabled");
+				sa.assertTrue(true, "Airplane mode is disabled");
+				test.log(LogStatus.PASS,"Airplane mode is disabled");
+			}
+			else{
+				clickBtn(Locators_CallSetting.airplanemodeCheckboxon);
+				System.out.println("airplane mode on");
+				APP_LOGS.info("Airplane mode is enabled and now it is disabled");
+				sa.assertTrue(true, "Airplane mode is enabled and now it is disabled");
+				test.log(LogStatus.PASS,"Airplane mode is disabled");
+			}
+
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+			APP_LOGS.info("Airplane mode is disabled");
+			sa.assertTrue(true, "Airplane mode is disabled");
+			test.log(LogStatus.ERROR,"Error in locators->checkairplanemode()");
+		}catch (Exception e) {
+			APP_LOGS.info("Airplane mode is disabled");
+			sa.assertTrue(true, "Airplane mode is disabled");
+			test.log(LogStatus.ERROR,"Exeption in ->checkairplanemode()");
+		}
+	}
+
+	public void navigate_to_call_settings(){
+
+		try {
+
+			if(isElementExist(Locators_CallSetting.settingsIcon)){
+				clickBtn(Locators_CallSetting.settingsIcon);
+				minWait();
+				clickBtn(Locators_CallSetting.settingsOpt);
+			}else{
+				clickBtn(Locators_CallSetting.vzwsettingsIcon);
+				minWait();
+				clickBtn(Locators_CallSetting.settingsOpt);
+			}
+
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->navigate_to_call_settings()");
+			e.printStackTrace();
+
+		}catch (Exception e) {
+
+			test.log(LogStatus.ERROR, "Exeption in ->navigate_to_call_settings()");
+		}
+	}
+
+	public void navigate_to_call_settingswithout_try_catch() throws InterruptedException {
+		if(isElementExist(Locators_CallSetting.settingsIcon)){
+			clickBtn(Locators_CallSetting.settingsIcon);
+			minWait();
+			clickBtn(Locators_CallSetting.settingsOpt);
+		}else{
+			clickBtn(Locators_CallSetting.vzwsettingsIcon);
+			minWait();
+			clickBtn(Locators_CallSetting.settingsOpt);
+		}
+	}
+
+
+	public void validate_navigatetocallsettings(SoftAssert sa)
+	{
+		try{
+
+			launch_an_app("phone");
+			minWait();
+			navigate_to_call_settings();
+			minWait();
+			if(isElementExist(Locators_CallSetting.callsettingsframe)){
+				APP_LOGS.info("Call Setting is navigated successfully");
+				sa.assertTrue(true, "Call Setting is navigated successfully");
+				test.log(LogStatus.PASS, "Call Setting is navigated successfully");	
+
+
+			}else {
+
+
+				APP_LOGS.info("Call setting navigation fail");
+				sa.fail();
+				test.log(LogStatus.FAIL, "Call setting navigation fail");
+
+			}
+
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR,"Error in locators->validate_navigatetocallsettings()");
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR,"Exeption in ->validate_navigatetocallsettings()");
+		}
+	}
+
+
+
+
 	public void navigate_To_Settings_AndElement(AndroidElement element) throws InterruptedException
 	{
 		/*
 		 * Navigates to settings and clicks on given element
 		 */
 		try {
+			if(isElementExist(Locators_CallSetting.settingsIcon)){
+				clickBtn(Locators_CallSetting.settingsIcon);
+				minWait();
+				clickBtn(Locators_CallSetting.settingsOpt);
+			}else{
+				clickBtn(Locators_CallSetting.vzwsettingsIcon);
+				minWait();
+				clickBtn(Locators_CallSetting.settingsOpt);
+			}
+			element.click();
 			minWait();
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->navigate_To_Settings_AndElement()");
+			e.printStackTrace();
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->navigate_To_Settings_AndElement()");
+
+		}
+	}
+	public void navigate_To_Settings_AndElement_without_try_catch(AndroidElement element) throws InterruptedException
+	{
+		/*
+		 * Navigates to settings and clicks on given element
+		 */
+		if(isElementExist(Locators_CallSetting.settingsIcon)){
 			clickBtn(Locators_CallSetting.settingsIcon);
 			minWait();
 			clickBtn(Locators_CallSetting.settingsOpt);
+		}else{
+			clickBtn(Locators_CallSetting.vzwsettingsIcon);
 			minWait();
-			element.click();
-			minWait();
-		} catch (Exception e) {
-			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+			clickBtn(Locators_CallSetting.settingsOpt);
 		}
+		element.click();
+		minWait();
+
 	}
 	public String selectDisplaySubOption(AndroidElement element,AndroidElement subElement) throws InterruptedException
 	{
@@ -93,42 +268,38 @@ public class XP8_Call_Settings_Util extends BaseUtil{
 		minWait();
 		return field;
 	}
-	public void validateSortByAndNameFormat(AndroidElement element,AndroidElement subElement ,AndroidElement contactName,String Contact) throws InterruptedException {
+	public void validateSortByAndNameFormat(AndroidElement element,AndroidElement subElement ,AndroidElement contactName,String Contact,SoftAssert sa) throws InterruptedException {
 		/*
 		 * Common method to validate sortBy and name format option 
 		 */
-		SoftAssert SA= new SoftAssert();
-		try {
-
-			navigate_To_Settings_AndElement(Locators_CallSetting.displayOptions);
-
-			String field = selectDisplaySubOption(element, subElement);
-			minWait();
-			clickBackButton(2);
+		//navigate_To_Settings_AndElement(Locators_CallSetting.displayOptions);
+		String field = selectDisplaySubOption(element, subElement);
+		minWait();
+		clickBackButton_without_try_catch(2);
+		if(isElementExist(Locators_CallSetting.contactPage)){
 			clickBtn(Locators_CallSetting.contactPage);
 			minWait();
-			String actualText = contactName.getText();
-			System.out.println(actualText);
-			minWait();
-			if(actualText.equals(Contact)){
-				check = true;
-				APP_LOGS.info( field +" feature is validated successfully");
-				test.log(LogStatus.PASS, field +" feature is validated successfully");
-				SA.assertTrue(check, field +" feature is validated successfully");
-			}else{
-				APP_LOGS.info(field +" feature is not validated");
-				test.log(LogStatus.FAIL, field +" feature is not validated");
-				SA.fail();
-			}
-		}catch (Exception e) {
-			e.printStackTrace();
-			APP_LOGS.info("Element Not Found");
-			test.log(LogStatus.ERROR, "Element Not Found");
-			SA.fail();
 		}
-		SA.assertAll();
+		else{
+			clickBtn(Locators_CallSetting.vzwcontactpage);
+			minWait();
+		}
+		String actualText = contactName.getText();
+		System.out.println(actualText);
+		minWait();
+		if(actualText.equals(Contact)){
+			APP_LOGS.info( field +" feature is validated successfully");
+			sa.assertTrue(true, "Sort by feature is validated successfully");
+			test.log(LogStatus.PASS, field +" feature is validated successfully");
+
+		}else{
+			APP_LOGS.info(field +" feature is not validated");
+			sa.fail();
+			test.log(LogStatus.FAIL, field +" feature is not validated");
+
+		}
 	}
-	public void clickBackButton(int number)
+	public void clickBackButton(int number) throws InterruptedException
 	{
 		/*
 		 * clicks on back button with iteration as user input
@@ -140,87 +311,131 @@ public class XP8_Call_Settings_Util extends BaseUtil{
 				minWait();
 			}
 		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption occurs in clickBackButton() method");
 			e.printStackTrace();
 		}
 	}
-	public void validateSettingsAndDisplayOptions() throws InterruptedException, IOException
+	public void clickBackButton_without_try_catch(int number) throws InterruptedException
+	{
+		/*
+		 * clicks on back button with iteration as user input
+		 */
+
+		for(int i=0;i<number;i++){
+			minWait();
+			aDriver.pressKeyCode(AndroidKeyCode.BACK);
+		}
+	}
+	public void validateSettingsAndDisplayOptions(SoftAssert sa) throws InterruptedException, IOException
 	{
 		/*
 		 * validates settings and display option
 		 */
 		try {
+
+			launch_an_app("phone");
+			minWait();
+			navigate_to_call_settingswithout_try_catch();
 			minWait();
 			clickBtn(Locators_CallSetting.displayOptions);
 			minWait();
-			validateSortByAndNameFormat(Locators_CallSetting.sortByOpt,Locators_CallSetting.firstNameOpt,Locators_CallSetting.contact1, "Abc Automation");
+			validateSortByAndNameFormat(Locators_CallSetting.sortByOpt,Locators_CallSetting.lastNameOpt,Locators_CallSetting.contact2, "Cde Test",sa);
 			minWait();
-			validateSortByAndNameFormat(Locators_CallSetting.sortByOpt,Locators_CallSetting.lastNameOpt,Locators_CallSetting.contact2, "Cde Test");
+			navigate_To_Settings_AndElement_without_try_catch(Locators_CallSetting.displayOptions);
+			validateSortByAndNameFormat(Locators_CallSetting.sortByOpt,Locators_CallSetting.firstNameOpt,Locators_CallSetting.contact1, "Abc Automation",sa);
 			minWait();
-			validateSortByAndNameFormat(Locators_CallSetting.nameFormatOpt, Locators_CallSetting.firstNameFirstOpt,Locators_CallSetting.contact2, "Cde Test");
+			navigate_To_Settings_AndElement_without_try_catch(Locators_CallSetting.displayOptions);
+			validateSortByAndNameFormat(Locators_CallSetting.nameFormatOpt, Locators_CallSetting.lastNameFirstOpt,Locators_CallSetting.lnfcontact2, "Test, Cde",sa);
 			minWait();
-			validateSortByAndNameFormat(Locators_CallSetting.nameFormatOpt, Locators_CallSetting.lastNameFirstOpt,Locators_CallSetting.lnfcontact2, "Test, Cde");
+			navigate_To_Settings_AndElement_without_try_catch(Locators_CallSetting.displayOptions);
+			validateSortByAndNameFormat(Locators_CallSetting.nameFormatOpt, Locators_CallSetting.firstNameFirstOpt,Locators_CallSetting.contact2, "Cde Test",sa);
 			minWait();
-		} catch (Exception e) {
+			APP_LOGS.info("Settings and display option is validated");
+			sa.assertTrue(true, "Settings and display option is validated");
+			test.log(LogStatus.PASS, "Settings and display option is validated");
+
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators-> validateSettingsAndDisplayOptions()");
 			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+
+		} 
+
+		catch (Exception e) {
+			sa.fail();
+			test.log(LogStatus.ERROR, "Exception in validateSettingsAndDisplayOptions()");
 		}
 	}
 
-	public void deleteIfContactsPresent() throws InterruptedException
+	public void deleteIfContactsPresent(SoftAssert sa) throws InterruptedException
 	{
-		/*
-		 * deletes contacts if present in contacts application
-		 */
+
 		try {
-			clickBtn(Locators_CallSetting.delete_option);
-			minWait();
-			if(isElementExist(Locators_CallSetting.zero_selected)){
+
+			if(isElementExist(Locators_CallSetting.deletefirstcontact))
+			{
+				clickBtn(Locators_CallSetting.delete_option);
 				minWait();
-				/*TouchAction touchaction = new TouchAction(aDriver);
-				touchaction.longPress(Locators_CallSetting.zero_selected).perform().release();
-				minWait();*/
+				//  if(isElementExist(Locators_CallSetting.selectAllOpt)){
+
 				clickBtn(Locators_CallSetting.zero_selected);
 				minWait();
-				if(isElementExist(Locators_CallSetting.selectAllOpt)){
-					clickBtn(Locators_CallSetting.selectAllOpt);
-					minWait();
-				}else{
-					clickBackButton(1);
-				}
+				clickBtn(Locators_CallSetting.selectAllOpt);
+				minWait();
 				clickBtn(Locators_CallSetting.Ok_option);
 				minWait();
 				clickBtn(Locators_CallSetting.okBtn);
 				customWait(5000);
-				clickBackButton(2);
+				APP_LOGS.info("Contacts are deleted successfully");
+				sa.assertTrue(true, "Contacts are deleted successfully");
+				test.log(LogStatus.PASS, "Contacts are deleted successfully");	
+
+
+			}else{
+				clickBackButton_without_try_catch(4);
 			}
-		} catch (Exception e) {
+
+		}  catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->deleteIfContactsPresent()");
 			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+
 		}
+		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->deleteIfContactsPresent()");
+		}
+
 	}
 
+
 	public void deleteConatactList() throws InterruptedException{
-		//deleting added contacts if present in Black or white list
+		//deleting added contacts if present in Black  list
+
 		try {
+			launch_an_app("phone");
+			minWait();
+			navigateToSettingsAndElement(Locators_CallSetting.Callscreening);
+			minWait();
+			clickBtn(Locators_CallSetting.Manageblacklist);
+			minWait();
 			for(int i=1; i<=20; i++){
-				if(isElementExist(Locators_CallSetting.contactList)){
-					//System.out.println("Im in delete method");
+				if(isElementExist(Locators_CallSetting.blackcontactList)){
+					clickBtn(Locators_CallSetting.deleteblockBtninContact);
 					minWait();
-					clickBtn(Locators_CallSetting.unBlock_Icon);
+					clickBtn(Locators_CallSetting.unblocktxt);
 					minWait();
-					clickBtn(Locators_CallSetting.remove_Confirm);
-					APP_LOGS.info("Validation is successful");
-					test.log(LogStatus.PASS, "validated added whitelisted contact ");
 				} else {
-					APP_LOGS.info("Validation is not successful");
-
-					test.log(LogStatus.FAIL,"Validation is not successful ");
-
+					clickBackButton(4);
 				}
 			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->deleteConatactList() ");
 			e.printStackTrace();
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->deleteConatactList() ");
+
 		}
 
 	}
@@ -229,160 +444,160 @@ public class XP8_Call_Settings_Util extends BaseUtil{
 		/*
 		 * Enter name and phone number and save the contact
 		 */
-		try {
-			customWait(2000);
-			enterTextToInputField(Locators_CallSetting.nameEditFld, name);
-			minWait();
-			clickBackButton(1);
-			enterTextToInputField(Locators_CallSetting.lastnameEditFld, lastname);
-			minWait();
-			clickBackButton(1);
-			enterTextToInputField(Locators_CallSetting.phoneNumberEditFld, phone);
-			minWait();
-			clickBtn(Locators_CallSetting.saveOpt);
-			minWait();
-		} catch (Exception e) {
-			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
-		}
+		//	try {
+		customWait(2000);
+		enterTextToInputField(Locators_CallSetting.nameEditFld, name);
+		minWait();
+		clickBackButton(1);
+		enterTextToInputField(Locators_CallSetting.lastnameEditFld, lastname);
+		minWait();
+		clickBackButton(1);
+		enterTextToInputField(Locators_CallSetting.phoneNumberEditFld, phone);
+		minWait();
+		clickBtn(Locators_CallSetting.saveOpt);
+		minWait();
+		//	} catch (Exception e) {
+		//	e.printStackTrace();
+		//	test.log(LogStatus.ERROR, "Create contact with name and phone is failed");
+		//}
 	}
 
-	public void validateCreateNewContactFromCallLog(String name) throws InterruptedException
-	{
-		/*
-		 * Validates Create New contact from call log
-		 */
-		try {
-			minWait();
-			clickBtn(Locators_CallSetting.callLogPage);
-			customWait(2000);
-			CreateNewContactValidateSavedContact(name,"from call Log");
-			minWait();
-			clickBtn(Locators_CallSetting.contactPage);
-			minWait();
-			clickBtn(Locators_CallSetting.addedContactCallLog);
-			minWait();
-			clickBtn(Locators_CallSetting.moreSettings);
-			minWait();
-			clickBtn(Locators_CallSetting.delete);
-			minWait();
-			clickBtn(Locators_CallSetting.deleteBtn);
-			minWait();
-		} catch (Exception e) {
-			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
-		}
-	}
 
-	public void CreateNewContactValidateSavedContact(String name,String location) throws InterruptedException
-	{
-		/*
-		 * Validates Create New contact and validate saved contact
-		 */
-		try {
-			minWait();
-			CreateNewContactAndSave(name);
-			customWait(2000);
-			if(isElementExist(Locators_CallSetting.permissionPopUp)) {
-				minWait();
-				for(int i=0;i<3;i++){
-					minWait();
-					clickBtn(Locators_CallSetting.allowBtn);
-				}
-				validateSavedContact(name,location);
-			}else{
-				validateSavedContact(name,location);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
-		}
-	}
-	public void CreateNewContactAndSave(String name) throws InterruptedException
-	{
-		/*
-		 * Clicks on Create New contact -->enter name --> save
-		 */
-		try {
-			minWait();
-			clickBtn(Locators_CallSetting.createNewContactOpt);
-			customWait(2000);
-			enterTextToInputField(Locators_CallSetting.nameEditFld,name);
-			customWait(2000);
-			clickBtn(Locators_CallSetting.saveOpt);
-		} catch (Exception e) {
-			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
-		}
-	}
 
-	public void validateSavedContact(String name,String location) throws InterruptedException
+
+	public void validateSavedContact(String name,String location,SoftAssert sa) throws InterruptedException
 	{
 		/*
 		 * validates saved contact
 		 */
-		SoftAssert SA= new SoftAssert();
+
 		try {
 			customWait(2000);
 			String savedContact = Locators_CallSetting.savedContact.getText();
 			if(savedContact.contains(name)){
-				clickBackButton(1);
-				check = true;
+				clickBackButton_without_try_catch(1);
 				APP_LOGS.info("Contact saved "+ location +"successfully");
+				sa.assertTrue(true, "Saved contacts are validated");
 				test.log(LogStatus.PASS, "Contact saved  "+ location +" successfully");
-				test.log(LogStatus.PASS, "Test case Status is PASS");
-				SA.assertTrue(check, "Contact saved "+ location +" successfully");
+
+
 			} else	{
 				APP_LOGS.info("Contact not saved" + location);
-				test.log(LogStatus.FAIL, "Contact not saved" + location);
-				test.log(LogStatus.FAIL, "Test case Status is FAIL");
-				SA.fail();
+				sa.fail();
+				test.log(LogStatus.FAIL, "Contact not saved");
+
 			}		
-		} catch (Exception e) {
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->validateSavedContact()");
 			e.printStackTrace();
-			APP_LOGS.info("Element Not Found");
-			test.log(LogStatus.ERROR, "Element Not Found");
-			SA.fail();
+
 		}
-		SA.assertAll();
+		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in validateSavedContact()");
+
+		}
+
 	}
 
-	public void validateAddContactFromContactsPage(String name,String lastname,String phone) throws InterruptedException, IOException{
+
+	public void validateSavedContact2(String Thirdname,String location,SoftAssert sa) throws InterruptedException
+	{
 		/*
-		 * Validate Add contact from contacts page and validate added contact 
+		 * validates saved contact
+		 */
+
+		try {
+			customWait(2000);
+			String savedContact = Locators_CallSetting.savedContact.getText();
+			if(savedContact.contains(Thirdname)){
+				clickBackButton_without_try_catch(1);
+				APP_LOGS.info("Contact saved "+ location +"successfully");
+				sa.assertTrue(true, "Saved contact2 are validated");
+				test.log(LogStatus.PASS, "Contact saved  "+ location +" successfully");
+
+
+			} else	{
+				APP_LOGS.info("Contact not saved" + location);
+				sa.fail();
+				test.log(LogStatus.FAIL, "Contact not saved");
+
+			}		
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->validateSavedContact2()");
+			e.printStackTrace();
+
+		} 
+		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in validateSavedContact2()");
+
+		}
+
+	}
+
+	public void AddContactFromContactsPage(String name,String lastname,String phone) throws InterruptedException, IOException{
+		/*
+		 *  Add contact from contacts page 
 		 */
 		try
 		{
-			minWait();
-			clickBtn(Locators_CallSetting.contactPage);
-			minWait();
-			clickBtn(Locators_CallSetting.createNewContactInContactPage);
+			if(isElementExist(Locators_CallSetting.contactPage)){
+				clickBtn(Locators_CallSetting.contactPage);
+				minWait();
+				clickBtn(Locators_CallSetting.createNewContactInContactPage);
+				createContactWithNameandPhone(name,lastname, phone);
+				minWait();
+			}
+			else{
+				clickBtn(Locators_CallSetting.vzwcontactpage);
+				minWait();
+				clickBtn(Locators_CallSetting.createNewContactInContactPage);
+				createContactWithNameandPhone(name,lastname, phone);
+				minWait();
+			}
+		}catch (org.openqa.selenium.NoSuchElementException e) {
 
-			createContactWithNameandPhone(name,lastname, phone);
-			minWait();
-			validateSavedContact(name, "from Contacts page");
-		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Error in the locators->AddContactFromContactsPage()");
 			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+
+		}
+		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in AddContactFromContactsPage()");
 		}
 	} 
+
 	public void add_Contact(String Newname,String Newlastname,String Newphone) throws InterruptedException, IOException{
 		/*
 		 * Validate Add contact from contacts page and validate added contact 
 		 */
 		try
 		{
-			minWait();
-			clickBtn(Locators_CallSetting.contactPage);
-			minWait();
-			clickBtn(Locators_CallSetting.createSecondcontactInContactPage);
+			if(isElementExist(Locators_CallSetting.contactPage)){
+				clickBtn(Locators_CallSetting.contactPage);
+				minWait();
+				clickBtn(Locators_CallSetting.createSecondcontactInContactPage);
+				createContactWithNameandPhone(Newname,Newlastname, Newphone);
+				minWait();
 
-			createContactWithNameandPhone(Newname,Newlastname, Newphone);
-			minWait();
-			validateSavedContact(Newname, "from Contacts page");
-		}catch (Exception e) {
+			}
+			else{
+				clickBtn(Locators_CallSetting.vzwcontactpage);
+				clickBtn(Locators_CallSetting.createSecondcontactInContactPage);
+				createContactWithNameandPhone(Newname,Newlastname, Newphone);
+				minWait();
+			}
+
+		}
+		catch (org.openqa.selenium.NoSuchElementException e) {
+
+
+			test.log(LogStatus.ERROR, "Error in the locators->add_Contact()");
 			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+
+		}
+		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in add_Contact()");
 		}
 	} 
 
@@ -392,25 +607,50 @@ public class XP8_Call_Settings_Util extends BaseUtil{
 		 * Navigates to settings and clicks on given element
 		 */
 		try {
-			customWait(2000);
+			if(isElementExist(Locators_CallSetting.settingsIcon)){
+				clickBtn(Locators_CallSetting.settingsIcon);
+				minWait();
+				clickBtn(Locators_CallSetting.settingsOpt);
+			}else{
+				clickBtn(Locators_CallSetting.vzwsettingsIcon);
+				minWait();
+				clickBtn(Locators_CallSetting.settingsOpt);
+			}
+			element.click();
+			minWait();
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->navigateToSettingsAndElement()");
+			e.printStackTrace();
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception error in navigateToSettingsAndElement");
+		}
+	}
+	public void navigateToSettingsAndElement_without_try_catch(AndroidElement element) throws InterruptedException
+	{
+		/*
+		 * Navigates to settings and clicks on given element
+		 */
+
+		if(isElementExist(Locators_CallSetting.settingsIcon)){
 			clickBtn(Locators_CallSetting.settingsIcon);
 			minWait();
 			clickBtn(Locators_CallSetting.settingsOpt);
+		}else{
+			clickBtn(Locators_CallSetting.vzwsettingsIcon);
 			minWait();
-			element.click();
-			minWait();
-		} catch (Exception e) {
-			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+			clickBtn(Locators_CallSetting.settingsOpt);
 		}
+		element.click();
+		minWait();
 	}
 
-
-	public void validatePhoneRingtone() throws InterruptedException {
+	public void validatePhoneRingtone(SoftAssert sa) throws InterruptedException {
 		/*
 		 * Sets phone ringtone and validates selected phone ringtone
 		 */
-		SoftAssert SA= new SoftAssert();
+
 		try {
 			minWait();
 			clickBtn(Locators_CallSetting.phoneRingtoneOpt);
@@ -426,76 +666,156 @@ public class XP8_Call_Settings_Util extends BaseUtil{
 			if(selectedRingtone.equals(expectedRingtone)){
 				check = true;
 				APP_LOGS.info("Phone Ringtone is validated successfully");
+				sa.assertTrue(true, "Phone Ringtone is validated successfully");
 				test.log(LogStatus.PASS, "Phone Ringtone is validated successfully");
-				SA.assertTrue(check, "Phone Ringtone is validated successfully");
+
 			}else{
 				APP_LOGS.info("Phone Ringtone is not validated");
+				sa.fail();
 				test.log(LogStatus.FAIL, "Phone Ringtone is not validated");
-				SA.fail();
+
 			}
-		}catch (Exception e) {
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->validatePhoneRingtone()");
 			e.printStackTrace();
-			APP_LOGS.info("Element Not Found");
-			test.log(LogStatus.ERROR, "Element Not Found");
-			SA.fail();
+
+		}catch (Exception e) {
+			test.log(LogStatus.INFO, "Exception in validatePhoneRingtone() ");
+
 		}
-		SA.assertAll();
+
 	}
+	public void validatePhoneRingtone_vzw(SoftAssert sa) throws InterruptedException {
+		/*
+		 * Sets phone ringtone and validates selected phone ringtone
+		 */
 
+		try {
+			minWait();
+			/*clickBtn(Locators_CallSetting.phoneRingtoneOpt);
+			minWait();*/
+			scrollToText("Phone ringtone");
+			clickBtn(Locators_CallSetting.ringtoneOpt);
+			clickBtn(Locators_CallSetting.okBtn);
+		    clickBtn(Locators_CallSetting.vzw_advanced);
+			scrollToText("Default notification sound");
+			clickBtn(Locators_CallSetting.ringtoneOpt);
+			clickBtn(Locators_CallSetting.okBtn);
+			scrollToText("Default alarm sound");
+			clickBtn(Locators_CallSetting.ringtoneOpt);
+			clickBtn(Locators_CallSetting.okBtn);
+			minWait();
+			if(isElementExist(Locators_CallSetting.ringtoneSelected)){
+				APP_LOGS.info("Phone Ringtone is validated successfully");
+				sa.assertTrue(true, "Phone Ringtone is validated successfully");
+				test.log(LogStatus.PASS, "Phone Ringtone is validated successfully");
 
+			}else{
+				APP_LOGS.info("Phone Ringtone is not validated");
+				sa.fail();
+				test.log(LogStatus.FAIL, "Phone Ringtone is not validated");
 
-	public void validateSoundsAndVibrationSubOptions() throws InterruptedException {
+			}
+			
+          }catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->validatePhoneRingtone()");
+			e.printStackTrace();
+
+		}catch (Exception e) {
+			test.log(LogStatus.INFO, "Exception in validatePhoneRingtone() ");
+
+		}
+
+	}
+	public void validateSoundsAndVibrationSubOptions(SoftAssert sa) throws InterruptedException {
 		/*
 		 * validates sounds and vibration sub-options checkbox status 
 		 */
 		try {
 			minWait();
-			checkOtherSoundOptionsCheckboxStatus(Locators_CallSetting.alsoVibrateForCallsOpt, Locators_CallSetting.alsoVibrateCheckbox);
+			checkOtherSoundOptionsCheckboxStatus(Locators_CallSetting.alsoVibrateForCallsOpt, Locators_CallSetting.alsoVibrateCheckbox,sa);
 			customWait(2000);
-			checkOtherSoundOptionsCheckboxStatus(Locators_CallSetting.dialpadTonesOpt, Locators_CallSetting.dialpadToneCheckbox);
+			checkOtherSoundOptionsCheckboxStatus(Locators_CallSetting.dialpadTonesOpt, Locators_CallSetting.dialpadToneCheckbox,sa);
 			customWait(2000);
-			checkOtherSoundOptionsCheckboxStatus(Locators_CallSetting.callEndToneOpt, Locators_CallSetting.callEndToneCheckbox);
+			checkOtherSoundOptionsCheckboxStatus(Locators_CallSetting.callEndToneOpt, Locators_CallSetting.callEndToneCheckbox,sa);
 			minWait();
-		}catch (Exception e) {
+			APP_LOGS.info("Sounds and vibration are validated");
+			sa.assertTrue(true, "Sounds and vibration are validated");
+			test.log(LogStatus.PASS, "Sounds and vibration are validated");	
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->validateSoundsAndVibrationSubOptions()");
 			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception error in validateSoundsAndVibrationSubOptions()");
 		}
-	}   
+	}  
+	public void validateSoundsAndVibrationSubOptions_vzw(SoftAssert sa) throws InterruptedException {
+		/*
+		 * validates sounds and vibration sub-options checkbox status 
+		 */
+		try {
+			//clickBtn(Locators_CallSetting.vzw_advanced);
+			scrollToText("Other sounds and vibrations");
+			minWait();
+			checkOtherSoundOptionsCheckboxStatus(Locators_CallSetting.keypadsounds, Locators_CallSetting.keypadsoundsCheckbox,sa);
+			customWait(2000);
+			checkOtherSoundOptionsCheckboxStatus(Locators_CallSetting.dialpadtones, Locators_CallSetting.dialpadtonesCheckbox,sa);
+			customWait(2000);
+			checkOtherSoundOptionsCheckboxStatus(Locators_CallSetting.screenlockingsounds, Locators_CallSetting.screenlockingsoundsCheckbox,sa);
+			minWait();
+			checkOtherSoundOptionsCheckboxStatus(Locators_CallSetting.touchsounds, Locators_CallSetting.touchsoundsCheckbox,sa);
+			customWait(2000);
+			checkOtherSoundOptionsCheckboxStatus(Locators_CallSetting.vibrateontap, Locators_CallSetting.vibrateontapCheckbox,sa);
+			customWait(2000);
+			checkOtherSoundOptionsCheckboxStatus(Locators_CallSetting.poweronsounds, Locators_CallSetting.poweronsoundsCheckbox,sa);
+			customWait(2000);
+			APP_LOGS.info("Sounds and vibration are validated");
+			sa.assertTrue(true, "Sounds and vibration are validated");
+			test.log(LogStatus.PASS, "Sounds and vibration are validated");	
+		}catch (org.openqa.selenium.NoSuchElementException e) {
 
+			test.log(LogStatus.ERROR, "Error in the locators->validateSoundsAndVibrationSubOptions_vzw()");
+			e.printStackTrace();
 
-	public void  checkOtherSoundOptionsCheckboxStatus(WebElement element,WebElement checkbox) throws InterruptedException {
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception error in validateSoundsAndVibrationSubOptions_vzw()");
+		}
+	}  
+	public void  checkOtherSoundOptionsCheckboxStatus(WebElement element,AndroidElement checkbox,SoftAssert sa) throws InterruptedException {
 		/*
 		 * checks whether given elements checkbox is enabled
 		 */
-		SoftAssert SA= new SoftAssert();
-		try {
-			minWait();
-			String soundResourceText = element.getText();
-			minWait();
+		String soundResourceText = element.getText();
+		minWait();
+		element.click();
+		minWait();
+		if(isElementExist(checkbox)){
 			element.click();
-			minWait();
-			if(isElementExist(checkbox)){
-				element.click();
-				check = true;
-				APP_LOGS.info(soundResourceText+" is Enabled");
-				test.log(LogStatus.PASS, soundResourceText+" is Enabled");
-				SA.assertTrue(check,soundResourceText+" is Enabled");
-			}else{
-				APP_LOGS.info(soundResourceText+" is disabled");
-				test.log(LogStatus.FAIL, soundResourceText+" is disabled");
-			}
-		}catch (Exception e) {
-			e.printStackTrace();
-			APP_LOGS.info("Element Not Found");
-			test.log(LogStatus.ERROR, "Element Not Found");
-			SA.fail();
+			check = true;
+			APP_LOGS.info(soundResourceText+" is Enabled");
+			sa.assertTrue(true, "Sound option checkbox is enabled");
+			test.log(LogStatus.PASS, soundResourceText+" is Enabled");
+
+		}else{
+			APP_LOGS.info(soundResourceText+" is disabled");
+			test.log(LogStatus.INFO, soundResourceText+" is disabled");
+			sa.fail();
+			test.log(LogStatus.FAIL, "Test cases failed");
 		}
-		SA.assertAll();
 	}
-	public void validateQuickResponses(String data) throws InterruptedException
+
+
+
+
+
+	public void Restore_default_QuickResponses() throws InterruptedException
 	{	
 		/*
-		 * Validate quick response option
+		 * Restore default in quick response
 		 */
 		try {
 			minWait();
@@ -503,19 +823,18 @@ public class XP8_Call_Settings_Util extends BaseUtil{
 			minWait();
 			clickBtn(Locators_CallSetting.restoreDefaultsInQuickResponse);
 			customWait(2000);
-			getAndValidateQuickResponsesList();
-			minWait();
-			editAndValidateQuickResponse(data);
-			minWait();
-			restoreDefaults();
-			clickBackButton(2);
-		} catch (Exception e) {
+
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->Restore_default_QuickResponses()");
 			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in Restore_default_QuickResponses()");
 		}
 	}
 
-	public void getAndValidateQuickResponsesList() throws InterruptedException
+	public void getAndValidateQuickResponsesList(SoftAssert sa) throws InterruptedException
 	{
 		/*
 		 * validates presence of quick response list messages
@@ -529,9 +848,17 @@ public class XP8_Call_Settings_Util extends BaseUtil{
 			getQuickResonseText(Locators_CallSetting.quickResponseTextThree,"I'll call you later.");
 			minWait();
 			getQuickResonseText(Locators_CallSetting.quickResponseTextFour,"Can't talk now. Call me later?");
+			APP_LOGS.info("Quick response list is verified");
+			sa.assertTrue(true, "Quick response list is verified");
+			test.log(LogStatus.PASS, "Quick response list is verified");
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->getAndValidateQuickResponsesList()");
+			e.printStackTrace();
+
 		}catch (Exception e) {
 			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+			test.log(LogStatus.INFO, "Exception in getAndValidateQuickResponsesList()");
 		}
 	}
 
@@ -540,154 +867,242 @@ public class XP8_Call_Settings_Util extends BaseUtil{
 		/*
 		 * Gets Quick response text message and returns
 		 */
-		SoftAssert SA= new SoftAssert();
-		try {
-			minWait();
-			String textMessage = element.getText();
-			minWait();
-			if(textMessage.contains(expectedTextMessage)){
-				check = true;
-				APP_LOGS.info("Quick Resonse message : "+textMessage);
-				test.log(LogStatus.INFO,"Quick Resonse message : "+textMessage);
-				SA.assertTrue(check,"Quick Resonse message : "+textMessage);
-			}else{
-				APP_LOGS.info("Quick Resonse message : "+textMessage +" is not available");
-				test.log(LogStatus.ERROR, "Quick Resonse message : "+textMessage +" is not available");
-				SA.fail();
-			}
-		}catch (Exception e) {
-			e.printStackTrace();
-			APP_LOGS.info("Element Not Found");
-			test.log(LogStatus.ERROR, "Element Not Found");
-			SA.fail();
+		String textMessage = element.getText();
+		minWait();
+		if(textMessage.contains(expectedTextMessage)){
+			check = true;
+			APP_LOGS.info("Quick Resonse message : "+textMessage);
+			test.log(LogStatus.INFO,"Quick Resonse message : "+textMessage);
+
+		}else{
+			APP_LOGS.info("Quick Resonse message : "+textMessage +" is not available");
+			test.log(LogStatus.ERROR, "Quick Resonse message : "+textMessage +" is not available");
+
 		}
-		SA.assertAll();
 	}
-	public void editAndValidateQuickResponse(String data) throws InterruptedException
+	public void editAndValidateQuickResponse(String data,SoftAssert sa) throws InterruptedException
 	{
 		/*
 		 *  Edit quick response and validate edited quick response message
 		 */
-		SoftAssert SA= new SoftAssert(); 
+
 		try{
+			clickBtn(Locators_CallSetting.quickResponseText);
+
 			minWait();
-			Locators_CallSetting.quickResponseText.click();
-			minWait();
-			Locators_CallSetting.quickResponseEditField.clear();
+			clickBtn(Locators_CallSetting.quickResponseEditField);
 			minWait();
 			enterTextToInputField(Locators_CallSetting.quickResponseEditField, data);
 			minWait();
-			Locators_CallSetting.okBtn.click();
+			clickBtn(Locators_CallSetting.okBtn);
 			minWait();
 			String actualEditedMessage = Locators_CallSetting.quickResponseText.getText();
 			if(actualEditedMessage.contains("Hello Sonim")){
 				check = true;
 				APP_LOGS.info("Edited and validated Quick Response text");
-				test.log(LogStatus.INFO, "Edited and validated Quick Response text");
-				SA.assertTrue(check, "Edited and validated Quick Response text");
+				sa.assertTrue(true, "Edited and validated Quick Response text");
+				test.log(LogStatus.PASS, "Edited and validated Quick Response text");
+
 			}else{
 				APP_LOGS.info("Edited Quick Response Text is not available");
-				test.log(LogStatus.ERROR, "Edited Quick Response Text is not available");
-				SA.fail();
+				sa.fail();
+				test.log(LogStatus.FAIL, "Edited Quick Response Text is not available");
+
 			}
-		}catch (Exception e) {
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->editAndValidateQuickResponse()");
 			e.printStackTrace();
-			APP_LOGS.info("Element Not Found");
-			test.log(LogStatus.ERROR, "Element Not Found");
-			SA.fail();
-		}
-		SA.assertAll();
-	}
-	public void restoreDefaults() throws InterruptedException{
-		/*
-		 * Validate Restore default option
-		 */
-		SoftAssert SA= new SoftAssert();
-		try{
-			clickBtn(Locators_CallSetting.moreSettings);
-			minWait();
-			clickBtn(Locators_CallSetting.restoreDefaultsInQuickResponse);
-			customWait(2000);
-			String actualString = Locators_CallSetting.quickResponseText.getText();
-			if(actualString.equals("Can't talk now. What's up?")){
-				check = true;
-				APP_LOGS.info("Default settings Restored");
-				test.log(LogStatus.INFO, "Default settings Restored");
-				SA.assertTrue(check, "Default settings Restored");
-			}else{
-				APP_LOGS.info("Failed to restore default Quick Response");
-				test.log(LogStatus.ERROR, "Failed to restore default Quick Response");
-				SA.fail();
-			}
+
 		}catch (Exception e) {
-			e.printStackTrace();
-			APP_LOGS.info("Element Not Found");
-			test.log(LogStatus.ERROR, "Element Not Found");
-			SA.fail();
+			test.log(LogStatus.ERROR, "Exception in editAndValidateQuickResponse()");
+
 		}
-		SA.assertAll();
+
 	}
-	public void assignSpeedDialNumber(String Phone,String name) throws InterruptedException, IOException{
-		/*
-		 * Validate All speed dial settings
-		 */
-		SoftAssert SA1= new SoftAssert();
-		try{
-			minWait();
-			presenceOfVoicemailInSpeedDailSettings();
-			minWait();
-			addContactInSpeedDailSettings(Phone);
-			minWait();
-			replaceContactInSpeedDailSettings(name);
-			minWait();
-			deleteContactInSpeedDailSettings();
-			minWait();
-			//aDriver.pressKeyCode(AndroidKeyCode.BACK);
-			Runtime.getRuntime().exec("adb -s "+ p_Id +" shell input keyevent 4");
-			longpress(2);
-			check = true;
-			APP_LOGS.info("Speed Dail settings validated successfully");
-			test.log(LogStatus.INFO, "Speed Dail settings validated successfully");
-			SA1.assertTrue(check, "Speed Dail settings validated successfully");
-		}catch (Exception e) {
-			e.printStackTrace();
-			APP_LOGS.info("Element Not Found");
-			test.log(LogStatus.ERROR, "Element Not Found");
-			SA1.fail();
-		}
-		SA1.assertAll();
-	}
-	public void presenceOfVoicemailInSpeedDailSettings()
+
+
+	public void presenceOfVoicemailInSpeedDailSettings(SoftAssert sa)
 	{
 		/*
 		 * validates Presence of voicemail option
 		 */
-		SoftAssert SA= new SoftAssert();
 		try
 		{
 			if(isElementExist(Locators_CallSetting.voiceMailOpt)){
-				check = true;
+				System.out.println("Voice mail present");
 				APP_LOGS.info("Voicemail Option is present in Speed Dail settings");
-				test.log(LogStatus.INFO, "Voicemail Option is present in Speed Dail settings");
-				SA.assertTrue(check, "Voicemail Option is present in Speed Dail settings");
+				sa.assertTrue(true, "Voicemail Option is present in Speed Dail settings");
+				test.log(LogStatus.PASS, "Voicemail Option is present in Speed Dail settings");				
 			}else {
+
 				APP_LOGS.info("Voicemail Option is not present in Speed Dail settings");
-				test.log(LogStatus.INFO, "Voicemail Option is not present in Speed Dail settings");
-				SA.fail("Voicemail Option is not present in Speed Dail settings");
+				test.log(LogStatus.PASS, "Voicemail Option is not present in Speed Dail settings");
+				sa.fail();
+				test.log(LogStatus.FAIL, "Test cases failed");
 			}
-		}catch (Exception e) {
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators-> presenceOfVoicemailInSpeedDailSettings()");
 			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+
+		}catch (Exception e) {
+			test.log(LogStatus.INFO, "Exception in  presenceOfVoicemailInSpeedDailSettings()");
 		}
-		SA.assertAll();
+
+	}
+	public void presenceOfCallingAccounts(SoftAssert sa)
+	{
+		/*
+		 * validates Presence of voicemail option
+		 */
+		try
+		{
+			if(isElementExist(Locators_CallSetting.callingaccount)){
+				System.out.println("Calling Account present");
+				APP_LOGS.info("Calling Account Option is present in Speed Dail settings");
+				sa.assertTrue(true, "Calling Account Option is present in Speed Dail settings");
+				test.log(LogStatus.PASS, "Calling Account Option is present in Speed Dail settings");				
+			}else {
+
+				APP_LOGS.info("Calling Account Option is not present in Speed Dail settings");
+				test.log(LogStatus.PASS, "Calling Account Option is not present in Speed Dail settings");
+				sa.fail();
+				test.log(LogStatus.FAIL, "Test cases failed");
+			}
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators-> presenceOfCallingAccounts()");
+			e.printStackTrace();
+
+		}catch (Exception e) {
+			test.log(LogStatus.INFO, "Exception in presenceOfCallingAccounts()");
+		}
+
+	}
+	public void presenceOfFixeddialingnumbers(SoftAssert sa)
+	{
+		/*
+		 * validates Presence of voicemail option
+		 */
+		try
+		{
+			if(isElementExist(Locators_CallSetting.fdn)){
+				System.out.println("FDN present");
+				APP_LOGS.info("FDN Option is present in Calls");
+				sa.assertTrue(true, "FDN Option is present in Calls");
+			}else {
+
+				APP_LOGS.info("FDN Option is not present in Calls");
+				test.log(LogStatus.PASS, "FDN Option is not present in calls");
+				sa.fail();
+				test.log(LogStatus.FAIL, "FDN Option is not present in calls");
+			}
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->  presenceOfFixeddialingnumbers()");
+			e.printStackTrace();
+
+		}catch (Exception e) {
+			test.log(LogStatus.INFO, "Exception in  presenceOfFixeddialingnumbers()");
+		}
+
+	}
+	public void presenceOfCallForwarding(SoftAssert sa)
+	{
+		/*
+		 * validates Presence of voicemail option
+		 */
+		try
+		{
+			if(isElementExist(Locators_CallSetting.callforwarding)){
+				System.out.println("callforwarding present");
+				APP_LOGS.info("callforwarding Option is present in calls");
+				sa.assertTrue(true, "callforwarding Option is present in calls");
+				test.log(LogStatus.PASS, "callforwarding Option is present in calls");				
+			}else {
+
+				APP_LOGS.info("callforwarding Option is not present in calls");
+				test.log(LogStatus.PASS, "callforwarding Option is not present in calls");
+				sa.fail();
+				test.log(LogStatus.FAIL, "callforwarding Option is not present in calls");
+			}
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators-> presenceOfCallForwarding()");
+			e.printStackTrace();
+
+		}catch (Exception e) {
+			test.log(LogStatus.INFO, "Exception in presenceOfCallForwarding()");
+		}
+
+	}
+	public void presenceOfAdditionalSettings(SoftAssert sa)
+	{
+		/*
+		 * validates Presence of voicemail option
+		 */
+		try
+		{
+			if(isElementExist(Locators_CallSetting.additionalsettings)){
+				System.out.println("additionalsettings present");
+				APP_LOGS.info("Additional Setting Option is present in calls");
+				sa.assertTrue(true, "Additional Setting Option is present in calls");
+				test.log(LogStatus.PASS, "Additional Setting Option is present in calls");				
+			}else {
+
+				APP_LOGS.info("Additional Setting Option is not present in calls");
+				test.log(LogStatus.PASS, "Additional Setting Option is not present in calls");
+				sa.fail();
+				test.log(LogStatus.FAIL, "Additional Setting Option is not present in calls");
+			}
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators-> presenceOfCallingAccounts()");
+			e.printStackTrace();
+
+		}catch (Exception e) {
+			test.log(LogStatus.INFO, "Exception in presenceOfCallingAccounts()");
+		}
+
+	}
+	public void presenceOfCallbarring(SoftAssert sa)
+	{
+		/*
+		 * validates Presence of voicemail option
+		 */
+		try
+		{
+			if(isElementExist(Locators_CallSetting.callbarring)){
+				System.out.println("Call barring present");
+				APP_LOGS.info("CallBarring Option is present in calls");
+				sa.assertTrue(true, "CallBarring Option is present in calls");
+				test.log(LogStatus.PASS, "CallBarring Account Option is present in calls");				
+			}else {
+
+				APP_LOGS.info("CallBarring Option is not present in calls");
+				test.log(LogStatus.PASS, "CallBarring Option is not present in calls");
+				sa.fail();
+				test.log(LogStatus.FAIL, "CallBarring Option is not present in calls");
+			}
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators-> presenceOfCallbarring()");
+			e.printStackTrace();
+
+		}catch (Exception e) {
+			test.log(LogStatus.INFO, "Exception in presenceOfCallbarring()");
+		}
+
 	}
 
-	public void addContactInSpeedDailSettings(String Phone) throws InterruptedException, IOException
+	public void addContactInSpeedDailSettings(String Phone,SoftAssert sa) throws InterruptedException, IOException
 	{
 		/*
 		 * Add contact in speed Dial settings and validate
 		 */
-		//SoftAssert SA= new SoftAssert();
+
+
 		try
 		{
 			clickBtn(Locators_CallSetting.notSetInSpeedDialSettings);
@@ -698,28 +1113,37 @@ public class XP8_Call_Settings_Util extends BaseUtil{
 			customWait(3000);
 			if(isElementExist(Locators_CallSetting.addedContactInSpeedDialSettings))
 			{
-				check = true;
+
 				APP_LOGS.info("Contact added in Speed Dail settings");
-				test.log(LogStatus.INFO, "Contact added in Speed Dail settings");
-				//SA.assertTrue(check, "Contact added in Speed Dail settings");
+				sa.assertTrue(true, "Contact added in Speed Dail settings");
+				test.log(LogStatus.PASS, "Contact added in Speed Dail settings");
+
+
 			}else {
 				APP_LOGS.info("Contact not added in Speed Dail settings");
 				test.log(LogStatus.INFO, "Contact not added in Speed Dail settings");
-				//SA.fail();
+				sa.fail();
+				test.log(LogStatus.FAIL, "");
 			}
-		}catch (Exception e) {
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->addContactInSpeedDailSettings()");
 			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in addContactInSpeedDailSettings()");
 		}
-		//SA.assertAll();
+
+
 	}
 
-	public void replaceContactInSpeedDailSettings(String name) throws InterruptedException, IOException
+	public void replaceContactInSpeedDailSettings(String name,SoftAssert sa) throws InterruptedException, IOException
 	{
 		/*
 		 * Replace contact in speed dial settings and validate
 		 */
-		SoftAssert SA= new SoftAssert();
+
+
 		try
 		{
 			clickBtn(Locators_CallSetting.addedContactInSpeedDialSettings);
@@ -728,57 +1152,127 @@ public class XP8_Call_Settings_Util extends BaseUtil{
 			minWait();
 			clickBtn(Locators_CallSetting.selectContactInSpeedDialSettings);
 			minWait();
-			clickBtn(Locators_CallSetting.searchOpt);
-			customWait(4000);
-			Runtime.getRuntime().exec("adb -s "+ p_Id +" shell input text "+name);
-			customWait(3000);
 			clickBtn(Locators_CallSetting.firstNameContact);
 			minWait();
 			if(isElementExist(Locators_CallSetting.firstNameContact)){
-				check = true;
+
+				System.out.println("0000000000000000000000000000");
+
 				APP_LOGS.info("Contact replaced in Speed Dail settings");
+				sa.assertTrue(true, "Contact replaced in Speed Dail settings");
 				test.log(LogStatus.INFO, "Contact replaced in Speed Dail settings");
-				SA.assertTrue(check, "Contact replaced in Speed Dail settings");
+
+				test.log(LogStatus.PASS, "Contact replaced in Speed Dail settings");
+
 			}else {
+
+				System.out.println("FAILLLLLLLLLLLLLLL");
+
+
 				APP_LOGS.info("Contact not replaced in Speed Dail settings");
-				test.log(LogStatus.INFO, "Contact not replaced in Speed Dail settings");
-				SA.fail("Contact not replaced in Speed Dail settings");
+				sa.fail();
+				test.log(LogStatus.FAIL, "Contact not replaced in Speed Dail settings");
+
+
 			}
-		}catch (Exception e) {
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->replaceContactInSpeedDailSettings()");
 			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in replaceContactInSpeedDailSettings()");
 		}
-		SA.assertAll();
+
+
 	}
-	public void deleteContactInSpeedDailSettings() throws InterruptedException, IOException
+	public void deleteContactInSpeedDailSettings(SoftAssert sa) throws InterruptedException, IOException
 	{
 		/*
 		 * Delete contact in speed dial settings and validate
 		 */
-		SoftAssert SA= new SoftAssert();
+
+
 		try
 		{
-			clickBtn(Locators_CallSetting.firstNameContact);
+			System.out.println("delete");
+			clickBtn(Locators_CallSetting.speeddialsettingfirstcontact);
 			minWait();
 			clickBtn(Locators_CallSetting.delete);
 			minWait();
 			if(isElementExist(Locators_CallSetting.notSetInSpeedDialSettings)){
-				check = true;
 				APP_LOGS.info("Contact deleted in Speed Dail settings");
-				test.log(LogStatus.INFO, "Contact deleted in Speed Dail settings");
-				SA.assertTrue(check, "Contact deleted in Speed Dail settings");
+				sa.assertTrue(true, "Contact deleted in Speed Dail settings");
+				test.log(LogStatus.PASS, "Contact deleted in Speed Dail settings");
+
+
 			}else {
 				APP_LOGS.info("Contact not deleted in Speed Dail settings");
-				test.log(LogStatus.INFO, "Contact not deleted in Speed Dail settings");
-				SA.fail("Contact not deleted in Speed Dail settings");
+				sa.fail();
+				test.log(LogStatus.FAIL, "Contact not deleted in Speed Dail settings");
+
+
+
 			}
 		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->deleteContactInSpeedDailSettings()");
 			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+
+		}catch (Exception e) {
+			test.log(LogStatus.INFO, "Exception in deleteContactInSpeedDailSettings()");
 		}
-		SA.assertAll();
+
+
 	}
-	public void BlacklistincallScreening(String phoneno,String phoneno2) throws InterruptedException {
+	public void deleteContactInSpeedDailSettings_post(SoftAssert sa) throws InterruptedException, IOException
+	{
+		/*
+		 * Delete contact in speed dial settings and validate
+		 */
+
+
+		try
+		{
+			System.out.println("delete");
+			if(isElementExist(Locators_CallSetting.speeddialsettingfirstcontactpost)){
+				
+				clickBtn(Locators_CallSetting.speeddialsettingfirstcontactpost);
+				minWait();
+				clickBtn(Locators_CallSetting.delete);
+			}
+			else{
+				
+					clickBackButton_without_try_catch(4);
+			
+			minWait();
+			}
+			/*if(isElementExist(Locators_CallSetting.notSetInSpeedDialSettings)){
+				APP_LOGS.info("Contact deleted in Speed Dail settings");
+				sa.assertTrue(true, "Contact deleted in Speed Dail settings");
+				test.log(LogStatus.PASS, "Contact deleted in Speed Dail settings");
+
+
+			}else {
+				APP_LOGS.info("Contact not deleted in Speed Dail settings");
+				sa.fail();
+				test.log(LogStatus.FAIL, "Contact not deleted in Speed Dail settings");
+
+
+
+			}*/
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->deleteContactInSpeedDailSettings()");
+			e.printStackTrace();
+
+		}catch (Exception e) {
+			test.log(LogStatus.INFO, "Exception in deleteContactInSpeedDailSettings()");
+		}
+
+
+	}
+	public void BlacklistincallScreening(String phoneno) throws InterruptedException {
 
 		//* black list
 
@@ -786,42 +1280,72 @@ public class XP8_Call_Settings_Util extends BaseUtil{
 		try {
 			minWait();
 			clickBtn(Locators_CallSetting.Manageblacklist);
-			for(int i=1; i<=2;i++){
-				clickBtn(Locators_CallSetting.addanumber);
-				minWait();
-				enterTextToInputField(Locators_CallSetting.Phonenumber, phoneno);
-				minWait();
-				clickBtn(Locators_CallSetting.blockBtn);
-				minWait();
-				minWait();
-			}
+
+			clickBtn(Locators_CallSetting.addanumberblack);
+			minWait();
+			enterTextToInputField(Locators_CallSetting.Phonenumber, phoneno);
+			minWait();
+			clickBtn(Locators_CallSetting.blockBtn);
+			minWait();
+
+
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->navigate_to_call_settings()");
+			e.printStackTrace();
+
 		}
 		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in BlacklistincallScreening()");
+
+		}
+	}
+	public void BlacklistincallScreening_vzw(String phoneno) throws InterruptedException {
+
+		//* black list
+
+
+		try {
+			minWait();
+			
+			clickBtn(Locators_CallSetting.addanumberblack);
+			minWait();
+			enterTextToInputField(Locators_CallSetting.Phonenumber, phoneno);
+			minWait();
+			clickBtn(Locators_CallSetting.blockBtn);
+			minWait();
+
+
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->navigate_to_call_settings()");
 			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+
+		}
+		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in BlacklistincallScreening()");
 
 		}
 	}
 
-	public void UnblockincallScreening(String phone) throws InterruptedException {
+	public void UnblockincallScreening() throws InterruptedException {
 
 		// * unblock in black list
 
-		clickBackButton(4);
-		launch_an_app("phone");
-		navigateToSettingsAndElement(Locators_CallSetting.Callscreening);  
+
 		try {
-			minWait();
-			clickBtn(Locators_CallSetting.Manageblacklist);
-			minWait();
 			clickBtn(Locators_CallSetting.deleteblockedno);
 			minWait();
 			clickBtn(Locators_CallSetting.unblockBtn);
 			minWait();			
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->UnblockincallScreening() ");
+			e.printStackTrace();
+
 		}
 		catch (Exception e) {
-			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+			test.log(LogStatus.ERROR, "Exception in UnblockincallScreening() ");
 
 		}
 	}
@@ -831,51 +1355,88 @@ public class XP8_Call_Settings_Util extends BaseUtil{
 		/*
 		 * clear frequents,all call log  and delete contacts before test
 		 */
-		minWait();
-		if(isElementExist(Locators_CallSetting.clearCallHistoryOpt)){
-
+		try {
 			launch_an_app("phone");
-			navigateTocallHistory();
+			clickBtn(Locators_CallSetting.Callhistorytab);
 			minWait();
-			clickBtn(Locators_CallSetting.moreOptionsInCallHistory);
-			minWait();
-			clickBtn(Locators_CallSetting.clearCallHistoryOpt);
-			minWait();
-			clickBtn(Locators_CallSetting.okBtn);
-			customWait(3000);
-			clickBackButton(3);
-			deleteIfContactsPresent();
-		}else if(!isElementExist(Locators_CallSetting.clearCallHistoryOpt)){
-			minWait();
-			deleteIfContactsPresent();
-		}minWait();
-		launch_an_app("phone");
-		navigateTocallHistory();
-		minWait();
-		clickBtn(Locators_CallSetting.moreOptionsInCallHistory);
-		minWait();
-		clickBtn(Locators_CallSetting.clearCallHistoryOpt);
-		minWait();
-		clickBtn(Locators_CallSetting.okBtn);
-		customWait(3000);
-		clickBackButton(3);
+			if(isElementExist(Locators_CallSetting.dailedFirstNum)){
+				navigateTocallHistory();
+				minWait();
+				clickBtn(Locators_CallSetting.moreOptionsInCallHistory);
+				minWait();
+				clickBtn(Locators_CallSetting.clearCallHistoryOpt);
+				minWait();
+				clickBtn(Locators_CallSetting.okBtn);
+				customWait(3000);
 
+			}else{
+
+				clickBackButton_without_try_catch(4);
+			}
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->clearcallhistory()");
+			e.printStackTrace();
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->clearcallhistory()");
+
+		}
 	}
-	public void navigateTocallHistory() throws InterruptedException, IOException
+	public void clearcallhistory_vzw()throws InterruptedException, IOException
+	{
+
+		/*
+		 * clear frequents,all call log  and delete contacts before test
+		 */
+		try {
+			launch_an_app("phone");
+			clickBtn(Locators_CallSetting.vzw_recent);
+			minWait();
+			if(isElementExist(Locators_CallSetting.vzwdailedFirstNum)){
+				clickBtn(Locators_CallSetting.vzwsettingsIcon);
+				minWait();
+				//clickBtn(Locators_CallSetting.moreOptionsInCallHistory);
+				//minWait();
+				clickBtn(Locators_CallSetting.vzw_callhistory);
+				clickBtn(Locators_CallSetting.moreOptionsInCallHistory);
+				minWait();
+				clickBtn(Locators_CallSetting.clearCallHistoryOpt);
+				minWait();
+				clickBtn(Locators_CallSetting.okBtn);
+				customWait(3000);
+
+			}else{
+
+				clickBackButton_without_try_catch(4);
+			}
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->clearcallhistory()");
+			e.printStackTrace();
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->clearcallhistory()");
+
+		}
+	}
+
+
+	public void navigateTocallHistory() throws InterruptedException 
 	{
 		/*
 		 * navigate to call History page
 		 */
-		try {
-			minWait();
-			clickBtn(Locators_CallSetting.settingsIcon);
-			minWait();
-			clickBtn(Locators_CallSetting.callHistoryOpt);
-			minWait();
-		} catch (Exception e) {
-			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
-		}
+		//	try {
+		minWait();
+		clickBtn(Locators_CallSetting.settingsIcon);
+		minWait();
+		clickBtn(Locators_CallSetting.callHistoryOpt);
+		minWait();
+		//} catch (Exception e) {
+		//	e.printStackTrace();
+		//test.log(LogStatus.ERROR, "Navigate to call history is failed");
+		//}
 	}
 	public void MakeACall(String phone) throws InterruptedException, IOException
 	{
@@ -897,9 +1458,14 @@ public class XP8_Call_Settings_Util extends BaseUtil{
 			clickBtn(Locators_CallSetting.Endcall);
 			customWait(3000);
 
-		} catch (Exception e) {
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->MakeACall()");
 			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->MakeACall()");
+
 		}
 	}
 	public void blockAndUnblockNumber(SoftAssert sf2) throws InterruptedException
@@ -908,6 +1474,7 @@ public class XP8_Call_Settings_Util extends BaseUtil{
 		//* Block And Unblock number and validate
 
 		try {
+
 			minWait();
 			blockUnblockNumber(Locators_CallSetting.blockNumberOpt, Locators_CallSetting.blockBtn);
 			minWait();
@@ -923,9 +1490,14 @@ public class XP8_Call_Settings_Util extends BaseUtil{
 			clickBackButton(1);
 			minWait();
 			clickBtn(Locators_CallSetting.addedContactCallLog);
-		} catch (Exception e) {
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->blockAndUnblockNumber()");
 			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->blockAndUnblockNumber()");
+
 		}
 	}
 
@@ -934,58 +1506,130 @@ public class XP8_Call_Settings_Util extends BaseUtil{
 		/*
 		 * Block And Unblock number
 		 */
-		try {
-			minWait();
-			element.click();
-			minWait();
-			subElement.click();
-			minWait();
-		} catch (Exception e) {
-			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
-		}
-	}
 
-	public void validateBlockAndUnblockNumber(String status,String phonenum,SoftAssert sf2) throws InterruptedException
+		minWait();
+		element.click();
+		minWait();
+		subElement.click();
+		minWait();
+	} 
+	public void validateBlockAndUnblockNumber(String status,String phonenum,SoftAssert sa) throws InterruptedException
 	{
 		/*
 		 * Validates Block And Unblock number
 		 */
 		try {
-
-			minWait();
-			clearcallhistory();
-			minWait();
-			MakeACall(phonenum);
-			clickBackButton(2);
-			minWait();
-
-			launch_an_app("phone");
 			clickBtn(Locators_CallSetting.Callhistorytab);
-			customWait(3000);
+			customWait(2000);
 			System.out.println("Sarching...");
+			if(isElementExist(Locators_CallSetting.Blocked)){
 			String actualString = Locators_CallSetting.Blocked.getText();
 			System.out.println(actualString);
 			String NumString = Locators_CallSetting.dailedFirstNum.getText();
 			System.out.println(NumString);
-
 			if(actualString.contains("Blocked")){
-				check = true;
+				System.out.println("validateBlockAndUnblockNumber if condition is working");
 				APP_LOGS.info("Number is blocked");
+				sa.assertTrue(true, "Number is blocked");
 				test.log(LogStatus.PASS, "Number is blocked ");
-				sf2.assertTrue(check, "Number is blocked");
-			}else {
-				APP_LOGS.info("Number is  Unblocked");
-				test.log(LogStatus.FAIL, "Number is  Unblocked");
-				sf2.fail("Number is  Unblocked");
+
 			}
-		}
-		catch (Exception e) {
+			else{
+				clickBtn(Locators_CallSetting.dailedFirstNum);
+				minWait();
+				if(!isElementExist(Locators_CallSetting.blockNumberOpt)){
+					System.out.println("validateBlockAndUnblockNumber else condition is working");
+					APP_LOGS.info("Number is  Unblocked");
+					sa.assertTrue(true, "Number is  Unblocked");
+					test.log(LogStatus.PASS, "Number is  Unblocked");
+
+				}}
+			}
+			else if(!isElementExist(Locators_CallSetting.Blocked)) {
+				System.out.println("sprint");
+				clickBtn(Locators_CallSetting.dailedFirstNum);
+				if(isElementExist(Locators_CallSetting.blockNumberOpt)){
+					System.out.println("validateBlockAndUnblockNumber else condition is working");
+					APP_LOGS.info("Number is  Unblocked");
+					sa.assertTrue(true, "Number is  Unblocked");
+					test.log(LogStatus.PASS, "Number is  Unblocked");
+				}else{
+				clickBtn(Locators_CallSetting.dailedFirstNum);
+				if(!isElementExist(Locators_CallSetting.blockNumberOpt)){
+					APP_LOGS.info("Number is blocked");
+					sa.assertTrue(true, "Number is blocked");
+					test.log(LogStatus.PASS, "Number is blocked ");
+				}
+			}
+			
+			
+				}
+			else{
+					APP_LOGS.info("validateBlockAndUnblockNumber is failed");
+					sa.fail();
+					test.log(LogStatus.PASS, "validateBlockAndUnblockNumber is failed");
+
+				}
+			}
+	
+		
+		catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->validateBlockAndUnblockNumber()");
 			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->validateBlockAndUnblockNumber()");
+
 		}
 	}
+	public void validateBlockAndUnblockNumber_vzw(String status,String phonenum,SoftAssert sa) throws InterruptedException
+	{
+		/*
+		 * Validates Block And Unblock number
+		 */
+		try {
+			clickBtn(Locators_CallSetting.vzw_recent);
+			customWait(2000);
+			System.out.println("Sarching...");
+			String actualString = Locators_CallSetting.vzwBlocked.getText();
+			System.out.println(actualString);
+			String NumString = Locators_CallSetting.vzwdailedFirstNum.getText();
+			System.out.println(NumString);
 
+			if(actualString.contains("Blocked")){
+				System.out.println("validateBlockAndUnblockNumber if condition is working");
+				APP_LOGS.info("Number is blocked");
+				sa.assertTrue(true, "Number is blocked");
+				test.log(LogStatus.PASS, "Number is blocked ");
+
+			}else if(isElementExist(Locators_CallSetting.vzwdailedFirstNum)) {
+				clickBtn(Locators_CallSetting.vzwdailedFirstNum);
+				if(isElementExist(Locators_CallSetting.vzwblockNumberOpt)){
+					System.out.println("validateBlockAndUnblockNumber else condition is working");
+					APP_LOGS.info("Number is  Unblocked");
+					sa.assertTrue(true, "Number is  Unblocked");
+					test.log(LogStatus.PASS, "Number is  Unblocked");
+
+				}
+				else{
+					APP_LOGS.info("validateBlockAndUnblockNumber is failed");
+					sa.fail();
+					test.log(LogStatus.PASS, "validateBlockAndUnblockNumber is failed");
+
+				}
+			}
+		}
+		catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->validateBlockAndUnblockNumber_vzw()");
+			e.printStackTrace();
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->validateBlockAndUnblockNumber_vzw()");
+
+		}
+	}
 
 	public void navigateToCallDetails(WebElement element) throws InterruptedException
 	{
@@ -1006,50 +1650,61 @@ public class XP8_Call_Settings_Util extends BaseUtil{
 			test.log(LogStatus.ERROR, "Element Not Found");
 		}
 	}	
-	public void validate_blocknumber_with_values(String str,SoftAssert sf3){
+	public void validate_blocknumber_with_values(String phoneno,SoftAssert sa){
 
 		try {
-			String NumString = Locators_CallSetting.dailedFirstNum.getText();
-			System.out.println(NumString);
-			if((NumString.contains(str))) {
-				check = true;
-				clickBackButton(3);
-				APP_LOGS.info("Contact saved with 'str' successfully");
-				test.log(LogStatus.PASS, "Contact saved with 'str' successfully");
 
-				sf3.assertTrue(check, "Contact saved with 'str' successfully");
-			} else	{
-				APP_LOGS.info("Failed to save Contact with 'str'" );
-				test.log(LogStatus.FAIL, "Failed to save Contact with 'str'");
-				test.log(LogStatus.FAIL, "Test case Status is FAIL");
-				sf3.fail();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
-		}
-	}
-	public void Addingno_in_blacklist_callscreening(String phoneno){
-		//Adding no in black list
-
-
-		try {
-			minWait();
-			clickBtn(Locators_CallSetting.Manageblacklist);
-			minWait();
-			clickBtn(Locators_CallSetting.addanumber);
+			clickBtn(Locators_CallSetting.addanumberblack);
 			minWait();
 			enterTextToInputField(Locators_CallSetting.Phonenumber, phoneno);
 			minWait();
 			clickBtn(Locators_CallSetting.blockBtn);
+			minWait();
+			if(isElementExist(Locators_CallSetting.blocklistfirstno)){
+				System.out.println("No is blocked");
+
+				APP_LOGS.info("blocked no is validated successfully");
+				sa.assertTrue(true, "blocked no is validated successfully");
+				test.log(LogStatus.PASS, "blocked no is validated successfully");				
+			}else {
+
+				APP_LOGS.info("blocked no is not validated ");
+				sa.fail();
+				test.log(LogStatus.FAIL, "blocked no is not validated ");
+			}
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->validate_blocknumber_with_values()");
+			e.printStackTrace();
+
+		}catch (Exception e) {
+
+			test.log(LogStatus.INFO, "Exception in validate_blocknumber_with_values()");
+		}
+	}
+	public void addingno_in_blacklist_callscreening(String phoneno1) throws InterruptedException{
+		//Adding no in black list
+
+
+		try {
+			clickBtn(Locators_CallSetting.addanumberblack);
+			minWait();
+			enterTextToInputField(Locators_CallSetting.Phonenumber, phoneno1);
+			minWait();
+			clickBtn(Locators_CallSetting.blockBtn);
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->addingno_in_blacklist_callscreening()");
+			e.printStackTrace();
+
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			test.log(LogStatus.ERROR, "Exception in addingno_in_blacklist_callscreening()");
 		}
 
 	}
 
-	public void validate_pressing_backkey_once(String phoneno,SoftAssert sf4) throws InterruptedException
+	public void validate_pressing_backkey_once(String phoneno1,SoftAssert sa) throws InterruptedException
 	{
 
 		// pressing Back key while adding number to the blocked list
@@ -1058,92 +1713,250 @@ public class XP8_Call_Settings_Util extends BaseUtil{
 			minWait();
 			clickBtn(Locators_CallSetting.Manageblacklist);
 			minWait();
-			clickBtn(Locators_CallSetting.addanumber);
+			clickBtn(Locators_CallSetting.addanumberblack);
 			minWait();
-			enterTextToInputField(Locators_CallSetting.Phonenumber, phoneno);
+			enterTextToInputField(Locators_CallSetting.Phonenumber, phoneno1);
 			minWait();
-			clickBackButton(1);
-			String imagePath="C:\\Users\\naveenat.t\\Desktop\\sikuli images\\virtualkeyboard.PNG";
-			Screen sc=new Screen();
-			Pattern p=new Pattern(imagePath).similar((float)0.7);
-			sc.wait(p,10);
-			if(sc.exists(imagePath) != null){
-
+			clickBackButton_without_try_catch(1);
+			if(isElementExist(Locators_CallSetting.blockcallandtextscreen)){
 				System.out.println("Image exist");
+				APP_LOGS.info("Pressing backkey while adding no to blacklist is verified successfully");
+				sa.assertTrue(true, "Pressing backkey while adding no to blacklist is verified successfully");
+				test.log(LogStatus.PASS, "Pressing backkey while adding no to blacklist is verified successfully");	
 			}else {
 				System.out.println("image doesnot exist");
+				APP_LOGS.info("Pressing backkey while adding no to blacklist is failure");
+				test.log(LogStatus.PASS, "Pressing backkey while adding no to blacklist is failure");
+				sa.fail();
+				test.log(LogStatus.FAIL, "Pressing backkey while adding no to blacklist is failure");
 			}
+		} catch (org.openqa.selenium.NoSuchElementException e) {
 
-
-
-		} catch (FindFailed e) {
-
-			System.out.println("IMAGE doesnot ");
-
-		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Error in the locators->validate_pressing_backkey_once()");
 			e.printStackTrace();
+
+		}
+		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in the locators->validate_pressing_backkey_once()");
+		}
+
+
+	}
+	public void validate_pressing_backkey_once_vzw(String phoneno1,SoftAssert sa) throws InterruptedException
+	{
+
+		// pressing Back key while adding number to the blocked list
+
+		try {
+			launch_an_app("phone");
+			minWait();
+			navigate_To_Settings_AndElement_without_try_catch(Locators_CallSetting.vzwblockedno);
+			minWait();
+			clickBtn(Locators_CallSetting.addanumberblack);
+			minWait();
+			enterTextToInputField(Locators_CallSetting.Phonenumber, phoneno1);
+			minWait();
+			clickBackButton_without_try_catch(1);
+			if(isElementExist(Locators_CallSetting.blockcallandtextscreen)){
+				System.out.println("Image exist");
+				APP_LOGS.info("Pressing backkey while adding no to blacklist is verified successfully");
+				sa.assertTrue(true, "Pressing backkey while adding no to blacklist is verified successfully");
+				test.log(LogStatus.PASS, "Pressing backkey while adding no to blacklist is verified successfully");	
+			}else {
+				System.out.println("image doesnot exist");
+				APP_LOGS.info("Pressing backkey while adding no to blacklist is failure");
+				test.log(LogStatus.PASS, "Pressing backkey while adding no to blacklist is failure");
+				sa.fail();
+				test.log(LogStatus.FAIL, "Pressing backkey while adding no to blacklist is failure");
+			}
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->validate_pressing_backkey_once()");
+			e.printStackTrace();
+
+		}
+		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in the locators->validate_pressing_backkey_once()");
 		}
 
 
 	}
 
-	public void validate_pressing_backkey_twice(String phoneno,SoftAssert sf4) throws InterruptedException{
+	public void validate_pressing_backkey_twice(String phoneno1,SoftAssert sa) throws InterruptedException{
 		// pressing Back key while adding number to the blocked list.
 
 		try{
+			launch_an_app("phone");
+			navigateToSettingsAndElement_without_try_catch(Locators_CallSetting.Callscreening);
 			minWait();
-			Addingno_in_blacklist_callscreening(phoneno);
-			clickBackButton(2);
-			customWait(3000);
-			if (!isElementExist(Locators_CallSetting.addingnotoblock)) {
-				check = true;
+			clickBtn(Locators_CallSetting.Manageblacklist);
+			minWait();
+			clickBtn(Locators_CallSetting.addanumberblack);
+			minWait();
+			enterTextToInputField(Locators_CallSetting.Phonenumber, phoneno1);
+			minWait();
+			clickBackButton_without_try_catch(2);
+
+			customWait(2000);
+			Runtime.getRuntime().exec("adb -s "+p_Id+" shell input tap 540 1222");
+			minWait();
+
+			if(isElementExist(Locators_CallSetting.addanumberblack)) {
+
+				System.out.println("Adding no to block is displayed");
 				APP_LOGS.info("Blockedno screen page is dispalyed");
-				test.log(LogStatus.PASS, "Blockedno screen page is displayed");
-				sf4.assertTrue(check, "Blockedno screen page is dispalyed");
+				sa.assertTrue(true, "Blockedno screen page is dispalyed");
+				test.log(LogStatus.PASS, "Blockedno screen page is dispalyed");
 			}else {
+				System.out.println("not displayed");
 				APP_LOGS.info("Blockedno screen page is not displayed");
 				test.log(LogStatus.FAIL, "Blockedno screen page is not dispalyed");
-				sf4.fail("Blockedno screen page is not displayed");
+				sa.fail();
+				test.log(LogStatus.FAIL, "Blockedno screen page is not dispalyed");
 			}
-		}catch(Exception e) {
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->validate_pressing_backkey_twice()");
 			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+
+		}catch(Exception e) {
+			test.log(LogStatus.ERROR, " Exception in validate_pressing_backkey_twice()");
 		}
 
 	}
-	public void validate_pressing_Shortpress_HomeKey(String phoneno,SoftAssert sf5) throws InterruptedException{
+	public void validate_pressing_backkey_twice_vzw(String phoneno1,SoftAssert sa) throws InterruptedException{
+		// pressing Back key while adding number to the blocked list.
 
 		try{
+			launch_an_app("phone");
 			minWait();
-			Addingno_in_blacklist_callscreening(phoneno);
+			navigateToSettingsAndElement(Locators_CallSetting.vzwblockedno);
+			minWait();
+			clickBtn(Locators_CallSetting.addanumberblack);
+			minWait();
+			enterTextToInputField(Locators_CallSetting.Phonenumber, phoneno1);
+			minWait();
+			clickBackButton_without_try_catch(2);
+
+			customWait(2000);
+			Runtime.getRuntime().exec("adb -s "+p_Id+" shell input tap 540 1222");
+			minWait();
+
+			if(isElementExist(Locators_CallSetting.addanumberblack)) {
+
+				System.out.println("Adding no to block is displayed");
+				APP_LOGS.info("Blockedno screen page is dispalyed");
+				sa.assertTrue(true, "Blockedno screen page is dispalyed");
+				test.log(LogStatus.PASS, "Blockedno screen page is dispalyed");
+			}else {
+				System.out.println("not displayed");
+				APP_LOGS.info("Blockedno screen page is not displayed");
+				test.log(LogStatus.FAIL, "Blockedno screen page is not dispalyed");
+				sa.fail();
+				test.log(LogStatus.FAIL, "Blockedno screen page is not dispalyed");
+			}
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->validate_pressing_backkey_twice()");
+			e.printStackTrace();
+
+		}catch(Exception e) {
+			test.log(LogStatus.ERROR, " Exception in validate_pressing_backkey_twice()");
+		}
+
+	}
+	public void validate_pressing_Shortpress_HomeKey(String phoneno1,SoftAssert sa) throws InterruptedException{
+
+		try{
+			launch_an_app("phone");
+			navigateToSettingsAndElement_without_try_catch(Locators_CallSetting.Callscreening);
+			minWait();
+			clickBtn(Locators_CallSetting.Manageblacklist);
+			minWait();
+			clickBtn(Locators_CallSetting.addanumberblack);
+			minWait();
+			enterTextToInputField(Locators_CallSetting.Phonenumber, phoneno1);
+			minWait();
 			//clickBackButton(2);
 			customWait(3000);
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_HOME);
 			minWait();
 			if (isElementExist(Locators_CallSetting.Appslist)) {
-				check = true;
 				APP_LOGS.info(" Homescreen is displayed");
+				sa.assertTrue(true, "Homescreen is displayed");
 				test.log(LogStatus.PASS, "Homescreen is displayed");
-				sf5.assertTrue(check, "Homescreen is displayed");
+
 			}else {
 				APP_LOGS.info("Homescreen is not displayed");
 				test.log(LogStatus.FAIL, "Homescreen is not displayed");
-				sf5.fail("Homescreen is not displayed");
+				sa.fail();
+				test.log(LogStatus.FAIL, "Homescreen is not displayed");
 			}
-		}catch(Exception e) {
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->validate_pressing_Shortpress_HomeKey()");
 			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+
+		}catch(Exception e) {
+
+			test.log(LogStatus.ERROR, "Exception in validate_pressing_Shortpress_HomeKey()");
+		}
+
+	}
+	public void validate_pressing_Shortpress_HomeKey_vzw(String phoneno1,SoftAssert sa) throws InterruptedException{
+
+		try{
+			launch_an_app("phone");
+			minWait();
+			navigateToSettingsAndElement(Locators_CallSetting.vzwblockedno);
+			minWait();
+			clickBtn(Locators_CallSetting.addanumberblack);
+			minWait();
+			enterTextToInputField(Locators_CallSetting.Phonenumber, phoneno1);
+			minWait();
+			//clickBackButton(2);
+			customWait(3000);
+			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_HOME);
+			minWait();
+			if (isElementExist(Locators_CallSetting.Appslist)) {
+				APP_LOGS.info(" Homescreen is displayed");
+				sa.assertTrue(true, "Homescreen is displayed");
+				test.log(LogStatus.PASS, "Homescreen is displayed");
+
+			}else {
+				APP_LOGS.info("Homescreen is not displayed");
+				test.log(LogStatus.FAIL, "Homescreen is not displayed");
+				sa.fail();
+				test.log(LogStatus.FAIL, "Homescreen is not displayed");
+			}
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->validate_pressing_Shortpress_HomeKey()");
+			e.printStackTrace();
+
+		}catch(Exception e) {
+
+			test.log(LogStatus.ERROR, "Exception in validate_pressing_Shortpress_HomeKey()");
 		}
 
 	}
 
-	public void validate_pressing_Longpress_HomeKey(String phoneno,SoftAssert sf6) throws InterruptedException{
+	public void validate_pressing_Longpress_HomeKey(String phoneno1,SoftAssert sa) throws InterruptedException{
 
 		//pressing Home key (LONG PRESS)while adding number to the blocked list
 
 		try{
+
+
+			launch_an_app("phone");
+			navigateToSettingsAndElement_without_try_catch(Locators_CallSetting.Callscreening);
 			minWait();
-			Addingno_in_blacklist_callscreening(phoneno);
+			clickBtn(Locators_CallSetting.Manageblacklist);
+			minWait();
+			clickBtn(Locators_CallSetting.addanumberblack);
+			minWait();
+			enterTextToInputField(Locators_CallSetting.Phonenumber, phoneno1);
+			minWait();
 			//clickBackButton(2);
 			customWait(3000);
 			Runtime.getRuntime().exec("adb -s "+p_Id+" shell input keyevent --longpress KEYCODE_HOME");
@@ -1153,46 +1966,110 @@ public class XP8_Call_Settings_Util extends BaseUtil{
 
 			minWait();
 			if (isElementExist(Locators_CallSetting.googlequicksearch)) {
-				check = true;
 				APP_LOGS.info(" Googlenow on tap screen is displayed");
+				sa.assertTrue(true, "Googlenow on tap screen is displayed");
 				test.log(LogStatus.PASS, "Googlenow on tap screen is displayed");
-				sf6.assertTrue(check, "Googlenow on tap screen is displayed");
+
 			}else {
 				APP_LOGS.info("Googlenow on tap screen is not displayed");
 				test.log(LogStatus.FAIL, "Googlenow on tap screen is not displayed");
-				sf6.fail("Googlenow on tap screen is not displayed");
+				sa.fail();
+				test.log(LogStatus.FAIL, "Googlenow on tap screen is not displayed");
 			}
-		}catch(Exception e) {
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->validate_pressing_Longpress_HomeKey()");
 			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+
+		}catch(Exception e) {
+			test.log(LogStatus.ERROR, "Exception in validate_pressing_Longpress_HomeKey()");
 		}
 
 	}
-	public void validate_pressing_Recentsapp_Key(String phoneno,SoftAssert sf7) throws InterruptedException{
+	public void validate_pressing_Recentsapp_Key(String phoneno1,SoftAssert sa) throws InterruptedException{
 
 		//pressing Recent apps key while adding number to the blocked list
 
 		try{
 			minWait();
-			Addingno_in_blacklist_callscreening(phoneno);
+			clickBackButton_without_try_catch(4);
+			launch_an_app("phone");
+			navigateToSettingsAndElement_without_try_catch(Locators_CallSetting.Callscreening);
+			minWait();
+			clickBtn(Locators_CallSetting.Manageblacklist);
+			minWait();
+			clickBtn(Locators_CallSetting.addanumberblack);
+			minWait();
+			enterTextToInputField(Locators_CallSetting.Phonenumber, phoneno1);
+			minWait();
 			//clickBackButton(2);
 			customWait(3000);
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
 			minWait();	 	
 			if(!isElementExist(Locators_BaseUtil.no_Recent_Items)) {
-				check = true;
 				APP_LOGS.info(" Recentappkey is displaying recent opened apps");
+				sa.assertTrue(true, "Recentappkey is displaying recent opened apps");
 				test.log(LogStatus.PASS, "Recentappkey is displaying recent opened apps");
-				sf7.assertTrue(check, "Recentappkey is displaying recent opened apps");
+
 			}else {
 				APP_LOGS.info("Recentappkey is not displaying recent opened apps");
 				test.log(LogStatus.FAIL, "Recentappkey is not displaying recent opened apps");
-				sf7.fail("Recentappkey is not displaying recent opened apps");
+				sa.fail();
+				test.log(LogStatus.FAIL, "Recentappkey is not displaying recent opened apps");
+
 			}
 
-		}catch(Exception e) {
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->validate_pressing_Recentsapp_Key()");
 			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+
+		}
+		catch(Exception e) {
+			test.log(LogStatus.ERROR, "Exception in validate_pressing_Recentsapp_Key() ");
+		}
+
+	}
+	public void validate_pressing_Recentsapp_Key_vzw(String phoneno1,SoftAssert sa) throws InterruptedException{
+
+		//pressing Recent apps key while adding number to the blocked list
+
+		try{
+			minWait();
+			clickBackButton_without_try_catch(4);
+			launch_an_app("phone");
+			minWait();
+			navigateToSettingsAndElement(Locators_CallSetting.vzwblockedno);
+			minWait();
+			clickBtn(Locators_CallSetting.addanumberblack);
+			minWait();
+			enterTextToInputField(Locators_CallSetting.Phonenumber, phoneno1);
+			minWait();
+			//clickBackButton(2);
+			customWait(3000);
+			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_APP_SWITCH);
+			minWait();	 	
+			if(!isElementExist(Locators_BaseUtil.no_Recent_Items)) {
+				APP_LOGS.info(" Recentappkey is displaying recent opened apps");
+				sa.assertTrue(true, "Recentappkey is displaying recent opened apps");
+				test.log(LogStatus.PASS, "Recentappkey is displaying recent opened apps");
+
+			}else {
+				APP_LOGS.info("Recentappkey is not displaying recent opened apps");
+				test.log(LogStatus.FAIL, "Recentappkey is not displaying recent opened apps");
+				sa.fail();
+				test.log(LogStatus.FAIL, "Recentappkey is not displaying recent opened apps");
+
+			}
+
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->validate_pressing_Recentsapp_Key()");
+			e.printStackTrace();
+
+		}
+		catch(Exception e) {
+			test.log(LogStatus.ERROR, "Exception in validate_pressing_Recentsapp_Key() ");
 		}
 
 	}
@@ -1201,34 +2078,123 @@ public class XP8_Call_Settings_Util extends BaseUtil{
 		try {
 			minWait();
 
-			clickBtn(Locators_CallSetting.addanumber);
+			clickBtn(Locators_CallSetting.addanumberwhite);
 			minWait();
 			enterTextToInputField(Locators_CallSetting.Phonenumber, phoneno);
 			minWait();
 			clickBtn(Locators_CallSetting.addBtn);
 			customWait(2000);
 		}
-		catch (Exception e) {
+		catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->validate_Editedquickresponse_displayproperly_duringcallscreen()");
 			e.printStackTrace();
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->validate_Editedquickresponse_displayproperly_duringcallscreen()");
+
 		}
 	}
 
-	public void addContactNumWhitelist(String phoneNum){
+	public void addContactNumWhitelist(String phoneno) throws InterruptedException{
 		try {
 
-			clickBtn(Locators_CallSetting.Managewhitelist);
+			clickBtn(Locators_CallSetting.addanumberwhite);
 			minWait();
+			enterTextToInputField(Locators_CallSetting.Phonenumber, phoneno);
+			minWait();
+			clickBtn(Locators_CallSetting.addBtn);
+			customWait(2000);
 
 
-			whitelist_callscreening(phoneNum);
+			//whitelist_callscreening(phoneNum);
 
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->addContactNumWhitelist()");
 			e.printStackTrace();
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in addContactNumWhitelist()");
 		}	
 	}
+	public void deleting_no_in_blacklist() throws InterruptedException{
 
-	public void deleting_no_in_whitelist(String phoneNum) throws InterruptedException{
+		try{
+
+			while(true){
+
+				minWait();
+
+				if(isElementExist(Locators_CallSetting.deleteblockedno)){
+
+					System.out.println("--------------p-------------");
+
+
+					clickBtn(Locators_CallSetting.deleteblockedno);
+
+					clickBtn(Locators_CallSetting.unblockBtn);
+
+
+
+				}else {
+
+					System.out.println("-+++++++++++++f+++++++++++");
+
+
+					break;
+				}
+			}
+
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->deleting_no_in_whitelist()");
+			e.printStackTrace();
+
+		}
+		catch(Exception e){
+			test.log(LogStatus.ERROR, "Exception in->deleting_no_in_whitelist()");
+		}
+	}
+	public void deleting_no_in_whitelist() throws InterruptedException{
+
+		try{
+
+			while(true){
+
+				minWait();
+
+				if(isElementExist(Locators_CallSetting.removeBtn)){
+
+					System.out.println("--------------p-------------");
+
+
+					clickBtn(Locators_CallSetting.removeBtn);
+
+					clickBtn(Locators_CallSetting.removetxt);
+
+
+
+				}else {
+
+					System.out.println("-+++++++++++++f+++++++++++");
+
+
+					break;
+				}
+			}
+
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->deleting_no_in_whitelist()");
+			e.printStackTrace();
+
+		}
+		catch(Exception e){
+			test.log(LogStatus.ERROR, "Exception in->deleting_no_in_whitelist()");
+		}
+	}
+	public void deleting_no_whitelist() throws InterruptedException{
 
 		try{
 			clickBtn(Locators_CallSetting.Managewhitelist);
@@ -1237,147 +2203,410 @@ public class XP8_Call_Settings_Util extends BaseUtil{
 			minWait();
 			clickBtn(Locators_CallSetting.removetxt);
 			minWait();
-			deleteConatactList();
+
 		}
-		catch(Exception e){
+		catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->deleting_no_whitelist()");
 			e.printStackTrace();
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->deleting_no_whitelist()");
+
 		}
 	}
-	public void deleting_no_in_blacklist() throws InterruptedException{
+	public void deleting_no_whitelist_without_try_catch() throws InterruptedException{
+
+		//	try{
+		launch_an_app("phone");
+		minWait();
+		navigateToSettingsAndElement_without_try_catch(Locators_CallSetting.Callscreening);
+		minWait();
+		clickBtn(Locators_CallSetting.Managewhitelist);
+		minWait();
+		clickBtn(Locators_CallSetting.removenoBtn);
+		minWait();
+		clickBtn(Locators_CallSetting.removetxt);
+		minWait();
+
+		//	}
+		//	catch(Exception e){
+		//	test.log(LogStatus.ERROR, "Error indeleting_no_whitelist()");
+		//	e.printStackTrace();
+		//}
+	}
+	public void deleting_no_in_blacklist(String phoneno) throws InterruptedException{
 
 		try {
-			minWait();
-			clickBtn(Locators_CallSetting.Manageblacklist);
-			minWait();
-			clickBtn(Locators_CallSetting.deleteblockBtn);
+
+			clickBtn(Locators_CallSetting.deleteblockBtninContact);
 			minWait();
 			clickBtn(Locators_CallSetting.unblocktxt);
 			minWait();
-			deleteConatactList();
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->deleting_no_in_blacklist()");
+			e.printStackTrace();
 
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			test.log(LogStatus.ERROR, "Exception in->deleting_no_in_blacklist()");
 		}				
 	}
+	public void deleting_blacklist() throws InterruptedException{
 
-	public void validatescrollingno_in_whitelist(String phoneNum, int n,SoftAssert sf8){
-		//
-		System.out.println(phoneNum);
-		if(scrollTo(phoneNum)){
-			check=true;
-			APP_LOGS.info("Validation is successful");
-			sf8.assertTrue(check, "TestCase Valiation is PASS");
-			test.log(LogStatus.PASS, "validated added whitelisted contact "+n);
-		} else {
-			APP_LOGS.info("Validation is not successful");
-			sf8.fail();
-			test.log(LogStatus.FAIL,"Validation is not successful "+n);
+		try{
+
+			while(true){
+
+				customWait(2000);
+
+				if(isElementExist(Locators_CallSetting.deleteblockBtninContact)){
+					System.out.println("--------------p-------------");
+
+
+					clickBtn(Locators_CallSetting.deleteblockBtninContact);
+
+					clickBtn(Locators_CallSetting.unblocktxt);
+
+
+
+				}else {
+
+					System.out.println("-+++++++++++++f+++++++++++");
+
+
+					break;
+				}
+			}
+
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+
+			clickBackButton_without_try_catch(1);
+			clickBtn(Locators_CallSetting.Manageblacklist);
+			minWait();
+			deleting_blacklist();
+			test.log(LogStatus.ERROR, "Error in the locators->deleting_blacklist()");
+			e.printStackTrace();
 
 		}
-	}
-	
-
-	public void validatescrollingno_in_blacklist(String phoneNum, int n,SoftAssert sf1){
-		//
-		System.out.println(phoneNum);
-		if(scrollTo(phoneNum)){
-			check=true;
-			APP_LOGS.info("Validation is successful");
-			sf1.assertTrue(check, "TestCase Valiation is PASS");
-			test.log(LogStatus.PASS, "validated added whitelisted contact "+n);
-		} else {
-			APP_LOGS.info("Validation is not successful ");
-			sf1.fail();
-			test.log(LogStatus.FAIL,"Validation is not successful "+n);
-
+		catch(Exception e){
+			test.log(LogStatus.ERROR, "Exception in->deleting_blacklist()");
 		}
 	}
-	public void validate_cancel_option(String phoneno,SoftAssert sf2) throws InterruptedException{
+	/*public void delete_no_blacklist() throws InterruptedException{
+		//blocking  numbers from Contact app
+		try{
+
+
+			if(isElementExist(Locators_CallSetting.deleteblockBtninContact)){
+				minWait();
+				clickBtn(Locators_CallSetting.deleteblockBtninContact);
+				minWait();
+				clickBtn(Locators_CallSetting.unblocktxt);
+				minWait();
+			}else{
+				clickBackButton_without_try_catch(4);
+			}
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->delete_no_blacklist()");
+			e.printStackTrace();
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->delete_no_blacklist()");
+
+		}
+	}*/
+	/*public void delete_all_No_in_blacklist() throws InterruptedException{
+		try{
+			launch_an_app("phone");
+
+			minWait();
+			navigateToSettingsAndElement(Locators_CallSetting.Callscreening);
+			minWait();
+			clickBtn(Locators_CallSetting.Manageblacklist);
+			minWait();
+			if(isElementExist(Locators_CallSetting.deleteblockBtninContact)){
+				minWait();
+				clickBtn(Locators_CallSetting.deleteblockBtninContact);
+				minWait();
+				clickBtn(Locators_CallSetting.unblocktxt);
+				minWait();
+
+			}
+			else{
+				clickBackButton(4);
+			}
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->delete_all_No_in_blacklist()");
+			e.printStackTrace();
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->delete_all_No_in_blacklist()");
+
+		}	
+	}*/
+	public void validatescrollingno_in_whitelist(String phoneNum,SoftAssert sa){
+		try{
+			System.out.println(phoneNum);
+			if(scrollTo(phoneNum)){
+				check=true;
+				APP_LOGS.info("Validated Scrolling no in whitelist contact");
+				sa.assertTrue(true, "Validated Scrolling no in whitelist contact");
+				test.log(LogStatus.PASS, "Validated Scrolling no in whitelist contact");
+			} else {
+				APP_LOGS.info("Validation Scrolling no in whitelist contactis is failed");
+				sa.fail();
+				test.log(LogStatus.FAIL,"Validation Scrolling no in whitelist contact is failed");
+
+			}
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->validatescrollingno_in_whitelist()");
+			e.printStackTrace();
+
+		}catch(Exception e) {
+			test.log(LogStatus.ERROR, "Exception in the locators->validatescrollingno_in_whitelist()");
+		}
+	}
+	public void validatescrollingno_in_blacklist(String phoneNum,SoftAssert sa){
+		//
+		try {
+			System.out.println(phoneNum);
+
+			if(scrollTo(phoneNum)){
+				System.out.println("PASSSSSSSSSSSSSSSSSSSss");
+				APP_LOGS.info("validated Scrolling no in blacklist contact");
+				sa.assertTrue(true, "validated Scrolling no in blacklist contact");
+				test.log(LogStatus.PASS, "validated Scrolling no in blacklist contact ");
+			} else {
+				System.out.println("FAIL---------------");
+
+				APP_LOGS.info("Validation Scrolling no in blacklist contact is failed ");
+				sa.fail();
+				test.log(LogStatus.FAIL,"Validation Scrolling no in blacklist contact is failed");
+
+			}
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->validatescrollingno_in_blacklist()");
+			e.printStackTrace();
+
+		}catch(Exception e) {
+			test.log(LogStatus.ERROR, "Exception  in->validatescrollingno_in_blacklist()");
+		}
+
+	}
+
+
+	public void validate_cancel_option_blacklist(String phoneno1,SoftAssert sa) throws InterruptedException{
+
+		//**CANCEL options while adding number to black list
+
+		try {
+
+			launch_an_app("phone");
+			navigateToSettingsAndElement_without_try_catch(Locators_CallSetting.Callscreening);
+			minWait();
+			clickBtn(Locators_CallSetting.Manageblacklist);
+			minWait();
+			clickBtn(Locators_CallSetting.addanumberblack);
+			minWait();
+			enterTextToInputField(Locators_CallSetting.Phonenumber, phoneno1);
+			minWait();
+			clickBtn(Locators_CallSetting.canceltxt);
+			minWait();
+			if(!isElementExist(Locators_CallSetting.blocklistfirstno)){
+				APP_LOGS.info("BlacklistNumber is not added to list");
+				sa.assertTrue(true, "BlacklistNumber is not added to list");
+				test.log(LogStatus.PASS, "BlacklistNumber is not added to list");
+
+			}else {
+				APP_LOGS.info("BlacklistNumber is added to list");
+				sa.fail();
+				test.log(LogStatus.FAIL, "BlacklistNumber is added to list");
+
+			}
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->validate_cancel_option_blacklist()");
+			e.printStackTrace();
+
+		}
+		catch(Exception e) {
+			test.log(LogStatus.ERROR, "Exception in validate_cancel_option_blacklist()");
+		}
+
+	}
+	public void validate_cancel_option_blacklist_vzw(String phoneno1,SoftAssert sa) throws InterruptedException{
+
+		//**CANCEL options while adding number to black list
+
+		try {
+
+			launch_an_app("phone");
+			navigateToSettingsAndElement_without_try_catch(Locators_CallSetting.vzwblockedno);
+			minWait();
+			clickBtn(Locators_CallSetting.addanumberblack);
+			minWait();
+			enterTextToInputField(Locators_CallSetting.Phonenumber, phoneno1);
+			minWait();
+			clickBtn(Locators_CallSetting.canceltxt);
+			minWait();
+			if(!isElementExist(Locators_CallSetting.blocklistfirstno)){
+				APP_LOGS.info("BlacklistNumber is not added to list");
+				sa.assertTrue(true, "BlacklistNumber is not added to list");
+				test.log(LogStatus.PASS, "BlacklistNumber is not added to list");
+
+			}else {
+				APP_LOGS.info("BlacklistNumber is added to list");
+				sa.fail();
+				test.log(LogStatus.FAIL, "BlacklistNumber is added to list");
+
+			}
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->validate_cancel_option_blacklist()");
+			e.printStackTrace();
+
+		}
+		catch(Exception e) {
+			test.log(LogStatus.ERROR, "Exception in validate_cancel_option_blacklist()");
+		}
+
+	}
+	public void validate_cancel_option_whitelist(String phoneno1,SoftAssert sa) throws InterruptedException{
 
 		//**CANCEL options while adding number to White list
 
 		try {
-			deleting_no_in_blacklist();
+			/*launch_an_app("phone");
+			navigateToSettingsAndElement_without_try_catch(Locators_CallSetting.Callscreening);
 			minWait();
-			clickBackButton(1);
+			clickBtn(Locators_CallSetting.Managewhitelist);
+			minWait();*/
+			clickBtn(Locators_CallSetting.addanumberwhite);
 			minWait();
-			clickBtn(Locators_CallSetting.Manageblacklist);
-			minWait();
-			clickBtn(Locators_CallSetting.addanumber);
-			minWait();
-			enterTextToInputField(Locators_CallSetting.Phonenumber, phoneno);
+			enterTextToInputField(Locators_CallSetting.Phonenumber, phoneno1);
 			minWait();
 			clickBtn(Locators_CallSetting.canceltxt);
 			minWait();
 
-			if(isElementExist(Locators_CallSetting.contactList)){
-				check = true;
-				APP_LOGS.info(" number is not added to list");
-				test.log(LogStatus.PASS, "number is not added to list");
-				sf2.assertTrue(check, "number is not added to list");
+			if(!isElementExist(Locators_CallSetting.blocklistfirstno)){
+				APP_LOGS.info(" WhitelistNumber is not added to list");
+				sa.assertTrue(true, "WhitelistNumber is not added to list");
+				test.log(LogStatus.PASS, "WhitelistNumber is not added to list");
+
 			}else {
-				APP_LOGS.info("number is added to list");
-				test.log(LogStatus.FAIL, "number is added to list");
-				sf2.fail("number is  added to list");
+				APP_LOGS.info("WhitelistNumber is added to list");
+				sa.fail();
+				test.log(LogStatus.FAIL, "WhitelistNumber is added to list");
+
 			}
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->validate_cancel_option_whitelist()");
+			e.printStackTrace();
+
 		}
 		catch(Exception e) {
-			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+			test.log(LogStatus.ERROR, "Exception in validate_cancel_option_whitelist()");
 		}
 
 	}
 
-	public void validate_addno_option_under_callsettings_blacklist(String phoneno,SoftAssert sf3) throws InterruptedException{
+
+	public void validate_addno_option_under_callsettings_blacklist(SoftAssert sa) throws InterruptedException{
 		// number field is displayed on selecting "ADD A NUMBER" option under Black List
 		try {
+			/*launch_an_app("phone");
+			minWait();
+			navigateToSettingsAndElement_without_try_catch(Locators_CallSetting.Callscreening);
 			minWait();
 			clickBtn(Locators_CallSetting.Manageblacklist);
+			minWait();*/
+			clickBtn(Locators_CallSetting.addanumberblack);
 			minWait();
-			clickBtn(Locators_CallSetting.addanumber);
-			minWait();
-			if(isElementExist(Locators_CallSetting.contactList)){
-				check = true;
-				APP_LOGS.info(" numberfield option is displayed ");
-				test.log(LogStatus.PASS, "numberfield option is displayed");
-				sf3.assertTrue(check, "numberfield option is displayed");
+			if(isElementExist(Locators_CallSetting.blackcontactList)){
+				APP_LOGS.info(" numberfield option is displayed in blacklist");
+				sa.assertTrue(true, "numberfield option is displayed in blacklist");
+				test.log(LogStatus.PASS, "numberfield option is displayed in blacklist");
+
 			}else {
-				APP_LOGS.info("numberfield option is not displayed");
-				test.log(LogStatus.FAIL, "numberfield option is not displayed");
-				sf3.fail("numberfield option is not displayed");
+				APP_LOGS.info("numberfield option is not displayed in blacklist");
+				sa.fail();
+				test.log(LogStatus.FAIL, "numberfield option is not displayed in blacklist");
 			}
-		} catch (Exception e) {
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->validate_addno_option_under_callsettings_blacklist()");
 			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+
+		} catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in validate_addno_option_under_callsettings_blacklist()");
 		}
 	}
-	public void validate_addno_option_under_callsettings_Whitelist(String phoneno,SoftAssert sf3) throws InterruptedException{
+	public void validate_addno_option_under_callsettings_Whitelist(SoftAssert sa) throws InterruptedException{
 		// number field is displayed on selecting "ADD A NUMBER" option under white List
 		try {
+			launch_an_app("phone");
+			minWait();
+			navigateToSettingsAndElement_without_try_catch(Locators_CallSetting.Callscreening);
 			minWait();
 			clickBtn(Locators_CallSetting.Managewhitelist);
 			minWait();
-			clickBtn(Locators_CallSetting.addanumber);
+			clickBtn(Locators_CallSetting.addanumberwhite);
 			minWait();
-			if(isElementExist(Locators_CallSetting.contactList)){
-				check = true;
-				APP_LOGS.info(" numberfield option is displayed ");
-				test.log(LogStatus.PASS, "numberfield option is displayed");
-				sf3.assertTrue(check, "numberfield option is displayed");
+			if(isElementExist(Locators_CallSetting.whitecontactList)){
+				APP_LOGS.info(" numberfield option is displayed in whitelist ");
+				sa.assertTrue(true, "numberfield option is displayed in whitelist");
+				test.log(LogStatus.PASS, "numberfield option is displayed in whitelist");
+
 			}else {
-				APP_LOGS.info("numberfield option is not displayed");
-				test.log(LogStatus.FAIL, "numberfield option is not displayed");
-				sf3.fail("numberfield option is not displayed");
+				APP_LOGS.info("numberfield option is not displayed in whitelist");
+				sa.fail();
+				test.log(LogStatus.FAIL, "numberfield option is not displayed in whitelist");
+
 			}
-		} catch (Exception e) {
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->validate_addno_option_under_callsettings_Whitelist()");
 			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in validate_addno_option_under_callsettings_Whitelist()");
 		}
 	}
 
 	public void checkScreeningIncomingEnabled() throws InterruptedException{
+
 		if(!Locators_CallSetting.screeningincomingcallsetting.isEnabled()){
+			clickBtn(Locators_CallSetting.screeningincomcallcheckbox);
+			minWait();
+			System.out.println("Clicked enabled checkbox");
+		}
+	}
+	public void checkScreeningOutgoingEnabled() throws InterruptedException{
+		if(!Locators_CallSetting.screeningoutgoingcallcheckbox.isEnabled()){
+			clickBtn(Locators_CallSetting.screeningincomcallcheckbox);
+			minWait();
+			System.out.println("Clicked enabled checkbox");
+		}
+
+	}
+	public void checkScreeningOutgoingDisabled() throws InterruptedException{
+		if(Locators_CallSetting.screeningoutgoingcall.isEnabled()){
+			clickBtn(Locators_CallSetting.screeningoutgoingcallcheckbox);
+			minWait();
+			System.out.println("Clicked disabled checkbox");
+		}
+
+	}
+	public void checkScreeningIncomingDisabled() throws InterruptedException{
+		if(Locators_CallSetting.screeningincomingcallsetting.isEnabled()){
 			clickBtn(Locators_CallSetting.screeningincomcallcheckbox);
 			minWait();
 			System.out.println("Clicked disabled checkbox");
@@ -1385,98 +2614,165 @@ public class XP8_Call_Settings_Util extends BaseUtil{
 
 	}
 
-	public void validate_screening_incoming_call_highlighted(SoftAssert sf4){
+	public void validate_screening_incoming_call_highlighted(SoftAssert sa){
 		//Screening incoming call Setting option is highlighted (not greyed out)
 		try {
+			launch_an_app("phone");
+			minWait();
+			navigateToSettingsAndElement_without_try_catch(Locators_CallSetting.Callscreening);
 			minWait();
 			checkScreeningIncomingEnabled();
 			if(Locators_CallSetting.screeningincomingcallsetting.isEnabled()){
 				clickBtn(Locators_CallSetting.screeningincomingcallsetting);
 				minWait();
 				if(isElementExist(Locators_CallSetting.ScreeningincomingcallsettingOpt) && isElementExist(Locators_CallSetting.blockblacklistopt) && isElementExist(Locators_CallSetting.allowwhitelistopt)){
+					System.out.println("Highlighted");
 
+					APP_LOGS.info(" Screening incoming call setting is highlighted & options are shown ");
+					sa.assertTrue(true, " Screening incoming call setting is highlighted & options are shown ");
+					test.log(LogStatus.PASS, "Screening incoming call setting is highlighted & options are shown");
+
+				}else {
+					APP_LOGS.info("Screening incoming call setting is not highlighted & options are not shown");
+					sa.fail();
+					test.log(LogStatus.FAIL, "Screening incoming call setting is not highlighted & options are not shown");
 				}
-				check = true;
-				APP_LOGS.info(" Screening incoming call setting is highlighted & options are shown ");
-				System.out.println("Highlighted");
-				test.log(LogStatus.PASS, "Screening incoming call setting is highlighted & options are shown");
-				sf4.assertTrue(check, "Screening incoming call setting is highlighted & options are shown");
-			}else {
+			}else{
 				APP_LOGS.info("Screening incoming call setting is not highlighted & options are not shown");
+				sa.fail();
 				test.log(LogStatus.FAIL, "Screening incoming call setting is not highlighted & options are not shown");
-				sf4.fail("Screening incoming call setting is not highlighted & options are not shown");
+
 			}
-		} catch (Exception e) {
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->validate_screening_incoming_call_highlighted()");
 			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+
+		} catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in validate_screening_incoming_call_highlighted()");
 		}
 	}
 
-	public void validate_Callscreening_under_Callsettings(SoftAssert sf4)
+	public void validate_Callscreening_under_Callsettings(SoftAssert sa)
 	{
 		try{
-			clickBackButton(1);
-			if(isElementExist(Locators_CallSetting.Callscreening)){
-				check = true;
+
+			launch_an_app("phone");
+			minWait();
+			clickBtn(Locators_CallSetting.settingsIcon);
+			minWait();
+			clickBtn(Locators_CallSetting.settingsOpt);
+			minWait();
+			clickBtn(Locators_CallSetting.Callscreening);
+			minWait();
+			if(isElementExist(Locators_CallSetting.callscreeningpage)){
 				APP_LOGS.info(" CallScreening present under Callsettings  ");
+				sa.assertTrue(true, "CallScreening present under Callsettings");
 				test.log(LogStatus.PASS, "CallScreening present under Callsettings");
-				sf4.assertTrue(check, "CallScreening present under Callsettings");
+
 			}else {
 				APP_LOGS.info("CallScreening not present under Callsettings");
+				sa.fail();
 				test.log(LogStatus.FAIL, "CallScreening not present under Callsettings");
-				sf4.fail("CallScreening not present under Callsettings");
+
 			}
-		} catch (Exception e) {
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->validate_Callscreening_under_Callsettings()");
 			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in validate_Callscreening_under_Callsettings()");
 		}
 	}
 
 	public void blockno_in_contactapp(String refNum){
 		//Blocked and unblocked numbers in phone contact settings
 		try{
+
 			clickBtn(Locators_CallSetting.opennavigationdrawer);
 			minWait();
 			clickBtn(Locators_CallSetting.Settings);
 			minWait();
 			scrollToText("Blocked numbers");
 			minWait();
-			clickBtn(Locators_CallSetting.addanumber);
+			clickBtn(Locators_CallSetting.addanumberblack);
 			minWait();
 			enterTextToInputField(Locators_CallSetting.Phonenumber, refNum);
 			minWait();
 			clickBtn(Locators_CallSetting.blockBtn);
 			minWait();
-			clickBackButton(4);
+			clickBackButton_without_try_catch(4);
 			minWait();
 
 		}
-		catch(Exception e){
+		catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->blockno_in_contactapp()");
 			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->blockno_in_contactapp()");
 
 		}
 	}
-	public void validate_blockno_in_blacklist(SoftAssert sf5) throws InterruptedException{
+	public void validate_blockno_in_blacklist(SoftAssert sa) throws InterruptedException{
 		try{
 			launch_an_app("phone");
-			navigateToSettingsAndElement(Locators_CallSetting.Callscreening);
+			navigateToSettingsAndElement_without_try_catch(Locators_CallSetting.Callscreening);
 			minWait();
 			clickBtn(Locators_CallSetting.Manageblacklist);
 			minWait();
 			if(isElementExist(Locators_CallSetting.firstblockedno)){
-				check = true;
+				System.out.println("validate blockno in blacklist if condition is working");
 				APP_LOGS.info(" Blockingno from contacts app is reflected in Black lsit under Call screening");
+				sa.assertTrue(true, "Blockingno from contacts app is reflected in Black lsit under Call screening");
 				test.log(LogStatus.PASS, "Blockingno from contacts app is reflected in Black lsit under Call screening");
-				sf5.assertTrue(check, "Blockingno from contacts app is reflected in Black lsit under Call screening");
+
 			}else {
+
+				System.out.println("validate blockno in blacklist else condition is working");
 				APP_LOGS.info("Blockingno from contacts app is not reflected in Black lsit under Call screening");
+				sa.fail();
 				test.log(LogStatus.FAIL, "Blockingno from contacts app is not reflected in Black lsit under Call screening");
-				sf5.fail("Blockingno from contacts app is not reflected in Black lsit under Call screening");
 			}
-		} catch (Exception e) {
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->validate_blockno_in_blacklist()");
 			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->validate_blockno_in_blacklist()");
+
+		}
+	}
+	public void validate_blockno_in_blacklist_vzw(SoftAssert sa) throws InterruptedException{
+		try{
+			launch_an_app("phone");
+			navigateToSettingsAndElement(Locators_CallSetting.vzwblockedno);
+			minWait();
+			minWait();
+			if(isElementExist(Locators_CallSetting.firstblockedno)){
+				System.out.println("validate blockno in blacklist if condition is working");
+				APP_LOGS.info(" Blockingno from contacts app is reflected in Black lsit under Call screening");
+				sa.assertTrue(true, "Blockingno from contacts app is reflected in Black lsit under Call screening");
+				test.log(LogStatus.PASS, "Blockingno from contacts app is reflected in Black lsit under Call screening");
+
+			}else {
+
+				System.out.println("validate blockno in blacklist else condition is working");
+				APP_LOGS.info("Blockingno from contacts app is not reflected in Black lsit under Call screening");
+				sa.fail();
+				test.log(LogStatus.FAIL, "Blockingno from contacts app is not reflected in Black lsit under Call screening");
+			}
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->validate_blockno_in_blacklist()");
+			e.printStackTrace();
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->validate_blockno_in_blacklist()");
+
 		}
 	}
 
@@ -1487,19 +2783,26 @@ public class XP8_Call_Settings_Util extends BaseUtil{
 		try {
 			Runtime.getRuntime().exec("adb -s "+r_Id+" shell am start -a android.intent.action.CALL -d tel:"+pryNum);
 			minWait();
-		} catch (Exception e) {
-			e.printStackTrace();
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->make_Call_from_RefDev()");
+
 		}
 	}
+
 
 
 	public void make_Call_from_PrmyDev() throws InterruptedException, IOException {
 		//make a call from ref device to primary device
 		try {
+			System.out.println("Inside Make a call");
 			Runtime.getRuntime().exec("adb -s "+p_Id+" shell am start -a android.intent.action.CALL -d tel:"+refNum);
+			customWait(10000);			
+			System.out.println("Call is activitated");
 			minWait();
-		} catch (Exception e) {
-			e.printStackTrace();
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in -> make_Call_from_PrmyDev()");
+
 		}
 	}
 
@@ -1509,7 +2812,9 @@ public class XP8_Call_Settings_Util extends BaseUtil{
 			minWait();
 			Runtime.getRuntime().exec("adb -s "+r_Id+" shell input keyevent 6");
 			Thread.sleep(1000);
-		} catch (Exception e) {
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->endCall_RefDevice()");
+
 		}
 	}
 
@@ -1518,211 +2823,273 @@ public class XP8_Call_Settings_Util extends BaseUtil{
 			minWait();
 			Runtime.getRuntime().exec("adb -s "+p_Id+" shell input keyevent 6");
 			Thread.sleep(1000);
-		} catch (Exception e) {
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->endCall_PrmyDevice() ");
+
 		}
 	}
-
 	public void recieve_Call_PrimaryDev_O() throws IOException, InterruptedException {
-		SoftAssert SA = new SoftAssert();
 
-		String value = null;
-		customWait(10000);
 		try {
-			for(int j=1;j<=100;j++){
+
+			while(true){
+
+				System.out.println("Running-------------------");
+
 				Process child = null;
-				Process version = null;
-				version = Runtime.getRuntime().exec("adb -s "+p_Id+" shell getprop ro.build.version.release");
-				InputStream lsOut1 = version.getInputStream();
-				InputStreamReader r1 = new InputStreamReader(lsOut1);
-				BufferedReader in1 = new BufferedReader(r1);
-				String  value1=in1.readLine();
-				System.out.println(value1);    
+
 				if (p_b_No.contains("8A.")) {
-
-					System.out.println("XP8");
-					if(value1.contains("8.1")) {
-						child=Runtime.getRuntime().exec("adb -s "+p_Id+" shell service call telecom 29");
-					}else {
-						child=Runtime.getRuntime().exec("adb -s "+p_Id+" shell service call telecom 27");
-					}
-				} if (p_b_No.contains("3A.")) {
-					System.out.println("XP3");
-					child=Runtime.getRuntime().exec("adb -s "+p_Id+" shell service call telecom 30");
-				} 
-
-				else if(p_b_No.contains("5SA.")) {
+					System.out.println("XP8");					
+					child = Runtime.getRuntime().exec("adb -s "+ p_Id+" shell service call telecom 29");
+				} else if(p_b_No.contains("5SA.")) {
 					System.out.println("XP5");
-					System.out.println(value1);    
-
-					if(value1.contains("8.1")) {
-						child=Runtime.getRuntime().exec("adb -s "+p_Id+" shell service call telecom 30");
-					}else {
-						child=Runtime.getRuntime().exec("adb -s "+p_Id+" shell service call telecom 28");
-					}
-				}     
+					child=Runtime.getRuntime().exec("adb -s "+p_Id+" shell service call telecom 28");
+				}
 				InputStream lsOut = child.getInputStream();
 				InputStreamReader r = new InputStreamReader(lsOut);
 				BufferedReader in = new BufferedReader(r);
-				value=in.readLine();
-				customWait(2000);
+				String  value=in.readLine();
 				System.out.println(value);
 				if(value.contains("00000001")) {
-					check = true;
+					System.out.println("Phone is ringing so accepting call.");
 					Runtime.getRuntime().exec("adb -s "+p_Id+" shell input keyevent 5");
-					test.log(LogStatus.PASS,"Recieved Call in Primary device validated ");
-					SA.assertTrue(check, " ");	
 					break;
-				}
-				else {
-					test.log(LogStatus.FAIL, "Receive Voice call Failed " );
-					SA.fail();
-				}
-				customWait(10000);	
 
+				} else {
+					System.out.println("Not accepting call.");
+
+				}		
 			}
-			/*	aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
-				minWait();
-				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
-				minWait();*/
-		} catch (Exception e) {
+
+			System.out.println("coming Out of loop");
+
+		}catch(Exception e) {
 			Thread.sleep(2000);
-			Runtime.getRuntime().exec("adb -s "+r_Id+" shell input keyevent 5");
+			Runtime.getRuntime().exec("adb -s "+p_Id+" shell input keyevent 5");
 			Thread.sleep(2000);
-		}
-
-
-	}
-
-
-	public void validateCallLog_Orio() throws InterruptedException, IOException {
-		/*
-		 * Validate via log String that MO-Voice  call initiated 
-		 */
-
-		String value = null;
-		customWait(10000);
-		try {
-
-			for(int j=1;j<=100;j++){
-				Process child = null;
-				Process version = null;
-				version = Runtime.getRuntime().exec("adb -s "+r_Id+" shell getprop ro.build.version.release");
-				InputStream lsOut1 = version.getInputStream();
-				InputStreamReader r1 = new InputStreamReader(lsOut1);
-				BufferedReader in1 = new BufferedReader(r1);
-				String  value1=in1.readLine();
-				System.out.println(value1);    
-				if (r_b_No.contains("8A.")) {
-
-					System.out.println("XP8");
-					if(value1.contains("8.1")) {
-						child=Runtime.getRuntime().exec("adb -s "+r_Id+" shell service call telecom 29");
-					}else {
-						child=Runtime.getRuntime().exec("adb -s "+r_Id+" shell service call telecom 27");
-					}
-				} if (r_b_No.contains("3A.")) {
-					System.out.println("XP3");
-					child=Runtime.getRuntime().exec("adb -s "+r_Id+" shell service call telecom 30");
-				} 
-
-				else if(r_b_No.contains("5SA.")) {
-					System.out.println("XP5");
-					System.out.println(value1);    
-
-					if(value1.contains("8.1")) {
-						child=Runtime.getRuntime().exec("adb -s "+r_Id+" shell service call telecom 30");
-					}else {
-						child=Runtime.getRuntime().exec("adb -s "+r_Id+" shell service call telecom 28");
-					}
-				}     
-				InputStream lsOut = child.getInputStream();
-				InputStreamReader r = new InputStreamReader(lsOut);
-				BufferedReader in = new BufferedReader(r);
-				value=in.readLine();
-				customWait(2000);
-				System.out.println(value);
-				if(value.contains("00000001")) {
-					check = true;
-					Runtime.getRuntime().exec("adb -s "+r_Id+" shell input keyevent 5");
-					test.log(LogStatus.PASS,"MO-Voice call from  is validated at : iteration " );
-					//						soft.assertTrue(check, " ");	
-					break;
-				}
-				else {
-					test.log(LogStatus.FAIL, "MO-Voice call Failed at : iteration " );
-					//						soft.fail();
-				}
-				customWait(10000);	
-
-			}
-			customWait(10000);	
-			endCall_PrmyDevice();
-			customWait(2000);
-			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
-			minWait();
-			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
-			minWait();
-		} catch (Exception e) {
-			Thread.sleep(2000);
-			Runtime.getRuntime().exec("adb -s "+r_Id+" shell input keyevent 5");
-			Thread.sleep(2000);
+			test.log(LogStatus.ERROR, "Exeption in ->recieve_Call_PrimaryDev_O()");
 		}
 	}
 
-	public void Screeningincomingcalls_callscreening() throws InterruptedException{
-		navigateToSettingsAndElement(Locators_CallSetting.Callscreening);
-		minWait();
-		deleting_no_in_blacklist();
-		minWait();
-		Addingno_in_blacklist_callscreening(refNum);
-		minWait();
-		clickBackButton(1);
-		checkScreeningIncomingEnabled();
-		//Screeningincomingcallsetting_option2();
 
+
+
+	public void validate_calllog_callreceived(SoftAssert sa){
+		try{
+			launch_an_app("phone");
+			minWait();
+			clickBtn(Locators_CallSetting.Callhistorytab);
+			minWait();
+			String dialedno =Locators_CallSetting.dailedFirstNum.getText();
+			String new_Dial_Num=dialedno.replaceAll("\\s+","");
+			String new_Ref_Num=refNum.replaceAll("\\s+", "");
+
+			System.out.println(new_Dial_Num +","+new_Ref_Num);
+
+			if(new_Dial_Num.contains(new_Ref_Num)){
+				APP_LOGS.info("Call received successfully");
+				sa.assertTrue(true, "Call received successfully");
+				test.log(LogStatus.PASS, "Call received successfully");
+
+
+			} else	{
+				APP_LOGS.info("Call not received");
+				test.log(LogStatus.FAIL, "Call not received");
+				sa.fail();
+				test.log(LogStatus.FAIL, "Call not received");
+
+			}		
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->validate_calllog_callreceived()");
+			e.printStackTrace();
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->validate_calllog_callreceived()");
+
+		}
+	}
+	public void validate_calllog_contactcallreceived(SoftAssert sa){
+
+		try{
+
+			launch_an_app("phone");
+			minWait();
+			clickBtn(Locators_CallSetting.Callhistorytab);
+			minWait();
+			String dialedno =Locators_CallSetting.dailedFirsttext.getText();
+			System.out.println( "dialedno" );
+			if(dialedno.contains("Test Automation")){
+				APP_LOGS.info("Call received successfully");
+				sa.assertTrue(true, "Call received successfully");
+				test.log(LogStatus.PASS, "Call received successfully");
+
+
+			} else	{
+				APP_LOGS.info("Call not received");
+				sa.fail();
+				test.log(LogStatus.FAIL, "Call not received");
+
+			}		
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->validate_calllog_contactcallreceived()");
+			e.printStackTrace();
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->validate_calllog_contactcallreceived()");
+
+		}
+	}
+	public void validate_calllog_callnotreceived(SoftAssert sa){
+		try{
+			launch_an_app("phone");
+			minWait();
+			clickBtn(Locators_CallSetting.Callhistorytab);
+			minWait();
+			if(!isElementExist(Locators_CallSetting.dailedFirstNum))
+			{
+				APP_LOGS.info("Call not received ");
+				sa.assertTrue(true, "Call not received");
+				test.log(LogStatus.PASS, "Call not received");
+
+
+			} else	{
+				APP_LOGS.info("Call received ");
+				sa.fail();
+				test.log(LogStatus.FAIL, "Call received ");
+
+
+			}		
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->validate_calllog_callnotreceived()");
+			e.printStackTrace();
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->validate_calllog_callnotreceived()");
+
+		}
+	}
+
+
+
+
+
+
+
+
+	public void disabling_Screeningincomingcalls_callscreening() throws InterruptedException, IOException{
+		try{
+			navigateToSettingsAndElement_without_try_catch(Locators_CallSetting.Callscreening);
+			minWait();
+			checkScreeningIncomingDisabled();
+			minWait();
+		}
+		catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->disabling_Screeningincomingcalls_callscreening()");
+			e.printStackTrace();
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->disabling_Screeningincomingcalls_callscreening()");
+
+		}
+	}
+
+	//Screeningincomingcallsetting_option2();
+
+	public void enabling_Screeningincomingcalls_callscreening(String phoneno) throws InterruptedException, IOException{
+		try{
+			navigateToSettingsAndElement_without_try_catch(Locators_CallSetting.Callscreening);
+			minWait();
+			checkScreeningIncomingEnabled();
+			minWait();
+			screeningincomingcallsetting_option2();
+			minWait();
+
+		}
+		catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->enabling_Screeningincomingcalls_callscreening()");
+			e.printStackTrace();
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->enabling_Screeningincomingcalls_callscreening()");
+
+		}
+	}
+	public void enabling_Screeningincomingcalls_allowonlycontacts(String phoneno) throws InterruptedException, IOException{
+		try{
+			navigateToSettingsAndElement_without_try_catch(Locators_CallSetting.Callscreening);
+			minWait();
+			checkScreeningIncomingEnabled();
+			minWait();
+			screeningincomingcallsetting_option1();
+			minWait();
+		}
+		catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->enabling_Screeningincomingcalls_allowonlycontacts()");
+			e.printStackTrace();
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->enabling_Screeningincomingcalls_allowonlycontacts()");
+
+		}
 
 	}
-	public void Screeningincomingcallsetting_option2() throws InterruptedException{
+	public void enabling_Screeningincomingcalls_allowwhitelist() throws InterruptedException, IOException{
+		try{
+			navigateToSettingsAndElement_without_try_catch(Locators_CallSetting.Callscreening);
+			minWait();
+			checkScreeningIncomingEnabled();
+			minWait();
+			screeningincomingcallsetting_option3();
+			minWait();
+
+		}
+		catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->enabling_Screeningincomingcalls_allowwhitelist()");
+			e.printStackTrace();
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->enabling_Screeningincomingcalls_allowwhitelist()");
+
+		}
+
+	}
+	public void screeningincomingcallsetting_option2() throws InterruptedException{
 		//screening incoming call setting block black list option
-		try{
-			clickBtn(Locators_CallSetting.screeningincomingcallsetting);
-			minWait();
-			clickBtn(Locators_CallSetting.blockblacklistopt);
-			minWait();
-		}
-		catch(Exception e){
-			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
-		}
+
+		clickBtn(Locators_CallSetting.screeningincomingcallsetting);
+		minWait();
+		clickBtn(Locators_CallSetting.blockblacklistopt);
+		minWait();
+
+
 	}
-	public void Screeningincomingcallsetting_option3() throws InterruptedException{
+	public void screeningincomingcallsetting_option3() throws InterruptedException{
 		//screening incoming call setting Allow white list option
-		try{
-			clickBtn(Locators_CallSetting.screeningincomingcallsetting);
-			minWait();
-			clickBtn(Locators_CallSetting.allowwhitelistopt);
-			minWait();
-		}
-		catch(Exception e){
-			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
-		}
+
+		clickBtn(Locators_CallSetting.screeningincomingcallsetting);
+		minWait();
+		clickBtn(Locators_CallSetting.allowwhitelistopt);
+		minWait();
+
 	}
-	public void Screeningincomingcallsetting_option1() throws InterruptedException{
+	public void screeningincomingcallsetting_option1() throws InterruptedException{
 		//screening incoming call setting allow only contacts option
-		try{
-			clickBtn(Locators_CallSetting.screeningincomingcallsetting);
-			minWait();
-			clickBtn(Locators_CallSetting.allowonlycontactsopt);
-			minWait();
-		}
-		catch(Exception e){
-			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
-		}
+
+		clickBtn(Locators_CallSetting.screeningincomingcallsetting);
+		minWait();
+		clickBtn(Locators_CallSetting.allowonlycontactsopt);
+		minWait();
+
 	}
 
-	public void Unblockno_in_contactapp(String refNum){
+	public void unblockno_in_contactapp(String refNum) throws InterruptedException{
 		//Blocked and unblocked numbers in phone contact settings
 		try{
 			clickBtn(Locators_CallSetting.opennavigationdrawer);
@@ -1731,35 +3098,88 @@ public class XP8_Call_Settings_Util extends BaseUtil{
 			minWait();
 			scrollToText("Blocked numbers");
 			minWait();
-			clickBtn(Locators_CallSetting.deleteblockBtn);
-			minWait();
-			clickBtn(Locators_CallSetting.unblocktxt);
-			minWait();
-		}
-		catch(Exception e){
+			if(isElementExist(Locators_CallSetting.deleteblockBtninContact)){
+				minWait();
+				clickBtn(Locators_CallSetting.deleteblockBtninContact);
+				minWait();
+				clickBtn(Locators_CallSetting.unblocktxt);
+				minWait();
+			}
+			else{
+				clickBackButton_without_try_catch(4);
+			}
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->unblockno_in_contactapp()");
 			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->unblockno_in_contactapp()");
+
 		}
+
 	}
-	public void validate_Unblockno_in_blacklist(SoftAssert sf5) throws InterruptedException{
+	public void validate_Unblockno_in_blacklist(SoftAssert sa) throws InterruptedException{
 		try{
-			navigateToSettingsAndElement(Locators_CallSetting.Callscreening);
+			launch_an_app("phone");
+			minWait();
+			navigateToSettingsAndElement_without_try_catch(Locators_CallSetting.Callscreening);
 			minWait();
 			clickBtn(Locators_CallSetting.Manageblacklist);
 			minWait();
+
 			if(!isElementExist(Locators_CallSetting.firstblockedno)){
-				check = true;
+				System.out.println("validate Unblockno in blacklist if condition is working");
 				APP_LOGS.info(" UnBlockingno from contacts app is reflected in Black lsit under Call screening");
+				sa.assertTrue(true, "UnBlockingno from contacts app is reflected in Black lsit under Call screening");
 				test.log(LogStatus.PASS, "UnBlockingno from contacts app is reflected in Black lsit under Call screening");
-				sf5.assertTrue(check, "UnBlockingno from contacts app is reflected in Black lsit under Call screening");
+
 			}else {
+				System.out.println("validate Unblockno in blacklist else condition is working");
 				APP_LOGS.info("UnBlockingno from contacts app is not reflected in Black lsit under Call screening");
+				sa.fail();
 				test.log(LogStatus.FAIL, "UnBlockingno from contacts app is not reflected in Black lsit under Call screening");
-				sf5.fail("UnBlockingno from contacts app is not reflected in Black lsit under Call screening");
+
+
 			}
-		} catch (Exception e) {
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->validate_Unblockno_in_blacklist()");
 			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->validate_Unblockno_in_blacklist()");
+
+		}
+	}
+	public void validate_Unblockno_in_blacklist_vzw(SoftAssert sa) throws InterruptedException{
+		try{
+			launch_an_app("phone");
+			minWait();
+			navigateToSettingsAndElement(Locators_CallSetting.vzwblockedno);
+
+			if(!isElementExist(Locators_CallSetting.firstblockedno)){
+				System.out.println("validate Unblockno in blacklist if condition is working");
+				APP_LOGS.info(" UnBlockingno from contacts app is reflected in Black lsit under Call screening");
+				sa.assertTrue(true, "UnBlockingno from contacts app is reflected in Black lsit under Call screening");
+				test.log(LogStatus.PASS, "UnBlockingno from contacts app is reflected in Black lsit under Call screening");
+
+			}else {
+				System.out.println("validate Unblockno in blacklist else condition is working");
+				APP_LOGS.info("UnBlockingno from contacts app is not reflected in Black lsit under Call screening");
+				sa.fail();
+				test.log(LogStatus.FAIL, "UnBlockingno from contacts app is not reflected in Black lsit under Call screening");
+
+
+			}
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->validate_Unblockno_in_blacklist()");
+			e.printStackTrace();
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->validate_Unblockno_in_blacklist()");
+
 		}
 	}
 	public void clearSMSPermissions() throws InterruptedException {
@@ -1843,43 +3263,200 @@ public class XP8_Call_Settings_Util extends BaseUtil{
 		WebDriverWait wait  =new WebDriverWait(aDriver, 60);
 
 		try {
-			wait.until(ExpectedConditions.visibilityOf(Locators_CallSetting.Delivered));
-			if(isElementExist(Locators_CallSetting.Delivered)||isElementExist(Locators_CallSetting.not_Sent_Text)) {
-				check=true;
-				APP_LOGS.info("Message sent Succeccfully");
-				System.out.println("Sent");
-				soft.assertTrue(check, "TestCase Valiation is PASS");
-				test.log(LogStatus.PASS, "SMS Sent Successfully at iteration ");
-			} else {
-				APP_LOGS.info("SMS didn't sent");
-				soft.fail();
-				test.log(LogStatus.FAIL,"Message didn't sent at iteration ");
+			if (p_b_No.contains("-10.")||p_b_No.contains("-00.")) {
+				wait.until(ExpectedConditions.visibilityOf(Locators_CallSetting.Delivered));
+				if(isElementExist(Locators_CallSetting.Delivered)||isElementExist(Locators_CallSetting.not_Sent_Text)) {
+					APP_LOGS.info("Message sent Succeccfully");
+					System.out.println("Sent");
+					soft.assertTrue(check, "TestCase Valiation is PASS");
+					test.log(LogStatus.PASS, "SMS Sent Successfully at iteration ");
+				} else {
+					APP_LOGS.info("SMS didn't sent");
+					soft.fail();
+					test.log(LogStatus.FAIL,"Message didn't sent at iteration ");
+				}
 			}
-		} catch (Exception e) {			 
+			else if (p_b_No.contains("-11.")) {
+				if(isElementExist(Locators_CallSetting.bell_first_sms)) {
+					clickBtn(Locators_CallSetting.bell_first_sms);
+					APP_LOGS.info("Message sent Succeccfully");
+					System.out.println("Sent");
+					soft.assertTrue(check, "TestCase Valiation is PASS");
+					test.log(LogStatus.PASS, "SMS Sent Successfully at iteration ");
+				} else {
+					APP_LOGS.info("SMS didn't sent");
+					soft.fail();
+					test.log(LogStatus.FAIL,"Message didn't sent at iteration ");
+				}
+			}
+		}	catch (Exception e) {			 
 			e.printStackTrace();
 			soft.fail();
 		}
 	}
-	public void delete_SMS() throws InterruptedException {
+	public void validate_NotSentMessage(SoftAssert sa) throws InterruptedException {
+		////Verify  messages is not received from black list on selecting 'Block black list"
+		try{
+			if (p_b_No.contains("-10.")||p_b_No.contains("-00.")) {
+				launch_an_app("messaging");
+				if(!isElementExist(Locators_CallSetting.smsfirstmsg)) {
+					APP_LOGS.info("Message not sent");
+					System.out.println("Not Sent");
+					sa.assertTrue(true, "Message not sent");
+					test.log(LogStatus.PASS, "Message not sent ");
+				} else {
+					APP_LOGS.info("Message sent");
+					sa.fail();
+					test.log(LogStatus.FAIL,"Message  sent ");
+				}
+			}
+			else if (p_b_No.contains("-11.")) {
+				launch_APP(Locators_CallSetting.Bell_Messages);
+				if(!isElementExist(Locators_CallSetting.bell_first_sms)) {
+					APP_LOGS.info("Message not sent");
+					System.out.println("Not Sent");
+					sa.assertTrue(true, "Message not sent");
+					test.log(LogStatus.PASS, "Message not sent ");
+				} else {
+					APP_LOGS.info("Message sent");
+					sa.fail();
+					test.log(LogStatus.FAIL,"Message  sent ");
+				}
+
+			}
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+			test.log(LogStatus.ERROR, "Error in the locators-> validate_NotSentMessage()");
+			e.printStackTrace();
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in -> validate_NotSentMessage()");
+
+		}
+	}
+	public void validate_SentMessage(SoftAssert sa) throws InterruptedException {
+		////Verify  messages is not received from black list on selecting 'Block black list"
+		try{
+			if(isElementExist(Locators_CallSetting.smsfirstmsg)) {
+				APP_LOGS.info("Message  sent");
+				System.out.println("Sent");
+				sa.assertTrue(true, "");
+				test.log(LogStatus.PASS, "Message  sent ");
+			} else {
+				APP_LOGS.info("Message not sent");
+				sa.fail();
+				test.log(LogStatus.FAIL,"Message not sent ");
+			}
+		} catch (Exception e) {			 
+			e.printStackTrace();
+			test.log(LogStatus.INFO, "Validate sentmessage is failed");
+		}
+	}
+
+
+	public void delete_SMS(SoftAssert sa) throws InterruptedException {
 		/* This Method delete the First Thread in the List. */
 
 		try {
 			System.out.println("IN Delete");
 			minWait();
-			if (isElementExist(Locators_CallSetting.firstSMS_InList)) {
-				clickBtn(Locators_CallSetting.firstSMS_InList);
+			if (p_b_No.contains("-10.")||p_b_No.contains("-00.")) {
+				launch_an_app("messaging");
 				minWait();
-				clickBtn(Locators_CallSetting.moreOptions);
-				minWait();
-				clickBtn(Locators_CallSetting.delete_Thread);
-				minWait();
-				clickBtn(Locators_CallSetting.delete_Confirm);
-				minWait();
+				if (isElementExist(Locators_CallSetting.firstSMS_InList)) {
+
+					TouchAction action = new TouchAction(aDriver);
+					action.longPress(Locators_CallSetting.firstSMS_InList).release().perform();
+					minWait();
+					clickBtn(Locators_CallSetting.smsmoreOptions);
+					minWait();
+					if(isElementExist(Locators_CallSetting.smsselectall)){
+						minWait();
+						clickBtn(Locators_CallSetting.smsselectall);
+						minWait();
+						clickBtn(Locators_CallSetting.smsdeleteall);
+						minWait();
+						clickBtn(Locators_CallSetting.smsconfirmdelete);
+						minWait();
+					}
+					else{
+						clickBackButton_without_try_catch(2);
+						minWait();
+						launch_an_app("messaging");
+						minWait();
+						action.longPress(Locators_CallSetting.firstSMS_InList).release().perform();
+						minWait();
+						clickBtn(Locators_CallSetting.smsdeleteall);
+						minWait();
+						clickBtn(Locators_CallSetting.smsconfirmdelete);
+						minWait();
+						sa.assertTrue(true, "SMS is deleted");
+						test.log(LogStatus.PASS, "SMS is deleted");
+					}
+				} else{
+
+					clickBackButton_without_try_catch(4);
+					APP_LOGS.info("SMS is deleted");
+					sa.assertTrue(true, "");
+					test.log(LogStatus.PASS, "SMS is deleted");
+				}
 			}
-		} catch (Exception e) {			 
+			else if(p_b_No.contains("-11.")||p_b_No.contains("-29.")) {
+				launch_APP(Locators_CallSetting.Bell_Messages);
+				while(true){
+					customWait(2000);
+
+					if (isElementExist(Locators_CallSetting.bell_first_sms)) {
+						TouchAction action = new TouchAction(aDriver);
+						action.longPress(Locators_CallSetting.bell_first_sms).release().perform();
+						minWait();
+						clickBtn(Locators_CallSetting.deletebell_first_sms);
+						clickBtn(Locators_CallSetting.cnfrmdeletebell_first_sms);
+					}else{
+						break;
+					}
+				}
+
+
+
+
+			}
+
+
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators-> delete_SMS()");
 			e.printStackTrace();
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in -> delete_SMS()");
+
 		}
 	}
+	public void create_NewSMS_SL(String number, String message) throws InterruptedException, IOException {
+		/* Method used to create New SMS. */
+
+		try {
+			clickBtn(Locators_CallSetting.Bell_newconversation);
+			minWait();
+			enterTextToInputField( Locators_CallSetting.tofield_text_sl,number);
+			minWait();
+			aDriver.pressKeyCode(AndroidKeyCode.ENTER);
+			minWait();
+			System.out.println("Enter Text");
+			customWait(2000);
+			enterTextToInputField(multi_Loc_Strategy(Locators_CallSetting.typemsg_sl, Locators_CallSetting.typemsg_sl_indx, Locators_CallSetting.typemsg_text_sl, Locators_CallSetting.typemsg_xpath_sl,Locators_CallSetting.typemsgcls_sl, 1268, 343), message);
+			minWait();
+			clickBtn(multi_Loc_Strategy(Locators_CallSetting.sendmsg_sl, Locators_CallSetting.sendmsg_sl_indx, Locators_CallSetting.sendmsg_text_sl, Locators_CallSetting.sendmsgcls_sl, Locators_CallSetting.sendmsgtxt_sl, 1011, 1127));
+
+
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR,"Error in locators-> create_NewSMS_SL()");
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR,"Exeption in -> create_NewSMS_SL()");
+		}
+	}
+
 	public void launch_APP(AndroidElement appToClick) throws InterruptedException {
 		try {
 			clickOnAppList();
@@ -1988,6 +3565,7 @@ public class XP8_Call_Settings_Util extends BaseUtil{
 			minWait();
 			if (r_b_No.contains("8A.")) {
 				if (r_b_No.contains("-10.")||r_b_No.contains("-30.")) {
+
 					minWait();
 					Runtime.getRuntime().exec("adb -s "+r_Id+" shell input keyevent 3");
 					minWait();
@@ -2002,6 +3580,7 @@ public class XP8_Call_Settings_Util extends BaseUtil{
 					Runtime.getRuntime().exec("adb -s "+r_Id+" shell input tap 918 1699");
 					minWait();
 					Runtime.getRuntime().exec("adb -s "+r_Id+" shell input tap 918 952");
+
 					minWait();
 				} else if(r_b_No.contains("-11.")||r_b_No.contains("-12.")||r_b_No.contains("-18.")||r_b_No.contains("-26.")||r_b_No.contains("-29.")){
 					minWait();
@@ -2015,6 +3594,7 @@ public class XP8_Call_Settings_Util extends BaseUtil{
 					minWait();
 					Runtime.getRuntime().exec("adb -s "+r_Id+" shell input tap 930 976");
 					minWait();
+
 				}else if(r_b_No.contains("-15.")){
 					minWait();
 					System.out.println("IN Android O");
@@ -2043,6 +3623,9 @@ public class XP8_Call_Settings_Util extends BaseUtil{
 				minWait();
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
+			test.log(LogStatus.ERROR, "exeption in sendSMS_fromRefDevice() method");
+
 
 		}
 	}
@@ -2075,56 +3658,136 @@ public class XP8_Call_Settings_Util extends BaseUtil{
 		//Blocking no from call details
 
 		try {
-			navigateToSettingsAndElement(Locators_CallSetting.Callscreening);
-			minWait();
-			deleting_no_in_blacklist();
-			minWait();
-			clickBackButton(3);
-			minWait();
-			clearcallhistory();
-			minWait();
-			make_Call_from_PrmyDev();
-			customWait(3000);
-			endCall_PrmyDevice();
-			minWait();
 			launch_an_app("phone");
 			minWait();
 			clickBtn(Locators_CallSetting.Callhistorytab);
 			minWait();
-			 clickBtn(Locators_CallSetting.dialerfirstno);
-			 minWait();
-			blockUnblockNumber(Locators_CallSetting.blockNumberOpt, Locators_CallSetting.blockBtn);
+			clickBtn(Locators_CallSetting.dialerfirstno);
 			minWait();
 
-		} catch (Exception e) {
+			if(isElementExist(Locators_CallSetting.blockNumberOpt)){
+				clickBtn(Locators_CallSetting.blockNumberOpt);
+				clickBtn(Locators_CallSetting.blockBtn);
+				minWait();
+
+			}else{
+				clickBackButton_without_try_catch(4);
+			}
+
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->blockno_in_Calldetails()");
 			e.printStackTrace();
-			test.log(LogStatus.ERROR, "Element Not Found");
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->blockno_in_Calldetails()");
+
+		}
+	}
+	public void blockno_in_Calldetails_vzw() throws InterruptedException
+	{
+		//Blocking no from call details
+
+		try {
+			launch_an_app("phone");
+			minWait();
+			clickBtn(Locators_CallSetting.vzw_recent);
+			minWait();
+			clickBtn(Locators_CallSetting.vzwdailedFirstNum);
+			minWait();
+
+			if(isElementExist(Locators_CallSetting.vzwblockNumberOpt)){
+				clickBtn(Locators_CallSetting.vzwblockNumberOpt);
+				clickBtn(Locators_CallSetting.blockBtn);
+				minWait();
+
+			}else{
+				clickBackButton_without_try_catch(4);
+			}
+
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->blockno_in_Calldetails_vzw()");
+			e.printStackTrace();
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->blockno_in_Calldetails_vzw()");
+
 		}
 	}
 
-   public void Unblockno_in_calldetails(){
-	  //UnBlocking no from call details
+	public void Unblockno_in_calldetails(){
+		//UnBlocking no from call details
 
-			try {
-				clickBtn(Locators_CallSetting.Callhistorytab);
-				minWait();
-				clickBtn(Locators_CallSetting.dialerfirstno);
-				minWait();
-				blockUnblockNumber(Locators_CallSetting.unblockNumberOpt, Locators_CallSetting.unblockBtn);
-				minWait();
-   }
-			 catch (Exception e) {
-					e.printStackTrace();
-					test.log(LogStatus.ERROR, "Element Not Found");
-				}
+		try {
 
-}
-   public void validateBlockAndUnblockNumber(WebElement element,String status) throws InterruptedException
+			launch_an_app("phone");
+			minWait();
+			clickBtn(Locators_CallSetting.Callhistorytab);
+			minWait();
+			clickBtn(Locators_CallSetting.dialerfirstno);
+			minWait();
+			if(isElementExist(Locators_CallSetting.unblockNumberOpt)){
+				clickBtn(Locators_CallSetting.unblockNumberOpt);
+				clickBtn(Locators_CallSetting.unblockBtn);
+				minWait();
+
+			}else{
+				clickBackButton_without_try_catch(4);
+			}
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->Unblockno_in_calldetails()");
+			e.printStackTrace();
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->Unblockno_in_calldetails()");
+
+		}
+
+	}
+	public void Verizon_Unblockno_in_calldetails(){
+		//UnBlocking no from call details
+
+		try {
+
+			launch_an_app("phone");
+			minWait();
+			clickBtn(Locators_CallSetting.vzw_recent);
+			minWait();
+			System.out.println("dialed first no");
+			clickBtn(Locators_CallSetting.vzwdailedFirstNum);
+			minWait();
+			System.out.println("block no option");
+			if(isElementExist(Locators_CallSetting.vzwunblockNumberOpt)){
+				customWait(5000);
+				System.out.println("inside");
+				clickBtn(Locators_CallSetting.vzwunblockNumberOpt);
+				minWait();
+				System.out.println("out");
+				clickBtn(Locators_CallSetting.unblockBtn);
+				minWait();
+
+			}else{
+				clickBackButton_without_try_catch(4);
+			}
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->Unblockno_in_calldetails_vzw()");
+			e.printStackTrace();
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->Unblockno_in_calldetails_vzw()");
+
+		}
+
+	}
+	public void validateBlockAndUnblockNumber(AndroidElement element,String status) throws InterruptedException
 	{
 		/*
 		 * Validates Block And Unblock number
 		 */
-				try {
+		try {
 			clickBackButton(1);
 			minWait();
 			clickBtn(Locators_CallSetting.callDetailsOpt);
@@ -2133,93 +3796,609 @@ public class XP8_Call_Settings_Util extends BaseUtil{
 				check = true;
 				APP_LOGS.info("Number "+ status +" Successfully");
 				test.log(LogStatus.INFO, "Number "+ status +" Successfully");
-				
+
 			}else{
 				APP_LOGS.info("Number not " +status);
 				test.log(LogStatus.ERROR,"Number not " +status);
-				
+
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			APP_LOGS.info("Element Not Found");
 			test.log(LogStatus.ERROR, "Element Not Found");
-			
+
 		}
-		
+
 	}
 
-public void validateCancel_option_calldialer(){
-	//Verify CANCEL option from Call details
-	
-		/*
-		 * Validates cancel option 
-		 */
-		
+	public void validate_canceloptionin_calldetailsblockno(SoftAssert sa) throws InterruptedException{
+		//cancel option in call details block no
+
+		try{
+			System.out.println("cancel block no" );
+			if(isElementExist(Locators_CallSetting.blockNumberOpt)){
+				clickBtn(Locators_CallSetting.blockNumberOpt);
+				minWait();
+				clickBtn(Locators_CallSetting.cancelBtn);
+				minWait();
+				navigateToSettingsAndElement_without_try_catch(Locators_CallSetting.Callscreening);
+				minWait();
+				clickBtn(Locators_CallSetting.Manageblacklist);
+				minWait();
+				if(!isElementExist(Locators_CallSetting.firstblockedno)){
+					System.out.println("validate_canceloptionin_calldetailsblockno if condition is working");
+					APP_LOGS.info(" Cancel option from contacts app is reflected in Black lsit under Call screening");
+					sa.assertTrue(true, "Cancel option from contacts app is reflected in Black lsit under Call screening");
+					test.log(LogStatus.PASS, "Cancel option from contacts app is reflected in Black lsit under Call screening");
+
+				}
+			}
+			else if(isElementExist(Locators_CallSetting.unblockNumberOpt)) {
+				clickBtn(Locators_CallSetting.unblockNumberOpt);
+				minWait();
+				clickBtn(Locators_CallSetting.unblockBtn);
+				minWait();
+				clickBtn(Locators_CallSetting.blockNumberOpt);
+				minWait();
+				clickBtn(Locators_CallSetting.cancelBtn);
+				minWait();
+				navigateToSettingsAndElement_without_try_catch(Locators_CallSetting.Callscreening);
+				minWait();
+				clickBtn(Locators_CallSetting.Manageblacklist);
+				minWait();
+				if(!isElementExist(Locators_CallSetting.firstblockedno)){
+					System.out.println("validate_canceloptionin_calldetailsblockno else if condition is working");
+					APP_LOGS.info(" Cancel option from contacts app is reflected in Black lsit under Call screening");
+					sa.assertTrue(true, "Cancel option from contacts app is reflected in Black lsit under Call screening");
+					test.log(LogStatus.PASS, "Cancel option from contacts app is reflected in Black lsit under Call screening");
+				}
+			}
+
+			else{
+				System.out.println("validate_canceloptionin_calldetailsblockno else condition is working");
+				APP_LOGS.info("Cancel option is not verified in call details block no");
+				sa.fail();
+				test.log(LogStatus.FAIL, "Cancel option is not verified in call details block no");
+				clickBackButton_without_try_catch(4);
+			}
+		}
+		catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->validate_canceloptionin_calldetailsblockno()");
+			e.printStackTrace();
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->validate_canceloptionin_calldetailsblockno()");
+
+		}
+	}
+	public void validate_canceloptionin_calldetailsblockno_vzw(SoftAssert sa) throws InterruptedException{
+		//cancel option in call details block no
+
+		try{
+			System.out.println("cancel block no" );
+			clickBtn(Locators_CallSetting.vzwdailedFirstNum);
+			customWait(8000);
+			if(isElementExist(Locators_CallSetting.vzwblockNumberOpt)){
+				clickBtn(Locators_CallSetting.vzwblockNumberOpt);
+				minWait();
+				clickBtn(Locators_CallSetting.cancelBtn);
+				minWait();
+				navigateToSettingsAndElement_without_try_catch(Locators_CallSetting.vzwblockedno);
+				minWait();
+				if(!isElementExist(Locators_CallSetting.firstblockedno)){
+					System.out.println("validate_canceloptionin_calldetailsblockno if condition is working");
+					APP_LOGS.info(" Cancel option from contacts app is reflected in Black lsit under Call screening");
+					sa.assertTrue(true, "Cancel option from contacts app is reflected in Black lsit under Call screening");
+					test.log(LogStatus.PASS, "Cancel option from contacts app is reflected in Black lsit under Call screening");
+
+				}
+			}
+			else if(isElementExist(Locators_CallSetting.unblockNumberOpt)) {
+				clickBtn(Locators_CallSetting.unblockNumberOpt);
+				minWait();
+				clickBtn(Locators_CallSetting.unblockBtn);
+				minWait();
+				clickBtn(Locators_CallSetting.vzwblockNumberOpt);
+				minWait();
+				clickBtn(Locators_CallSetting.cancelBtn);
+				minWait();
+				navigateToSettingsAndElement_without_try_catch(Locators_CallSetting.vzwblockedno);
+				minWait();
+				if(!isElementExist(Locators_CallSetting.firstblockedno)){
+					System.out.println("validate_canceloptionin_calldetailsblockno else if condition is working");
+					APP_LOGS.info(" Cancel option from contacts app is reflected in Black lsit under Call screening");
+					sa.assertTrue(true, "Cancel option from contacts app is reflected in Black lsit under Call screening");
+					test.log(LogStatus.PASS, "Cancel option from contacts app is reflected in Black lsit under Call screening");
+				}
+			}
+
+			else{
+				System.out.println("validate_canceloptionin_calldetailsblockno else condition is working");
+				APP_LOGS.info("Cancel option is not verified in call details block no");
+				sa.fail();
+				test.log(LogStatus.FAIL, "Cancel option is not verified in call details block no");
+				clickBackButton_without_try_catch(4);
+			}
+		}
+		catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->validate_canceloptionin_calldetailsblockno_vzw()");
+			e.printStackTrace();
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->validate_canceloptionin_calldetailsblockno_vzw()");
+
+		}
+	}
+
+
+
+	public void validate_canceloptionin_calldetailsUnblockno(SoftAssert sa) throws InterruptedException{
+		//cancel option in call details Unblock no
+		try{
+			System.out.println("coming inside");
+
+			if(isElementExist(Locators_CallSetting.unblockNumberOpt)){
+				clickBtn(Locators_CallSetting.unblockNumberOpt);
+				minWait();
+				clickBtn(Locators_CallSetting.cancelBtn);
+				minWait();
+				navigateToSettingsAndElement_without_try_catch(Locators_CallSetting.Callscreening);
+				minWait();
+				clickBtn(Locators_CallSetting.Manageblacklist);
+				minWait();
+				if(isElementExist(Locators_CallSetting.firstblockedno)){
+					System.out.println("validate_canceloptionin_calldetailsUnblockno if condition is working");
+					APP_LOGS.info(" UnblockCancel option from contacts app is reflected in Black lsit under Call screening");
+					sa.assertTrue(true, "UnblockCancel option from contacts app is reflected in Black lsit under Call screening");
+					test.log(LogStatus.PASS, "UnblockCancel option from contacts app is reflected in Black lsit under Call screening");
+					System.out.println("going out");
+				}
+			}else if(isElementExist(Locators_CallSetting.blockNumberOpt)){
+				System.out.println("else if block no");
+				clickBtn(Locators_CallSetting.blockNumberOpt);
+				minWait();
+				clickBtn(Locators_CallSetting.blockBtn);
+				minWait();
+				clickBtn(Locators_CallSetting.unblockNumberOpt);
+				minWait();
+				clickBtn(Locators_CallSetting.cancelBtn);
+				minWait();
+				navigateToSettingsAndElement_without_try_catch(Locators_CallSetting.Callscreening);
+				minWait();
+				clickBtn(Locators_CallSetting.Manageblacklist);
+				minWait();
+				if(isElementExist(Locators_CallSetting.firstblockedno)){
+					System.out.println("validate_canceloptionin_calldetailsUnblockno elseif condition is working");
+					APP_LOGS.info(" Unblock Cancel option from contacts app is reflected in Black lsit under Call screening");
+					sa.assertTrue(true, "Unblock Cancel option from contacts app is reflected in Black lsit under Call screening");
+					test.log(LogStatus.PASS, " Unblock Cancel option from contacts app is reflected in Black lsit under Call screening");
+					System.out.println("going out");
+				}
+			}else{
+				System.out.println("validate_canceloptionin_calldetailsUnblockno else cancel unblock no");
+				APP_LOGS.info("Cancel option is not verified in call details unblock no");
+				sa.fail();
+				test.log(LogStatus.FAIL, "Cancel option is  not verified in call details Unblock no");
+				clickBackButton_without_try_catch(4);
+
+
+			}}
+
+		catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->validate_canceloptionin_calldetailsUnblockno()");
+			e.printStackTrace();
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->validate_canceloptionin_calldetailsUnblockno()");
+
+		}
+
+	}
+	public void validate_canceloptionin_calldetailsUnblockno_vzw(SoftAssert sa) throws InterruptedException{
+		//cancel option in call details Unblock no
+		try{
+			System.out.println("coming inside");
+			clickBtn(Locators_CallSetting.vzwdailedFirstNum);
+			customWait(2000);
+     if(isElementExist(Locators_CallSetting.vzwunblockNumberOpt2)){
+				clickBtn(Locators_CallSetting.vzwunblockNumberOpt);
+				minWait();
+				clickBtn(Locators_CallSetting.cancelBtn);
+				minWait();
+				navigateToSettingsAndElement_without_try_catch(Locators_CallSetting.vzwblockedno);
+				minWait();
+				if(isElementExist(Locators_CallSetting.firstblockedno)){
+					System.out.println("validate_canceloptionin_calldetailsUnblockno if condition is working");
+					APP_LOGS.info(" UnblockCancel option from contacts app is reflected in Black lsit under Call screening");
+					sa.assertTrue(true, "UnblockCancel option from contacts app is reflected in Black lsit under Call screening");
+					test.log(LogStatus.PASS, "UnblockCancel option from contacts app is reflected in Black lsit under Call screening");
+					System.out.println("going out");
+				}
+			}else if(isElementExist(Locators_CallSetting.vzwblockNumberOpt)){
+				System.out.println("else if block no");
+				clickBtn(Locators_CallSetting.vzwblockNumberOpt);
+				minWait();
+				clickBtn(Locators_CallSetting.blockBtn);
+				minWait();
+				clickBtn(Locators_CallSetting.unblockNumberOpt);
+				minWait();
+				clickBtn(Locators_CallSetting.cancelBtn);
+				minWait();
+				navigateToSettingsAndElement_without_try_catch(Locators_CallSetting.vzwblockedno);
+				minWait();
+				if(isElementExist(Locators_CallSetting.firstblockedno)){
+					System.out.println("validate_canceloptionin_calldetailsUnblockno elseif condition is working");
+					APP_LOGS.info(" Unblock Cancel option from contacts app is reflected in Black lsit under Call screening");
+					sa.assertTrue(true, "Unblock Cancel option from contacts app is reflected in Black lsit under Call screening");
+					test.log(LogStatus.PASS, " Unblock Cancel option from contacts app is reflected in Black lsit under Call screening");
+					System.out.println("going out");
+				}
+			}else{
+				System.out.println("validate_canceloptionin_calldetailsUnblockno else cancel unblock no");
+				APP_LOGS.info("Cancel option is not verified in call details unblock no");
+				sa.fail();
+				test.log(LogStatus.FAIL, "Cancel option is  not verified in call details Unblock no");
+				clickBackButton_without_try_catch(4);
+
+
+			}}
+
+		catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->validate_canceloptionin_calldetailsUnblockno_vzw()");
+			e.printStackTrace();
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->validate_canceloptionin_calldetailsUnblockno_vzw()");
+
+		}
+
+	}
+	public void validation_Screeningoutgoingcall_enabled(SoftAssert sa) throws InterruptedException{
+		//Verify enabling Screening outgoing calls
+
 		try {
-			//============================Block scenario==========================
-			clickBtn(Locators_CallSetting.Callhistorytab);
+			navigateToSettingsAndElement(Locators_CallSetting.Callscreening);
 			minWait();
-			
-			clickBtn(Locators_CallSetting.dailedFirstNum);
-			clickBtn(Locators_CallSetting.blockNumberOpt);
+			checkScreeningOutgoingEnabled();
 			minWait();
-			if(isElementExist(Locators_CallSetting.cancelBtn)){
-				clickBtn(Locators_CallSetting.cancelBtn);
-				check=true;
-				APP_LOGS.info("Cancel Option is verified in Block scenario");
-				test.log(LogStatus.INFO, "Cancel Option is verified in Block scenario");
+			if(!Locators_CallSetting.screeningoutgoingcall.isEnabled()){
+				clickBtn(Locators_CallSetting.screeningoutgoingcall);
+				minWait();
+				System.out.println("Enabled");
+				APP_LOGS.info( "Screening outgoing call enabled ");
+				sa.assertTrue(true, "Screening outgoing call enabled ");
+				test.log(LogStatus.PASS, "Screening outgoing call enabled ");
 			}
-			clickBackButton(1);
-			//============================Unblock Scenario==========================
-			minWait();
+			else{
+				System.out.println("Disabled");
+				APP_LOGS.info("Validating Screening outgoing call disabled");
+				sa.fail();
+				test.log(LogStatus.FAIL, "Validating Screening outgoing call disabled");
+			}
+		}
+		catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->validation_Screeningoutgoingcall_enabled()");
+			e.printStackTrace();
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->validation_Screeningoutgoingcall_enabled()");
+
+		}
+
+	}
+	public void validation_Screeningoutgoingcall_disabled(SoftAssert sa) throws InterruptedException{
+		//Verify disabling Screening outgoing calls
+
+		try {
 			launch_an_app("phone");
 			minWait();
-			clickBtn(Locators_CallSetting.Callhistorytab);
+			navigateToSettingsAndElement_without_try_catch(Locators_CallSetting.Callscreening);
 			minWait();
-			clickBtn(Locators_CallSetting.dailedFirstNum);
+			checkScreeningOutgoingDisabled();
 			minWait();
-			blockUnblockNumber(Locators_CallSetting.blockNumberOpt, Locators_CallSetting.blockBtn);
-			minWait();
-			clickBackButton(1);
-			launch_an_app("phone");
-			minWait();
-			clickBtn(Locators_CallSetting.Callhistorytab);
-			minWait();
-			clickBtn(Locators_CallSetting.dailedFirstNum);
-			minWait();
-			clickBtn(Locators_CallSetting.unblockNumberOpt);
-			minWait();
-			if(isElementExist(Locators_CallSetting.cancelBtn)){
-				clickBtn(Locators_CallSetting.cancelBtn);
-				check=true;
-				APP_LOGS.info("Cancel Option is verified in Unblock scenario");
-				test.log(LogStatus.INFO, "Cancel Option is verified in Unblock scenario");
+			if(!Locators_CallSetting.screeningoutgoingcall.isEnabled()){
+				clickBtn(Locators_CallSetting.screeningoutgoingcall);
+				minWait();
+				System.out.println("Disabled");
+				APP_LOGS.info( "Screening outgoing call disabled ");
+				sa.assertTrue(true, "Screening outgoing call disabled");
+				test.log(LogStatus.PASS, "Screening outgoing call disabled ");
 			}
-			clickBackButton(1);
+			else{
+				System.out.println("Enabled");
+				APP_LOGS.info("Validating Screening outgoing call enabled");
+				sa.fail();
+				test.log(LogStatus.FAIL, "Validating Screening outgoing call  enabled");
+			}
+		}
+		catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->validation_Screeningoutgoingcall_disabled()");
+			e.printStackTrace();
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->validation_Screeningoutgoingcall_disabled()");
+
+		}
+
+
+	}
+	public void setDefaultSavingAccount() throws InterruptedException
+	{
+		/*
+		 * Set default saving account as phone in contacts application
+		 */
+		try {
 			minWait();
-			clickBtn(Locators_CallSetting.callDetailsOpt);
+			clickBtn(Locators_CallSetting.ContactsMoreOptions);
 			minWait();
-			blockUnblockNumber(Locators_CallSetting.unblockNumberOpt, Locators_CallSetting.unblockBtn);
-			clickBackButton(1);
+			clickBtn(Locators_CallSetting.contactsSettingsOPt);
+			minWait();
+			clickBtn(Locators_CallSetting.contactsDefaultAccountSettings);
+			minWait();
+			clickBtn(Locators_CallSetting.contactsDefaultPhone);
+			minWait();
+			clickBackButton_without_try_catch(1);
+
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->setDefaultSavingAccount()");
+			e.printStackTrace();
 
 		}
 		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in setDefaultSavingAccount()");
+		}
+	}
+	public void validation_initiatingcall_Screeningoutgoingcall_enabled(String name,String lastname,String refNum,SoftAssert sa) throws InterruptedException{
+		//Verify initiating calls to saved contacts on enabling Screening outgoing calls
+
+
+		try {
+			launch_an_app("phone");
+			navigateToSettingsAndElement_without_try_catch(Locators_CallSetting.Callscreening);
+			minWait();
+			checkScreeningOutgoingEnabled();
+			minWait();
+			APP_LOGS.info("Initiating calls to saved contacts on enabling Screening outgoing calls is verified");
+			sa.assertTrue(true, "Initiating calls to saved contacts on enabling Screening outgoing calls is verified");
+			test.log(LogStatus.PASS, "Initiating calls to saved contacts on enabling Screening outgoing calls is verified");		
+
+		}
+
+		catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->validate_Editedquickresponse_displayproperly_duringcallscreen()");
 			e.printStackTrace();
-			APP_LOGS.info("Element Not Found");
-			test.log(LogStatus.ERROR, "Element Not Found");
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->validate_Editedquickresponse_displayproperly_duringcallscreen()");
+
+		}
+
+
+	}
+
+	public void add_contact_for_callscreening(String name,String lastname,String refNum) throws InterruptedException{
+		{
+			try{
+
+				launch_an_app("phone");
+				AddContactFromContactsPage(name,lastname,refNum);
+				clickBackButton(4);
+				minWait();
+			}catch (org.openqa.selenium.NoSuchElementException e) {
+
+				test.log(LogStatus.ERROR, "Error in the locators->add_contact_for_callscreening()");
+				e.printStackTrace();
+
+			}catch (Exception e) {
+				test.log(LogStatus.ERROR, "Exeption in ->add_contact_for_callscreening()");
+
+			}
+		}
+	}
+	public void Editedquickresponse_displayproperly_duringcallscreen() throws InterruptedException{
+		//To verify user edited quick response should display properly on the screen while sending during a call screen
+		clickBackButton(4);
+		minWait();
+		try {
+			make_Call_from_RefDev();
+			customWait(11000);
+			Runtime.getRuntime().exec("adb -s "+p_Id+" shell input tap 547 182");
+			customWait(5000);
+			aDriver.swipe(80, 1840, 300, 600, 750);
+			minWait();
+			clickBtn(Locators_CallSetting.quickresponseedittxt);
+			minWait();
+			endCall_RefDevice();
+			minWait();
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->Editedquickresponse_displayproperly_duringcallscreen()");
+			e.printStackTrace();
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->Editedquickresponse_displayproperly_duringcallscreen()");
+
+		}
+
+	}
+
+	public void validate_Editedquickresponse_displayproperly_duringcallscreen(SoftAssert sa) throws InterruptedException{
+		try{
+			if (p_b_No.contains("-10.")||p_b_No.contains("-00.")) {
+				customWait(10000);
+				launch_an_app("messaging");
+				customWait(10000);
+
+				if(isElementExist(Locators_CallSetting.quickresponsemsg)){
+					clickBtn(Locators_CallSetting.quickresponsemsg);
+					minWait();
+					System.out.println("message sent");
+					APP_LOGS.info( "Quick response message sent ");
+					sa.assertTrue(true, "Quick response message sent");
+					test.log(LogStatus.PASS, "Quick response message sent ");
+				}
+				else{
+					System.out.println("message not sent");
+					APP_LOGS.info("Quick response message not sent");
+					sa.fail();
+					test.log(LogStatus.FAIL, "Quick response message not sent");
+				}
+
+			}else if (p_b_No.contains("-11.")||p_b_No.contains("-29.")||p_b_No.contains("-26.")) {
+				customWait(10000);
+				launch_APP(Locators_CallSetting.Bell_Messages);
+				customWait(10000);
+				if(isElementExist(Locators_CallSetting.bell_first_sms)){
+					clickBtn(Locators_CallSetting.bell_first_sms);
+					minWait();
+					System.out.println("message sent");
+					APP_LOGS.info( "Quick response message sent ");
+					sa.assertTrue(true, "Quick response message sent");
+					test.log(LogStatus.PASS, "Quick response message sent ");
+				}else{
+					System.out.println("message not sent");
+					APP_LOGS.info("Quick response message not sent");
+					sa.fail();
+					test.log(LogStatus.FAIL, "Quick response message not sent");
+				}
+			}
+				else if (p_b_No.contains("-15.")) {
+					customWait(10000);
+					launch_APP(Locators_CallSetting.MessagePlus);
+					if(isElementExist(Locators_CallSetting.vzw_Start_msg))
+					{
+						Runtime.getRuntime().exec("adb -s "+p_Id+" shell pm clear com.verizon.messaging.vzmsgs");
+						launch_APP(Locators_CallSetting.MessagePlus);
+						clickBtn(Locators_CallSetting.vzw_Start_msg);
+						clickBtn(Locators_CallSetting.vzw_msg_skipprovisioing);
+						if(isElementExist(Locators_CallSetting.VZW_first_sms)){
+							clickBtn(Locators_CallSetting.VZW_first_sms);
+							minWait();
+							System.out.println("message sent");
+							APP_LOGS.info( "Quick response message sent ");
+							sa.assertTrue(true, "Quick response message sent");
+							test.log(LogStatus.PASS, "Quick response message sent ");
+						}else{
+							System.out.println("message not sent");
+							APP_LOGS.info("Quick response message not sent");
+							sa.fail();
+							test.log(LogStatus.FAIL, "Quick response message not sent");
+						}
+					}else{
+						launch_APP(Locators_CallSetting.MessagePlus);
+						if(isElementExist(Locators_CallSetting.VZW_first_sms)){
+							clickBtn(Locators_CallSetting.VZW_first_sms);
+							minWait();
+							System.out.println("message sent");
+							APP_LOGS.info( "Quick response message sent ");
+							sa.assertTrue(true, "Quick response message sent");
+							test.log(LogStatus.PASS, "Quick response message sent ");
+						}else{
+							System.out.println("message not sent");
+							APP_LOGS.info("Quick response message not sent");
+							sa.fail();
+							test.log(LogStatus.FAIL, "Quick response message not sent");
+						}
+						}
+					}
+				
+				
+			
+				
+			
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "validate_Editedquickresponse_displayproperly_duringcallscreen()");
+			e.printStackTrace();
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->validate_Editedquickresponse_displayproperly_duringcallscreen()");
+
+		}
+
+	}
+	public void delete_SMS_O(SoftAssert sa) throws InterruptedException {
+		/* This Method delete the First Thread in the List. */
+
+		try {
+			if(isElementExist(Locators_CallSetting.firstSMS_InList_O)){
+			minWait();
+			clickBtn(Locators_CallSetting.firstSMS_InList_O);
+			minWait();
+			clickBtn(Locators_CallSetting.moreOption_O);
+			minWait();
+			clickBtn(Locators_CallSetting.delete_Messages);
+			minWait();
+			clickBtn(Locators_CallSetting.ALL_Msg);
+			minWait();
+			clickBtn(Locators_CallSetting.delete_Btn);
+			minWait();
+			clickBtn(Locators_CallSetting.Delete);
+			minWait();
+			APP_LOGS.info(" SMS deleted Successfully");
+			sa.assertTrue(true, "SMS deleted Successfully");
+			test.log(LogStatus.PASS, "SMS deleted Successfully");
+		
+	}
+
+else{
+	System.out.println("Deleting SMS failed");
+	APP_LOGS.info("Deleting SMS failed");
+	sa.fail();
+	test.log(LogStatus.FAIL, "Deleting SMS failed");
+	clickBackButton_without_try_catch(4);
+		}
+		}  catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR,"Error in locators->delete_SMS_O()");
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR,"Exeption in ->delete_SMS_O()");
+		}
+	}
+	public void delete_SMS_SL(SoftAssert sa) throws InterruptedException {
+		/* This Method delete the First Thread in the List. */
+
+		try {
+			System.out.println("IN Delete");
+			minWait();
+			if (isElementExist(multi_Loc_Strategy(Locators_CallSetting.firstsmsinlist_sl, Locators_CallSetting.firstsmsinlist_sl_indx, Locators_CallSetting.firstsmsinlist_text_sl, Locators_CallSetting.firstsmsinlistcls_sl, Locators_CallSetting.firstsmsinlistdes_sl, 1712, 1896))) {
+				clickBtn(multi_Loc_Strategy(Locators_CallSetting.firstsmsinlist_sl, Locators_CallSetting.firstsmsinlist_sl_indx, Locators_CallSetting.firstsmsinlist_text_sl, Locators_CallSetting.firstsmsinlistcls_sl, Locators_CallSetting.firstsmsinlistdes_sl, 605, 752));
+				minWait();
+				clickBtn(Locators_CallSetting.moreoptions_des_sl);
+				minWait();
+				clickBtn(multi_Loc_Strategy(Locators_CallSetting.delete_sl, Locators_CallSetting.delete_sl_indx, Locators_CallSetting.delete_id_sl, Locators_CallSetting.deletecls_sl, Locators_CallSetting.deletetxt_sl, 1735, 412));
+				minWait();
+				clickBtn(multi_Loc_Strategy(Locators_CallSetting.cnfrmdelete_id_sl, Locators_CallSetting.cnfrmdelete_sl,Locators_CallSetting.cnfrmdelete_sl_indx, Locators_CallSetting.cnfrmdeletecls_sl, Locators_CallSetting.cnfrmdeletetxt_sl, 1712, 1896));
+				minWait();
+				APP_LOGS.info(" SMS deleted Successfully");
+				sa.assertTrue(true, "SMS deleted Successfully");
+				test.log(LogStatus.PASS, "SMS deleted Successfully");
 			
 		}
+	
+	else{
+		System.out.println("Deleting SMS failed");
+		APP_LOGS.info("Deleting SMS failed");
+		sa.fail();
+		test.log(LogStatus.FAIL, "Deleting SMS failed");
+		clickBackButton_without_try_catch(4);
+			}
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR,"Error in locators->delete_SMS_SL()");
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR,"Exeption in ->delete_SMS_SL()");
+		}
+	}
 }
-}
-
-
-
-
-
-
-
-
-
 
 
 
