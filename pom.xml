@@ -26,7 +26,8 @@
 
 					<!-- Suite testng xml file to consider for test execution -->
 					<suiteXmlFiles>
-						<suiteXmlFile>src/test/resources/testsuites/MasterTestsuite.xml
+						<suiteXmlFile>src/test/resources/drivers/XP8_Wi-Fi.xml
+						
 						</suiteXmlFile>
 					</suiteXmlFiles>
 				</configuration>
