@@ -18,7 +18,7 @@
 					<properties>
 						<property>
 							<name>listener</name>
-							<value>src/test/java/TNGListner/Listner.java</value>
+							<value>/src/test/java/TNGListner/Listner.java</value>
 						</property>
 					</properties>
 					<useFile>true</useFile>
