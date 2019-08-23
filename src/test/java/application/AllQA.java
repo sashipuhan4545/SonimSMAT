@@ -90,7 +90,7 @@ import javafx.util.Pair;
 public class AllQA  extends CommonConfig {
 
 	//ObservableList<String> items=FXCollections.observableArrayList("Sanity Test","MultiMedia","Messaging","Connectivity","GMS","Browser","Settings","Tools","Contacts","Call","ScoutApps","Performance","DeviceFunctionality");
-	ObservableList<String> items=FXCollections.observableArrayList(/*"PTT"*//*"Sanity Test",*/"DataAndConnectivity","VOLTE-CallPerformance","3G-CallPerformance","Stability","PTT","Interaction"/*,"SCOUT"*//*"Call",/*,"Stability_AT&T-15595"*/);
+	ObservableList<String> items=FXCollections.observableArrayList(/*"PTT"*//*"Sanity Test",*/"Sanity","DataAndConnectivity","VOLTE-CallPerformance","3G-CallPerformance","Stability","PTT","Interaction"/*,"SCOUT"*//*"Call",/*,"Stability_AT&T-15595"*/);
 
 	//ObservableList<String> items=FXCollections.observableArrayList("Quick Sanity","Performance");
 	//	ObservableList<String> Sanity = FXCollections.observableArrayList("Sanity");
@@ -114,7 +114,7 @@ public class AllQA  extends CommonConfig {
 
 	//ObservableList<String> performance = FXCollections.observableArrayList("CallPerformance","Stability","Browser","All");
 	ObservableList<String> CallPerformance = FXCollections.observableArrayList("MO-Call","MT-Call","MO-MT-Call");
-	ObservableList<String> stability = FXCollections.observableArrayList("Contacts Stability",/*"Multitasking",*/"Wifi","Network Stability","Browser Stability",/*"Device Stability",*/"SMS"/*,*/);
+	ObservableList<String> stability = FXCollections.observableArrayList("Contacts Stability",/*"Multitasking",*/"Wifi","Network Stability","Browser Stability","Device Stability","SMS"/*,*/);
 	ObservableList<String> ATTStablity = FXCollections.observableArrayList("Telephony","Email");
 	ObservableList<String> ptt = FXCollections.observableArrayList("KodiakPTT");
 	ObservableList<String> IOT = FXCollections.observableArrayList("Interaction Cases","Interruption Cases");
@@ -867,7 +867,7 @@ public class AllQA  extends CommonConfig {
 
 			comboBoxItems=(String) combobox.getSelectionModel().getSelectedItem();
 
-			if(comboBoxItems=="Sanity Test")
+			if(comboBoxItems=="Sanity")
 			{
 				listView.setItems(Sanity);
 				listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
@@ -1209,7 +1209,7 @@ public class AllQA  extends CommonConfig {
 								public void run() {
 									TestNG runner=new TestNG();
 									List<String> suitefiles=new ArrayList<String>();
-									suitefiles.add("src/test/resources/drivers/XP5_Device_QA_Sanity_O.xml");
+									suitefiles.add("src/test/resources/drivers/XP8_New_Sanity.xml");
 									System.out.println("XP5 :");
 									runner.setTestSuites(suitefiles);
 									runner.run();	
@@ -1822,7 +1822,7 @@ public class AllQA  extends CommonConfig {
 								public void run() {
 									TestNG runner=new TestNG();
 									List<String> suitefiles=new ArrayList<String>();
-									suitefiles.add("src/test/resources/drivers/XP8_Sanity_O.xml");
+									suitefiles.add("src/test/resources/drivers/XP8_New_Sanity.xml");
 									System.out.println("Android O XP8");
 									runner.setTestSuites(suitefiles);
 									runner.run();	
@@ -4048,7 +4048,7 @@ public class AllQA  extends CommonConfig {
 					}
 					else if (JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("-8.1")) {
 
-						File Stabilitytest = new File("src/test/resources/extentreport/XP8_DeviceStability_Orio_TestReport.html");
+						File Stabilitytest = new File("src/test/resources/extentreport/XP8_Device_Stability_Orio_TestReport.html");
 						File StabilityDest = new File(System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog");
 						String Stabilitypath=System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog";
 						try {

@@ -154,13 +154,6 @@ public class DataProviders {
 		return ExcelUtils.getData_aosp(testcase, excel, "SCOUT_Sanity");
 	}
 	
-	@DataProvider(name ="XP8DevSanity")
-	 public static Object[][] XP8DevSanity(Method m) throws Exception{
-	  System.out.println(m.getName());
-	  ExcelReader excel = new ExcelReader(ExcelConstants.XP5S_XL_PATH);
-	  String testcase = m.getName();
-	  return ExcelUtils.getData_aosp(testcase, excel,"XP8_Dev_Sanity");
-	 }
 	
 	@DataProvider(name ="XP8_PhoneDialer")
 	 public static Object[][] XP8_PhoneDialer(Method m) throws Exception{
@@ -261,6 +254,15 @@ public class DataProviders {
 
 		return ExcelUtils.getData_aosp(testcase, excel,"XP8_Wifi");
 	}
+	
+	@DataProvider(name ="XP8_NewSanityTest")
+	public static Object[][] XP8_NewSanityTest(Method m) throws Exception{
+		System.out.println(m.getName());
+		ExcelReader excel = new ExcelReader(ExcelConstants.XP5S_XL_PATH);
 
+		String testcase = m.getName();
+
+		return ExcelUtils.getData_aosp(testcase, excel,"XP8_NewSanityTest");
+	}
 
 }
