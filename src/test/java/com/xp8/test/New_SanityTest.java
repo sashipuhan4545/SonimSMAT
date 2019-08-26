@@ -154,7 +154,7 @@ public class New_SanityTest extends New_SanityUtil {
 	// ============================================
 
 	
-	/*@Test(priority = 1, dataProvider = "XP8_NewSanityTest", dataProviderClass = DataProviders.class)
+	@Test(priority = 1, dataProvider = "XP8_NewSanityTest", dataProviderClass = DataProviders.class)
 	public void XP8_DeviceSanity_003_Check_Switching_of_camera_FandB(Hashtable<String, String> dt)
 			throws InterruptedException, IOException, AWTException {
 
@@ -196,7 +196,7 @@ public class New_SanityTest extends New_SanityUtil {
 		clickVideoButton();
 		customWait(8000);
 		validate_ADB_Logs(fN, "encoder (video) stopped");// com.android.camera.NEW_VIDEO
-	}*/
+	}
 
 
 	@Test(priority = 3, dataProvider = "XP8_NewSanityTest", dataProviderClass = DataProviders.class)
@@ -664,7 +664,7 @@ public class New_SanityTest extends New_SanityUtil {
 		  sa.assertAll();
 	}
 
-	@Test(priority = 34, dataProvider = "XP8_NewSanityTest", dataProviderClass = DataProviders.class) // 
+	@Test(priority = 29, dataProvider = "XP8_NewSanityTest", dataProviderClass = DataProviders.class) // 
 	public void XP8_DeviceSanity_0034_check_user_able_to_download_differentMedia_Files(Hashtable<String, String> dt)
 			throws InterruptedException, IOException, AWTException {
 
