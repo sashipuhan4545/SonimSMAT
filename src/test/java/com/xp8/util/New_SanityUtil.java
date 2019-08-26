@@ -184,10 +184,10 @@ public class New_SanityUtil extends BaseUtil {
 		}
 	}
 
-	public void dailCallUsingDailPad(String dailNum) throws InterruptedException, IOException {
+	public void dialCallUsingDialPad(String dailNum) throws InterruptedException, IOException {
 
 		try {
-			dailNumber(dailNum);
+			dialNumber(dailNum);
 			if (!isElementExist(New_SanityLocators.turnOff_Airplane_PopUp)) {
 				try {
 					for (int j = 1; j <= 100; j++) {
@@ -225,10 +225,8 @@ public class New_SanityUtil extends BaseUtil {
 		}
 	}
 
-	public void dailNumber(String dailNum) throws IOException {
+	public void dialNumber(String dailNum) throws IOException {
 		try {
-			minWait();
-			clickBtn(New_SanityLocators.add_Call);
 			minWait();
 			clickBtn(New_SanityLocators.dailerPad);
 			minWait();

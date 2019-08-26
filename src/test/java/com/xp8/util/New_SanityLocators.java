@@ -19,8 +19,8 @@ public class New_SanityLocators {
 	@AndroidFindBy(xpath="//android.widget.TextView[@text='Turn off airplane mode to make a call.']")
 	public static AndroidElement turnOff_Airplane_PopUp;
 	
-	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Add call\")")
-	public static AndroidElement add_Call;
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.ImageButton\").description(\"key pad\")")
+	public static AndroidElement add_Call; 
 	
 	@AndroidFindBy(xpath="//*[@resource-id='com.android.dialer:id/floating_action_button' or @resource-id='com.google.android.dialer:id/fab']")
 	public static AndroidElement dailerPad;
@@ -195,7 +195,7 @@ public class New_SanityLocators {
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.LinearLayout\").instance(7)")
 	 public static AndroidElement Wifi_wifiLnk;
 	
-	@AndroidFindBy(id = "com.android.settings:id/switch_widget")
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.Switch\").index(1)")
 	public static AndroidElement Wifi_Switch_Btn;
 	
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"Wi‑Fi\")")

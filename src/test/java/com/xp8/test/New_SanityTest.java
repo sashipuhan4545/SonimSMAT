@@ -16,6 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.json.simple.parser.ParseException;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -152,7 +153,8 @@ public class New_SanityTest extends New_SanityUtil {
 	// ========================================= Test Method
 	// ============================================
 
-	@Test(priority = 1, dataProvider = "XP8_NewSanityTest", dataProviderClass = DataProviders.class)
+	
+	/*@Test(priority = 1, dataProvider = "XP8_NewSanityTest", dataProviderClass = DataProviders.class)
 	public void XP8_DeviceSanity_003_Check_Switching_of_camera_FandB(Hashtable<String, String> dt)
 			throws InterruptedException, IOException, AWTException {
 
@@ -194,9 +196,10 @@ public class New_SanityTest extends New_SanityUtil {
 		clickVideoButton();
 		customWait(8000);
 		validate_ADB_Logs(fN, "encoder (video) stopped");// com.android.camera.NEW_VIDEO
-	}
+	}*/
 
-	@Test(priority = 1333, dataProvider = "XP8_NewSanityTest", dataProviderClass = DataProviders.class)
+
+	@Test(priority = 3, dataProvider = "XP8_NewSanityTest", dataProviderClass = DataProviders.class)
 	public void XP8_DeviceSanity_005_LaunchAndCheck_CalculatorOperation(Hashtable<String, String> dt)
 			throws InterruptedException, IOException, AWTException {
 
@@ -373,6 +376,7 @@ public class New_SanityTest extends New_SanityUtil {
 		sa.assertAll();
 	}
 
+	
 	@Test(priority = 13, dataProvider = "XP8_NewSanityTest", dataProviderClass = DataProviders.class) // 131
 	public void XP8_DeviceSanity_0017_checkDeviceInformation_WithSwrealese_and_stng(Hashtable<String, String> dt)
 			throws InterruptedException, IOException, AWTException {
@@ -381,7 +385,7 @@ public class New_SanityTest extends New_SanityUtil {
 				"===================== XP8_DeviceSanity_0017_checkDeviceInformation_WithSwrealese_and_stng ======================");
 		SoftAssert sa = new SoftAssert();
 		launch_An_App(dt.get("CallDialer_Package"), dt.get("CallDialer_Activity"));
-		dailNumber(dt.get("num"));
+		dailNumberforEnggMenu(dt.get("num"));
 		LinkedList<String> al = checkInf_inSwRealease();
 		close_CIT();
 		Launch_App("Setting");
@@ -416,7 +420,7 @@ public class New_SanityTest extends New_SanityUtil {
 	
 	}
 	
-	@Test(priority = 14, dataProvider = "XP8_NewSanityTest", dataProviderClass = DataProviders.class) // 137
+	@Test(priority = 16, dataProvider = "XP8_NewSanityTest", dataProviderClass = DataProviders.class) // 137
 	public void XP8_DeviceSanity_0020_Enable_Disable_AirplaneMode_In_QuickStng(Hashtable<String, String> dt)
 			throws InterruptedException, IOException, AWTException {
 		APP_LOGS.info("===================== XP8_DeviceSanity_0020_Enable_Disable_AirplaneMode_In_QuickStng ======================");
@@ -426,13 +430,13 @@ public class New_SanityTest extends New_SanityUtil {
 		swipe_QuickPanel_SecondPage();
 		enable_Shortcuts_In_QuickPanel(New_SanityLocators.airplane_OffState_QuickPanel_O);
 		launch_APP(New_SanityLocators.phone);
-		dailCallUsingDailPad(refNum);
+		dialCallUsingDialPad(refNum);
 		validate_Airplane_Enable(refNum);
 		swipe_NotificationBar();
 		swipe_QuickPanel_SecondPage();
 		disable_Shortcuts_QuickPanel(New_SanityLocators.airplane_OnState_QuickPanel_O);
 		launch_APP(New_SanityLocators.phone);
-		dailCallUsingDailPad(refNum);
+		dialCallUsingDialPad(refNum);
 		validate_Airplane_Disable(refNum);
 		end_Call();
 		sa.assertAll();
