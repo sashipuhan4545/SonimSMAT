@@ -90,13 +90,15 @@ import javafx.util.Pair;
 public class AllQA  extends CommonConfig {
 
 	//ObservableList<String> items=FXCollections.observableArrayList("Sanity Test","MultiMedia","Messaging","Connectivity","GMS","Browser","Settings","Tools","Contacts","Call","ScoutApps","Performance","DeviceFunctionality");
-	ObservableList<String> items=FXCollections.observableArrayList(/*"PTT"*//*"Sanity Test",*/"Sanity","DataAndConnectivity","VOLTE-CallPerformance","3G-CallPerformance","Stability","PTT","Interaction"/*,"SCOUT"*//*"Call",/*,"Stability_AT&T-15595"*/);
+	ObservableList<String> items=FXCollections.observableArrayList("New Sanity",/*"PTT"*//*"Sanity Test",*/"Sanity","DataAndConnectivity","VOLTE-CallPerformance","3G-CallPerformance","Stability","PTT","Interaction"/*,"SCOUT"*//*"Call",/*,"Stability_AT&T-15595"*/);
 
 	//ObservableList<String> items=FXCollections.observableArrayList("Quick Sanity","Performance");
 	//	ObservableList<String> Sanity = FXCollections.observableArrayList("Sanity");
 
 
 	//ObservableList<String> Sanity = FXCollections.observableArrayList("Device","DEV-QA-Sanity");
+	ObservableList<String> New_Sanity = FXCollections.observableArrayList("Device Sanity");
+
 	ObservableList<String> Sanity = FXCollections.observableArrayList("Device");
 
 
@@ -872,9 +874,13 @@ public class AllQA  extends CommonConfig {
 				listView.setItems(Sanity);
 				listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
-			}
+			}else if (comboBoxItems=="New Sanity") {
+			
+				listView.setItems(New_Sanity);
+				listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+				
 			//Added as per Raj comments 03-12-2018
-			else if (comboBoxItems=="Stability") {
+			}else if (comboBoxItems=="Stability") {
 
 				listView.setItems(stability);
 				listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
@@ -1796,6 +1802,22 @@ public class AllQA  extends CommonConfig {
 						});
 						email.start();
 						break;		*/
+						
+					case "Device Sanity":
+						Thread DS=new Thread(new Runnable() {
+							public void run() {
+								TestNG runner=new TestNG();
+								List<String> suitefiles=new ArrayList<String>();
+								suitefiles.add("src/test/resources/drivers/XP8_New_Sanity.xml");
+								System.out.println("New Device Sanity Started");
+								runner.setTestSuites(suitefiles);
+								runner.run();	
+
+
+							}
+						});
+						DS.start();
+						break;
 
 					case "Device":
 
@@ -3861,6 +3883,35 @@ public class AllQA  extends CommonConfig {
 
 						try {
 							BaseUtil.openReportPath(emailpath);
+						} catch (IOException e) {
+
+							e.printStackTrace();
+						}
+
+
+
+					}
+					else {
+						executionReportDoesnotExist("Test Report is not generated yet");
+					}
+
+					break;	
+					
+				case "Device Sanity":
+
+					File DeviceNewSanity = new File("src/test/resources/extentreport/XP8_ATT_Stability_Email_TestReport.html");
+					File DeviceNewSanityDest = new File(System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog");
+					String DeviceNewSanityPath=System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog";
+					try {
+						FileUtils.copyFileToDirectory(DeviceNewSanity, DeviceNewSanityDest);
+					} catch (IOException e) {
+
+						e.printStackTrace();
+					}
+					if(DeviceNewSanity.exists()) {
+
+						try {
+							BaseUtil.openReportPath(DeviceNewSanityPath);
 						} catch (IOException e) {
 
 							e.printStackTrace();

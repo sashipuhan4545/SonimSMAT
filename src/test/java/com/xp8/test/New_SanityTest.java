@@ -131,7 +131,7 @@ public class New_SanityTest extends New_SanityUtil {
 																														// Case
 																														// Start
 																														// Here
-		// test.assignAuthor("Chandan. A"); //Test Script Author Name.
+	
 
 		clearRecentApps();
 	}
