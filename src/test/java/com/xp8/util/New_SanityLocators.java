@@ -128,16 +128,16 @@ public class New_SanityLocators {
 	
 	/********************** Clock ********************************/
 	
-	@AndroidFindBy(uiAutomator="new UiSelector().className(\"to\").description(\"Alarm\")")
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Alarm\")")
 	public static AndroidElement clock_alarmIcon;
 	
-	@AndroidFindBy(uiAutomator="new UiSelector().className(\"to\").description(\"Timer\")")
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Timer\")")
 	public static AndroidElement clock_TimerIcon;
 	
-	@AndroidFindBy(uiAutomator="new UiSelector().className(\"to\").description(\"Clock\")")
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Clock\")")
 	public static AndroidElement clock_ClockIcon;
 	
-	@AndroidFindBy(uiAutomator="new UiSelector().className(\"to\").description(\"Stopwatch\")")
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Stopwatch\")")
 	public static AndroidElement clock_StopWatchIcon;
 	
 	@AndroidFindBy(id="com.google.android.deskclock:id/digital_clock")
@@ -198,7 +198,7 @@ public class New_SanityLocators {
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.Switch\").index(1)")
 	public static AndroidElement Wifi_Switch_Btn;
 	
-	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"Wi‑Fi\")")
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").index(1)")
 	public static AndroidElement Wifi_PageLogo;
 	
 	@AndroidFindBy(id="com.android.settings:id/password")
@@ -411,9 +411,23 @@ public class New_SanityLocators {
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.Button\").text(\"OK\")") 
 	public static AndroidElement OK_1;
 	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Incoming call\")") 
+	public static AndroidElement incomingCall_Lnk;
+	
 	@AndroidFindBy(id="com.android.dialer:id/custom_sms_input")
 	public static AndroidElement msg_popup;
 	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.ImageView\").description(\"Contacts tab.\")")
+	public static AndroidElement dialer_contactsTabBtn;
+	
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").resourceId(\"com.android.contacts:id/menu_search\")")
+	public static AndroidElement Search_ConatctIcon;
+	
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.view.ViewGroup\").index(1)")
+	public static AndroidElement contact_searchedCnctact;
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Search contacts\")") 
+	public static AndroidElement contact_searchIcon;
 	
 	/***************** Testing Code *********************/
 	
