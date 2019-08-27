@@ -14,7 +14,7 @@
             
       	</image>
       </ImageView>
-      <Label layoutX="144.0" layoutY="63.0" text="Version : SMAT_3.19.419" textFill="#d5dad7">
+      <Label layoutX="144.0" layoutY="63.0" text="Version : SMAT_3.20.419" textFill="#d5dad7">
          <font>
             <Font name="Calibri Bold" size="16.0" />
          </font>

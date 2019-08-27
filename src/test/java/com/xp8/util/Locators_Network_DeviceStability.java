@@ -28,7 +28,7 @@ public class Locators_Network_DeviceStability {
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").resourceId(\"com.google.android.apps.messaging:id/conversation_timestamp\")")
 	public static AndroidElement message_Summary;
 	
-	@AndroidFindBy(xpath="//android.widget.TextView[@text='SendingÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦']")
+	@AndroidFindBy(xpath="//android.widget.TextView[@text='SendingÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¦']")
 	public static AndroidElement sending_Txt1;
 	
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").resourceId(\"com.google.android.apps.messaging:id/char_counter\")")
@@ -300,10 +300,10 @@ public class Locators_Network_DeviceStability {
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Now\")")
 	public static AndroidElement now_Text; //To validate after sending SMS.
 	
-	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Now ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ SMS\")")
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Now ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¢ SMS\")")
 	public static AndroidElement justnow_Text; //To validate after sending SMS.
 
-	@AndroidFindBy(xpath="//android.widget.TextView[@text='SendingÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦']")
+	@AndroidFindBy(xpath="//android.widget.TextView[@text='SendingÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¦']")
 	public static AndroidElement sending_Txt;
 
 	@AndroidFindBy(xpath="//android.widget.ImageButton[@content-desc='Attach']")
@@ -513,7 +513,7 @@ public class Locators_Network_DeviceStability {
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.EditText\").resourceId(\"com.verizon.messaging.vzmsgs:id/curRecip\")")	
 	public static AndroidElement TO_Field_O;
 	
-	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.EditText\").text(\"Type a messageÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦\")")
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.EditText\").text(\"Type a messageÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¦\")")
 	public static AndroidElement messageField_O;
 	
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Conversations\")")
@@ -840,7 +840,7 @@ public class Locators_Network_DeviceStability {
 	public static AndroidElement call;
 	
 	//****************************************Wi-Fi Menu*****************************************
-	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").textContains(\"WiÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬ËœFi\")")
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").textContains(\"WiÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‹Å“Fi\")")
 	public static AndroidElement NetworkAndInternet_Wifi_tc1;
 	
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.LinearLayout\").index(0)")

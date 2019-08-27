@@ -264,5 +264,24 @@ public class DataProviders {
 
 		return ExcelUtils.getData_aosp(testcase, excel,"XP8_NewSanityTest");
 	}
+	@DataProvider(name ="XP8_Data_Setting")
+	public static Object[][] XP8_Data_Setting(Method m) throws Exception{
+		System.out.println(m.getName());
+		ExcelReader excel = new ExcelReader(ExcelConstants.XP5S_XL_PATH);
+
+		String testcase = m.getName();
+
+		return ExcelUtils.getData_aosp(testcase, excel,"XP8_Data_Setting");
+	}
+
+	@DataProvider(name ="XP8_Messaging")
+	public static Object[][] XP8_Messaging(Method m) throws Exception{
+		System.out.println(m.getName());
+		ExcelReader excel = new ExcelReader(ExcelConstants.XP5S_XL_PATH);
+
+		String testcase = m.getName();
+
+		return ExcelUtils.getData_aosp(testcase, excel,"XP8_Messaging");
+	}
 
 }

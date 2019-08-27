@@ -121,6 +121,25 @@ public class XP8_Interactions_Util extends BaseUtil {
 				clickBtn(Locators_Interactions.skypetouch);
 				
 			}
+			aDriver.pressKeyCode(AndroidKeyCode.HOME);
+			Locators_BaseUtil.AppListIcon.click();
+			minWait();
+			scrollToElements(Locators_Interactions.skype);
+			if(isElementExist(Locators_Interactions.skype)){
+				System.out.println("skype installled");
+				APP_LOGS.info("skype installled");
+				sa.assertTrue(true, "skype installled");
+				test.log(LogStatus.PASS, "skype installled");
+
+
+			} else {
+				System.out.println("skype not  installled");
+				APP_LOGS.info("skype not  installled");
+				sa.fail("skype not  installled");
+				test.log(LogStatus.FAIL, "skype not  installled ");
+
+			}
+			
 		}catch (org.openqa.selenium.NoSuchElementException e) {
 
 			test.log(LogStatus.ERROR, "Error in the locators->Installing_skype()");
@@ -141,24 +160,53 @@ public class XP8_Interactions_Util extends BaseUtil {
 			if(isElementExist(Locators_Interactions.gaana)){
 				Runtime.getRuntime().exec("adb -s "+p_Id+" shell pm clear com.gaana");	
 				launch_APP(Locators_Interactions.gaana);
-				if(isElementExist(Locators_Interactions.gaanaskip)){
-				clickBtn(Locators_Interactions.gaanaskip);
-				clickBtn(Locators_Interactions.gaanaskip);
-				//clickBtn(Locators_Interactions.gaanaskip);
-				clickBtn(Locators_Interactions.gaanadolater);
-				}else{
+				wait.until(ExpectedConditions.visibilityOf(Locators_Interactions.gaanacontinue2));
+				 clickBtn(Locators_Interactions.gaanacontinue2);
+				 aDriver.pressKeyCode(AndroidKeyCode.BACK);
+				 minWait();
+				 aDriver.pressKeyCode(AndroidKeyCode.BACK);
+				 minWait();
+
+					//clickBtn(Locators_Interactions.gaanaskip);
+				/* wait.until(ExpectedConditions.visibilityOf(Locators_Interactions.gaanacontinue));
 					clickBtn(Locators_Interactions.gaanacontinue);
-					clickBtn(Locators_Interactions.gaanaskip);
-					clickBtn(Locators_Interactions.gaanadolater);
-				}
+					wait.until(ExpectedConditions.visibilityOf(Locators_Interactions.gaanadolater));
+					clickBtn(Locators_Interactions.gaanadolater);*/
+				
+				
+				
 		}else{
+			    aDriver.pressKeyCode(AndroidKeyCode.HOME);
 				Runtime.getRuntime().exec("adb -s "+p_Id+" install .\\src\\test\\resources\\StorageFile\\Gaanamusicapp.apk");
 				customWait(5000);
 				launch_APP(Locators_Interactions.gaana);
-				clickBtn(Locators_Interactions.gaanaskip);
-				clickBtn(Locators_Interactions.gaanaskip);
-				clickBtn(Locators_Interactions.gaanadolater);
-		}		
+				wait.until(ExpectedConditions.visibilityOf(Locators_Interactions.gaanacontinue2));
+				 clickBtn(Locators_Interactions.gaanacontinue2);
+					//clickBtn(Locators_Interactions.gaanaskip);
+				 aDriver.pressKeyCode(AndroidKeyCode.BACK);
+				 minWait();
+				 aDriver.pressKeyCode(AndroidKeyCode.BACK);
+				 minWait();
+		}	
+			aDriver.pressKeyCode(AndroidKeyCode.HOME);
+			Locators_BaseUtil.AppListIcon.click();
+			minWait();
+			scrollToElements(Locators_Interactions.gaana);
+			if(isElementExist(Locators_Interactions.gaana)){
+				System.out.println("gaana installled");
+				APP_LOGS.info("gaana installled");
+				sa.assertTrue(true, "gaana installled");
+				test.log(LogStatus.PASS, "gaana installled");
+
+
+			} else {
+				System.out.println("gaana not  installled");
+				APP_LOGS.info("gaana not  installled");
+				sa.fail("gaana not  installled");
+				test.log(LogStatus.FAIL, "gaana not  installled ");
+
+			}
+			
 				
 }catch (org.openqa.selenium.NoSuchElementException e) {
 
@@ -289,8 +337,10 @@ public class XP8_Interactions_Util extends BaseUtil {
 			try {
 				//enter_Num_ToField1(number);
 				enterTextToInputField(Locators_Interactions.TO_Field_Text1_att,refNum);
-				customWait(2000);
-			   System.out.println("Enter Text");
+				
+				aDriver.pressKeyCode(AndroidKeyCode.BACK);
+			     System.out.println("Enter Text");
+				
 				enterText_MessageField(message);
 			}catch (org.openqa.selenium.NoSuchElementException e) {
 
@@ -493,19 +543,19 @@ public class XP8_Interactions_Util extends BaseUtil {
 			WebDriverWait wait  =new WebDriverWait(aDriver, 80);
 			
 			try{
-				wait.until(ExpectedConditions.visibilityOf(Locators_Interactions.now_Text));
+				/*wait.until(ExpectedConditions.visibilityOf(Locators_Interactions.now_Text));
 				clickBtn(Locators_Interactions.skypecontact);
 				System.out.println("rply");
 				enterText_MessageField(message);
-				customWait(6000);
-				/*aDriver.openNotifications();
+				customWait(6000);*/
+				aDriver.openNotifications();
 				//Runtime.getRuntime().exec("adb  -s "+p_Id+"shell cmd statusbar expand-settings"); 
 				minWait();
 				System.out.println("rply out");
-				
+				wait.until(ExpectedConditions.visibilityOf(Locators_Interactions.reply_txt));
 				clickBtn(Locators_Interactions.reply_txt);
 				enterTextToInputField(Locators_Interactions.reply_typemsg,message);
-				clickBtn(Locators_Interactions.reply_send);*/
+				clickBtn(Locators_Interactions.reply_send);
 				
 				
 			} catch (org.openqa.selenium.NoSuchElementException e) {
@@ -584,6 +634,9 @@ public class XP8_Interactions_Util extends BaseUtil {
 			minWait();
 			clickBtn(Locators_Interactions.saveOpt);
 			minWait();
+			if(isElementExist(Locators_Interactions.okBtn)){
+				clickBtn(Locators_Interactions.okBtn);
+			}
 			aDriver.pressKeyCode(AndroidKeyCode.BACK);
 			if(isElementExist(Locators_Interactions.validate_savedcontact)){
 				APP_LOGS.info("contacts saved");
@@ -729,13 +782,20 @@ public void enable_disable_data(){
 		}
 	}
      public void validate_set_alarm(SoftAssert sa){
+    	 WebDriverWait wait  =new WebDriverWait(aDriver, 80);
     	 try{
     		 clickBtn(Locators_Interactions.alarm);
     		 clickBtn(Locators_Interactions.createalarm);
+    		 customWait(5000);
     		 clickBtn(Locators_Interactions.twohrsalarm);
+    		 customWait(5000);
     		 clickBtn(Locators_Interactions.fortyminshrsalarm);
+    		 customWait(5000);
     		 clickBtn(Locators_Interactions.okalarm);
+    		 customWait(5000);
     		 if(isElementExist(Locators_Interactions.alarmenabled)){
+    			wait.until(ExpectedConditions.visibilityOf(Locators_Interactions.alarmdelete));
+    			
     			 clickBtn(Locators_Interactions.alarmdelete);
     			 APP_LOGS.info("Alarm saved");
  				System.out.println("Alarm saved");
@@ -758,17 +818,29 @@ public void enable_disable_data(){
  			}
     			 
     		 }
+     
      public void validate_set_timer(SoftAssert sa){
+    	 WebDriverWait wait  =new WebDriverWait(aDriver, 80);
     	 try{
     		 clickBtn(Locators_Interactions.timer);
+    		 customWait(5000);
     		 clickBtn(Locators_Interactions.settimer);
+    		 customWait(5000);
     		 clickBtn(Locators_Interactions.settimer);
+    		 customWait(5000);
     		 clickBtn(Locators_Interactions.settimer);
+    		 customWait(5000);
     		 clickBtn(Locators_Interactions.settimer);
+    		 customWait(5000);
     		 clickBtn(Locators_Interactions.settimer);
+    		 customWait(5000);
     		 clickBtn(Locators_Interactions.settimer);
+    		 customWait(5000);
     		 clickBtn(Locators_Interactions.startingtimer);
+    		 customWait(5000);
     		 if(isElementExist(Locators_Interactions.ontimer)){
+    			 wait.until(ExpectedConditions.visibilityOf(Locators_Interactions.deletetimer));
+     			
     			 clickBtn(Locators_Interactions.deletetimer);
     			 APP_LOGS.info("Timer saved");
  				System.out.println("Timer saved");
@@ -1098,7 +1170,8 @@ public void enable_disable_data(){
 		try{
 			aDriver.pressKeyCode(AndroidKeyCode.HOME);
 		     aDriver.openNotifications();
-		     clickBtn(Locators_Interactions.usbdebuggingconnected);
+		     scrollToText("USB debugging connected");
+		    // clickBtn(Locators_Interactions.usbdebuggingconnected);
 		     if(isElementExist(Locators_Interactions.developeropt)){
 				APP_LOGS.info("Notification is validated");
 				System.out.println("Notification is validated");
@@ -1134,14 +1207,17 @@ public void enable_disable_data(){
 	}
 	public void Musicplay_gaana(SoftAssert sa){
 		try{
+		     	customWait(10000);
 			    clickBtn(Locators_Interactions.gaanaframe);
 			    clickBtn(Locators_Interactions.gaanahome);
 				scrollToText("Trending Songs");
-				clickBtn(Locators_Interactions.gaanasongslt);
+				//clickBtn(Locators_Interactions.gaanasongslt);
 				clickBtn(Locators_Interactions.gaanaplay);
-				aDriver.openNotifications();	
+				customWait(10000);
+				aDriver.openNotifications();
+				customWait(5000);
 			if(isElementExist(Locators_Interactions.gaananotification)){
-				clickBtn(Locators_Interactions.clearall);
+				
 				APP_LOGS.info("GaanaNotification is validated");
 				System.out.println("GaanaNotification is validated");
 				sa.assertTrue(true, "GaanaNotification is validated");
@@ -1287,7 +1363,7 @@ public void enable_disable_data(){
 		aDriver.pressKeyCode(AndroidKeyCode.ENTER);
 		minWait();
 		System.out.println("URL Entered");
-		
+		customWait(10000);
 		if(isElementExist(Locators_Interactions.chromegoogle)){
 			APP_LOGS.info("Browser is validated");
 			System.out.println("Browser is validated");
@@ -1353,6 +1429,7 @@ public void enable_disable_data(){
 		clickBtn(Locators_Interactions.fmon);
 		wait.until(ExpectedConditions.visibilityOf(Locators_Interactions.fmfrequency));
 		aDriver.openNotifications();
+		wait.until(ExpectedConditions.visibilityOf(Locators_Interactions.fmnotification));
 		if(isElementExist(Locators_Interactions.fmnotification)){
 			
 			APP_LOGS.info("FM is validated");
@@ -1513,15 +1590,11 @@ public void enable_disable_data(){
 		}
 
 		public void skype_chat(SoftAssert sa,String phone,String text,String typemsg1){
+			WebDriverWait wait = new WebDriverWait(aDriver, 600);
 			try{
 				
 				System.out.println("skype in");
-					//clickBtn(Locators_Interactions.skypetouch);
-				/*clickBtn(Locators_Interactions.skypehomecall);
-					clickBtn(Locators_Interactions.skypehomecontact);
-					customWait(3000);
-					
-					clickBtn(Locators_Interactions.skypeall);*/
+				wait.until(ExpectedConditions.visibilityOf(Locators_Interactions.skypehomechats));
 					clickBtn(Locators_Interactions.skypehomechats);
 					
 					customWait(8000);
@@ -1802,26 +1875,48 @@ public void enable_disable_data(){
 		
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		public void enablemsg_notification(SoftAssert sa){
+			try{
+				clickBtn(Locators_Interactions.msgnotification);
+			     clickBtn(Locators_Interactions.msgsettings);
+			     clickBtn(Locators_Interactions.msgnotification);
+			     clickBtn(Locators_Interactions.msgrestoresettings);
+			   // selectCheckbox(Locators_Interactions.msgcheckbox);
+		   } catch (org.openqa.selenium.NoSuchElementException e) {
+				test.log(LogStatus.ERROR, "Error in the locators->enablemsg_notification()");
+				e.printStackTrace();
+
+			}catch (Exception e) {
+				test.log(LogStatus.ERROR, "Exception in enablemsg_notification()");
+				e.printStackTrace();
+			}
+	          
+			
+			
 		}
+}
+			
+			
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	
 
 	

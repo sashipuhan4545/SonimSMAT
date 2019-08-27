@@ -44,7 +44,7 @@ public class XP8_NetworkConnectivityTest extends XP8_Network_Stability_Util_orio
 	public ExcelReader excel;
 	Properties properties;
 	public static ExtentTestInterruptedException testexception;
-	public int  itr =1;
+	public int  itr =AllQA.NUMOFCALLS;
 	boolean value = false;
 	public Timer timer1;
 	

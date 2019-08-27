@@ -4,3 +4,7 @@ encoding//src/test/java/com/xp3/Utils/XP3_Device_Sanity_Util.java=UTF-8
 encoding//src/test/java/com/xp5S/util/Calculator_Util.java=UTF-8
 encoding//src/test/java/com/xp5S/util/Locators_Calculator.java=UTF-8
 encoding//src/test/java/com/xp5S/util/XP5S_Locators_SafeGuard.java=UTF-8
+encoding//src/test/java/com/xp8/util/Locators_DataUsageSetting.java=UTF-8
+encoding//src/test/java/com/xp8/util/Locators_DeviceStability.java=UTF-8
+encoding//src/test/java/com/xp8/util/Locators_Network_DeviceStability.java=UTF-8
+encoding//src/test/java/com/xp8/util/Locators_Wifi.java=UTF-8

@@ -107,10 +107,10 @@ public class Locators_Interactions {
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Now\")")
 	public static AndroidElement now_Text; //To validate after sending SMS.
 
-	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Now ï SMS\")")
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Now ‚Ä¢ SMS\")")
 	public static AndroidElement justnow_Text; //To validate after sending SMS.
 
-	@AndroidFindBy(xpath="//android.widget.TextView[@text='SendingÖ']")
+	@AndroidFindBy(xpath="//android.widget.TextView[@text='Sending‚Ä¶']")
 	public static AndroidElement sending_Txt;
 
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.Button\").text(\"REPLY\")")
@@ -215,10 +215,12 @@ public class Locators_Interactions {
 	@AndroidFindBy(uiAutomator="new UiSelector().resourceId(\"com.google.android.deskclock:id/fab\").description(\"Add alarm\")")
 	public static AndroidElement createalarm;
 	
-	@AndroidFindBy(xpath="//android.widget.RadialTimePickerView$RadialPickerTouchHelper[@index='2']")
+	//@AndroidFindBy(xpath="//android.widget.RadialTimePickerView$RadialPickerTouchHelper[@description='2']")
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.RadialTimePickerView$RadialPickerTouchHelper\").description(\"2\")")
 	public static AndroidElement  twohrsalarm ;
 	
-	@AndroidFindBy(xpath="//android.widget.RadialTimePickerView$RadialPickerTouchHelper[@index='9']")
+	//@AndroidFindBy(xpath="//android.widget.RadialTimePickerView$RadialPickerTouchHelper[@description='9']")
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.RadialTimePickerView$RadialPickerTouchHelper\").description(\"40\")")
 	public static AndroidElement  fortyminshrsalarm ;
 	
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.Button\").text(\"OK\")")
@@ -245,8 +247,9 @@ public class Locators_Interactions {
 	@AndroidFindBy(xpath="//android.widget.ImageButton[@content-desc=\"Stop\"]")
 	public static AndroidElement ontimer;
 	
-	@AndroidFindBy(xpath="//android.widget.Button[@content-desc=\"Delete\"]")
-	public static AndroidElement  deletetimer ;
+	//@AndroidFindBy(xpath="//android.widget.Button[@content-desc=\"Delete\"]")
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.Button\").text(\"Delete\")")
+     public static AndroidElement  deletetimer ;
 	
 	@AndroidFindBy(xpath="//android.widget.ImageButton[@content-desc=\"Start\"]")
 	public static AndroidElement  startingtimer ;
@@ -310,7 +313,7 @@ public class Locators_Interactions {
 	@AndroidFindBy(xpath="//android.widget.EditText[@index='0']")
 	public static AndroidElement wlcmpassword;
 	
-	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.Button\").text(\"Yes, Iím in\")")
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.Button\").text(\"Yes, I‚Äôm in\")")
 	public static AndroidElement yesiamin;
 	
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.Button\").text(\"I agree\")")
@@ -392,10 +395,14 @@ public class Locators_Interactions {
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"Home\")")
 	public static AndroidElement gaanahome;
 	
-	@AndroidFindBy(uiAutomator="new UiSelector().resourceId(\"com.gaana:id/txt_skip\").text(\"SKIP\")")
+	//@AndroidFindBy(uiAutomator="new UiSelector().resourceId(\"com.gaana:id/txt_skip\").text(\"SKIP\")")
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"SKIP\")")
 	public static AndroidElement gaanaskip;
 	
 	@AndroidFindBy(uiAutomator="new UiSelector().resourceId(\"com.gaana:id/btn_all_done\").text(\"CONTINUE (2)\")")
+	public static AndroidElement gaanacontinue2;
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().resourceId(\"com.gaana:id/btn_all_done\").text(\"CONTINUE\")")
 	public static AndroidElement gaanacontinue;
 	
 	@AndroidFindBy(uiAutomator="new UiSelector().resourceId(\"com.gaana:id/txt_do_later\").text(\"I'll do it later\")")
@@ -512,7 +519,7 @@ public class Locators_Interactions {
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.Button\").resourceId(\"com.android.chrome:id/negative_button\")")
 	public static AndroidElement chromenothanks;
 	
-	@AndroidFindBy(xpath ="//android.widget.FrameLayout[@content-desc='Web View']")
+	@AndroidFindBy(xpath ="//android.widget.Image[@text='Google']")
 	public static AndroidElement chromegoogle;
 	
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.Button\").text(\"CLEAR ALL\")")
@@ -564,8 +571,10 @@ public class Locators_Interactions {
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"Continue\")")
 	public static AndroidElement skypecontinue;
 	
-	//@AndroidFindBy(xpath ="//android.widget.FrameLayout[@content-desc='New Conversation']")
-	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.Button\").description(\"New Conversation\")")
+	//android.widget.Button[@content-desc="New conversation"]
+	//@AndroidFindBy(xpath ="//android.widget.Button[@content-desc='New Conversation']")
+	//@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.Button\").description(\"New Conversation\")")
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"Óêç\")")
 	public static AndroidElement skypestart;
 	
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"People, groups & messages\")")
@@ -648,10 +657,11 @@ public class Locators_Interactions {
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"Copied\")")
 	public static AndroidElement youtubedcopied;
 	
-	@AndroidFindBy(uiAutomator="new UiSelector().resourceId(\"com.android.chrome:id/menu_button\").description(\"More options\")")
+	//@AndroidFindBy(uiAutomator="new UiSelector().resourceId(\"com.android.chrome:id/menu_button\").description(\"More options\")")
+	@AndroidFindBy(xpath="//*[@content-desc='Update available. More options' or @content-desc='More options']")
 	public static AndroidElement chromemenu;
 	
-	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"ShareÖ\")")
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"Share‚Ä¶\")")
 	public static AndroidElement chromeshare;
 
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"Messaging\")")
@@ -675,6 +685,20 @@ public class Locators_Interactions {
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.Button\").text(\"DELETE\")")
 	public static AndroidElement soundrecorderdeletetxt;
 
+	@AndroidFindBy(uiAutomator = "UiSelector().description(\"More options\")")
+	public static AndroidElement msgnotification ;
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Settings\")")
+	public static AndroidElement msgsettings;
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().resourceId(\"android:id/checkbox\")")
+	public static AndroidElement msgcheckbox;
+	
+	@AndroidFindBy(xpath = "//android.widget.LinearLayout[@index='1']/../..//android.widget.Switch[@text='OFF']")
+	public static AndroidElement vibratecheckbox;
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Restore default settings\")")
+	public static AndroidElement msgrestoresettings;
 	
 	
 }

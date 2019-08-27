@@ -90,7 +90,7 @@ import javafx.util.Pair;
 public class AllQA  extends CommonConfig {
 
 	//ObservableList<String> items=FXCollections.observableArrayList("Sanity Test","MultiMedia","Messaging","Connectivity","GMS","Browser","Settings","Tools","Contacts","Call","ScoutApps","Performance","DeviceFunctionality");
-	ObservableList<String> items=FXCollections.observableArrayList("New Sanity",/*"PTT"*//*"Sanity Test",*/"Sanity","DataAndConnectivity","VOLTE-CallPerformance","3G-CallPerformance","Stability","PTT","Interaction"/*,"SCOUT"*//*"Call",/*,"Stability_AT&T-15595"*/);
+	ObservableList<String> items=FXCollections.observableArrayList("New Sanity",/*"PTT"*//*"Sanity Test",*/"Sanity","DataAndConnectivity","VOLTE-CallPerformance","3G-CallPerformance","Stability","PTT","Interaction","Messaging","Call"/*,"SCOUT","Call","Stability_AT&T-15595"*/);
 
 	//ObservableList<String> items=FXCollections.observableArrayList("Quick Sanity","Performance");
 	//	ObservableList<String> Sanity = FXCollections.observableArrayList("Sanity");
@@ -99,12 +99,14 @@ public class AllQA  extends CommonConfig {
 	//ObservableList<String> Sanity = FXCollections.observableArrayList("Device","DEV-QA-Sanity");
 	ObservableList<String> New_Sanity = FXCollections.observableArrayList("Device Sanity");
 
-	ObservableList<String> Sanity = FXCollections.observableArrayList("Device");
+	ObservableList<String> Sanity = FXCollections.observableArrayList("Device");	
+	ObservableList<String> Messaging= FXCollections.observableArrayList("Messaging");
+
 
 
 	ObservableList<String> connectivity = FXCollections.observableArrayList("Bluetooth","Wi-Fi","Mobile Data");
 	ObservableList<String> multiMedia = FXCollections.observableArrayList("Photos","Music","FM","All");
-	ObservableList<String> Messaging = FXCollections.observableArrayList("SMS","Email","All");
+	//ObservableList<String> Messaging = FXCollections.observableArrayList("SMS","Email","All");
 	ObservableList<String> GMS = FXCollections.observableArrayList("YouTube","Chrome","Google Apps","All");
 	ObservableList<String> browser = FXCollections.observableArrayList("Native Browser");
 	ObservableList<String> Settings = FXCollections.observableArrayList("Settings","Programmable Key","Power ON/OFF","All");
@@ -120,7 +122,7 @@ public class AllQA  extends CommonConfig {
 	ObservableList<String> ATTStablity = FXCollections.observableArrayList("Telephony","Email");
 	ObservableList<String> ptt = FXCollections.observableArrayList("KodiakPTT");
 	ObservableList<String> IOT = FXCollections.observableArrayList("Interaction Cases","Interruption Cases");
-	ObservableList<String> dataconnectivity = FXCollections.observableArrayList("DataUsageSettings","Wi-fi");
+	ObservableList<String> dataconnectivity = FXCollections.observableArrayList("DataUsageSettings","Wi-fi","Data Settings");
 
 
 
@@ -976,7 +978,18 @@ public class AllQA  extends CommonConfig {
 				listView.setItems(dataconnectivity);
 				listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 				
+			}else if (comboBoxItems=="DataSettings") {
+				
+				listView.setItems(dataconnectivity);
+				listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+				
+			}else if (comboBoxItems=="DataUsageSettings") {
+				
+				listView.setItems(dataconnectivity);
+				listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+				
 			}
+
 
 
 			//	itemSelectedListner();
@@ -1469,6 +1482,42 @@ public class AllQA  extends CommonConfig {
 
 
 					switch (itemvalue) {
+					
+					
+					
+					case "Messaging":
+						Thread msg=new Thread(new Runnable() {
+							public void run() {
+
+								TestNG runner=new TestNG();
+								List<String> suitefiles=new ArrayList<String>();
+								suitefiles.add("src/test/resources/drivers/XP8_Messaging.xml");
+								runner.setTestSuites(suitefiles);
+								runner.run();	
+
+
+							}
+						});
+						msg.start();
+						break;
+						
+					case "DataSettings":
+						Thread data=new Thread(new Runnable() {
+							public void run() {
+
+								TestNG runner=new TestNG();
+								List<String> suitefiles=new ArrayList<String>();
+								suitefiles.add("src/test/resources/drivers/XP8_DataSettings.xml");
+								runner.setTestSuites(suitefiles);
+								runner.run();	
+
+
+							}
+						});
+						data.start();
+						break;
+
+					
 					
 					
 					
@@ -3390,6 +3439,29 @@ public class AllQA  extends CommonConfig {
 					}
 
 					break;
+				case "DataSettings":
+
+					File datasetting = new File("src/test/resources/extentreport/XP8_Data_Setting_Test.html");
+					File data = new File(System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog");
+					String data_path=System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog";
+					try {
+						FileUtils.copyFileToDirectory(datasetting, data);
+					} catch (IOException e) {
+
+						e.printStackTrace();
+					}
+					if(datasetting.exists()) {
+
+						try {
+							BaseUtil.openReportPath(data_path);
+						} catch (IOException e) {
+
+							e.printStackTrace();
+						}
+					}
+					else {
+						executionReportDoesnotExist("Test Report is not generated yet");
+					}
 
 				
 				case "DataUsageSettings":
@@ -3837,6 +3909,33 @@ public class AllQA  extends CommonConfig {
 					}
 
 					break;
+					
+				case "Messaging":
+
+					File Messaging = new File("src/test/resources/extentreport/XP8_Messaging_TestReport.html");
+					File msgdest = new File(System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog");
+					String msgpath=System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog";
+					try {
+						FileUtils.copyFileToDirectory(Messaging, msgdest);
+					} catch (IOException e) {
+
+						e.printStackTrace();
+					}
+					if(Messaging.exists()) {
+
+						try {
+							BaseUtil.openReportPath(msgpath);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+					else {
+						executionReportDoesnotExist("Test Report is not generated yet");
+					}
+
+					break;
+
+			
 
 				case "Telephony":
 
@@ -3899,7 +3998,7 @@ public class AllQA  extends CommonConfig {
 					
 				case "Device Sanity":
 
-					File DeviceNewSanity = new File("src/test/resources/extentreport/XP8_ATT_Stability_Email_TestReport.html");
+					File DeviceNewSanity = new File("src/test/resources/extentreport/XP8_Device_QA_Sanity_Test_O.html");
 					File DeviceNewSanityDest = new File(System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog");
 					String DeviceNewSanityPath=System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog";
 					try {

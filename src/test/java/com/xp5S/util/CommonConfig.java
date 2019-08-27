@@ -46,6 +46,7 @@ public class CommonConfig extends appiumService {
 	private static final String LOG_PATH = "src/test/resources/properties/log4j.properties";
 	public static Logger APP_LOGS = null;
 	private static String deviceId;
+	public static DesiredCapabilities capabilities;
 
 
 
@@ -58,20 +59,20 @@ public class CommonConfig extends appiumService {
 
 
 			if(CALL_MODULE.equals("MT-Call")) {
-				
+
 				System.out.println("REFERENCE");
 				deviceId=JsonFileReaderAndWriter.ReadRefDeviceId(); 
 			}else {
-				
+
 				System.out.println("PRIMARY");
 
 				deviceId=JsonFileReaderAndWriter.primaryDevIdReader(); 
 			}
-		
-			DesiredCapabilities capabilities = new DesiredCapabilities();
+
+			capabilities = new DesiredCapabilities();
 			capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, deviceName_);
 			capabilities.setCapability(MobileCapabilityType.UDID, deviceId);
-		//	capabilities.setCapability("automationName", "UiAutomator2");
+			//	capabilities.setCapability("automationName", "UiAutomator2");
 			//capabilities.setCapability("orientation","PORTRAIT");
 			capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, platformVersion_);
 			capabilities.setCapability("autoGrantPermissions", true);
@@ -82,7 +83,7 @@ public class CommonConfig extends appiumService {
 			capabilities.setCapability("appActivity", App_Activity_Name_);
 
 
-			
+
 
 
 
@@ -90,7 +91,7 @@ public class CommonConfig extends appiumService {
 			aDriver = new AndroidDriver<AndroidElement>(appiumServerURL, capabilities);
 
 			aDriver.manage().timeouts().implicitlyWait(120, TimeUnit.SECONDS);
-			
+
 
 
 
@@ -112,16 +113,16 @@ public class CommonConfig extends appiumService {
 		return properties;
 	}
 
- 	public static void cleanUp() {
+	public static void cleanUp() {
 
 		try {
-			
+
 			if (getDriver() != null) {
 
 				getDriver().quit();
-				
+
 			}
-			
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

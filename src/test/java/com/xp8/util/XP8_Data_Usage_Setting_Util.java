@@ -579,19 +579,14 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 		 * Select IDC wifi which is available
 		 */
 		try {
-			AndroidElement element = aDriver.findElementByXPath("//android.widget.TextView[@text='" + ssid + "']");
-			boolean checkSSID = scrollToText(ssid);
-			while (checkSSID == false) {
-				checkSSID = scrollToText(ssid);
-
+				boolean checkSSID = scrollToText(ssid);
+				while (checkSSID == false) {
+					checkSSID = scrollToText(ssid);
+				}
+			if(checkSSID) {
+				APP_LOGS.info("Wifi network displayed");
+				System.out.println("Wifi network displayed");
 			}
-			/*
-			 * scrollToElements(element); if( wait(element,60)) { clickBtn(element); }else {
-			 * scrollTo(ssid); clickBtn(element); }
-			 */
-
-			APP_LOGS.info("IDC available secured wifi is Selected");
-
 		} catch (NoSuchElementException ne) {
 			test.log(LogStatus.ERROR, "Error in the locators => select_Wifi_SSID()");
 			ne.printStackTrace();
@@ -604,8 +599,8 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 
 	public void forget_Wifi_SSID() {
 		try {
-			if (isElementExist(Locators_DataUsageSetting.WiFi_FrgtBtn)) {
-				clickBtn(Locators_DataUsageSetting.WiFi_FrgtBtn);
+			if (wait(Locators_DataUsageSetting.FORGET,10)) {
+				clickBtn(Locators_DataUsageSetting.FORGET);
 			}
 		} catch (NoSuchElementException ne) {
 			test.log(LogStatus.ERROR, "Error in the locators => forget_Wifi_SSID()");
@@ -641,8 +636,9 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 
 		try {
 				APP_LOGS.info("'Perform network reset and Verify data saver is disabled' -> Not applicable for SPRINT Operator");
+				test.log(LogStatus.INFO, "'Perform network reset and Verify data saver is disabled' -> Not applicable for SPRINT Operator");
 				test.log(LogStatus.SKIP, "'Perform network reset and Verify data saver is disabled' -> Not applicable for SPRINT Operator");
-			
+
 		} catch (Exception e) {
 			test.log(LogStatus.ERROR, "Exeption in -> skip_NtwrkRst_Verify_DS_Disabled()");
 			e.printStackTrace();
@@ -3348,14 +3344,61 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 		}
 
 	}
-
+	public boolean scrollToTextContains(String text) {
+		/*
+		  Method used to select an element on the page by scrolling the Scroll View/List View
+		 */
+		boolean check = false;
+		try {  
+			String scrollable = "new UiScrollable(new UiSelector().scrollable(true))";
+			String textElement = ".scrollIntoView(new UiSelector().textContains(\""+ text +"\"))";
+			aDriver.findElementByAndroidUIAutomator(scrollable+textElement).click();
+			APP_LOGS.info("Searched application is found sucessfully : ");
+			check = true;
+			return check;
+		}
+		catch(NoSuchElementException e) {
+			return check;
+		}
+	}
+	public void launchYoutube() {
+		try {
+			customWait(1000);
+			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_HOME);
+			APP_LOGS.info("HOme PAge");
+			customWait(2000);
+			Locators_BaseUtil.AppListIcon.click();
+			customWait(1000);		
+			scrollToElements(Locators_DataUsageSetting.You_Tube);
+			clickBtn(Locators_DataUsageSetting.You_Tube);
+			APP_LOGS.info("Clicked on Youtube successfully.");
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+			test.log(LogStatus.ERROR, "Error in the locators->launchYoutube()");
+			e.printStackTrace();
+		} catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in ->launchYoutube()");
+			e.printStackTrace();
+		}	
+	}
 	public void play_Video() {
 		try {
-			if (wait(Locators_DataUsageSetting.video, 10)) {
-				clickBtn(Locators_DataUsageSetting.video);
+			if (wait(Locators_DataUsageSetting.sonimvideo, 120)==true) {
+				if(isElementExist(Locators_DataUsageSetting.sonimvideo)) {
+					   clickBtn(Locators_DataUsageSetting.sonimvideo);
+				  }else{
+					   scrollToElements(Locators_DataUsageSetting.sonimvideo);
+					   if(isElementExist(Locators_DataUsageSetting.sonimvideo)) {
+						  clickBtn(Locators_DataUsageSetting.sonimvideo);
+					   }else {
+						  boolean sonimVideo=scrollToTextContains("Sonim XP8. First look.");
+						  while(sonimVideo==false) {
+							sonimVideo=scrollToTextContains("Sonim XP8. First look.");
+						}
+					}
+				}
 				System.out.println("locator");
 			} else {
-				Runtime.getRuntime().exec("adb -s " + p_Id + " shell input tap 500 500");
+				Runtime.getRuntime().exec("adb -s " + p_Id + " shell input tap 348 1635");
 				System.out.println("adb command");
 			}
 		} catch (org.openqa.selenium.NoSuchElementException e) {
@@ -3556,7 +3599,17 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 		}
 	}
+	public void verify_PostConditionExcuted(SoftAssert sa) {
 
+		try {
+				APP_LOGS.info("Precondition executed");
+				sa.assertTrue(true, "Precondition executed");
+				test.log(LogStatus.PASS, "Precondition executed");
+			} catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in functionality -> verify_PostConditionExcuted()");
+			e.printStackTrace();
+		}
+	}
 	public boolean enable_BT() {
 		boolean enabled = false;
 		try {
@@ -3628,7 +3681,6 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 		forget_Wifi_SSID();
 		select_Wifi_SSID(ssid);
 		enter_WifiPwd(pwd);
-		enable_MobileData();
 	}
 
 	public void clickOn_MobileNetwork() {
@@ -3650,7 +3702,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 	public void preCond_browseData(String videoName, int duration) {
 		try {
 			clearRecentApps();
-			launch_an_app("youtube");
+			launchYoutube();
 			if (isElementExist(Locators_DataUsageSetting.NOT_NOW_txt)) {
 				clickBtn(Locators_DataUsageSetting.NOT_NOW_txt);
 			}
@@ -3662,14 +3714,15 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			minWait();
 			aDriver.pressKeyCode(AndroidKeyCode.ENTER);
 			minWait();
-			if (wait(Locators_DataUsageSetting.video, 10)) {
-				clickBtn(Locators_DataUsageSetting.video);
+			if (wait(Locators_DataUsageSetting.sonimvideo, 10)) {
+				clickBtn(Locators_DataUsageSetting.sonimvideo);
 				System.out.println("locator");
 			} else {
-				Runtime.getRuntime().exec("adb -s " + p_Id + " shell input tap 500 500");
+				Runtime.getRuntime().exec("adb -s " + p_Id + " shell input tap 500 1090");
 				System.out.println("adb command");
 			}
-			customWait(duration);
+			wait(Locators_DataUsageSetting.Data_limit,duration);
+			System.out.println("Video played for -> "+duration+" seconds");
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 
 			test.log(LogStatus.ERROR, "Error in the locators-> preCond_browseData()");

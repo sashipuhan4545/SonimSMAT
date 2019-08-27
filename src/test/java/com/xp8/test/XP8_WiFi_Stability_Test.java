@@ -32,9 +32,10 @@ import com.xp8.util.DataProviders;
 import com.xp8.util.ExcelConstants;
 import com.xp8.util.ExcelReader;
 import com.xp8.util.Locators_BaseUtil;
-import com.xp8.util.Locators_DeviceStability;
+import com.xp8.util.Locators_WifiStability;
 import com.xp8.util.XP8_Stability_Util_orio;
 
+import application.AllQA;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 
 public class XP8_WiFi_Stability_Test extends XP8_Stability_Util_orio {
@@ -44,8 +45,8 @@ public class XP8_WiFi_Stability_Test extends XP8_Stability_Util_orio {
 	public static ExtentTestInterruptedException testexception;
 	public int itr = 1;
 	public Timer timer1;
-	public static String ssid = "IDCSONWAP";
-	public static String pswd = "1dcS0n1md0tc0MbLr";
+	public static String ssid = AllQA.SSID;
+	public static String pswd = AllQA.WIFIPASSWORD;
 
 	@BeforeSuite
 	public void beforeSuite() throws FileNotFoundException, InterruptedException, IOException, ParseException {
@@ -105,7 +106,7 @@ public class XP8_WiFi_Stability_Test extends XP8_Stability_Util_orio {
 	@BeforeTest()
 	public void setupSys() throws MalformedURLException, InterruptedException, FileNotFoundException, AWTException {
 		properties = loadDriverAndProperties();
-		Locators_DeviceStability loc = new Locators_DeviceStability(aDriver);
+		Locators_WifiStability loc = new Locators_WifiStability(aDriver);
 		Locators_BaseUtil loc1 = new Locators_BaseUtil(aDriver);
 		PageFactory.initElements(new AppiumFieldDecorator(aDriver), loc);
 		PageFactory.initElements(new AppiumFieldDecorator(aDriver), loc1);

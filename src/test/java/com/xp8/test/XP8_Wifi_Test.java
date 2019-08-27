@@ -67,6 +67,8 @@ public class XP8_Wifi_Test extends XP8_Wifi_Util {
 	{
 		test = extent.startTest( (this.getClass().getSimpleName() +" :: "+  method.getName()),method.getName()); //Test Case Start Here
 		clearRecentApps();
+	//	test.assignAuthor("Farheen Taj"); //Test Script Author Name
+
 	}
 	
 	@BeforeClass
@@ -276,10 +278,10 @@ public class XP8_Wifi_Test extends XP8_Wifi_Util {
 				turnOn_Wifi();
 				clickOn_Addnetwork();
 				Add_Network_security_None(data.get("SSID_Name_None"));
-				validate_NetworkIsSaved(sa,data.get("SSID_Name_None"));
+				validate_NetworkIsSaved(sa,data.get("SSID_Name_None"),"Open Wifi");
 				clickOn_Addnetwork();
 				Add_Network_security_None(data.get("SSID_Name_None"));
-				validate_sameNetworkIsSaved(sa,data.get("SSID_Name_None"));		
+				validate_sameNetworkIsSaved(sa,data.get("SSID_Name_None"));	
 		 }else {																				//others
 				launch_an_app("settings");
 				clickOnNetwork_Internet();
@@ -287,7 +289,7 @@ public class XP8_Wifi_Test extends XP8_Wifi_Util {
 				turnOn_Wifi();
 				clickOn_Addnetwork();
 				Add_Network_security_None(data.get("SSID_Name_None"));
-				validate_NetworkIsSaved(sa,data.get("SSID_Name_None"));
+				validate_NetworkIsSaved(sa,data.get("SSID_Name_None"),"Open Wifi");
 				clickOn_Addnetwork();
 				Add_Network_security_None(data.get("SSID_Name_None"));
 				validate_sameNetworkIsSaved(sa,data.get("SSID_Name_None"));
@@ -313,7 +315,7 @@ public class XP8_Wifi_Test extends XP8_Wifi_Util {
 			turnOn_Wifi();
 			clickOn_Addnetwork();
 			Add_Network_security_WEP(data.get("SSID_Name_WEP"),data.get("Password"));
-			validate_NetworkIsSaved(sa,data.get("SSID_Name_WEP"));
+			validate_NetworkIsSaved(sa,data.get("SSID_Name_WEP"),"WEP secured Wifi");
 			clickOn_Addnetwork();
 			Add_Network_security_WEP(data.get("SSID_Name_WEP"),data.get("Password"));
 			validate_sameNetworkIsSaved(sa,data.get("SSID_Name_WEP"));
@@ -324,7 +326,7 @@ public class XP8_Wifi_Test extends XP8_Wifi_Util {
 			turnOn_Wifi();
 			clickOn_Addnetwork();
 			Add_Network_security_WEP(data.get("SSID_Name_WEP"),data.get("Password"));
-			validate_NetworkIsSaved(sa,data.get("SSID_Name_WEP"));
+			validate_NetworkIsSaved(sa,data.get("SSID_Name_WEP"),"WEP secured Wifi");
 			clickOn_Addnetwork();
 			Add_Network_security_WEP(data.get("SSID_Name_WEP"),data.get("Password"));
 			validate_sameNetworkIsSaved(sa,data.get("SSID_Name_WEP"));
@@ -350,7 +352,7 @@ public class XP8_Wifi_Test extends XP8_Wifi_Util {
 			getNotificationWindow();
 			clickOn_QuickWifiSetting();
 			verify_wifi_IsTurnedOn(sa);
-			clickOn_WifiMoreSetting();
+			clickOn_WifiMoreSettings();
 			verify_WifiScanningDevice(sa);
 			verify_SignalLevel_IsDisplayed(sa);
 			verify_SecurityType_IsDisplayed(sa);
@@ -364,7 +366,7 @@ public class XP8_Wifi_Test extends XP8_Wifi_Util {
 			getNotificationWindow();
 			clickOn_QuickWifiSetting();
 			verify_wifi_IsTurnedOn(sa);
-			clickOn_WifiMoreSetting();
+			clickOn_WifiMoreSettings();
 			verify_WifiScanningDevice(sa);
 			verify_SignalLevel_IsDisplayed(sa);
 			verify_SecurityType_IsDisplayed(sa);
@@ -473,7 +475,7 @@ public class XP8_Wifi_Test extends XP8_Wifi_Util {
 			turnOn_Wifi();
 			clickOn_Addnetwork();
 			Add_Network_security_None(data.get("SSID_Name_None"));
-			validate_NetworkIsSaved(sa,data.get("SSID_Name_None"));
+			validate_NetworkIsSaved(sa,data.get("SSID_Name_None"),"");
 			clickOn_Savednetwork();
 			select_SSID(data.get("SSID_Name_None"));
 			verify_FORGET_CANCEL_Displayed(sa);
@@ -485,7 +487,7 @@ public class XP8_Wifi_Test extends XP8_Wifi_Util {
 			turnOn_Wifi();
 			clickOn_Addnetwork();
 			Add_Network_security_None(data.get("SSID_Name_None"));
-			validate_NetworkIsSaved(sa,data.get("SSID_Name_None"));
+			validate_NetworkIsSaved(sa,data.get("SSID_Name_None"),"");
 			clickOn_Savednetwork();
 			select_SSID(data.get("SSID_Name_None"));
 			verify_FORGET_CANCEL_Displayed(sa);
@@ -515,7 +517,7 @@ public class XP8_Wifi_Test extends XP8_Wifi_Util {
 			}
 		    clickOn_Addnetwork();
 			Add_Network_security_None(SSIDNameNone);
-			validate_NetworkIsSaved(sa,SSIDNameNone);
+			validate_NetworkIsSaved(sa,SSIDNameNone,"");
 			clickOn_Savednetwork();
 			select_SSID(SSIDNameNone);
 			validate_CnclBtn(sa,SSIDNameNone);
@@ -531,7 +533,7 @@ public class XP8_Wifi_Test extends XP8_Wifi_Util {
 			}
 		    clickOn_Addnetwork();
 			Add_Network_security_None(SSIDNameNone);
-			validate_NetworkIsSaved(sa,SSIDNameNone);
+			validate_NetworkIsSaved(sa,SSIDNameNone,"");
 			clickOn_Savednetwork();
 			select_SSID(SSIDNameNone);
 			validate_CnclBtn(sa,SSIDNameNone);
@@ -647,7 +649,7 @@ public class XP8_Wifi_Test extends XP8_Wifi_Util {
 				clickOn_WifiPreferences();
 				clickOn_Advanced();
 				clickOn_InstallCerficate();
-				Validate_navigatedToStorageLocation(sa);
+				verify_InstallCertificate(sa);
 		 }else  {																	//others
 				launch_an_app("settings");
 				clickOnNetwork_Internet();
@@ -655,7 +657,7 @@ public class XP8_Wifi_Test extends XP8_Wifi_Util {
 				clickOn_WifiPreferences();
 				clickOn_Advanced();
 				clickOn_InstallCerficate();
-				Validate_navigatedToStorageLocation(sa);
+				verify_InstallCertificate(sa);
 				
 		 }}
 		sa.assertAll();
@@ -690,11 +692,7 @@ public class XP8_Wifi_Test extends XP8_Wifi_Util {
 			clickOn_ConnectToNetwork();
 		 }}
 		sa.assertAll();
-		
-		
-	}
-	
-	 
+		}
 	@Test(priority=18,dataProvider="XP8_Wifi", dataProviderClass=DataProviders.class)
 	public void XP8_TC_18_Wifi_AdvanceOption_In_PasswordScreen(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException
 	{  
@@ -718,7 +716,6 @@ public class XP8_Wifi_Test extends XP8_Wifi_Util {
 			validate_IpOpt(sa);
 			clickOn_BackBtn();
 			validate_AlloptSelectableInIP(sa);
-			
 		}else {																//others
 			launch_an_app("settings");
 			clickOnNetwork_Internet();
@@ -737,7 +734,6 @@ public class XP8_Wifi_Test extends XP8_Wifi_Util {
 			 } }
 		sa.assertAll();
 	}
-	
 	@Test(priority=19,dataProvider="XP8_Wifi", dataProviderClass=DataProviders.class)
 	public void XP8_TC_19_Wifi_SuffleWifiIcon(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException
 	{  
@@ -766,8 +762,7 @@ public class XP8_Wifi_Test extends XP8_Wifi_Util {
 		 }
 		}
 		 sa.assertAll();
-	}	
-	
+	}		
 	@Test(priority=20,dataProvider="XP8_Wifi", dataProviderClass=DataProviders.class)
 	public void XP8_TC_20_Wifi_WifisCanBeSeenInNotification(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException
 	{ 
@@ -784,11 +779,8 @@ public class XP8_Wifi_Test extends XP8_Wifi_Util {
 		clickOn_QuickWifiSetting();
 		verify_AvailableWifiNetworksDisplayed(sa);
 		 }
-			}
-	sa.assertAll();
+	 }sa.assertAll();
 	}
-	
-	 
 	@Test(priority=21,dataProvider="XP8_Wifi", dataProviderClass=DataProviders.class)
 	public void XP8_TC_21_Wifi_DeleteConnectedNetwork(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException
 	{  
@@ -813,10 +805,8 @@ public class XP8_Wifi_Test extends XP8_Wifi_Util {
 		select_SSID(WIFI_SSID);
 		validate_PassIsShown(sa);
 	}
-		 }sa.assertAll();
-	
-	}
-		 
+	}sa.assertAll();	
+	}		 
 	@Test(priority=22,dataProvider="XP8_Wifi", dataProviderClass=DataProviders.class)
 	public void XP8_TC_22_Wifi_ConnectInLandscape(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException
 	{  
@@ -849,7 +839,7 @@ if(operator.contains("-10") || operator.contains("-11") || operator.contains("-1
 		verify_quickWifiConnected(sa);		
 		customWait(10000);
 		aDriver.rotate(ScreenOrientation.PORTRAIT);
-}
+        }
 		 }sa.assertAll();
 	}
 	@Test(priority=23,dataProvider="XP8_Wifi", dataProviderClass=DataProviders.class)
@@ -896,7 +886,7 @@ if(operator.contains("-10") || operator.contains("-11") || operator.contains("-1
 		clickOn_Status();	
 		scrollToText("IP address");	
 		validate_IPAddress_AbtPhn(IpAddress_Wifi,sa);
-}
+        }
 		 }sa.assertAll();
 	}
 	@Test(priority=24,dataProvider="XP8_Wifi", dataProviderClass=DataProviders.class)
@@ -947,9 +937,7 @@ if(operator.contains("-10") || operator.contains("-11") || operator.contains("-1
 	}
 		 }sa.assertAll();
 	}
-	
-	 
-	@Test(priority=26,dataProvider="XP8_Wifi", dataProviderClass=DataProviders.class)
+	/*@Test(priority=26,dataProvider="XP8_Wifi", dataProviderClass=DataProviders.class)
 	public void XP8_TC_26_Wifi_ScanningTwoOptionsDefaultBehaviour(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException
 	{  
 		SoftAssert sa=new SoftAssert();
@@ -980,9 +968,7 @@ if(operator.contains("-10") || operator.contains("-11") || operator.contains("-1
 		}
 	}
 		sa.assertAll();
-	}
-	
-	 
+	}*/
 	@Test(priority=27,dataProvider="XP8_Wifi", dataProviderClass=DataProviders.class)
 	public void XP8_TC_27_Wifi_IPAndMacNotEditable(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException
 	{  
@@ -1014,8 +1000,6 @@ if(operator.contains("-10") || operator.contains("-11") || operator.contains("-1
 		 } }
 		sa.assertAll();
 	}
-	
-	 
 	@Test(priority=28,dataProvider="XP8_Wifi", dataProviderClass=DataProviders.class)
 	public void XP8_TC_28_Wifi_ScanningTwoOptionsFunctionality(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException
 	{  
@@ -1040,15 +1024,13 @@ if(operator.contains("-10") || operator.contains("-11") || operator.contains("-1
 		 }}
 		sa.assertAll();
 	}
-	
-	 
 	@Test(priority=29,dataProvider="XP8_Wifi", dataProviderClass=DataProviders.class)
 	public void XP8_TC_29_Wifi_Enable_WifiScanning_InLocation_Verify_InSetting(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException
 	{  
 		SoftAssert sa=new SoftAssert();
 		//Verify the scanning option is present under Location setting menu.
 		APP_LOGS.info("===========XP8_TC_29_Wifi_Enable_WifiScanning_InLocation_Verify_InSetting============");
-		 for(int i=1;i<=3;i++) {
+		 for(int i=1;i<=itr;i++) {
 		if(operator.contains("-10") || operator.contains("-11") || operator.contains("-15") || operator.contains("-26") || operator.contains("-29")) {
 			launch_an_app("settings");
 			clickOn_SecurityAndLocation();
@@ -1076,8 +1058,6 @@ if(operator.contains("-10") || operator.contains("-11") || operator.contains("-1
 		 }}
 		sa.assertAll();
 	}
-	
-	 
 	@Test(priority=30,dataProvider="XP8_Wifi", dataProviderClass=DataProviders.class)
 	public void XP8_TC_30_Wifi_Disable_WifiScanning_InSetting_Verify_InLocation(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException
 	{  
@@ -1245,6 +1225,7 @@ if(operator.contains("-10") || operator.contains("-11") || operator.contains("-1
 		turnOn_MobileNtwrk();
 		clickBackButton(1);
 		clickOn_DataUsage();
+		String str = Locators_Wifi.dataUsageDetails.getText();
 		int beforeWifi = get_MobileDataUsage();
 		launch_an_app("settings");
 		clickOnNetwork_Internet();
@@ -1253,11 +1234,11 @@ if(operator.contains("-10") || operator.contains("-11") || operator.contains("-1
 		remove_connectedNtwrk();
 		connect_to_WiFi(WIFI_SSID, WIFI_PWD);
 		clearRecentApps();
-		launch_an_app("youtube");
+		launchYoutube();
 		clickOn_Search();
 		search_Video("sonim xp8");
 		play_Video();
-		customWait(100000);
+		wait_TenMinutes(str);
 		launch_an_app("settings");
 		clickOnNetwork_Internet();
 		clickOn_DataUsage();
@@ -1270,6 +1251,7 @@ if(operator.contains("-10") || operator.contains("-11") || operator.contains("-1
 		turnOn_MobileNtwrk();
 		clickBackButton(1);
 		clickOn_DataUsage();
+		String str = Locators_Wifi.dataUsageDetails.getText();
 		int beforeWifi = get_MobileDataUsage();
 		launch_an_app("settings");
 		clickOnNetwork_Internet();
@@ -1278,11 +1260,11 @@ if(operator.contains("-10") || operator.contains("-11") || operator.contains("-1
 		remove_connectedNtwrk();
 		connect_to_WiFi(WIFI_SSID, WIFI_PWD);
 		clearRecentApps();
-		launch_an_app("youtube");
+		launchYoutube();
 		clickOn_Search();
 		search_Video("sonim xp8");
 		play_Video();
-		customWait(100000);
+		wait_TenMinutes(str);
 		launch_an_app("settings");
 		clickOnNetwork_Internet();
 		clickOn_DataUsage();
@@ -1361,13 +1343,13 @@ if(operator.contains("-10") || operator.contains("-11") || operator.contains("-1
 		clickOnNetwork_Internet();
 		clickOn_Wifi_Lnk();
 		turnOff_Wifi();
-		verify_AutoConnect_IsPresent(sa); 
+		verify_AutoConnect_IsPresent(operator,sa); 
 	}else {
 		launch_an_app("settings");
 		clickOnNetwork_Internet();
 		clickOn_Wifi_Lnk();
 		turnOff_Wifi();
-		verify_AutoConnect_IsPresent(sa);
+		verify_AutoConnect_IsPresent(operator,sa);
 	}
 		 }sa.assertAll();
 	} 
@@ -1385,11 +1367,11 @@ if(operator.contains("-10") || operator.contains("-11") || operator.contains("-1
 		connect_to_WiFi(WIFI_SSID,WIFI_PWD);
 		for(int i=1;i<=itr;i++) {
 	if(operator.contains("-10") || operator.contains("-11") || operator.contains("-15") || operator.contains("-26") || operator.contains("-29")) {
-		longPressOn_ConnectedSSID(WIFI_SSID);
+		longPressOn_ConnectedSSID(WIFI_SSID,WIFI_PWD);
 		validate_LongPressOn_ConnectedSSID(sa);
 		clickOn_BackBtn();
 	}else {
-		longPressOn_ConnectedSSID(WIFI_SSID);
+		longPressOn_ConnectedSSID(WIFI_SSID,WIFI_PWD);
 		validate_LongPressOn_ConnectedSSID(sa);
 		clickOn_BackBtn();
 	}
@@ -1600,55 +1582,39 @@ if(operator.contains("-10") || operator.contains("-11") || operator.contains("-1
 	}
 		 
 	@Test(priority=46,dataProvider="XP8_Wifi", dataProviderClass=DataProviders.class)
-	public void XP8_TC_46_Wifi_ReceiveCallWhileBrowsing(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException
+	public void XP8_TC_46_Wifi_EnterMoreNonNumerics_VerifyErrorMessage(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException
 	{  
 		SoftAssert sa=new SoftAssert();
-		//Receive call While brwosing and verify user can able to browse while answering a call
-		APP_LOGS.info("===========XP8_TC_01_Wifi_ReceiveCallWhileBrowsing============");
+		//Check if proper error message is shown when non-numeric or more than 11 digits are keyed in
+		APP_LOGS.info("===========XP8_TC_46_Wifi_EnterMoreNonNumerics_VerifyErrorMessage============");
+		
+		launch_an_app("phone");
+		clickOn_dialPad();
+		dial_Code(data.get("Code"));
+		clickOn_wifiInformation();
+		clickOn_WifiAPI();
 		 for(int i=1;i<=itr;i++) {
-if(operator.contains("-10") || operator.contains("-11") || operator.contains("-15") || operator.contains("-26") || operator.contains("-29")) {
-		launch_an_app("settings");
-		clickOnNetwork_Internet();
-		clickOn_Wifi_Lnk();
-		turnOn_Wifi();
-		remove_connectedNtwrk();
-		connect_to_WiFi(WIFI_SSID,WIFI_PWD);
-		launch_an_app("browser");
-		clear_ChromePermission();
-		enter_URL(i, URL1);
-		start_browsing();
-		customWait(2000);
-		make_Call_from_RefDev();
-		customWait(5000);
-		reciveCallInPriDevice();
-		customWait(5000);
-		moveCall_ToBackground();
-		start_browsing();
-		verify_BrowsingIsContinuedAfterReceivingCall(sa);
-		minWait();
-		endCall_RefDevice();
-	 }else {
-			launch_an_app("settings");
-			clickOnNetwork_Internet();
-			clickOn_Wifi_Lnk();
-			turnOn_Wifi();
-			remove_connectedNtwrk();
-			connect_to_WiFi(WIFI_SSID,WIFI_PWD);
-			launch_an_app("browser");
-			clear_ChromePermission();
-			enter_URL(i, URL1);
-			start_browsing();
-			customWait(2000);
-			make_Call_from_RefDev();
-			customWait(5000);
-			reciveCallInPriDevice();
-			customWait(5000);
-			moveCall_ToBackground();
-			start_browsing();
-			verify_BrowsingIsContinuedAfterReceivingCall(sa);
-			minWait();
-			endCall_RefDevice();
-	 }
+				if(operator.contains("-10") || operator.contains("-11") || operator.contains("-15") || operator.contains("-26") || operator.contains("-29")) {
+				 clickOn_enableNetwork();
+				 enter_NonNumericNumbersMorethan11(data.get("Input"));
+				 takeScreenShot();
+				 Read_File.takeScreenShotForOcr("WifiErrormsg");
+				 my_main.validate_Using_OCR("WifiErrormsg.jpeg");
+				 String path=System.getProperty("user.dir")+"\\src\\test\\resources\\OCR_FILES\\ocr.txt";	
+				 String content = readFile(path);
+				 System.out.println("Text from screenshot = "+content);
+				 verify_ErrorMsgDisplayed_WhenEnteringMoreNonNumerics(content,sa);
+			 }else  {																
+			 	 clickOn_enableNetwork();
+				 enter_NonNumericNumbersMorethan11(data.get("Input"));
+				 takeScreenShot();
+				 Read_File.takeScreenShotForOcr("WifiErrormsg");
+				 my_main.validate_Using_OCR("WifiErrormsg.jpeg");
+				 String path=System.getProperty("user.dir")+"\\src\\test\\resources\\OCR_FILES\\ocr.txt";	
+				 String content = readFile(path);
+				 System.out.println("Text from screenshot = "+content);
+				 verify_ErrorMsgDisplayed_WhenEnteringMoreNonNumerics(content,sa);
+				 } 
 		 }sa.assertAll();
 	}
 	@Test(priority=47,dataProvider="XP8_Wifi", dataProviderClass=DataProviders.class)
@@ -1676,11 +1642,11 @@ if(operator.contains("-10") || operator.contains("-11") || operator.contains("-1
 		disable_AirplaneMode();
 		clickOn_MobileNtwrk();
 		turnOn_MobileNtwrk();clearRecentApps();
-		launch_an_app("youtube");
+		launchYoutube();
 		clickOn_Search();
 		search_Video("sonim xp8");
 		play_Video();
-		wait_OneMinute();
+		wait_TenMinutes(wifiDataUsed);
 		launchSettings_Activity();
 		clickOnNetwork_Internet();
 		clickOn_DataUsage();
@@ -1692,11 +1658,11 @@ if(operator.contains("-10") || operator.contains("-11") || operator.contains("-1
 		clickOn_MobileNtwrk();
 		turnOff_MobileNtwrk();
 		clearRecentApps();
-		launch_an_app("youtube");
+		launchYoutube();
 		clickOn_Search();
 		search_Video("sonim xp8");
 		play_Video();
-		wait_OneMinute();
+		wait_TenMinutes(newWifiDataUsed);
 		launchSettings_Activity();
 		clickOnNetwork_Internet();
 		clickOn_DataUsage();
@@ -1722,11 +1688,11 @@ if(operator.contains("-10") || operator.contains("-11") || operator.contains("-1
 		disable_AirplaneMode();
 		clickOn_MobileNtwrk();
 		turnOn_MobileNtwrk();clearRecentApps();
-		launch_an_app("youtube");
+		launchYoutube();
 		clickOn_Search();
 		search_Video("sonim xp8");
 		play_Video();
-		wait_OneMinute();
+		wait_TenMinutes(wifiDataUsed);
 		launchSettings_Activity();
 		clickOnNetwork_Internet();
 		clickOn_DataUsage();
@@ -1738,11 +1704,11 @@ if(operator.contains("-10") || operator.contains("-11") || operator.contains("-1
 		clickOn_MobileNtwrk();
 		turnOff_MobileNtwrk();
 		clearRecentApps();
-		launch_an_app("youtube");
+		launchYoutube();
 		clickOn_Search();
 		search_Video("sonim xp8");
 		play_Video();
-		wait_OneMinute();
+		wait_TenMinutes(newWifiDataUsed);
 		launchSettings_Activity();
 		clickOnNetwork_Internet();
 		clickOn_DataUsage();
@@ -1835,7 +1801,7 @@ if(operator.contains("-10") || operator.contains("-11") || operator.contains("-1
 		customWait(5000);
 		takeScreenShot();
 		Read_File.takeScreenShotForOcr("WifiPass");
-		my_main.validate_Using_OCR("WifiPass.png");
+		my_main.validate_Using_OCR("WifiPass.jpeg");
 		String path=System.getProperty("user.dir")+"\\src\\test\\resources\\OCR_FILES\\ocr.txt";	
 		String content = readFile(path);
 		System.out.println("SCREENSHOT TEXT -> "+content);
@@ -1850,7 +1816,7 @@ if(operator.contains("-10") || operator.contains("-11") || operator.contains("-1
 		customWait(5000);
 		takeScreenShot();
 		Read_File.takeScreenShotForOcr("WifiPass");
-		my_main.validate_Using_OCR("WifiPass.png");
+		my_main.validate_Using_OCR("WifiPass.jpeg");
 		String path=System.getProperty("user.dir")+"\\src\\test\\resources\\OCR_FILES\\ocr.txt";	
 		String content = readFile(path);
 		System.out.println("SCREENSHOT TEXT -> "+content);
@@ -1894,43 +1860,60 @@ if(operator.contains("-10") || operator.contains("-11") || operator.contains("-1
 	}
 		 }sa.assertAll();
 	}
+	 	
 	 	@Test(priority=52,dataProvider="XP8_Wifi", dataProviderClass=DataProviders.class)
-		public void XP8_TC_52_Wifi_EnterMoreNonNumerics_VerifyErrorMessage(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException
+		public void XP8_TC_52_Wifi_ReceiveCallWhileBrowsing(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException
 		{  
 			SoftAssert sa=new SoftAssert();
-			//Check if proper error message is shown when non-numeric or more than 11 digits are keyed in
-			APP_LOGS.info("===========XP8_TC_53_Wifi_EnterMoreNonNumerics_VerifyErrorMessage============");
-			
-			launch_an_app("phone");
-			clickOn_dialPad();
-			dial_Code(data.get("Code"));
-			clickOn_wifiInformation();
-			clickOn_WifiAPI();
+			//Receive call While brwosing and verify user can able to browse while answering a call
+			APP_LOGS.info("===========XP8_TC_52_Wifi_ReceiveCallWhileBrowsing============");
+			clear_ChromeHistory();
 			 for(int i=1;i<=itr;i++) {
-					if(operator.contains("-10") || operator.contains("-11") || operator.contains("-15") || operator.contains("-26") || operator.contains("-29")) {
-					 clickOn_enableNetwork();
-					 enter_NonNumericNumbersMorethan11(data.get("Input"));
-					 takeScreenShot();
-					 Read_File.takeScreenShotForOcr("WifiErrormsg");
-					 my_main.validate_Using_OCR("WifiErrormsg.png");
-					 String path=System.getProperty("user.dir")+"\\src\\test\\resources\\OCR_FILES\\ocr.txt";	
-					 String content = readFile(path);
-					 System.out.println("Text from screenshot = "+content);
-					 verify_ErrorMsgDisplayed_WhenEnteringMoreNonNumerics(content,sa);
-				 }else  {																
-				 	 clickOn_enableNetwork();
-					 enter_NonNumericNumbersMorethan11(data.get("Input"));
-					 takeScreenShot();
-					 Read_File.takeScreenShotForOcr("WifiErrormsg");
-					 my_main.validate_Using_OCR("WifiErrormsg.png");
-					 String path=System.getProperty("user.dir")+"\\src\\test\\resources\\OCR_FILES\\ocr.txt";	
-					 String content = readFile(path);
-					 System.out.println("Text from screenshot = "+content);
-					 verify_ErrorMsgDisplayed_WhenEnteringMoreNonNumerics(content,sa);
-					 } 
+	if(operator.contains("-10") || operator.contains("-11") || operator.contains("-15") || operator.contains("-26") || operator.contains("-29")) {
+			launch_an_app("settings");
+			clickOnNetwork_Internet();
+			clickOn_Wifi_Lnk();
+			turnOn_Wifi();
+			remove_connectedNtwrk();
+			connect_to_WiFi(WIFI_SSID,WIFI_PWD);
+			launch_an_app("browser");
+			clear_ChromePermission();
+			enter_URL(i, URL1);
+			start_browsing();
+			customWait(2000);
+			make_Call_from_RefDev();
+			customWait(5000);
+			reciveCallInPriDevice();
+			customWait(5000);
+			moveCall_ToBackground();
+			//start_browsing();
+			verify_BrowsingIsContinuedAfterReceivingCall(sa);
+			minWait();
+			endCall_RefDevice();
+		 }else {
+				launch_an_app("settings");
+				clickOnNetwork_Internet();
+				clickOn_Wifi_Lnk();
+				turnOn_Wifi();
+				remove_connectedNtwrk();
+				connect_to_WiFi(WIFI_SSID,WIFI_PWD);
+				launch_an_app("browser");
+				clear_ChromePermission();
+				enter_URL(i, URL1);
+				start_browsing();
+				customWait(2000);
+				make_Call_from_RefDev();
+				customWait(5000);
+				reciveCallInPriDevice();
+				customWait(5000);
+				moveCall_ToBackground();
+			//	start_browsing();
+				verify_BrowsingIsContinuedAfterReceivingCall(sa);
+				minWait();
+				endCall_RefDevice();
+		 }
 			 }sa.assertAll();
 		}
-	
 /*	@Ignore
 	@Test(priority=53,dataProvider="XP8_Wifi", dataProviderClass=DataProviders.class)
 	public void XP8_TC_53_Wifi_UseWifi_ToSetup_Gmail(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException

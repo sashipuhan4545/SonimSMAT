@@ -43,7 +43,7 @@ public class XP8_Data_Usage_Setting_Test extends XP8_Data_Usage_Setting_Util{
 	public  String SSID=AllQA.SSID;
 	public  String PWD=AllQA.WIFIPASSWORD;
 	public  String videoName="sonim xp8";
-	public  int duration=10000;
+	public  int durationInSeconds=240;		//to play four minutes
 	public int itr=1;
 
 	@BeforeSuite
@@ -71,7 +71,8 @@ public class XP8_Data_Usage_Setting_Test extends XP8_Data_Usage_Setting_Util{
 	public  void beforeMethod(Method method) 
 	{
 		test = extent.startTest( (this.getClass().getSimpleName() +" :: "+  method.getName()),method.getName()); //Test Case Start Here
-		
+	//	test.assignAuthor("Farheen Taj"); //Test Script Author Name
+
 	}
 
 
@@ -116,15 +117,23 @@ public class XP8_Data_Usage_Setting_Test extends XP8_Data_Usage_Setting_Util{
 		PageFactory.initElements(new AppiumFieldDecorator(aDriver),loc);
 		PageFactory.initElements(new AppiumFieldDecorator(aDriver),loc1);
 		excel=new ExcelReader(ExcelConstants.XP5S_XL_PATH);	
-	/*	System.out.println("Precondition start");
+		
+
+	}
+	@Test(priority=0,dataProvider="XP8_Data_Usage_Setting", dataProviderClass=DataProviders.class)
+	public void XP8_TC_00_Data_Usage_Setting_PreConditions(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException
+	{  
+		APP_LOGS.info("===========XP8_TC_00_Data_Usage_Setting_PreConditions============");
+		System.out.println("Precondition start");
+		SoftAssert sa=new SoftAssert();
 		preCond_setSleepTime();
 		preCond_enableData();
-		preCond_browseData(videoName,duration);
+		preCond_browseData(videoName,durationInSeconds);
 		preCond_enableWifi(SSID,PWD);
-		preCond_browseData(videoName,duration);
-
-		System.out.println("Precondition end")*/;
-
+		preCond_browseData(videoName,durationInSeconds);
+		verify_PostConditionExcuted(sa);
+		sa.assertAll();
+		System.out.println("Precondition end");
 	}
 	//============================================================Test Case=======================================================================================
 	@Test(priority=1,dataProvider="XP8_Data_Usage_Setting", dataProviderClass=DataProviders.class)
@@ -2908,7 +2917,7 @@ public class XP8_Data_Usage_Setting_Test extends XP8_Data_Usage_Setting_Util{
 		enable_MobileData();
 	
 		clearRecentApps();
-		launch_an_app("youtube");
+		launchYoutube();
 		clickOn_Search();
 		search_Video("sonim xp8");
 		play_Video();
@@ -2947,7 +2956,7 @@ public class XP8_Data_Usage_Setting_Test extends XP8_Data_Usage_Setting_Util{
 			enable_MobileData();
 		
 			clearRecentApps();
-			launch_an_app("youtube");
+			launchYoutube();
 			clickOn_Search();
 			search_Video("sonim xp8");
 			play_Video();
@@ -2986,7 +2995,7 @@ public class XP8_Data_Usage_Setting_Test extends XP8_Data_Usage_Setting_Util{
 				enable_MobileData();
 			
 				clearRecentApps();
-				launch_an_app("youtube");
+				launchYoutube();
 				clickOn_Search();
 				search_Video("sonim xp8");
 				play_Video();
@@ -3025,7 +3034,7 @@ public class XP8_Data_Usage_Setting_Test extends XP8_Data_Usage_Setting_Util{
 			enable_MobileData();
 		
 			clearRecentApps();
-			launch_an_app("youtube");
+			launchYoutube();
 			clickOn_Search();
 			search_Video("sonim xp8");
 			play_Video();
@@ -3064,7 +3073,7 @@ public class XP8_Data_Usage_Setting_Test extends XP8_Data_Usage_Setting_Util{
 			enable_MobileData();
 		
 			clearRecentApps();
-			launch_an_app("youtube");
+			launchYoutube();
 			clickOn_Search();
 			search_Video("sonim xp8");
 			play_Video();
@@ -3103,7 +3112,7 @@ public class XP8_Data_Usage_Setting_Test extends XP8_Data_Usage_Setting_Util{
 			enable_MobileData();
 		
 			clearRecentApps();
-			launch_an_app("youtube");
+			launchYoutube();
 			clickOn_Search();
 			search_Video("sonim xp8");
 			play_Video();

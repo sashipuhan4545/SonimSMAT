@@ -122,12 +122,22 @@ public class XP8_Wifi_Util extends BaseUtil {
 			return check;
 			}
 		}
-	
+	public void launchWifiActivity() {
+		try {
+			aDriver.startActivity("com.android.settings","com.android.settings.SubSettings");
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in -> launchWifiActivity()");
+			e.printStackTrace();
+		}
+	}
 	public void clickOn_Wifi_Lnk(){
 
 		try {
-			   scrollToElements(Locators_Wifi.WiFi_Lnk);
-			   clickBtn(Locators_Wifi.WiFi_Lnk);
+			if(wait(Locators_Wifi.WiFi_Lnk, 10)) {
+				   clickBtn(Locators_Wifi.WiFi_Lnk);
+			}else {
+				
+			}
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 			test.log(LogStatus.ERROR, "Error in the locators->clickOn_Wifi_Lnk()");
 			e.printStackTrace();
@@ -151,8 +161,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 			e.printStackTrace();
 		}
 	}
-
-	public boolean clickOn_Savednetwork(){
+	public boolean verify_SavedNetwork_IsPresent(){
 		boolean savedNetwork=false;
 		try {
 				scrollToElements(Locators_Wifi.Saved_network);
@@ -173,14 +182,40 @@ public class XP8_Wifi_Util extends BaseUtil {
 		System.out.println("Saved network available = ? "+savedNetwork);
 		return savedNetwork;
 	}
+	public boolean clickOn_Savednetwork(){
+		boolean savedNetwork=false;
+		try {
+				scrollToElements(Locators_Wifi.Saved_network);
+				if(isElementExist(Locators_Wifi.Saved_network)) {
+					savedNetwork=true;
+					clickBtn(Locators_Wifi.Saved_network);
+				}else {
+					savedNetwork=scrollToTextClick("Saved networks");
+					while(savedNetwork==false) {
+						savedNetwork=scrollToTextClick("Saved networks");
+					}
+				}
+			} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->clickOn_Savednetwork()");
+			e.printStackTrace();
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->clickOn_Savednetwork()");
+			e.printStackTrace();
+		}
+		System.out.println("Saved network available = ? "+savedNetwork);
+		return savedNetwork;
+	}
 	public void clickOn_Addnetwork(){
 
 		try {
-				scrollToElements(Locators_Wifi.Add_network);
-				if(isElementExist(Locators_Wifi.Add_network)) {
+				if(wait(Locators_Wifi.Add_network,10)) {
 					clickBtn(Locators_Wifi.Add_network);
 				}else {
-					scrollText("Add network");
+					boolean an=scrollToText("Add network");
+					while(an==false) {
+						an=scrollToText("Add network");
+					}
 				}
 			} catch (org.openqa.selenium.NoSuchElementException e) {
 
@@ -277,8 +312,10 @@ public class XP8_Wifi_Util extends BaseUtil {
 			System.out.println("ssid = "+ssid);
 			checkSSID=scrollText(ssid);
 			while(checkSSID==true) {
-			clickBtn(Locators_Wifi.FORGET);
-			checkSSID=scrollToText(ssid);
+				if(isElementExist(Locators_Wifi.FORGET)) {
+					clickBtn(Locators_Wifi.FORGET);
+				}
+				checkSSID=scrollToText(ssid);
 			}	
 			System.out.println("removed old ssid");
 		} catch (org.openqa.selenium.NoSuchElementException e) {
@@ -349,15 +386,15 @@ public class XP8_Wifi_Util extends BaseUtil {
 		try{
 			
 			wait(Locators_Wifi.Wifi_ssidTxtBx, 90);
-			enterTextToInputField(Locators_Wifi.Wifi_ssidTxtBx, name);
-			clickBtn(Locators_Wifi.Wifi_securityLst);
-			clickBtn(Locators_Wifi.WiFi_securityLst_802_1x_EAP);
-			clickBackButton(1);
-			scrollToTextClick("Please select");
-			clickBtn(Locators_Wifi.WiFi_802_dontvalidateLst);
-			scrollToText("Password");
-			enterTextToInputField(Locators_Wifi.WiFi_802_pswdTxtBx, pswd);
-			clickBtn(Locators_Wifi.WiFi_saveBtn);
+			enterTextToInputField(Locators_Wifi.Wifi_ssidTxtBx, name);System.out.println("txt bx");
+			clickBtn(Locators_Wifi.Wifi_securityLst);System.out.println("security");
+			clickBtn(Locators_Wifi.WiFi_securityLst_802_1x_EAP);System.out.println("eap");
+			clickBackButton(1);System.out.println("back btn");
+			scrollToTextClick("Please select");System.out.println("pls select");
+			clickBtn(Locators_Wifi.WiFi_802_dontvalidateLst);System.out.println("do not validate");
+			scrollToText("Password");System.out.println("clicked on pwd");
+			enterTextToInputField(Locators_Wifi.WiFi_802_pswdTxtBx, pswd);System.out.println("pwd entered");
+			clickBtn(Locators_Wifi.WiFi_saveBtn);System.out.println("saved");
 			
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 			test.log(LogStatus.ERROR,"Error in locators->Add_Network_security_802_1x_EAP()");
@@ -420,7 +457,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 			while(wifi_SSID==false) {
 				wifi_SSID=scrollToText(ssid);
 			}
-			enterTextToInputField(Locators_Wifi.wifi_enterPwd_index, pswd);
+			enterTextToInputField(Locators_Wifi.wifi_enterPwd_index, pswd);wait(Locators_Wifi.sonimvideo,10);
 		 	boolean password = scrollToText(pswd);
 			if(password == false){
 				APP_LOGS.info("Password hidden successfully");
@@ -497,8 +534,8 @@ public class XP8_Wifi_Util extends BaseUtil {
 			minWait();
 			System.out.println("SSID selected ? = "+wifiName);
 			if(isElementExist(Locators_Wifi.wifi_enterPwd_index)) {
-			enterTextToInputField(Locators_Wifi.wifi_enterPwd_index, pwsd);
-			clickBtn(Locators_Wifi.Wifi_connectBtn);
+				enterTextToInputField(Locators_Wifi.wifi_enterPwd_index, pwsd);
+				clickBtn(Locators_Wifi.Wifi_connectBtn);
 			}
 			wait(Locators_Wifi.Wifi_PageLogo, 20);
 			
@@ -515,7 +552,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 	public void remove_connectedNtwrk()
 	{
 		try{
-			if( scrollToText("Connected")==true)
+			if( wait(Locators_Wifi.Connected,50)==true)
 			{
 					if(wait(Locators_Wifi.FORGET,10)) {
 						clickBtn(Locators_Wifi.FORGET);
@@ -653,18 +690,20 @@ public class XP8_Wifi_Util extends BaseUtil {
 			e.printStackTrace();
 		}
 	}
-	public void validate_NetworkIsSaved(SoftAssert sa,String ssid)
+	public void validate_NetworkIsSaved(SoftAssert sa,String ssid,String type)
 	{
 		try{
 			
-			scrollTo("Saved networks");
-			scrollToElements(Locators_Wifi.WiFi_savedNtw);
-			clickBtn(Locators_Wifi.WiFi_savedNtw);
+			boolean sn=scrollToText("Saved networks");
+			while(sn==false)
+			{
+				sn=scrollToText("Saved networks");
+			}
 			boolean checkSSID = scrollTo(ssid);
 			if(checkSSID == true){	
-				APP_LOGS.info("Network Added Succesfully ");
-				sa.assertTrue(true, "Network Added Succesfully");
-				test.log(LogStatus.PASS,"Network Added Succesfully");
+				APP_LOGS.info(type+" Network Added Succesfully ");
+				sa.assertTrue(true, type+" Network Added Succesfully");
+				test.log(LogStatus.PASS,type+" Network Added Succesfully");
 			}
 			else {
 				APP_LOGS.info("Failed in Adding Networks to WiFi");
@@ -684,8 +723,11 @@ public class XP8_Wifi_Util extends BaseUtil {
 	{
 		try{
 			
-			scrollToText("Saved networks");
-			clickBtn(Locators_Wifi.WiFi_savedNtw);
+			boolean sn=scrollToText("Saved networks");
+			while(sn==false)
+			{
+				sn=scrollToText("Saved networks");
+			}			
 			boolean checkSSID = scrollToText(ssid);
 			clickBackButton(1);	
 			if(checkSSID == true){
@@ -745,15 +787,15 @@ public class XP8_Wifi_Util extends BaseUtil {
 			e.printStackTrace();
 		}
 	}
-	public void clickOn_WifiMoreSetting()
+	public void clickOn_WifiMoreSettings()
 	{
 		try{
 			clickBtn(Locators_Wifi.WifiQuick_MoresettingBtn);
 		} catch (org.openqa.selenium.NoSuchElementException e) {
-			test.log(LogStatus.ERROR,"Error in locators->  clickOn_WifiMoreSetting()");
+			test.log(LogStatus.ERROR,"Error in locators->  clickOn_WifiMoreSettings()");
 			e.printStackTrace();
 		}catch (Exception e) {
-			test.log(LogStatus.ERROR,"Exeption in ->  clickOn_WifiMoreSetting()");
+			test.log(LogStatus.ERROR,"Exeption in ->  clickOn_WifiMoreSettings()");
 			e.printStackTrace();
 		}
 	}
@@ -829,9 +871,9 @@ public class XP8_Wifi_Util extends BaseUtil {
 			 aDriver.startActivity("com.google.android.youtube", "com.google.android.apps.youtube.app.WatchWhileActivity");
 			 
 			 if(!isElementExist(Locators_Wifi.Wifi_youtubeErrorMsg)) {
-				APP_LOGS.info("Wifi Connected Successfully and given site is opened successfully");
-				sa.assertTrue(true, "Wifi Connected Successfully and given site is opened successfully");
-				test.log(LogStatus.PASS, "Wifi Connected Successfully and given site is opened successfully");	
+				APP_LOGS.info("Wifi Connected and given site is opened successfully");
+				sa.assertTrue(true, "Wifi Connected  and given site is opened successfully");
+				test.log(LogStatus.PASS, "Wifi Connected  and given site is opened successfully");	
 			}else {
 				APP_LOGS.info("Failed to connect with wifi network");
 				sa.fail();
@@ -898,14 +940,14 @@ public class XP8_Wifi_Util extends BaseUtil {
 			boolean scanning = scrollToText("Scanning");
 			
 			if(scanning == true){
-				APP_LOGS.info("Scanning Option is displayed Successfully");
-				sa.assertTrue(true, "Scanning Option is displayed Successfully");
-				test.log(LogStatus.PASS,"Scanning Option is displayed Successfully");	
+				APP_LOGS.info("Scanning option is present in location setting");
+				sa.assertTrue(true, "Scanning option is present in location setting");
+				test.log(LogStatus.PASS,"Scanning option is present in location setting");	
 			}
 			else {
-				APP_LOGS.info("Failed to show Scanning Option");
+				APP_LOGS.info("Failed -> Scanning option is not displayed in location setting");
 				sa.fail();
-				test.log(LogStatus.FAIL, "Failed to show Scanning Option");
+				test.log(LogStatus.FAIL, "Failed -> Scanning option is not displayed in location setting");
 			}
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 			test.log(LogStatus.ERROR,"Error in locators->validate_ScanningOpt()");
@@ -956,9 +998,9 @@ public class XP8_Wifi_Util extends BaseUtil {
 			boolean scanning = scrollToText("Scanning");	
 			if(scanning ==true){
 				
-				APP_LOGS.info("Scanning setting is displayed successfully");
-				sa.assertTrue(true, "Scanning setting is displayed successfully");
-				test.log(LogStatus.PASS,"Scanning setting is displayed successfully");	
+				APP_LOGS.info("Scanning setting option displayed in wifi setting");
+				sa.assertTrue(true, "Scanning setting option displayed in wifi setting");
+				test.log(LogStatus.PASS,"Scanning setting option displayed in wifi setting");	
 			}
 			else {
 				
@@ -994,9 +1036,9 @@ public class XP8_Wifi_Util extends BaseUtil {
 			boolean forget = isElementExist(Locators_Wifi.FORGET);
 			boolean cancel = isElementExist(Locators_Wifi.CANCEL);	
 			if(forget && cancel){
-				APP_LOGS.info("Forget And Cancel Button are Present");
-				sa.assertTrue(true, "Forget And Cancel Button are Present");
-				test.log(LogStatus.PASS,"Forget And Cancel Button are Present");	
+				APP_LOGS.info("Forget And Cancel Button are Present in saved networks");
+				sa.assertTrue(true, "Forget And Cancel Button are Present in saved networks");
+				test.log(LogStatus.PASS,"Forget And Cancel Button are Present in saved networks");	
 			}
 			else {
 				APP_LOGS.info("Forget And Cancel Button are Not Present");
@@ -1021,14 +1063,14 @@ public class XP8_Wifi_Util extends BaseUtil {
 				verifySSID=scrollTo(ssid);
 			}
 			if(verifySSID){
-				APP_LOGS.info("Cancel Button Fuctioning Successfully");
-				sa.assertTrue(true, "Cancel Button Fuctioning Successfully");
-				test.log(LogStatus.PASS,"Cancel Button Fuctioning Successfully");
+				APP_LOGS.info("Verified the functionality of Cancel button");
+				sa.assertTrue(true, "Verified the functionality of Cancel button");
+				test.log(LogStatus.PASS,"Verified the functionality of Cancel button");
 			}
 			else {
-				APP_LOGS.info("Cancel Button Failed to Fuction");
+				APP_LOGS.info("Failed -> Cancel button is not functioning properly");
 				sa.fail();
-				test.log(LogStatus.FAIL, "Cancel Button Failed to Fuction");
+				test.log(LogStatus.FAIL, "Failed -> Cancel button is not functioning properly");
 				}
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 			test.log(LogStatus.ERROR,"Error in locators->validate_CnclBtn()");
@@ -1047,14 +1089,14 @@ public class XP8_Wifi_Util extends BaseUtil {
 			}
 			boolean verifySSID = scrollTo(ssid);	
 			if(verifySSID==false){	
-				APP_LOGS.info("Forget Button Fuctioning Successfully");
-				sa.assertTrue(true, "Forget Button Fuctioning Successfully");
-				test.log(LogStatus.PASS,"Forget Button Fuctioning Successfully");	
+				APP_LOGS.info("Verified the functionality of Forget button");
+				sa.assertTrue(true, "Verified the functionality of Forget button");
+				test.log(LogStatus.PASS,"Verified the functionality of Forget button");	
 			}
 			else {		
-				APP_LOGS.info("Forget Button Failed to Fuction");
+				APP_LOGS.info("Failed -> Forget button is not functioning properly");
 				sa.fail();
-				test.log(LogStatus.FAIL, "Forget Button Failed to Fuction");
+				test.log(LogStatus.FAIL, "Failed -> Forget button is not functioning properly");
 			}
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 			test.log(LogStatus.ERROR,"Error in locators->validate_FrgtBtn()");
@@ -1065,7 +1107,23 @@ public class XP8_Wifi_Util extends BaseUtil {
 		}
 	}
 	
-
+	public boolean scrollToTextContains(String text) {
+		/*
+		  Method used to select an element on the page by scrolling the Scroll View/List View
+		 */
+		boolean check = false;
+		try {  
+			String scrollable = "new UiScrollable(new UiSelector().scrollable(true))";
+			String textElement = ".scrollIntoView(new UiSelector().textContains(\""+ text +"\"))";
+			aDriver.findElementByAndroidUIAutomator(scrollable+textElement).click();
+			APP_LOGS.info("Searched application is found sucessfully : ");
+			check = true;
+			return check;
+		}
+		catch(NoSuchElementException e) {
+			return check;
+		}
+	}
 	public void clickOn_WifiPreferences(){
 
 		try {
@@ -1222,14 +1280,14 @@ public class XP8_Wifi_Util extends BaseUtil {
 			String macID = Locators_Wifi.Wifi_MacAddress.getText();
 			System.out.println("Mac id = "+macID);
 			if(macID!=null){
-				APP_LOGS.info("MAC Address Is Present");
-				sa.assertTrue(true, "MAC Address Is Present");
-				test.log(LogStatus.PASS,"MAC Address Is Present");	
+				APP_LOGS.info("MAC address is displayed under wifi settings");
+				sa.assertTrue(true, "MAC address is displayed under wifi settings");
+				test.log(LogStatus.PASS,"MAC address is displayed under wifi settings");	
 			}
 			else {
-				APP_LOGS.info("MAC Address is Not Present");
+				APP_LOGS.info("Failed -> MAC address is not displayed under wifi setting");
 				sa.fail();
-				test.log(LogStatus.FAIL, "MAC Address is Not Present");
+				test.log(LogStatus.FAIL, "Failed -> MAC address is not displayed under wifi setting");
 			}
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 			test.log(LogStatus.ERROR,"Error in locators->verify_MACAddress_IsPresent()");
@@ -1249,19 +1307,19 @@ public class XP8_Wifi_Util extends BaseUtil {
 			
 			if(Ip_ID.equalsIgnoreCase("Unavailable"))
 			{
-				APP_LOGS.info("IP Address Unavailable When Wifi is not connected");
-				sa.assertTrue(true, "IP Address Unavailable When Wifi is not connected");
-				test.log(LogStatus.PASS,"IP Address Unavailable When Wifi is not connected");
+				APP_LOGS.info("Wifi disconneced and IP address is unavailable under wifi settings");
+				sa.assertTrue(true, "Wifi disconneced and IP address is unavailable under wifi settings");
+				test.log(LogStatus.PASS,"Wifi disconneced and IP address is unavailable under wifi settings");
 			}
 			else if(check1 && check2){	
-				APP_LOGS.info("IP Address Is displayed Successfully");
-				sa.assertTrue(true, "IP Address Is displayed Successfully");
-				test.log(LogStatus.PASS,"IP Address Is displayed Successfully");	
+				APP_LOGS.info("IP address is displayed under wifi setting");
+				sa.assertTrue(true, "IP address is displayed under wifi setting");
+				test.log(LogStatus.PASS,"IP address is displayed under wifi setting");	
 			}
 			else {
-				APP_LOGS.info("Failed to show IP Address when Wifi is connected");
+				APP_LOGS.info("Failed -> IP address is not displayed under wifi setting");
 				sa.fail();
-				test.log(LogStatus.FAIL, "Failed to show IP Address when Wifi is connected");
+				test.log(LogStatus.FAIL, "Failed -> IP address is not displayed under wifi setting");
 			}
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 			test.log(LogStatus.ERROR,"Error in locators->validate_IP_Address()");
@@ -1323,15 +1381,14 @@ public class XP8_Wifi_Util extends BaseUtil {
 			e.printStackTrace();
 		}
 	}
-	
 	public void Validate_navigatedToStorageLocation(SoftAssert sa){
 
 		try {
 			boolean Recent = isElementExist(Locators_Wifi.Recent);	
 				if(Recent == true){
-					APP_LOGS.info("Navigated to Storage Location Successfully");
-					sa.assertTrue(true, "Navigated to Storage Location Successfully");
-					test.log(LogStatus.PASS,"Navigated to Storage Location Successfully");
+					APP_LOGS.info("Navigated to storage location");
+					sa.assertTrue(true, "Navigated to storage location");
+					test.log(LogStatus.PASS,"Navigated to storage location");
 				}
 				else {
 					APP_LOGS.info("Failed to Navigate to Storage Location");
@@ -1340,6 +1397,28 @@ public class XP8_Wifi_Util extends BaseUtil {
 				}
 			} catch (org.openqa.selenium.NoSuchElementException e) {
 				test.log(LogStatus.ERROR,"Error in locators-> Validate_navigatedToStorageLocation()");
+				e.printStackTrace();
+			}catch (Exception e) {
+				test.log(LogStatus.ERROR,"Exeption in -> Validate_navigatedToStorageLocation()");
+				e.printStackTrace();
+			}
+		}	
+	public void verify_InstallCertificate(SoftAssert sa){
+
+		try {
+			boolean Recent = isElementExist(Locators_Wifi.Recent);	
+				if(Recent == true){
+					APP_LOGS.info("Install certificate is working fine in wifi advaced menu");
+					sa.assertTrue(true, "Install certificate is working fine in wifi advaced menu");
+					test.log(LogStatus.PASS,"Install certificate is working fine in wifi advaced menu");
+				}
+				else {
+					APP_LOGS.info("Failed to Navigate to Storage Location");
+					sa.fail();
+					test.log(LogStatus.FAIL, "Failed to Navigate to Storage Location");
+				}
+			} catch (org.openqa.selenium.NoSuchElementException e) {
+				test.log(LogStatus.ERROR,"Error in locators-> verify_InstallCertificate()");
 				e.printStackTrace();
 			}catch (Exception e) {
 				test.log(LogStatus.ERROR,"Exeption in -> Validate_navigatedToStorageLocation()");
@@ -1734,31 +1813,56 @@ public class XP8_Wifi_Util extends BaseUtil {
 			test.log(LogStatus.ERROR,"Exeption in ->navigateTo_Accessibility()");
 		}
 	}
-	public void longPressOn_ConnectedSSID(String ssid) {
+	public void clear_ChromeHistory() {
 		try {
-			if(isElementExist(Locators_Wifi.Connected)) {
-			boolean ssidAvailable=false;
-			AndroidElement WifiSSID=aDriver.findElementByXPath("//android.widget.TextView[@text='"+ssid+"']");
-			scrollToElements(WifiSSID);
-			ssidAvailable=isElementExist(WifiSSID);
-			if(ssidAvailable) {
-			TouchAction ta=new TouchAction(aDriver);
-			ta.longPress(WifiSSID, 10000).perform();
-			}else {
-				while(ssidAvailable==false)
-				{
-					scrollToElements(WifiSSID);
-					ssidAvailable=isElementExist(WifiSSID);
-				}
+			Runtime.getRuntime().exec("adb -s "+p_Id+" shell pm clear com.android.chrome");
+		}catch (Exception e) {
+		
+		}
+	}
+	public void check_AirplaneModeState_InRefDev()    {
+		/*
+		* Perform action for IMS registered check
+		*/
+		try {
+		minWait();
+		Process child = Runtime.getRuntime().exec("adb -s " + r_Id + " settings get global airplane_mode_on ");
+		InputStream lsOut = child.getInputStream();
+		InputStreamReader r = new InputStreamReader(lsOut);
+		BufferedReader in = new BufferedReader(r);
+		String line = in.readLine();
+		System.out.println("Airplanemode state -> 0 = off ,1 = on "+line);
+
+		minWait();
+		} catch (IOException io) {
+			test.log(LogStatus.ERROR, "Caught IOException in -> check_AirplaneModeState_InRefDev");
+			io.printStackTrace();
+		} catch (InterruptedException ie) {
+			test.log(LogStatus.ERROR, "Caught InterruptedException  in -> check_AirplaneModeState_InRefDev");
+			ie.printStackTrace();
+		} catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in functionality -> check_AirplaneModeState_InRefDev()");
+			e.printStackTrace();
+		}
+		}
+	public void longPressOn_ConnectedSSID(String ssid,String pwsd) {
+		try {
+			if(wait(Locators_Wifi.Connected,50)) {
 				TouchAction ta=new TouchAction(aDriver);
-				ta.longPress(WifiSSID, 10000).perform();
-			}
+				ta.longPress(Locators_Wifi.Connected, 10000).perform();
+			}else {
+				connect_to_WiFi(ssid, pwsd);
+				if(wait(Locators_Wifi.Connected,50)) {
+				TouchAction ta=new TouchAction(aDriver);
+				ta.longPress(Locators_Wifi.Connected, 10000).perform();
+				}
 			}
 		} catch (org.openqa.selenium.NoSuchElementException e) {
-
 			test.log(LogStatus.ERROR,"Error in locators-> longPressOn_ConnectedSSID()");
+			e.printStackTrace();
 		}catch (Exception e) {
 			test.log(LogStatus.ERROR,"Exeption in -> longPressOn_ConnectedSSID()");
+			e.printStackTrace();
 		}
 	}
 	public boolean wait(AndroidElement element, int waitTime) {
@@ -1830,7 +1934,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 
 		try {
 			
-			boolean connectToNetwork = wait(Locators_Wifi.Connect_to_network,10000);
+			boolean connectToNetwork = wait(Locators_Wifi.Connect_to_network,120);
 				if(connectToNetwork == true){			
 					APP_LOGS.info("Long pressed on ssid and connect to network is displayed");
 					sa.assertTrue(true, "Long pressed on ssid and connect to network is displayed");
@@ -2346,14 +2450,16 @@ public class XP8_Wifi_Util extends BaseUtil {
 	}
 	
 	public void setup_WiFiHotspot_Open(String name){
-
 		try {
 			System.out.println("wifi hotspot open = "+name);
 			   wait(Locators_Wifi.Hotspot_ssidTxtBx,60);
-			   enterTextToInputField(Locators_Wifi.Hotspot_ssidTxtBx, name);
-			   clickBtn(Locators_Wifi.Hotspot_securityDrpDwn);
-			   clickBtn(Locators_Wifi.Hotspot_security_Open);
-			   clickBtn(Locators_Wifi.Hotspot_saveBtn);
+			   enterTextToInputField(Locators_Wifi.Hotspot_ssidTxtBx, name);System.out.println("txt");
+			   clickBtn(Locators_Wifi.Hotspot_securityDrpDwn);System.out.println("dropdown");
+			   clickBtn(Locators_Wifi.Hotspot_security_Open);System.out.println("open or none");
+			   if(isElementExist(Locators_Wifi.OK)) {
+				   clickBtn(Locators_Wifi.OK);
+			   }
+			   clickBtn(Locators_Wifi.Hotspot_saveBtn);System.out.println("save");
 			} catch (org.openqa.selenium.NoSuchElementException e) {
 			test.log(LogStatus.ERROR, "Error in the locators-> setup_WiFiHotspot_Open()");
 			e.printStackTrace();
@@ -2367,7 +2473,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 	{
 		try{
 			String str1 = Locators_Wifi.Hotspot_svdNtwrk.getText();			
-			if(str1.equalsIgnoreCase(name+" Open hotspot")){
+			if(str1.equalsIgnoreCase(name+" Open hotspot") || str1.equalsIgnoreCase(name+" None hotspot")){
 				APP_LOGS.info("Open network Wifi hotspot configured successfully");
 				sa.assertTrue(true, "Open network Wifi hotspot configured successfully");
 				test.log(LogStatus.PASS,"Open network Wifi hotspot configured successfully");	
@@ -2596,9 +2702,10 @@ public class XP8_Wifi_Util extends BaseUtil {
 		}
 	}
 	
-	public void verify_AutoConnect_IsPresent(SoftAssert sa)
+	public void verify_AutoConnect_IsPresent(String operator,SoftAssert sa)
 	{
 		try{
+			if(operator.contains("-10")) {
 			boolean  autoConnect= scrollToTextContains("Auto Connect");		
 			if(autoConnect==true){
 				APP_LOGS.info("Auto connect option is Present in Wifi Setting");
@@ -2609,6 +2716,11 @@ public class XP8_Wifi_Util extends BaseUtil {
 				APP_LOGS.info("Failed -> Auto connect option is not Present in Wifi Setting");
 				sa.fail();
 				test.log(LogStatus.FAIL, "Failed -> Auto connect option is not Present in Wifi Setting");
+			}}
+			else {
+				APP_LOGS.info("Auto connect option only applicable for ATT");
+				test.log(LogStatus.INFO,"Auto connect option only applicable for ATT");	
+				test.log(LogStatus.SKIP,"Only applicable for ATT");	
 			}
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 			test.log(LogStatus.ERROR,"Error in locators-> verify_AutoConnect_IsPresent()");
@@ -2622,7 +2734,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 	public void validate_LongPressOn_ConnectedSSID(SoftAssert sa){
 
 		try {
-			boolean forgetNetwork = wait(Locators_Wifi.Forgetnetwork,10000);
+			boolean forgetNetwork = wait(Locators_Wifi.Forgetnetwork,30);
 				if(forgetNetwork == true){
 					APP_LOGS.info("Long pressed on connected ssid and forget network option is displayed");
 					sa.assertTrue(true, "Long pressed on connected ssid and forget network option is displayed");
@@ -2993,28 +3105,41 @@ public class XP8_Wifi_Util extends BaseUtil {
 		}
 		return disabled;
 	}
-	public void clickOn_MobileDataUsage() {
 
+	public void drag_Drop(AndroidElement source, AndroidElement target) {
+		TouchAction action = new TouchAction(aDriver);
+		action.longPress(source, 9000).moveTo(target).release().perform();	
+	}
+	public void clickOn_BackBtn() {
 		try {
-
-			Locators_Wifi.MobileDataUsageBtn.click();
-
-		} catch (org.openqa.selenium.NoSuchElementException e) {
-
-			test.log(LogStatus.ERROR, "Error in the locators->clickOn_MobileDataUsage()");
+			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
+			minWait();
+		} catch (InterruptedException e) {
 			e.printStackTrace();
-
-		} catch (Exception e) {
-
-			test.log(LogStatus.ERROR, "Exeption in ->clickOn_MobileDataUsage()");
 		}
 	}
-	
-	
+
+	public String extract_Numerics(String stringValue) {
+		String numericValue = "";
+		String arr[]=stringValue.split("used");
+		stringValue=arr[0];
+		System.out.println("Input string = "+stringValue);
+		/*if(stringValue.contains(".")) {
+		    System.out.println(stringValue.indexOf("."));
+		    stringValue=stringValue.substring(0,stringValue.indexOf("."));
+		System.out.println("New string = "+stringValue);
+		}*/
+		for (int i = 0; i < stringValue.length(); i++) {
+			if (stringValue.charAt(i) >= '0' && stringValue.charAt(i) <= '9' || stringValue.charAt(i)=='.')
+				numericValue = numericValue + stringValue.charAt(i);
+		}
+		System.out.println("Output string = "+numericValue);
+		return numericValue;
+	}
+
 	public int get_MobileDataUsage() {
 		 int dataUsage =0;
 		try {
-
 		String str = Locators_Wifi.dataUsageDetails.getText();
 		System.out.println("Mobile data used = "+str);
 		String num = "";
@@ -3164,29 +3289,29 @@ public class XP8_Wifi_Util extends BaseUtil {
 			*/
 			if (!isElementExist(Locators_XP8_Sanity.turnOff_Airplane_PopUp)) {
 			try {
-			while(true){
-			Process child = null;
-			if (p_b_No.contains("8A.")) {
-			child=Runtime.getRuntime().exec("adb -s "+p_Id+" shell service call telecom 29");
-			} else if(r_b_No.contains("5SA.")) {
-			child=Runtime.getRuntime().exec("adb -s "+p_Id+" shell service call telecom 28");
-			}
-			InputStream inputStream = child.getInputStream();
-			InputStreamReader isr = new InputStreamReader(inputStream);
-			BufferedReader bf = new BufferedReader(isr);
-			String value=bf.readLine();
-			if(value.contains("00000001")) {
-			System.out.println("Phone is ringing so accepting call.");
-			Runtime.getRuntime().exec("adb -s "+p_Id+" shell input keyevent 5");
-			break;
-			}else {
-			continue;
-			}
-			}
+				while(true){
+					Process child = null;
+					if (p_b_No.contains("8A.")) {
+						child=Runtime.getRuntime().exec("adb -s "+p_Id+" shell service call telecom 29");
+					} else if(r_b_No.contains("5SA.")) {
+						child=Runtime.getRuntime().exec("adb -s "+p_Id+" shell service call telecom 28");
+					}
+					InputStream inputStream = child.getInputStream();
+					InputStreamReader isr = new InputStreamReader(inputStream);
+					BufferedReader bf = new BufferedReader(isr);
+					String value=bf.readLine();
+					if(value.contains("00000001")) {
+						System.out.println("Phone is ringing so accepting call.");
+						Runtime.getRuntime().exec("adb -s "+p_Id+" shell input keyevent 5");
+						break;
+					}else {
+						continue;
+					}
+				}
 
 			}catch(Exception e) {
-			Thread.sleep(2000);
-			Runtime.getRuntime().exec("adb -s "+p_Id+" shell input keyevent 5");
+				Thread.sleep(2000);
+				Runtime.getRuntime().exec("adb -s "+p_Id+" shell input keyevent 5");
 
 			}
 			}
@@ -3257,15 +3382,42 @@ public class XP8_Wifi_Util extends BaseUtil {
 		
 		public void start_browsing() {
 			try {
-				if(wait((AndroidElement) Locators_Wifi.googleSearchBx,10000)) {
+				aDriver.pressKeyCode(4);
+				/*TouchAction ta = new TouchAction(aDriver);
+				if(wait(Locators_Wifi.CLEAR,10)) {
+					ta.tap(Locators_Wifi.CLEAR).perform();
+					if(wait(Locators_Wifi.CLEAR,10)) 
+						ta.tap(Locators_Wifi.CLEAR).perform();
+					System.out.println("CLEAR");
+				}
+				if(wait(Locators_Wifi.clearreset, 10)) {
+					ta.tap(Locators_Wifi.clearreset).perform();
+					if(wait(Locators_Wifi.clearreset, 10)) 
+						ta.tap(Locators_Wifi.clearreset).perform();
+					System.out.println("Clear");
+				}*/
+				if(wait((AndroidElement) Locators_Wifi.googleSearchBx,120)) {
 					Locators_Wifi.googleSearchBx.sendKeys("Appium");
 					aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_ENTER);
-				}				
+					System.out.println("searched appium");
+				}	
+			/*	if(wait(Locators_Wifi.CLEAR,10)) {
+					ta.tap(Locators_Wifi.CLEAR).perform();
+					if(wait(Locators_Wifi.CLEAR,10)) 
+						ta.tap(Locators_Wifi.CLEAR).perform();
+					System.out.println("CLEAR last");
+				}
+				if(wait(Locators_Wifi.clearreset, 10)) {
+					ta.tap(Locators_Wifi.clearreset).perform();
+					if(wait(Locators_Wifi.clearreset, 10)) 
+						ta.tap(Locators_Wifi.clearreset).perform();
+					System.out.println("Clear last");
+				}*/
 			} catch (org.openqa.selenium.NoSuchElementException e) {
 				test.log(LogStatus.ERROR,"Error in locators->start_browsing()");
 				e.printStackTrace();
 			}catch (Exception e) {
-				test.log(LogStatus.ERROR, "start_browsing");
+				test.log(LogStatus.ERROR, "Exception in functionality->start_browsing()");
 				e.printStackTrace();
 			}
 			
@@ -3275,9 +3427,10 @@ public class XP8_Wifi_Util extends BaseUtil {
 		public void verify_BrowsingIsContinuedAfterReceivingCall(SoftAssert sa)
 		{
 			try{
-				boolean check1 = Locators_Wifi.google_verifyLnk.isDisplayed();
-				boolean check2 =  Locators_Wifi.google_navigateIdLnk.isDisplayed();
-				if(check1 && check2){		
+				boolean check1 = wait(Locators_Wifi.google_verifyLnk,10);
+				boolean check2 =  wait(Locators_Wifi.google_navigateIdLnk,10);
+				boolean appium =  wait(Locators_Wifi.Appium,10);
+				if(check1==true || check2==true || appium==true){		
 					APP_LOGS.info("Browsing is continued using wifi when call is in active");
 					sa.assertTrue(true, "Browsing is continued using wifi when call is in active");
 					test.log(LogStatus.PASS,"Browsing is continued using wifi when call is in active");
@@ -3325,8 +3478,8 @@ public class XP8_Wifi_Util extends BaseUtil {
 				try{
 					System.out.println("Old wifi data = "+MdataBefore);
 					System.out.println("New wifi data = "+MdataAfter);
-					int oldV=Integer.parseInt(MdataBefore);
-					int newV=Integer.parseInt(MdataAfter);
+					double oldV=Double.parseDouble(MdataBefore);
+					double newV=Double.parseDouble(MdataAfter);
 					if(newV>oldV==true){
 						APP_LOGS.info("Wifi data is used for browsing when Mobile data is in enable mode");
 						sa.assertTrue(true, "Wifi data is used for browsing when Mobile data is in enable mode");
@@ -3350,8 +3503,8 @@ public class XP8_Wifi_Util extends BaseUtil {
 				try{
 					System.out.println("Old wifi data = "+MdataBefore);
 					System.out.println("New wifi data = "+MdataAfter);
-					int oldV=Integer.parseInt(MdataBefore);
-					int newV=Integer.parseInt(MdataAfter);
+					double oldV=Double.parseDouble(MdataBefore);
+					double newV=Double.parseDouble(MdataAfter);
 					if(newV>oldV==true){
 						APP_LOGS.info("Wifi data is used for browsing when Mobile data is in disable mode");
 						sa.assertTrue(true, "Wifi data is used for browsing when Mobile data is in disable mode");
@@ -3399,8 +3552,6 @@ public class XP8_Wifi_Util extends BaseUtil {
 				APP_LOGS.info("After Enabling Wifi Successfully we are able to Browse using Wifi");
 				sa.assertTrue(true, "After Enabling Wifi Successfully we are able to Browse using Wifi");
 				test.log(LogStatus.PASS,"After Enabling Wifi Successfully we are able to Browse using Wifi");	
-
-
 			}
 			else {
 				
@@ -3546,11 +3697,11 @@ public class XP8_Wifi_Util extends BaseUtil {
 			}
 
 		} catch (org.openqa.selenium.NoSuchElementException e) {
-
 			test.log(LogStatus.ERROR,"Error in locators-> verify_Addnetwork_IsPresent_InWifiSetting()");
-			
+			e.printStackTrace();
 		}catch (Exception e) {
 			test.log(LogStatus.ERROR,"Exeption in -> verify_Addnetwork_IsPresent_InWifiSetting()");
+			e.printStackTrace();
 		}
 	}
 		
@@ -3645,10 +3796,10 @@ public class XP8_Wifi_Util extends BaseUtil {
 				french=isElementExist(Locators_Wifi.French);
 			}
 		}catch (org.openqa.selenium.NoSuchElementException e) {
-			test.log(LogStatus.ERROR,"Error in locators-> clickOn_Languages()");
+			test.log(LogStatus.ERROR,"Error in locators-> search_FrenchLanguage()");
 			e.printStackTrace();
 		}catch (Exception e) {
-			test.log(LogStatus.ERROR,"Exeption in -> clickOn_Languages()");
+			test.log(LogStatus.ERROR,"Exeption in -> search_FrenchLanguage()");
 			e.printStackTrace();
 		}
 		return french;
@@ -3869,10 +4020,10 @@ public class XP8_Wifi_Util extends BaseUtil {
 					clickBtn(Locators_Wifi.Next_gmailsetup);
 				}
 			}catch (org.openqa.selenium.NoSuchElementException e) {
-				test.log(LogStatus.ERROR,"Error in locators-> enter_EmailAddress()");
+				test.log(LogStatus.ERROR,"Error in locators-> enter_EmailPassword()");
 				e.printStackTrace();
 			}catch (Exception e) {
-				test.log(LogStatus.ERROR,"Exeption in -> enter_EmailAddress()");
+				test.log(LogStatus.ERROR,"Exeption in -> enter_EmailPassword()");
 				e.printStackTrace();
 			}
 
@@ -3909,10 +4060,10 @@ public class XP8_Wifi_Util extends BaseUtil {
 					clickBtn(Locators_Wifi.MORE);
 				}
 			}catch (org.openqa.selenium.NoSuchElementException e) {
-				test.log(LogStatus.ERROR,"Error in locators-> clickOn_MORE()");
+				test.log(LogStatus.ERROR,"Error in locators-> clickOn_Yes_i_am_in()");
 				e.printStackTrace();
 			}catch (Exception e) {
-				test.log(LogStatus.ERROR,"Exeption in -> clickOn_MORE()");
+				test.log(LogStatus.ERROR,"Exeption in -> clickOn_Yes_i_am_in()");
 				e.printStackTrace();
 			}
 		}
@@ -3984,32 +4135,20 @@ public class XP8_Wifi_Util extends BaseUtil {
 
 		public void clickOn_dialPad() {
 			try {
+				if(wait(Locators_Wifi.dialPad,10)) {
 				clickBtn(Locators_Wifi.dialPad);
-				
+				}
 			} catch (org.openqa.selenium.NoSuchElementException e) {
-
 				test.log(LogStatus.ERROR,"Error in locators->clickOn_dialPad()");
-				
+				e.printStackTrace();
 			}catch (Exception e) {
-				test.log(LogStatus.ERROR, "clickOn_dialPad");
+				test.log(LogStatus.ERROR, "Exception in functionality->clickOn_dialPad()");
+				e.printStackTrace();
 			}
 			
 		}
 		
-		public void enter_numberInDialPad(String num) {
-			try {
-				enterTextToInputField(Locators_Wifi.setdata, num);
-				
-			} catch (org.openqa.selenium.NoSuchElementException e) {
-
-				test.log(LogStatus.ERROR,"Error in locators->enter_numberInDialPad()");
-				
-			}catch (Exception e) {
-				test.log(LogStatus.ERROR, "enter_numberInDialPad");
-			}
-			
-		}
-		
+	
 		public void clickOn_wifiInformation() {
 			try {
 				if(wait(Locators_Wifi.wifi_information,60))
@@ -4074,8 +4213,10 @@ public class XP8_Wifi_Util extends BaseUtil {
 		}
 		public void enter_NonNumericNumbersMorethan11(String num) {
 			try {
+				if(wait(Locators_Wifi.setdata,10)) {
 				enterTextToInputField(Locators_Wifi.setdata, num);
 				clickBtn(Locators_Wifi.OkBtn);
+				}
 			} catch (org.openqa.selenium.NoSuchElementException e) {
 				test.log(LogStatus.ERROR,"Error in locators-> enter_NonNumericNumbersMorethan11()");
 				e.printStackTrace();
@@ -4393,6 +4534,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 		}
 		public void search_Video(String videoName) {
 			try {
+				wait(Locators_Wifi.setdata,10);
 				enterTextToInputField(Locators_Wifi.setdata, videoName);
 				minWait();
 				aDriver.pressKeyCode(AndroidKeyCode.ENTER);
@@ -4406,13 +4548,44 @@ public class XP8_Wifi_Util extends BaseUtil {
 			}
 
 		}
+		public void launchYoutube() {
+			try {
+				customWait(1000);
+				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_HOME);
+				APP_LOGS.info("Home PAge");
+				customWait(2000);
+				Locators_BaseUtil.AppListIcon.click();
+				customWait(1000);		
+				scrollToElements(Locators_Wifi.You_Tube);
+				clickBtn(Locators_Wifi.You_Tube);
+				APP_LOGS.info("Clicked on Youtube successfully.");
+			} catch (org.openqa.selenium.NoSuchElementException e) {
+				test.log(LogStatus.ERROR, "Error in the locators->launchYoutube()");
+				e.printStackTrace();
+			} catch (Exception e) {
+				test.log(LogStatus.ERROR, "Exception in ->launchYoutube()");
+				e.printStackTrace();
+			}	
+		}
 		public void play_Video() {
 			try {
-				if (wait(Locators_Wifi.firstvideo, 10)) {
-					clickBtn(Locators_Wifi.firstvideo);
+				if (wait(Locators_Wifi.sonimvideo, 120)==true) {
+					if(isElementExist(Locators_Wifi.sonimvideo)) {
+						clickBtn(Locators_Wifi.sonimvideo);
+					}else {
+						scrollToElements(Locators_Wifi.sonimvideo);
+						if(isElementExist(Locators_Wifi.sonimvideo)) {
+							clickBtn(Locators_Wifi.sonimvideo);
+						}else {
+							boolean sonimVideo=scrollToTextContains("Sonim XP8. First look.");
+							while(sonimVideo==false) {
+								sonimVideo=scrollToTextContains("Sonim XP8. First look.");
+							}
+						}
+					}
 					System.out.println("locator");
 				} else {
-					Runtime.getRuntime().exec("adb -s " + p_Id + " shell input tap 500 500");
+					Runtime.getRuntime().exec("adb -s " + p_Id + " shell input tap 348 1635");
 					System.out.println("adb command");
 				}
 			} catch (org.openqa.selenium.NoSuchElementException e) {
@@ -4424,19 +4597,29 @@ public class XP8_Wifi_Util extends BaseUtil {
 			}
 
 		}
-		public void wait_OneMinute() {
+		public void wait_TenMinutes(String dataUsed) {
 			try {
-				Thread.sleep(60000);
-			
+				if(dataUsed.contains("GB") || dataUsed.contains("gb") || dataUsed.contains("Gb")) {
+					wait(Locators_Wifi.Hotspot_saveBtn,600);
+					System.out.println("Video played for ten minutes ");
+				}
+				else if(dataUsed.contains("MB") || dataUsed.contains("mb") || dataUsed.contains("Mb")) {
+					wait(Locators_Wifi.Hotspot_saveBtn,240);
+					System.out.println("Video played for three minutes ");
+					}
+				else  {
+					wait(Locators_Wifi.Hotspot_saveBtn,240);
+					System.out.println("Video played for three minutes ");
+					}
 			} catch (Exception e) {
-				test.log(LogStatus.ERROR, "Exception in -> wait_OneMinute()");
+				test.log(LogStatus.ERROR, "Exception in -> wait_TenMinutes()");
 				e.printStackTrace();
 			}
 
 		}
 
-		public void verify_MobileData_NotUsed(int beforeWifi,int afterWifi,SoftAssert sa) {
-			try {
+	public void verify_MobileData_NotUsed(int beforeWifi,int afterWifi,SoftAssert sa) {
+	try {
 				System.out.println("before wifi mobile data used = "+beforeWifi);
 				System.out.println("after wifi mobile data used = "+afterWifi);
 				if(beforeWifi == afterWifi) {	
@@ -4450,74 +4633,14 @@ public class XP8_Wifi_Util extends BaseUtil {
 				test.log(LogStatus.FAIL, "Mobile data is used for browsing");
 			}
 	} catch (org.openqa.selenium.NoSuchElementException e) {
-		test.log(LogStatus.ERROR,"Error in locators->validate_WifisShown()");
+		test.log(LogStatus.ERROR,"Error in locators-> verify_MobileData_NotUsed()");
 		e.printStackTrace();
 	}catch (Exception e) {
-		test.log(LogStatus.ERROR,"Exeption in ->validate_WifisShown()");
+		test.log(LogStatus.ERROR,"Exeption in -> verify_MobileData_NotUsed()");
 		e.printStackTrace();
 	}
 		}
 	
-		
-		
-		
-		public void clickOn_BackBtn() {
-			try {
-				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
-				minWait();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-
-		public String extract_Numerics(String stringValue) {
-			String numericValue = "";
-			String arr[]=stringValue.split("used");
-			stringValue=arr[0];
-			System.out.println("Input string = "+stringValue);
-			if(stringValue.contains(".")) {
-			    System.out.println(stringValue.indexOf("."));
-			    stringValue=stringValue.substring(0,stringValue.indexOf("."));
-			System.out.println("New string = "+stringValue);
-			}
-			for (int i = 0; i < stringValue.length(); i++) {
-				if (stringValue.charAt(i) >= '0' && stringValue.charAt(i) <= '9')
-					numericValue = numericValue + stringValue.charAt(i);
-			}
-			System.out.println("Output string = "+numericValue);
-			return numericValue;
-		}	
-		
-		
-		
-		
-		public void drag_Drop(AndroidElement source, AndroidElement target) {
-			TouchAction action = new TouchAction(aDriver);
-			action.longPress(source, 9000).moveTo(target).release().perform();	
-		}
-		
-		
-		public boolean scrollToTextContains(String text) {
-			/*
-			  Method used to select an element on the page by scrolling the Scroll View/List View
-			 */
-			boolean check = false;
-			try {  
-				String scrollable = "new UiScrollable(new UiSelector().scrollable(true))";
-				String textElement = ".scrollIntoView(new UiSelector().textContains(\""+ text +"\"))";
-				aDriver.findElementByAndroidUIAutomator(scrollable+textElement).click();
-				APP_LOGS.info("Searched application is found sucessfully : ");
-				check = true;
-				return check;
-			}
-			catch(NoSuchElementException e) {
-				return check;
-			}
-		}
-		
-		
-		
-		
 	
 }
 	

@@ -56,7 +56,7 @@ private static AndroidDriver<AndroidElement> aDriver;
 
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"Wi‑Fi\")")
 	public static AndroidElement WiFi_Lnk;	
-
+	
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.Switch\").index(0)")
 	public static AndroidElement Wifi_Switch_Btn; 
 	
@@ -66,7 +66,7 @@ private static AndroidDriver<AndroidElement> aDriver;
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.ProgressBar\").resourceId(\"com.android.settings:id/progress_bar_animation\")")
 	public static AndroidElement ScanningProgress; 
 	
-	@FindBy(xpath = "//android.widget.LinearLayout[@index=1]")
+	@AndroidFindBy(xpath = "//android.widget.LinearLayout[@index=1]")
 	public static AndroidElement Wifi_ListLnk;
 	
 	@FindBy(id="com.android.settings:id/password")
@@ -81,10 +81,10 @@ private static AndroidDriver<AndroidElement> aDriver;
 	@FindBy(id="android:id/summary")
 	public static AndroidElement Wif_summaryTxt;
 	
-	@FindBy(xpath="//android.widget.TextView[@text='Add network']")
+	@AndroidFindBy(xpath="//android.widget.TextView[@text='Add network']")
 	public static AndroidElement Add_network;
 	
-	@FindBy(xpath="//android.widget.TextView[@text='Saved networks']")
+	@AndroidFindBy(xpath="//android.widget.TextView[@text='Saved networks']")
 	public static AndroidElement Saved_network;
 	
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.EditText\").textContains(\"Enter the SSID\")")
@@ -96,7 +96,7 @@ private static AndroidDriver<AndroidElement> aDriver;
 	@AndroidFindBy(uiAutomator="new UiSelector().textContains(\"Connected\")")
 	public static AndroidElement Connected;
 	
-	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.Button\").textContains(\"FORGET\")")
+	@AndroidFindBy(uiAutomator="new UiSelector().textContains(\"FORGET\")")
 	public static AndroidElement FORGET;
 
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.Button\").textContains(\"CANCEL\")")
@@ -329,19 +329,19 @@ private static AndroidDriver<AndroidElement> aDriver;
 	@FindBy(id ="com.android.settings:id/security")
 	public static AndroidElement Hotspot_securityDrpDwn;
 	
-	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.CheckedTextView\").text(\"Open\")")
+	@AndroidFindBy(xpath = "//android.widget.CheckedTextView[@text='Open' or @text='None']")
 	public static AndroidElement Hotspot_security_Open;
 	
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.CheckedTextView\").text(\"WPA2 PSK\")")
 	public static AndroidElement Hotspot_security_WPA2;
 	
-	@FindBy(id ="android:id/button1")
+	@AndroidFindBy(xpath = "//android.widget.Button[@text='SAVE' or @resource-id='android:id/button1']")
 	public static AndroidElement Hotspot_saveBtn;
 	
-	@FindBy(id ="android:id/button2")
+	@AndroidFindBy(xpath = "//android.widget.Button[@text='CANCEL' or @resource-id='android:id/button2']")
 	public static AndroidElement Hotspot_cnclBtn;
 	
-	@FindBy(xpath = "//android.widget.TextView[@instance=6]")
+	@AndroidFindBy(xpath = "//android.widget.TextView[@instance=6]")
 	public static AndroidElement Hotspot_svdNtwrk;
 	
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"Mobile network\")")
@@ -373,11 +373,11 @@ private static AndroidDriver<AndroidElement> aDriver;
 	@AndroidFindBy(uiAutomator = "new UiSelector().descriptionContains(\"Search\")")
 	public static AndroidElement Search;
 
-	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"YouTube\")")
-	public static AndroidElement youtube;
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").textContains(\"YouTube\")")
+	public static AndroidElement You_Tube;
 	
-	@AndroidFindBy(xpath="//android.view.ViewGroup[@index='1']")
-	public static AndroidElement firstvideo;
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.view.ViewGroup\").descriptionContains(\"Sonim XP8. First look.\")")
+	public static AndroidElement sonimvideo;
 	 
 	//****************************************************************************************************************************
 	@AndroidFindBy(uiAutomator="new UiSelector().text(\"Data usage\")")
@@ -419,7 +419,7 @@ private static AndroidDriver<AndroidElement> aDriver;
 	@AndroidFindBy(xpath="//android.widget.LinearLayout[@index='4']/android.widget.LinearLayout[@index='1']/android.widget.Switch")
 	public static AndroidElement aRSwitch;
 	
-	@FindBy(xpath = "//android.widget.EditText[@index=0]")
+	@AndroidFindBy(xpath = "//android.view.View[@index='1']/android.widget.EditText[@index=0]")
 	public static WebElement googleSearchBx;
 	
 	@FindBy(id = "com.android.chrome:id/url_bar")
@@ -434,8 +434,20 @@ private static AndroidDriver<AndroidElement> aDriver;
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.Button\").descriptionContains(\"End call\")")
 	public static AndroidElement Endcall;
 	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.view.View\").textContains(\"No Internet\")")
+	public static AndroidElement No_Internet;
+	
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"Clear & reset\").textContains(\"Clear\")")
+	public static AndroidElement clearreset;
+
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"Clear & reset\").textContains(\"CLEAR\")")
+	public static AndroidElement CLEAR;
+	
 	@FindBy(id = "msc")
 	public static AndroidElement google_verifyLnk;
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().textContains(\"Appium\")")
+	public static AndroidElement Appium;
 	
 	@FindBy(id = "navd")
 	public static AndroidElement google_navigateIdLnk;
@@ -474,7 +486,7 @@ private static AndroidDriver<AndroidElement> aDriver;
 	@AndroidFindBy(id="android:id/button1")
 	public static AndroidElement WifiDirect_OKBtn;
 
-	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"Languages & input\")")
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"LanguagesÂ & input\")")
 	public static  AndroidElement Languages_inputLnk;
 	
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"Languages\")")
@@ -495,7 +507,7 @@ private static AndroidDriver<AndroidElement> aDriver;
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.CheckBox\")")
 	public static  AndroidElement checkbox;
 
-	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"FranÃ§ais (France)\")")
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"FranÃƒÂ§ais (France)\")")
 	public static  AndroidElement France;
 	
 	@AndroidFindBy(xpath = "//android.widget.ImageButton[@content-desc='More options']")

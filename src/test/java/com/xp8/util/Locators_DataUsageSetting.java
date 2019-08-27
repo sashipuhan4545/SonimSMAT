@@ -365,7 +365,7 @@ import io.appium.java_client.android.AndroidDriver;
 		public static AndroidElement numericDataValue;
 		
 		//****************************Wifi *******************************
-		@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"Wi‑Fi\")")
+		@AndroidFindBy(xpath = "//android.widget.TextView[@text='Wi‑Fi']")
 		public static AndroidElement Wi_Fi;
 		
 		@AndroidFindBy(xpath = "//android.widget.LinearLayout[@index='0']/android.widget.TextView[@text='Wi‑Fi' and @index='0' @resource-id='android:id/title']")
@@ -377,9 +377,6 @@ import io.appium.java_client.android.AndroidDriver;
 		@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.EditText\").index(1)")
 		public static AndroidElement wifi_enterPwd_index; // index
 		
-		@FindBy(id="com.android.settings:id/forget_button")
-		public static AndroidElement WiFi_FrgtBtn;
-		
 		@AndroidFindBy(uiAutomator="new UiSelector().text(\"CONNECT\")")
 		public static AndroidElement CONNECT_t1;
 				
@@ -389,6 +386,8 @@ import io.appium.java_client.android.AndroidDriver;
 		@AndroidFindBy(xpath="//android.widget.Switch[@resourceId='com.android.settings:id/switch_bar' and @text='OFF']")
 		public static AndroidElement disabled_Wifi;
 		
+		@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.Button\").textContains(\"FORGET\")")
+		public static AndroidElement FORGET;
 		
 	
 		@AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.android.settings:id/switchWidget\")")
@@ -415,10 +414,6 @@ import io.appium.java_client.android.AndroidDriver;
 
 		@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").textContains(\"Mobile\")")
 		public static AndroidElement MobileNetwork_tc1;
-		
-		
-		@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").textContains(\"YouTube\")")
-		public static AndroidElement You_Tube;
 		
 		@AndroidFindBy(xpath = "//android.widget.TextView[@text='YouTube']/../..//android.widget.Switch[@resource-id='android:id/switch_widget']")
 		public static AndroidElement You_Tube_Switch;
@@ -465,10 +460,15 @@ import io.appium.java_client.android.AndroidDriver;
 		public static AndroidElement MORE;
 		@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.Button\").textContains(\"ACCEPT\")")
 		public static AndroidElement ACCEPT;
-		@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.ImageView\").descriptionContains(\"Wiâ€‘Fi\")")
+		@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.ImageView\").descriptionContains(\"WiÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬ËœFi\")")
 		public static AndroidElement WIFI_STATE;
 		
-	
+		@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").textContains(\"YouTube\")")
+		public static AndroidElement You_Tube;
+		
+
+		@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.view.ViewGroup\").descriptionContains(\"Sonim XP8. First look.\")")
+		public static AndroidElement sonimvideo;
 		
 		
 		

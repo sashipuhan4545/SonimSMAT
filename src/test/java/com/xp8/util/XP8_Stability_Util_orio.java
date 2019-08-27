@@ -123,25 +123,25 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		try {
 			minWait();
 			System.out.println("IM in Contacts");
-			if (isElementExist(Locators_DeviceStability.no_Contacts)) {
+			if (isElementExist(Locators_WifiStability.no_Contacts)) {
 				APP_LOGS.info("No Contact");
 				System.out.println("No Contact");
 				minWait();
 			} else {
-				clickBtn(Locators_DeviceStability.deleteContactOptn1);
+				clickBtn(Locators_WifiStability.deleteContactOptn1);
 				minWait();
-				clickBtn(Locators_DeviceStability.Selection_menu);
+				clickBtn(Locators_WifiStability.Selection_menu);
 				minWait();
-				if (isElementExist(Locators_DeviceStability.ALL_Selection_menu)) {
-					clickBtn(Locators_DeviceStability.ALL_Selection_menu);
+				if (isElementExist(Locators_WifiStability.ALL_Selection_menu)) {
+					clickBtn(Locators_WifiStability.ALL_Selection_menu);
 					minWait();
 				} else {
 					minWait();
-					clickBtn(Locators_DeviceStability.one_Selection_menu);
+					clickBtn(Locators_WifiStability.one_Selection_menu);
 				}
-				clickBtn(Locators_DeviceStability.OKBtn1);
+				clickBtn(Locators_WifiStability.OKBtn1);
 				minWait();
-				clickBtn(Locators_DeviceStability.OKBtn);
+				clickBtn(Locators_WifiStability.OKBtn);
 				APP_LOGS.info("Contacts Deleted");
 				minWait();
 			}
@@ -155,16 +155,16 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 	public void setDefaultAccount_Contact() throws InterruptedException, IOException {
 
 		try {
-			clickBtn(Locators_DeviceStability.moreOptions);
+			clickBtn(Locators_WifiStability.moreOptions);
 			minWait();
-			clickBtn(Locators_DeviceStability.settings_Contact);
+			clickBtn(Locators_WifiStability.settings_Contact);
 			minWait();
-			clickBtn(Locators_DeviceStability.defaultAccount_NewContacts);
+			clickBtn(Locators_WifiStability.defaultAccount_NewContacts);
 			minWait();
-			clickBtn(Locators_DeviceStability.PHONE_RadioBtn);
+			clickBtn(Locators_WifiStability.PHONE_RadioBtn);
 			customWait(2000);
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
-			// clickBtn(Locators_DeviceStability_ATT.navigateUp);
+			// clickBtn(Locators_WifiStability_ATT.navigateUp);
 			// Runtime.getRuntime().exec("adb -s "+p_Id+" shell input keyevent 4");
 			minWait();
 		} catch (Exception e) {
@@ -179,36 +179,36 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		try {
 
 			minWait();
-			Locators_DeviceStability.AddtoContact.click();
+			Locators_WifiStability.AddtoContact.click();
 			minWait();
 
-			if (isElementExist(Locators_DeviceStability.Choose_Phone)) {
+			if (isElementExist(Locators_WifiStability.Choose_Phone)) {
 				minWait();
-				clickBtn(Locators_DeviceStability.Choose_Phone);
+				clickBtn(Locators_WifiStability.Choose_Phone);
 				customWait(2000);
 				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_DPAD_DOWN);
 			}
-			if (isElementExist(Locators_DeviceStability.Contacts_Name)) {
+			if (isElementExist(Locators_WifiStability.Contacts_Name)) {
 				minWait();
 			}
 
 			customWait(4000);
 			minWait();
-			enterTextToInputField(Locators_DeviceStability.name_NewContact, name);
+			enterTextToInputField(Locators_WifiStability.name_NewContact, name);
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
 			minWait();
-			enterTextToInputField(Locators_DeviceStability.phone_NewContact, num);
+			enterTextToInputField(Locators_WifiStability.phone_NewContact, num);
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
 			minWait();
-			enterTextToInputField(Locators_DeviceStability.email_NewContact, "Sonimtech@gmail.com");
+			enterTextToInputField(Locators_WifiStability.email_NewContact, "Sonimtech@gmail.com");
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
 			minWait();
-			clickBtn(Locators_DeviceStability.Save_ConatctIcon1);
+			clickBtn(Locators_WifiStability.Save_ConatctIcon1);
 			minWait();
 
 			for (int i = 1; i <= 3; i++) {
-				if (isElementExist(Locators_DeviceStability.AllowOptn)) {
-					clickBtn(Locators_DeviceStability.AllowOptn);
+				if (isElementExist(Locators_WifiStability.AllowOptn)) {
+					clickBtn(Locators_WifiStability.AllowOptn);
 				}
 			}
 		} catch (Exception e) {
@@ -226,7 +226,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		try {
 			customWait(3000);
 			String getcontactNameText = null;
-			getcontactNameText = Locators_DeviceStability.ContactTitle.getText();
+			getcontactNameText = Locators_WifiStability.ContactTitle.getText();
 			System.out.println(getcontactNameText);
 			if (getcontactNameText.contains("Test")) {
 				check1 = true;
@@ -239,7 +239,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_DPAD_DOWN);
 			customWait(1000);
-			String getPhoneNumText = Locators_DeviceStability.contact_phnNum.getText();
+			String getPhoneNumText = Locators_WifiStability.contact_phnNum.getText();
 
 			String phoneNum = getPhoneNumText.replaceAll("[^a-zA-Z0-9]", "");
 			System.out.println(phoneNum);
@@ -257,7 +257,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_DPAD_DOWN);
 			customWait(1000);
 			String getEmailText = null;
-			getEmailText = Locators_DeviceStability.contact_Emailid.getText();
+			getEmailText = Locators_WifiStability.contact_Emailid.getText();
 			// System.out.println(getEmailText);
 			if (getEmailText.contains("Sonimtech")) {
 				check3 = true;
@@ -297,7 +297,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		try {
 			customWait(3000);
 			String getcontactNameText = null;
-			getcontactNameText = Locators_DeviceStability.ContactTitle.getText();
+			getcontactNameText = Locators_WifiStability.ContactTitle.getText();
 			System.out.println(getcontactNameText);
 			if (getcontactNameText.contains("Test")) {
 				check1 = true;
@@ -310,7 +310,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_DPAD_DOWN);
 			customWait(1000);
-			String getPhoneNumText = Locators_DeviceStability.contact_phnNum.getText();
+			String getPhoneNumText = Locators_WifiStability.contact_phnNum.getText();
 
 			String phoneNum = getPhoneNumText.replaceAll("[^a-zA-Z0-9]", "");
 			System.out.println(phoneNum);
@@ -358,8 +358,8 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		/* Methos is Used enter Message into Message Field. */
 		try {
 			minWait();
-			if (isElementExist(Locators_DeviceStability.messageField_O)) {
-				enterTextToInputField(Locators_DeviceStability.messageField_O, message);
+			if (isElementExist(Locators_WifiStability.messageField_O)) {
+				enterTextToInputField(Locators_WifiStability.messageField_O, message);
 				minWait();
 			}
 		} catch (Exception e) {
@@ -370,7 +370,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 	public void navigateTo_NewSMS_O() throws InterruptedException {
 		/* Used to Navigate to New Message Page. */
 		try {
-			clickBtn(Locators_DeviceStability.add_NewSMS_O);
+			clickBtn(Locators_WifiStability.add_NewSMS_O);
 			minWait();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -381,10 +381,10 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		/* Method is used to Enter Number into TO Field. */
 		try {
 			minWait();
-			enterTextToInputField(Locators_DeviceStability.TO_Field_O, number);
+			enterTextToInputField(Locators_WifiStability.TO_Field_O, number);
 			customWait(2000);
 			System.out.println("Selecting COntact NAme");
-			clickBtn(Locators_DeviceStability.contact_Select);
+			clickBtn(Locators_WifiStability.contact_Select);
 			// customWait(2000);
 		} catch (NoSuchElementException e) {
 			e.printStackTrace();
@@ -395,7 +395,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		/* Method used to click on Send Button. */
 		try {
 			customWait(500);
-			clickBtn(Locators_DeviceStability.send_Icon_O);
+			clickBtn(Locators_WifiStability.send_Icon_O);
 			minWait();
 		} catch (NoSuchElementException e) {
 			e.printStackTrace();
@@ -407,9 +407,9 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		WebDriverWait wait = new WebDriverWait(aDriver, 60);
 
 		try {
-			wait.until(ExpectedConditions.visibilityOf(Locators_DeviceStability.Delivered));
-			if (isElementExist(Locators_DeviceStability.Delivered)
-					|| isElementExist(Locators_DeviceStability.not_Sent_Text)) {
+			wait.until(ExpectedConditions.visibilityOf(Locators_WifiStability.Delivered));
+			if (isElementExist(Locators_WifiStability.Delivered)
+					|| isElementExist(Locators_WifiStability.not_Sent_Text)) {
 				check = true;
 				APP_LOGS.info("Message sent Succeccfully");
 				System.out.println("Sent");
@@ -431,17 +431,17 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 
 		try {
 			minWait();
-			clickBtn(Locators_DeviceStability.firstSMS_InList_O);
+			clickBtn(Locators_WifiStability.firstSMS_InList_O);
 			minWait();
-			clickBtn(Locators_DeviceStability.moreOption_O);
+			clickBtn(Locators_WifiStability.moreOption_O);
 			minWait();
-			clickBtn(Locators_DeviceStability.delete_Messages);
+			clickBtn(Locators_WifiStability.delete_Messages);
 			minWait();
-			clickBtn(Locators_DeviceStability.ALL_Msg);
+			clickBtn(Locators_WifiStability.ALL_Msg);
 			minWait();
-			clickBtn(Locators_DeviceStability.delete_Btn);
+			clickBtn(Locators_WifiStability.delete_Btn);
 			minWait();
-			clickBtn(Locators_DeviceStability.Delete);
+			clickBtn(Locators_WifiStability.Delete);
 			minWait();
 			// test.log(LogStatus.INFO, "SMS or MMS is deleted.");
 		} catch (Exception e) {
@@ -460,13 +460,13 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 			for (int i = 1; i <= 9; i++) {
 				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_DPAD_DOWN);
 			}
-			enableSwitch(Locators_DeviceStability.enabled_Airplane, Locators_DeviceStability.disabled_Airplane,
-					Locators_DeviceStability.switch_widget);
+			enableSwitch(Locators_WifiStability.enabled_Airplane, Locators_WifiStability.disabled_Airplane,
+					Locators_WifiStability.switch_widget);
 			customWait(5000);
-			clickBtn(Locators_DeviceStability.OKBtn);
+			clickBtn(Locators_WifiStability.OKBtn);
 			minWait();
-			disableSwitch(Locators_DeviceStability.disabled_Airplane, Locators_DeviceStability.enabled_Airplane,
-					Locators_DeviceStability.switch_widget);
+			disableSwitch(Locators_WifiStability.disabled_Airplane, Locators_WifiStability.enabled_Airplane,
+					Locators_WifiStability.switch_widget);
 			customWait(15000);
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
 		} catch (Exception e) {
@@ -558,10 +558,10 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		WebDriverWait wait = new WebDriverWait(aDriver, 80);
 
 		try {
-			wait.until(ExpectedConditions.visibilityOf(Locators_DeviceStability.now_Text));
+			wait.until(ExpectedConditions.visibilityOf(Locators_WifiStability.now_Text));
 			customWait(8000);
-			if (isElementExist(Locators_DeviceStability.now_Text)
-					|| isElementExist(Locators_DeviceStability.not_Sent_Text)) {
+			if (isElementExist(Locators_WifiStability.now_Text)
+					|| isElementExist(Locators_WifiStability.not_Sent_Text)) {
 				check = true;
 				APP_LOGS.info("Message sent Succeccfully");
 				soft.assertTrue(check, "TestCase Valiation is PASS");
@@ -583,13 +583,13 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		WebDriverWait wait = new WebDriverWait(aDriver, 80);
 
 		try {
-			wait.until(ExpectedConditions.visibilityOf(Locators_DeviceStability.Delivered));
+			wait.until(ExpectedConditions.visibilityOf(Locators_WifiStability.Delivered));
 			customWait(8000);
-			clickBtn(Locators_DeviceStability.firstSMS_InList_O);
-			if (isElementExist(Locators_DeviceStability.now_Text)
-					|| isElementExist(Locators_DeviceStability.unread_Conv_Messages)
-					|| isElementExist(Locators_DeviceStability.Delivered)
-					|| isElementExist(Locators_DeviceStability.not_Sent_Text)) {
+			clickBtn(Locators_WifiStability.firstSMS_InList_O);
+			if (isElementExist(Locators_WifiStability.now_Text)
+					|| isElementExist(Locators_WifiStability.unread_Conv_Messages)
+					|| isElementExist(Locators_WifiStability.Delivered)
+					|| isElementExist(Locators_WifiStability.not_Sent_Text)) {
 				check = true;
 				APP_LOGS.info("Message sent Succeccfully");
 				System.out.println("Received");
@@ -626,11 +626,11 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		 */
 		try {
 			minWait();
-			clickBtn(Locators_DeviceStability.Search_ConatctIcon);
+			clickBtn(Locators_WifiStability.Search_ConatctIcon);
 			customWait(2000);
-			enterTextToInputField(Locators_DeviceStability.findContacts_O, name);
+			enterTextToInputField(Locators_WifiStability.findContacts_O, name);
 			minWait();
-			clickBtn(Locators_DeviceStability.longpress_FirstContact_O);
+			clickBtn(Locators_WifiStability.longpress_FirstContact_O);
 			minWait();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -643,8 +643,8 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		 */
 		try {
 			/*
-			 * minWait(); clickBtn(Locators_DeviceStability.SavedContact); minWait();
-			 * clickBtn(Locators_DeviceStability.contact_phnNum); minWait();
+			 * minWait(); clickBtn(Locators_WifiStability.SavedContact); minWait();
+			 * clickBtn(Locators_WifiStability.contact_phnNum); minWait();
 			 */
 			customWait(4000);
 			Runtime.getRuntime()
@@ -794,17 +794,17 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		 */
 		try {
 			minWait();
-			if (isElementExist(Locators_DeviceStability.MoreOptions)) {
-				clickBtn(Locators_DeviceStability.MoreOptions);
+			if (isElementExist(Locators_WifiStability.MoreOptions)) {
+				clickBtn(Locators_WifiStability.MoreOptions);
 				minWait();
 			} else {
-				clickBtn(Locators_DeviceStability.MoreOptions1);
+				clickBtn(Locators_WifiStability.MoreOptions1);
 				minWait();
 			}
 			customWait(1000);
-			clickBtn(Locators_DeviceStability.callHistory_O);
+			clickBtn(Locators_WifiStability.callHistory_O);
 			minWait();
-			clickBtn(Locators_DeviceStability.Call_Contact);
+			clickBtn(Locators_WifiStability.Call_Contact);
 			minWait();
 			APP_LOGS.info("initiated a call");
 			minWait();
@@ -823,11 +823,11 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 			customWait(2000);
 			Runtime.getRuntime().exec("adb -s " + p_Id + " shell am start -a android.settings.AIRPLANE_MODE_SETTINGS");
 			minWait();
-			enableSwitch(Locators_DeviceStability.enabled_Airplane, Locators_DeviceStability.disabled_Airplane,
-					Locators_DeviceStability.switch_widget);
+			enableSwitch(Locators_WifiStability.enabled_Airplane, Locators_WifiStability.disabled_Airplane,
+					Locators_WifiStability.switch_widget);
 			customWait(5000);
-			disableSwitch(Locators_DeviceStability.disabled_Airplane, Locators_DeviceStability.enabled_Airplane,
-					Locators_DeviceStability.switch_widget);
+			disableSwitch(Locators_WifiStability.disabled_Airplane, Locators_WifiStability.enabled_Airplane,
+					Locators_WifiStability.switch_widget);
 			customWait(15000);
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
 		} catch (Exception e) {
@@ -924,9 +924,9 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		SoftAssert Sa = new SoftAssert();
 		try {
 			customWait(1000);
-			// ScrollToElement(Locators_DeviceStability.SettingsList, "Wi-Fi");
+			// ScrollToElement(Locators_WifiStability.SettingsList, "Wi-Fi");
 			customWait(2000);
-			clickBtn(Locators_DeviceStability.wifi);
+			clickBtn(Locators_WifiStability.wifi);
 			minWait();
 			APP_LOGS.info("Selected WIFI option");
 		} catch (Exception e) {
@@ -944,20 +944,20 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		try {
 			customWait(4000);
 			for (int i = 1; i <= 50; i++) {
-				if (isElementExist(Locators_DeviceStability.wifi_IDC)) {
+				if (isElementExist(Locators_WifiStability.wifi_IDC)) {
 					customWait(2000);
-					clickBtn(Locators_DeviceStability.wifi_IDC);
+					clickBtn(Locators_WifiStability.wifi_IDC);
 					APP_LOGS.info("IDC available secured wifi is Selected");
 					System.out.println("IDC available secured wifi is Selected");
 					break;
-				} else if (isElementExist(Locators_DeviceStability.wifi_Dellas)) {
+				} else if (isElementExist(Locators_WifiStability.wifi_Dellas)) {
 					minWait();
-					clickBtn(Locators_DeviceStability.wifi_Dellas);
+					clickBtn(Locators_WifiStability.wifi_Dellas);
 					APP_LOGS.info("Dellas available secured wifi is Selected");
 					break;
-				} else if (isElementExist(Locators_DeviceStability.wifi_Cannada)) {
+				} else if (isElementExist(Locators_WifiStability.wifi_Cannada)) {
 					minWait();
-					clickBtn(Locators_DeviceStability.wifi_Cannada);
+					clickBtn(Locators_WifiStability.wifi_Cannada);
 					APP_LOGS.info("Cannada available secured wifi is Selected");
 					break;
 				} else {
@@ -981,7 +981,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		try {
 			selectSSIDwifi();
 			customWait(4000);
-			clickBtn(Locators_DeviceStability.wifi_IDC_ForgetBtn);
+			clickBtn(Locators_WifiStability.wifi_IDC_ForgetBtn);
 			APP_LOGS.info("IDC available secured wifi is disconnected");
 			System.out.println("Disconnected");
 			customWait(4000);
@@ -1022,7 +1022,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		SoftAssert sf = new SoftAssert();
 		try {
 			customWait(2000);
-			enterTextToInputField(Locators_DeviceStability.urlBar_Chrome, url);
+			enterTextToInputField(Locators_WifiStability.urlBar_Chrome, url);
 			customWait(4000);
 			clickBtn(autoSuggestion);
 			customWait(12000);
@@ -1066,9 +1066,9 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		try {
 			minWait();
 			// aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_MENU);
-			clickBtn(Locators_DeviceStability.MoreOptions);
+			clickBtn(Locators_WifiStability.MoreOptions);
 			minWait();
-			clickBtn(Locators_DeviceStability.RefreshOptn);
+			clickBtn(Locators_WifiStability.RefreshOptn);
 			minWait();
 			// refresh btn
 			customWait(5000);
@@ -1085,8 +1085,8 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		 */
 		try {
 			minWait();
-			if (isElementExist(Locators_DeviceStability.SSIDTxt)) {
-				String getSSIDTitle = Locators_DeviceStability.SSIDTxt.getText();
+			if (isElementExist(Locators_WifiStability.SSIDTxt)) {
+				String getSSIDTitle = Locators_WifiStability.SSIDTxt.getText();
 				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_DPAD_DOWN);
 				minWait();
 				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_DPAD_CENTER);
@@ -1095,17 +1095,17 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 				customWait(2000);
 				if (getSSIDTitle.equalsIgnoreCase("IDCSONWAP")) {
 					minWait();
-					clickBtn(Locators_DeviceStability.wifi_IDC_Psswd);
+					clickBtn(Locators_WifiStability.wifi_IDC_Psswd);
 					customWait(4000);
-					// enterTextToInputField(Locators_DeviceStability.wifi_IDC_Psswd,"1dcS0n1md0tc0MbLr");
+					// enterTextToInputField(Locators_WifiStability.wifi_IDC_Psswd,"1dcS0n1md0tc0MbLr");
 					Runtime.getRuntime().exec("adb -s " + p_Id + " shell input text 1dcS0n1md0tc0MbLr");
 					customWait(3000);
 				}
 				minWait();
-				String psswrd = Locators_DeviceStability.wifi_IDC_Psswd.getText();
+				String psswrd = Locators_WifiStability.wifi_IDC_Psswd.getText();
 				System.out.println(psswrd);
 				customWait(1000);
-				clickBtn(Locators_DeviceStability.wifi_IDC_ConnectBtn);
+				clickBtn(Locators_WifiStability.wifi_IDC_ConnectBtn);
 				customWait(3000);
 			}
 		} catch (Exception e) {
@@ -1118,9 +1118,9 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 
 		try {
 			minWait();
-			Locators_DeviceStability.wifi_IDC_Psswd.sendKeys("123");
+			Locators_WifiStability.wifi_IDC_Psswd.sendKeys("123");
 			customWait(1500);
-			String text = Locators_DeviceStability.wifi_IDC_Psswd.getText();
+			String text = Locators_WifiStability.wifi_IDC_Psswd.getText();
 			System.out.println(text);
 			if (!text.equals("123")) {
 				for (int i = 0; i < 3; i++) {
@@ -1128,7 +1128,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 					minWait();
 				}
 			}
-			Locators_DeviceStability.wifi_IDC_Psswd.clear();
+			Locators_WifiStability.wifi_IDC_Psswd.clear();
 		} catch (Exception e) {
 			e.printStackTrace();
 			APP_LOGS.info("Wi-Fi Forget button: No such Element found");
@@ -1139,9 +1139,9 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 
 		try {
 			minWait();
-			Locators_DeviceStability.wifi_IDC_Psswd.sendKeys("123");
+			Locators_WifiStability.wifi_IDC_Psswd.sendKeys("123");
 			customWait(1500);
-			String text = Locators_DeviceStability.wifi_IDC_Psswd.getText();
+			String text = Locators_WifiStability.wifi_IDC_Psswd.getText();
 			System.out.println(text);
 			if (!text.equals("123")) {
 				for (int i = 0; i < 3; i++) {
@@ -1149,7 +1149,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 					minWait();
 				}
 			}
-			Locators_DeviceStability.wifi_IDC_Psswd.clear();
+			Locators_WifiStability.wifi_IDC_Psswd.clear();
 		} catch (Exception e) {
 			e.printStackTrace();
 			APP_LOGS.info("Wi-Fi Forget button: No such Element found");
@@ -1166,7 +1166,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 			minWait();
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
 			minWait();
-			String getTxt = Locators_DeviceStability.connectedWIFI1.getText();
+			String getTxt = Locators_WifiStability.connectedWIFI1.getText();
 			System.out.println(getTxt);
 			if (getTxt.contains("IDCSONWAP")) {
 				check = true;
@@ -1206,17 +1206,17 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		SoftAssert S1 = new SoftAssert();
 		try {
 			customWait(2000);
-			enableFeature(Locators_DeviceStability.enabled, Locators_DeviceStability.disabled,
-					Locators_DeviceStability.switch_Title);
+			enableFeature(Locators_WifiStability.enabled, Locators_WifiStability.disabled,
+					Locators_WifiStability.switch_Title);
 			minWait();
 
-			if (isElementExist(Locators_DeviceStability.enabled)) {
+			if (isElementExist(Locators_WifiStability.enabled)) {
 				check1 = true;
 				APP_LOGS.info(" check1");
 			}
 			customWait(3000);
-			disableFeature(Locators_DeviceStability.enabled, Locators_DeviceStability.disabled);
-			if (isElementExist(Locators_DeviceStability.disabled)) {
+			disableFeature(Locators_WifiStability.enabled, Locators_WifiStability.disabled);
+			if (isElementExist(Locators_WifiStability.disabled)) {
 				check2 = true;
 				APP_LOGS.info(" ");
 			}
@@ -1247,16 +1247,16 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 
 		try {
 			customWait(2000);
-			if (isElementExist(Locators_DeviceStability.AccptBtn)) {
-				Locators_DeviceStability.AccptBtn.click();
+			if (isElementExist(Locators_WifiStability.AccptBtn)) {
+				Locators_WifiStability.AccptBtn.click();
 			}
 			customWait(4000);
-			if (isElementExist(Locators_DeviceStability.NextIcon)) {
-				Locators_DeviceStability.NextIcon.click();
+			if (isElementExist(Locators_WifiStability.NextIcon)) {
+				Locators_WifiStability.NextIcon.click();
 			}
 			customWait(4000);
-			if (isElementExist(Locators_DeviceStability.NothanksBtn)) {
-				Locators_DeviceStability.NothanksBtn.click();
+			if (isElementExist(Locators_WifiStability.NothanksBtn)) {
+				Locators_WifiStability.NothanksBtn.click();
 			}
 			customWait(4000);
 		} catch (Exception e) {
@@ -1275,8 +1275,8 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 			// acceptDefault();
 			customWait(2000);
 			/*
-			 * clickBtn(Locators_DeviceStability.DefaultUrlTxt);
-			 * enterTextToInputField(Locators_DeviceStability.DefaultUrlTxt,newurl);
+			 * clickBtn(Locators_WifiStability.DefaultUrlTxt);
+			 * enterTextToInputField(Locators_WifiStability.DefaultUrlTxt,newurl);
 			 */
 			Runtime.getRuntime()
 					.exec("adb -s " + p_Id + " shell am start -a android.intent.action.VIEW -d http:/" + newurl);
@@ -1301,7 +1301,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		SoftAssert S2 = new SoftAssert();
 		try {
 			customWait(20000);
-			if (isElementExist(Locators_DeviceStability.networkNotAvailable)
+			if (isElementExist(Locators_WifiStability.networkNotAvailable)
 					| isElementExist(Locators_Stability.WebPageBlocked)) {
 				test.log(LogStatus.INFO, "Entered Website page not Loaded successfully at iteration: " + n);
 				soft.fail();
@@ -1340,32 +1340,32 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		try {
 			minWait();
 			while (true) {
-				if (isElementExist(Locators_DeviceStability.firstSMS_InList)) {
+				if (isElementExist(Locators_WifiStability.firstSMS_InList)) {
 					minWait();
 					TouchAction touchaction = new TouchAction(aDriver);
-					touchaction.longPress(Locators_DeviceStability.firstSMS_InList).perform().release();
+					touchaction.longPress(Locators_WifiStability.firstSMS_InList).perform().release();
 					minWait();
-					clickBtn(Locators_DeviceStability.delete_Icon_SMS);
+					clickBtn(Locators_WifiStability.delete_Icon_SMS);
 					minWait();
-					if (isElementExist(Locators_DeviceStability.delete_Confirm)) {
-						clickBtn(Locators_DeviceStability.delete_Confirm);
+					if (isElementExist(Locators_WifiStability.delete_Confirm)) {
+						clickBtn(Locators_WifiStability.delete_Confirm);
 						minWait();
 					} else {
-						clickBtn(Locators_DeviceStability.delete_moreOption);
+						clickBtn(Locators_WifiStability.delete_moreOption);
 						minWait();
 					}
-				} else if (isElementExist(Locators_DeviceStability.first_sms_Thread)) {
+				} else if (isElementExist(Locators_WifiStability.first_sms_Thread)) {
 					minWait();
 					TouchAction touchaction = new TouchAction(aDriver);
-					touchaction.longPress(Locators_DeviceStability.first_sms_Thread).perform().release();
+					touchaction.longPress(Locators_WifiStability.first_sms_Thread).perform().release();
 					minWait();
-					clickBtn(Locators_DeviceStability.delete_Icon);
+					clickBtn(Locators_WifiStability.delete_Icon);
 					minWait();
-					if (isElementExist(Locators_DeviceStability.delete_Confirm)) {
-						clickBtn(Locators_DeviceStability.delete_Confirm);
+					if (isElementExist(Locators_WifiStability.delete_Confirm)) {
+						clickBtn(Locators_WifiStability.delete_Confirm);
 						minWait();
 					} else {
-						clickBtn(Locators_DeviceStability.delete_moreOption);
+						clickBtn(Locators_WifiStability.delete_moreOption);
 						minWait();
 					}
 				} else {
@@ -1390,13 +1390,13 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 			minWait();
 			// aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_MENU);
 			minWait();
-			if (isElementExist(Locators_DeviceStability.add_NewSMS)) {
-				clickBtn(Locators_DeviceStability.add_NewSMS);
+			if (isElementExist(Locators_WifiStability.add_NewSMS)) {
+				clickBtn(Locators_WifiStability.add_NewSMS);
 				minWait();
 			}
 
-			if (isElementExist(Locators_DeviceStability.new_Message_Icon)) {
-				clickBtn(Locators_DeviceStability.new_Message_Icon);
+			if (isElementExist(Locators_WifiStability.new_Message_Icon)) {
+				clickBtn(Locators_WifiStability.new_Message_Icon);
 				minWait();
 			}
 
@@ -1430,12 +1430,12 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		try {
 			minWait();
 			String charAndPageNum1 = null;
-			if (isElementExist(Locators_DeviceStability.zero_Characters_FirstPage)) {
+			if (isElementExist(Locators_WifiStability.zero_Characters_FirstPage)) {
 				System.out.println("Im out");
 				charAndPageNum1 = charAndPageNum.getText();
-			} else if (isElementExist(Locators_DeviceStability.zero_Characters_FirstPage1)) {
+			} else if (isElementExist(Locators_WifiStability.zero_Characters_FirstPage1)) {
 				System.out.println("Im in");
-				charAndPageNum1 = Locators_DeviceStability.zero_Characters_FirstPage1.getText();
+				charAndPageNum1 = Locators_WifiStability.zero_Characters_FirstPage1.getText();
 			}
 
 			if (check = charAndPageNum1.equals(expectedcharAndPageNum)) {
@@ -1465,7 +1465,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		try {
 			minWait();
 			String charAndPageNum1 = null;
-			if (isElementExist(Locators_DeviceStability.zero_Characters_FirstPage_O)) {
+			if (isElementExist(Locators_WifiStability.zero_Characters_FirstPage_O)) {
 				System.out.println("Im out");
 				charAndPageNum1 = charAndPageNum.getText();
 			}
@@ -1501,7 +1501,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 	public void navigateTo_NewSMS() throws InterruptedException {
 		/* Used to Navigate to New Message Page. */
 		try {
-			clickBtn(Locators_DeviceStability.add_NewSMS);
+			clickBtn(Locators_WifiStability.add_NewSMS);
 			minWait();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1513,13 +1513,13 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 
 		try {
 			minWait();
-			clickBtn(Locators_DeviceStability.firstSMS_InList1);
+			clickBtn(Locators_WifiStability.firstSMS_InList1);
 			minWait();
-			clickBtn(Locators_DeviceStability.moreOptions);
+			clickBtn(Locators_WifiStability.moreOptions);
 			minWait();
-			clickBtn(Locators_DeviceStability.delete_moreOption);
+			clickBtn(Locators_WifiStability.delete_moreOption);
 			minWait();
-			clickBtn(Locators_DeviceStability.delete_Confirm);
+			clickBtn(Locators_WifiStability.delete_Confirm);
 			minWait();
 			// test.log(LogStatus.INFO, "SMS or MMS is deleted.");
 		} catch (Exception e) {
@@ -1533,14 +1533,14 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		try {
 			System.out.println("IN Delete");
 			minWait();
-			if (isElementExist(Locators_DeviceStability.firstSMS_InList)) {
-				clickBtn(Locators_DeviceStability.firstSMS_InList);
+			if (isElementExist(Locators_WifiStability.firstSMS_InList)) {
+				clickBtn(Locators_WifiStability.firstSMS_InList);
 				minWait();
-				clickBtn(Locators_DeviceStability.moreOptions);
+				clickBtn(Locators_WifiStability.moreOptions);
 				minWait();
-				clickBtn(Locators_DeviceStability.delete_Thread);
+				clickBtn(Locators_WifiStability.delete_Thread);
 				minWait();
-				clickBtn(Locators_DeviceStability.delete_Confirm);
+				clickBtn(Locators_WifiStability.delete_Confirm);
 				minWait();
 			}
 		} catch (Exception e) {
@@ -1552,7 +1552,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		/* Method used to click on Send Button. */
 		try {
 			customWait(500);
-			clickBtn(Locators_DeviceStability.send_Icon1);
+			clickBtn(Locators_WifiStability.send_Icon1);
 			minWait();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1562,7 +1562,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 	public void navigateTo_NewSMS1() throws InterruptedException {
 		/* Used to Navigate to New Message Page. */
 		try {
-			clickBtn(Locators_DeviceStability.add_NewSMS1);
+			clickBtn(Locators_WifiStability.add_NewSMS1);
 			minWait();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1573,7 +1573,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		/* Methos is Used enter Message into Message Field. */
 		try {
 			minWait();
-			enterTextToInputField(Locators_DeviceStability.messageField1, message);
+			enterTextToInputField(Locators_WifiStability.messageField1, message);
 			minWait();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1584,9 +1584,9 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		/* Method is used to Enter Number into TO Field. */
 		try {
 			minWait();
-			enterTextToInputField(Locators_DeviceStability.TO_Field1, number);
+			enterTextToInputField(Locators_WifiStability.TO_Field1, number);
 			customWait(2000);
-			clickBtn(Locators_DeviceStability.contactPicker);
+			clickBtn(Locators_WifiStability.contactPicker);
 			customWait(2000);
 		} catch (NoSuchElementException e) {
 			e.printStackTrace();
@@ -1597,7 +1597,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		/* Method is used to Enter Number into TO Field. */
 		try {
 			customWait(2000);
-			enterTextToInputField(Locators_DeviceStability.TO_Field, number);
+			enterTextToInputField(Locators_WifiStability.TO_Field, number);
 			minWait();
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
 			minWait();
@@ -1610,7 +1610,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		/* Methos is Used enter Message into Message Field. */
 		try {
 			customWait(1000);
-			enterTextToInputField(Locators_DeviceStability.messageField, message);
+			enterTextToInputField(Locators_WifiStability.messageField, message);
 			minWait();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1631,13 +1631,13 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		SoftAssert sf = new SoftAssert();
 		try {
 			customWait(2000);
-			if (isElementExist(Locators_DeviceStability.TO_Field)) {
-				enterTextToInputField(Locators_DeviceStability.TO_Field, cellNo);
+			if (isElementExist(Locators_WifiStability.TO_Field)) {
+				enterTextToInputField(Locators_WifiStability.TO_Field, cellNo);
 				minWait();
 			}
 
-			if (isElementExist(Locators_DeviceStability.TO_Field_enter)) {
-				enterTextToInputField(Locators_DeviceStability.TO_Field_enter, cellNo);
+			if (isElementExist(Locators_WifiStability.TO_Field_enter)) {
+				enterTextToInputField(Locators_WifiStability.TO_Field_enter, cellNo);
 				minWait();
 			}
 
@@ -1654,11 +1654,11 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		SoftAssert sf = new SoftAssert();
 		try {
 			minWait();
-			if (isElementExist(Locators_DeviceStability.type_Message)) {
-				enterTextToInputField(Locators_DeviceStability.messageField, typeMessage);
+			if (isElementExist(Locators_WifiStability.type_Message)) {
+				enterTextToInputField(Locators_WifiStability.messageField, typeMessage);
 			}
-			if (isElementExist(Locators_DeviceStability.type_Message_enter)) {
-				enterTextToInputField(Locators_DeviceStability.type_Message_enter, typeMessage);
+			if (isElementExist(Locators_WifiStability.type_Message_enter)) {
+				enterTextToInputField(Locators_WifiStability.type_Message_enter, typeMessage);
 			}
 
 		} catch (Exception e) {
@@ -1678,7 +1678,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 			minWait();
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_MENU);
 			minWait();
-			clickBtn(Locators_DeviceStability.send);
+			clickBtn(Locators_WifiStability.send);
 			minWait();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1692,16 +1692,16 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		/* Method used to click on Send Button. */
 		try {
 			minWait();
-			if (isElementExist(Locators_DeviceStability.send_Icon)) {
-				clickBtn(Locators_DeviceStability.send_Icon);
+			if (isElementExist(Locators_WifiStability.send_Icon)) {
+				clickBtn(Locators_WifiStability.send_Icon);
 				APP_LOGS.info("Send icon");
 				minWait();
-			} else if (isElementExist(Locators_DeviceStability.send_SMS)) {
-				clickBtn(Locators_DeviceStability.send_SMS);
+			} else if (isElementExist(Locators_WifiStability.send_SMS)) {
+				clickBtn(Locators_WifiStability.send_SMS);
 				APP_LOGS.info("Send icon");
 				minWait();
 			} else {
-				clickBtn(Locators_DeviceStability.send_MMS_Icon);
+				clickBtn(Locators_WifiStability.send_MMS_Icon);
 				minWait();
 			}
 
@@ -1714,11 +1714,11 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 	public void clearSMSPermissions() throws InterruptedException {
 		try {
 			customWait(2000);
-			// clickBtn(Locators_DeviceStability.StartMessaging);
+			// clickBtn(Locators_WifiStability.StartMessaging);
 			minWait();
-			clickBtn(Locators_DeviceStability.NEXT_Msg);
+			clickBtn(Locators_WifiStability.NEXT_Msg);
 			minWait();
-			clickBtn(Locators_DeviceStability.allow_Permission);
+			clickBtn(Locators_WifiStability.allow_Permission);
 			minWait();
 			// Runtime run = Runtime.getRuntime();
 			// Process pr = run.exec("adb shell input tap 540 1776");
@@ -1737,7 +1737,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 			minWait();
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_HOME);
 			customWait(2000);
-			clickBtn(Locators_DeviceStability.app_List);
+			clickBtn(Locators_WifiStability.app_List);
 			minWait();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1767,9 +1767,9 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 	public void clearSMSPermissions_O() throws InterruptedException {
 		try {
 			customWait(2000);
-			clickBtn(Locators_DeviceStability.StartMessaging);
+			clickBtn(Locators_WifiStability.StartMessaging);
 			minWait();
-			clickBtn(Locators_DeviceStability.skipProvisioning);
+			clickBtn(Locators_WifiStability.skipProvisioning);
 			minWait();
 		} catch (Exception e) {
 			e.getMessage();
@@ -1785,10 +1785,10 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 			System.out.println("Sent msg");
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
 			customWait(1000);
-			if (isElementExist(Locators_DeviceStability.now_Text)
-					|| isElementExist(Locators_DeviceStability.justnow_Text)
-					|| isElementExist(Locators_DeviceStability.not_Sent_Text)
-					|| isElementExist(Locators_DeviceStability.sending_Txt)) {
+			if (isElementExist(Locators_WifiStability.now_Text)
+					|| isElementExist(Locators_WifiStability.justnow_Text)
+					|| isElementExist(Locators_WifiStability.not_Sent_Text)
+					|| isElementExist(Locators_WifiStability.sending_Txt)) {
 				check = true;
 				APP_LOGS.info("Message sent Succeccfully");
 				test.log(LogStatus.PASS, "Test case status is Passed at iteration : " + n);
@@ -1819,12 +1819,12 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		try {
 			minWait();
 			String charAndPageNum1 = null;
-			if (isElementExist(Locators_DeviceStability.zero_Characters_FirstPage)) {
+			if (isElementExist(Locators_WifiStability.zero_Characters_FirstPage)) {
 				System.out.println("Im out");
 				charAndPageNum1 = charAndPageNum.getText();
-			} else if (isElementExist(Locators_DeviceStability.zero_Characters_FirstPage1)) {
+			} else if (isElementExist(Locators_WifiStability.zero_Characters_FirstPage1)) {
 				System.out.println("Im in");
-				charAndPageNum1 = Locators_DeviceStability.zero_Characters_FirstPage1.getText();
+				charAndPageNum1 = Locators_WifiStability.zero_Characters_FirstPage1.getText();
 			}
 
 			if (check = charAndPageNum1.equals(expectedcharAndPageNum)) {
@@ -1853,7 +1853,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		try {
 			minWait();
 			String charAndPageNum1 = null;
-			if (isElementExist(Locators_DeviceStability.zero_Characters_FirstPage_O)) {
+			if (isElementExist(Locators_WifiStability.zero_Characters_FirstPage_O)) {
 				System.out.println("Im out");
 				charAndPageNum1 = charAndPageNum.getText();
 			}
@@ -1878,7 +1878,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		/* Navigates to */
 		try {
 			minWait();
-			clickBtn(Locators_DeviceStability.attach_icon_O);
+			clickBtn(Locators_WifiStability.attach_icon_O);
 			minWait();
 			System.out.println("Clicked Attachment");
 		} catch (Exception e) {
@@ -1922,10 +1922,10 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 				minWait();
 			} catch (Exception e) {
 			}
-			if (!isElementExist(Locators_DeviceStability.cellularData_OnState)) {
-				clickBtn(Locators_DeviceStability.cellularData_OffState);
-				if (isElementExist(Locators_DeviceStability.OK)) {
-					clickBtn(Locators_DeviceStability.OK);
+			if (!isElementExist(Locators_WifiStability.cellularData_OnState)) {
+				clickBtn(Locators_WifiStability.cellularData_OffState);
+				if (isElementExist(Locators_WifiStability.OK)) {
+					clickBtn(Locators_WifiStability.OK);
 				}
 				APP_LOGS.info("MobileData is Disabled");
 				minWait();
@@ -1936,10 +1936,10 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 			try {
 				navigateTo_CellularNetworks();
 				minWait();
-				if (!isElementExist(Locators_DeviceStability.mobileData_OnState)) {
-					clickBtn(Locators_DeviceStability.mobileData_OffState);
-					if (isElementExist(Locators_DeviceStability.OK)) {
-						clickBtn(Locators_DeviceStability.OK);
+				if (!isElementExist(Locators_WifiStability.mobileData_OnState)) {
+					clickBtn(Locators_WifiStability.mobileData_OffState);
+					if (isElementExist(Locators_WifiStability.OK)) {
+						clickBtn(Locators_WifiStability.OK);
 					}
 					APP_LOGS.info("MobileData is Disabled");
 					minWait();
@@ -1975,12 +1975,12 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		 * Menu
 		 */
 		try {
-			scrollToElements(multi_Loc_Strategy(Locators_DeviceStability.setting_Network_InternetLnk_txt1,
-					Locators_DeviceStability.setting_Network_InternetLnk_ind2,
-					Locators_DeviceStability.setting_Network_InternetLnk_SubTxt3, null, null, 419, 934));
-			clickBtn(multi_Loc_Strategy(Locators_DeviceStability.setting_Network_InternetLnk_txt1,
-					Locators_DeviceStability.setting_Network_InternetLnk_ind2,
-					Locators_DeviceStability.setting_Network_InternetLnk_SubTxt3, null, null, 419, 934));
+			scrollToElements(multi_Loc_Strategy(Locators_WifiStability.setting_Network_InternetLnk_txt1,
+					Locators_WifiStability.setting_Network_InternetLnk_ind2,
+					Locators_WifiStability.setting_Network_InternetLnk_SubTxt3, null, null, 419, 934));
+			clickBtn(multi_Loc_Strategy(Locators_WifiStability.setting_Network_InternetLnk_txt1,
+					Locators_WifiStability.setting_Network_InternetLnk_ind2,
+					Locators_WifiStability.setting_Network_InternetLnk_SubTxt3, null, null, 419, 934));
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 
 			test.log(LogStatus.ERROR, "Error in the locators->clickOn_Networks_and_Internet()");
@@ -1998,10 +1998,10 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		 * this method clickes on "Mobile Network" Which is Present Under Network & Internet Menu
 		 */
 		try {
-			scrollToElements(multi_Loc_Strategy(Locators_DeviceStability.network_Internet_MobileNtwrk_Lnk_Txt1,
-					Locators_DeviceStability.network_Internet_MobileNtwrk_Lnk_Instance2, null, null, null, 312, 698));
-			clickBtn(multi_Loc_Strategy(Locators_DeviceStability.network_Internet_MobileNtwrk_Lnk_Txt1,
-					Locators_DeviceStability.network_Internet_MobileNtwrk_Lnk_Instance2, null, null, null, 312, 698));
+			scrollToElements(multi_Loc_Strategy(Locators_WifiStability.network_Internet_MobileNtwrk_Lnk_Txt1,
+					Locators_WifiStability.network_Internet_MobileNtwrk_Lnk_Instance2, null, null, null, 312, 698));
+			clickBtn(multi_Loc_Strategy(Locators_WifiStability.network_Internet_MobileNtwrk_Lnk_Txt1,
+					Locators_WifiStability.network_Internet_MobileNtwrk_Lnk_Instance2, null, null, null, 312, 698));
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 
 			test.log(LogStatus.ERROR, "Error in the locators->clickOn_MobileNetwork()");
@@ -2037,7 +2037,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 
 		try {
 			dailNumber(dailNum);
-			if (!isElementExist(Locators_DeviceStability.turnOff_Airplane_PopUp)) {
+			if (!isElementExist(Locators_WifiStability.turnOff_Airplane_PopUp)) {
 				try {
 					for (int j = 1; j <= 100; j++) {
 						Process child = null;
@@ -2077,17 +2077,17 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 	public void dailNumber(String dailNum) throws IOException {
 		try {
 			minWait();
-			clickBtn(Locators_DeviceStability.add_Call);
+			clickBtn(Locators_WifiStability.add_Call);
 			minWait();
-			clickBtn(Locators_DeviceStability.dailerPad);
+			clickBtn(Locators_WifiStability.dailerPad);
 			minWait();
-			clickBtn(Locators_DeviceStability.enterNumFiled);
+			clickBtn(Locators_WifiStability.enterNumFiled);
 			minWait();
-			enterTextToInputField(Locators_DeviceStability.enterNumFiled, dailNum);
+			enterTextToInputField(Locators_WifiStability.enterNumFiled, dailNum);
 			minWait();
 			// Runtime.getRuntime().exec("adb -s "+p_Id+" shell input text "+dailNum);
 			minWait();
-			clickBtn(Locators_DeviceStability.dail);
+			clickBtn(Locators_WifiStability.dail);
 			customWait(4000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -2101,7 +2101,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		 */
 		try {
 			customWait(2000);
-			if (isElementExist(Locators_DeviceStability.turnOff_Airplane_PopUp)) {
+			if (isElementExist(Locators_WifiStability.turnOff_Airplane_PopUp)) {
 				minWait();
 				check = true;
 				APP_LOGS.info("Validated TurnOff Airplane Mode PopUp Displayed Successfully" + check);
@@ -2116,9 +2116,9 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 				soft.fail();
 			}
 			minWait();
-			clickBtn(Locators_DeviceStability.OK);
+			clickBtn(Locators_WifiStability.OK);
 			minWait();
-			clickBtn(Locators_DeviceStability.CANCEL);
+			clickBtn(Locators_WifiStability.CANCEL);
 			minWait();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -2133,7 +2133,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		 */
 		try {
 			minWait();
-			if (!isElementExist(Locators_DeviceStability.turnOff_Airplane_PopUp)) {
+			if (!isElementExist(Locators_WifiStability.turnOff_Airplane_PopUp)) {
 				minWait();
 				check = true;
 				APP_LOGS.info("TurnOff Airplane Mode PopUp NOT Displayed.");
@@ -2146,7 +2146,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 				soft.fail();
 			}
 			minWait();
-			// clickBtn(Locators_DeviceStability.OK);
+			// clickBtn(Locators_WifiStability.OK);
 			minWait();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -2161,8 +2161,8 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		 */
 		try {
 			minWait();
-			if (isElementExist(Locators_DeviceStability.end_Call)) {
-				clickBtn(Locators_DeviceStability.end_Call);
+			if (isElementExist(Locators_WifiStability.end_Call)) {
+				clickBtn(Locators_WifiStability.end_Call);
 				APP_LOGS.info("Call Ended");
 			} else {
 				APP_LOGS.info("End Call Button Doesn't exist on screen");
@@ -2200,10 +2200,10 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		customWait(6000);
 		System.out.println(" Im Searching...BT devices");
 		WebDriverWait wait = new WebDriverWait(aDriver, 30);
-		// scrollToElement(Locators_DeviceStability.BT_Devices);
-		wait.until(ExpectedConditions.visibilityOf(Locators_DeviceStability.BT_Devices));
+		// scrollToElement(Locators_WifiStability.BT_Devices);
+		wait.until(ExpectedConditions.visibilityOf(Locators_WifiStability.BT_Devices));
 		minWait();
-		boolean check = Locators_DeviceStability.BT_Devices.isDisplayed();
+		boolean check = Locators_WifiStability.BT_Devices.isDisplayed();
 		minWait();
 		if (check) {
 			check = true;
@@ -2262,7 +2262,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 			element.click();
 		} else {
 			System.out.println("Clicking First Element");
-			clickBtn(Locators_DeviceStability.firstApp_Suggetion);
+			clickBtn(Locators_WifiStability.firstApp_Suggetion);
 		}
 	}
 
@@ -2295,8 +2295,8 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 	public void checkWifiConnected() throws InterruptedException {
 		try {
 			customWait(4000);
-			if (isElementExist(Locators_DeviceStability.connectedWIFI1)) {
-				String getTxt = Locators_DeviceStability.connectedWIFI1.getText();
+			if (isElementExist(Locators_WifiStability.connectedWIFI1)) {
+				String getTxt = Locators_WifiStability.connectedWIFI1.getText();
 				System.out.println(getTxt);
 				test.log(LogStatus.INFO, "Wi-Fi is Connected : will be disconnecting");
 				disconnectSSIDifConnected();
@@ -2317,21 +2317,21 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 
 		try {
 			customWait(5000);
-			if (isElementExist(Locators_DeviceStability.google_savedDataOpt)) {
+			if (isElementExist(Locators_WifiStability.google_savedDataOpt)) {
 
-				clickBtn(Locators_DeviceStability.google_savedDataOpt_OkBtn);
+				clickBtn(Locators_WifiStability.google_savedDataOpt_OkBtn);
 			}
 			minWait();
 			String url = "https://www.google.com";
-			Locators_DeviceStability.google_urlBar.clear();
-			enterTextToInputField(Locators_DeviceStability.google_urlBar, url);
+			Locators_WifiStability.google_urlBar.clear();
+			enterTextToInputField(Locators_WifiStability.google_urlBar, url);
 			minWait();
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_ENTER);
 			minWait();
 
-			boolean check1 = Locators_DeviceStability.google_appsBtn.isDisplayed();
-			boolean check2 = Locators_DeviceStability.google_offeredInTxt.isDisplayed();
-			boolean check3 = Locators_DeviceStability.google_signinBtn.isDisplayed();
+			boolean check1 = Locators_WifiStability.google_appsBtn.isDisplayed();
+			boolean check2 = Locators_WifiStability.google_offeredInTxt.isDisplayed();
+			boolean check3 = Locators_WifiStability.google_signinBtn.isDisplayed();
 
 			if (check1 && check2 && check3) {
 				APP_LOGS.info("Suggeted URL Page Displayed Succeessfully");
@@ -2360,39 +2360,39 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 
 		try {
 			customWait(5000);
-			if (isElementExist(Locators_DeviceStability.google_Alert_NoInternetOpt)) {
+			if (isElementExist(Locators_WifiStability.google_Alert_NoInternetOpt)) {
 
-				clickBtn(Locators_DeviceStability.google_Alert_okBtn);
-			} else if (isElementExist(Locators_DeviceStability.google_savedDataOpt)) {
+				clickBtn(Locators_WifiStability.google_Alert_okBtn);
+			} else if (isElementExist(Locators_WifiStability.google_savedDataOpt)) {
 
-				clickBtn(Locators_DeviceStability.google_savedDataOpt_OkBtn);
+				clickBtn(Locators_WifiStability.google_savedDataOpt_OkBtn);
 			}
 
 			customWait(2000);
 
 			String url = "https://www.appium.com";
-			Locators_DeviceStability.google_urlBar.clear();
-			enterTextToInputField(Locators_DeviceStability.google_urlBar, url);
+			Locators_WifiStability.google_urlBar.clear();
+			enterTextToInputField(Locators_WifiStability.google_urlBar, url);
 			minWait();
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_ENTER);
 			minWait();
 
 			/*
-			 * boolean check1 = Locators_DeviceStability.google_appsBtn.isDisplayed();
-			 * boolean check2 = Locators_DeviceStability.google_offeredInTxt.isDisplayed();
-			 * boolean check3 = Locators_DeviceStability.google_signinBtn.isDisplayed();
+			 * boolean check1 = Locators_WifiStability.google_appsBtn.isDisplayed();
+			 * boolean check2 = Locators_WifiStability.google_offeredInTxt.isDisplayed();
+			 * boolean check3 = Locators_WifiStability.google_signinBtn.isDisplayed();
 			 */
 			/*
-			 * if(isElementExist(multi_Loc_Strategy(Locators_DeviceStability.
-			 * google_noInternetAlertID, Locators_DeviceStability.google_noInternetAlertBtn,
+			 * if(isElementExist(multi_Loc_Strategy(Locators_WifiStability.
+			 * google_noInternetAlertID, Locators_WifiStability.google_noInternetAlertBtn,
 			 * null, null, null, 889, 1093))) {
 			 * 
-			 * clickBtn(multi_Loc_Strategy(Locators_DeviceStability.
-			 * google_noInternetAlertID, Locators_DeviceStability.google_noInternetAlertBtn,
+			 * clickBtn(multi_Loc_Strategy(Locators_WifiStability.
+			 * google_noInternetAlertID, Locators_WifiStability.google_noInternetAlertBtn,
 			 * null, null, null, 889, 1093)); }
 			 */
 
-			if (Locators_DeviceStability.google_NoInternetOpt.isDisplayed()) {
+			if (Locators_WifiStability.google_NoInternetOpt.isDisplayed()) {
 				APP_LOGS.info("Page Not Displayed do to Wifi Disconnection");
 				soft.assertTrue(true, "Page Not Displayed due to Wifi Disconnection");
 				test.log(LogStatus.PASS, "Page Not Displayed due to Wifi Disconnection in Iteration " + n);
@@ -2424,10 +2424,10 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 	public void OFF_Switch() {
 		try {
 			minWait();
-			if(Locators_DeviceStability.MobileDataSwitch.getText().equalsIgnoreCase("On")) {
-				Locators_DeviceStability.MobileDataSwitch.click();
+			if(Locators_WifiStability.MobileDataSwitch.getText().equalsIgnoreCase("On")) {
+				Locators_WifiStability.MobileDataSwitch.click();
 				minWait();
-				Locators_DeviceStability.OkBtn_ID.click();
+				Locators_WifiStability.OkBtn_ID.click();
 			}
 				
 			minWait();
@@ -2440,7 +2440,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 			minWait();
 			aDriver.findElementByXPath("//*[contains(@text,'" + switch_To_OFF + "')]/../..//*[@text='ON']").click();
 			minWait();
-			Locators_DeviceStability.OkBtn_ID.click();
+			Locators_WifiStability.OkBtn_ID.click();
 		} catch (Exception e) {
 		}
 	}
@@ -2450,10 +2450,10 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		 * Turning on the Wifi
 		 */
 		try {
-			if (Locators_DeviceStability.Wifi_Switch_Btn.getText().equalsIgnoreCase("ON")) {
+			if (Locators_WifiStability.Wifi_Switch_Btn.getText().equalsIgnoreCase("ON")) {
 
 			} else {
-				Locators_DeviceStability.Wifi_Switch_Btn.click();
+				Locators_WifiStability.Wifi_Switch_Btn.click();
 				customWait(2000);
 			}
 
@@ -2473,18 +2473,18 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		 * Clearing Google chrome History
 		 */
 		try {
-			clickBtn(Locators_DeviceStability.google_chromeMenuBtn);
-			clickBtn(Locators_DeviceStability.google_ChromeHistoryLnk);
-			if (isElementExist(Locators_DeviceStability.google_chromeEmptyHistory_Txt_Id)) {
+			clickBtn(Locators_WifiStability.google_chromeMenuBtn);
+			clickBtn(Locators_WifiStability.google_ChromeHistoryLnk);
+			if (isElementExist(Locators_WifiStability.google_chromeEmptyHistory_Txt_Id)) {
 
 			} else {
 
-				clickBtn(Locators_DeviceStability.google_chromeClearBrowserBtn);
-				clickBtn(Locators_DeviceStability.google_ChromeAdvancedLnk);
-				clickBtn(Locators_DeviceStability.google_chromeTimeRangeMenuDrpDwn);
-				clickBtn(Locators_DeviceStability.google_chromeTimeRange_AllTimeCheckBx);
+				clickBtn(Locators_WifiStability.google_chromeClearBrowserBtn);
+				clickBtn(Locators_WifiStability.google_ChromeAdvancedLnk);
+				clickBtn(Locators_WifiStability.google_chromeTimeRangeMenuDrpDwn);
+				clickBtn(Locators_WifiStability.google_chromeTimeRange_AllTimeCheckBx);
 
-				List<AndroidElement> checkBxStatus = Locators_DeviceStability.google_chromeCheckBoxStatus;
+				List<AndroidElement> checkBxStatus = Locators_WifiStability.google_chromeCheckBoxStatus;
 
 				for (AndroidElement androidElement : checkBxStatus) {
 
@@ -2500,7 +2500,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 
 				}
 
-				clickBtn(Locators_DeviceStability.google_chromeClearBrowser_Clear_Btn_Id);
+				clickBtn(Locators_WifiStability.google_chromeClearBrowser_Clear_Btn_Id);
 
 			}
 			clickOn_BackBtn();
@@ -2520,7 +2520,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 
 		try {
 			minWait();
-			enterTextToInputField(multi_Loc_Strategy(Locators_DeviceStability.wifi_PsswdBx,Locators_DeviceStability.wifi_PsswdBx_index, Locators_DeviceStability.wifi_PsswdBx_instance, null, null, 250, 500), Pswd);
+			enterTextToInputField(multi_Loc_Strategy(Locators_WifiStability.wifi_PsswdBx,Locators_WifiStability.wifi_PsswdBx_index, Locators_WifiStability.wifi_PsswdBx_instance, null, null, 250, 500), Pswd);
 
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 
@@ -2536,7 +2536,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 	public void clickOn_Connect() {
 
 		try {
-			clickBtn(Locators_DeviceStability.Wifi_connectBtn);
+			clickBtn(Locators_WifiStability.Wifi_connectBtn);
 			customWait(3000);
 
 		}
@@ -2574,10 +2574,10 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 	public void turnOff_Wifi() {
 
 		try {
-			if (Locators_DeviceStability.Wifi_Switch_Btn.getText().equalsIgnoreCase("OFF")) {
+			if (Locators_WifiStability.Wifi_Switch_Btn.getText().equalsIgnoreCase("OFF")) {
 
 			} else {
-				Locators_DeviceStability.Wifi_Switch_Btn.click();
+				Locators_WifiStability.Wifi_Switch_Btn.click();
 				customWait(3000);
 			}
 
@@ -2596,11 +2596,11 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		/* To close all tha Tabs in Chrome Browser. */
 		try {
 			minWait();
-			clickBtn(Locators_DeviceStability.switcherButton_Chrome);
+			clickBtn(Locators_WifiStability.switcherButton_Chrome);
 			minWait();
-			clickBtn(Locators_DeviceStability.menuButton_Chrome);
+			clickBtn(Locators_WifiStability.menuButton_Chrome);
 			minWait();
-			clickBtn(Locators_DeviceStability.closeAllTabs_Chrome);
+			clickBtn(Locators_WifiStability.closeAllTabs_Chrome);
 			minWait();
 		} catch (NoSuchElementException e) {
 			e.printStackTrace();
@@ -2621,9 +2621,9 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_ENTER);
 			minWait();
 
-			boolean check1 = Locators_DeviceStability.google_appsBtn.isDisplayed();
-			boolean check2 = Locators_DeviceStability.google_offeredInTxt.isDisplayed();
-			boolean check3 = Locators_DeviceStability.google_signinBtn.isDisplayed();
+			boolean check1 = Locators_WifiStability.google_appsBtn.isDisplayed();
+			boolean check2 = Locators_WifiStability.google_offeredInTxt.isDisplayed();
+			boolean check3 = Locators_WifiStability.google_signinBtn.isDisplayed();
 
 			if (check1 && check2 && check3) {
 
@@ -2647,13 +2647,13 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 	public void clearChromePermission() {
 		try {
 			System.out.println("In Browser");
-			if (isElementExist(Locators_DeviceStability.ACCEPTCONTINUE)) {
+			if (isElementExist(Locators_WifiStability.ACCEPTCONTINUE)) {
 				customWait(3000);
-				clickBtn(Locators_DeviceStability.ACCEPTCONTINUE);
+				clickBtn(Locators_WifiStability.ACCEPTCONTINUE);
 				customWait(5000);
-				clickBtn(Locators_DeviceStability.NEXT);
+				clickBtn(Locators_WifiStability.NEXT);
 				customWait(3000);
-				clickBtn(Locators_DeviceStability.NO_THANKS);
+				clickBtn(Locators_WifiStability.NO_THANKS);
 				customWait(2000);
 			} else {
 
@@ -2669,15 +2669,15 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 	public void clearChromePermission_SPRN() {
 		try {			
 			System.out.println("In Browser");
-			if (isElementExist(Locators_DeviceStability.ACCEPTCONTINUE)) {
-				clickBtn(Locators_DeviceStability.ACCEPTCONTINUE);
+			if (isElementExist(Locators_WifiStability.ACCEPTCONTINUE)) {
+				clickBtn(Locators_WifiStability.ACCEPTCONTINUE);
 				customWait(3000);
 			}
-			if(isElementExist(Locators_DeviceStability.NEXT));{
-				clickBtn(Locators_DeviceStability.NEXT);
+			if(isElementExist(Locators_WifiStability.NEXT));{
+				clickBtn(Locators_WifiStability.NEXT);
 				customWait(3000);}
-			if(Locators_DeviceStability.nothanksBtn.isDisplayed()) {
-					clickBtn(Locators_DeviceStability.nothanksBtn);
+			if(Locators_WifiStability.nothanksBtn.isDisplayed()) {
+					clickBtn(Locators_WifiStability.nothanksBtn);
 					customWait(2000);
 				}
 				
@@ -2695,19 +2695,19 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 			Runtime.getRuntime().exec("adb -s "+p_Id+" shell pm clear com.android.chrome");
 			/*launch_an_app("settings");
 			minWait();
-			clickBtn(Locators_DeviceStability.setting_app_notificationLnk_Txt1);
+			clickBtn(Locators_WifiStability.setting_app_notificationLnk_Txt1);
 			minWait();
-			clickBtn(Locators_DeviceStability.setting_seeAllApps_Txt1);
+			clickBtn(Locators_WifiStability.setting_seeAllApps_Txt1);
 			minWait();
 			scrollToText("Chrome");
 			minWait();
 			scrollText("Storage");
 			minWait();
-			clickBtn(Locators_DeviceStability.setting_manageSpaceBtn_Txt1);
+			clickBtn(Locators_WifiStability.setting_manageSpaceBtn_Txt1);
 			minWait();
-			clickBtn(Locators_DeviceStability.setting_ClearAllBtn_Txt1);
+			clickBtn(Locators_WifiStability.setting_ClearAllBtn_Txt1);
 			minWait();
-			Locators_DeviceStability.OkBtn_ID.click();
+			Locators_WifiStability.OkBtn_ID.click();
 			minWait();*/
 			
 		} catch (org.openqa.selenium.NoSuchElementException e) {
@@ -2723,21 +2723,21 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 			minWait();
 			launch_an_app("settings");
 			minWait();
-			clickBtn(Locators_DeviceStability.setting_app_notificationLnk_Txt1);
+			clickBtn(Locators_WifiStability.setting_app_notificationLnk_Txt1);
 			minWait();
-			clickBtn(Locators_DeviceStability.setting_seeAllApps_Txt1);
+			clickBtn(Locators_WifiStability.setting_seeAllApps_Txt1);
 			minWait();
-			scrollToElements(Locators_DeviceStability.setting_chromeEle);
+			scrollToElements(Locators_WifiStability.setting_chromeEle);
 			minWait();
-			clickBtn(Locators_DeviceStability.setting_chromeEle);
+			clickBtn(Locators_WifiStability.setting_chromeEle);
 			minWait();
 			scrollText("Storage");
 			minWait();
-			clickBtn(Locators_DeviceStability.setting_manageSpaceBtn_Txt1);
+			clickBtn(Locators_WifiStability.setting_manageSpaceBtn_Txt1);
 			minWait();
-			clickBtn(Locators_DeviceStability.setting_ClearAllBtn_Txt1);
+			clickBtn(Locators_WifiStability.setting_ClearAllBtn_Txt1);
 			minWait();
-			Locators_DeviceStability.OkBtn_ID.click();
+			Locators_WifiStability.OkBtn_ID.click();
 			minWait();
 			
 		} catch (org.openqa.selenium.NoSuchElementException e) {
@@ -2753,25 +2753,25 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 			TouchAction ta = new TouchAction(aDriver);
 			launch_an_app("settings");
 			minWait();
-			clickBtn(Locators_DeviceStability.setting_app_notificationLnk_Txt1);
+			clickBtn(Locators_WifiStability.setting_app_notificationLnk_Txt1);
 			minWait();
-			clickBtn(Locators_DeviceStability.setting_seeAllApps_Txt1);
+			clickBtn(Locators_WifiStability.setting_seeAllApps_Txt1);
 			minWait();
 			scrollToText("Chrome");
 			minWait();
 			scrollText("Storage");
 			minWait();
-			clickBtn(Locators_DeviceStability.setting_manageSpaceBtn_Txt1);
+			clickBtn(Locators_WifiStability.setting_manageSpaceBtn_Txt1);
 			customWait(5000);
-			if(isElementExist(Locators_DeviceStability.alertTextDisplay)) {
+			if(isElementExist(Locators_WifiStability.alertTextDisplay)) {
 				
 				ta.tap(142, 1716).perform();
 			}
 			minWait();
-			//clickBtn(Locators_DeviceStability.clearAllDataBtn);
+			//clickBtn(Locators_WifiStability.clearAllDataBtn);
 			ta.tap(758, 1462);
 			minWait();
-			Locators_DeviceStability.OkBtn_ID.click();
+			Locators_WifiStability.OkBtn_ID.click();
 			minWait();
 			
 		} catch (org.openqa.selenium.NoSuchElementException e) {
@@ -2788,23 +2788,23 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 			if (p_b_No.contains("-10.") || p_b_No.contains("-30.")) {
 				clickAttachment();
 				minWait();
-				clickBtn(Locators_DeviceStability.capturePicture_MMS);
+				clickBtn(Locators_WifiStability.capturePicture_MMS);
 				minWait();
 				clearAllow();
-				clickBtn(Locators_DeviceStability.capturePicture);
+				clickBtn(Locators_WifiStability.capturePicture);
 				customWait(10000);
-				clickBtn(Locators_DeviceStability.done_1);
+				clickBtn(Locators_WifiStability.done_1);
 				minWait();
 			} else if (p_b_No.contains("-11.") || p_b_No.contains("-12.") || p_b_No.contains("-18.")
 					|| p_b_No.contains("-26.") || p_b_No.contains("-29.")) {
 				clickAttachment();
 				minWait();
-				clickBtn(Locators_DeviceStability.capture_pictures_or_video);
+				clickBtn(Locators_WifiStability.capture_pictures_or_video);
 				minWait();
 				clearAllow();
-				clickBtn(Locators_DeviceStability.capture_pictures_or_video);
+				clickBtn(Locators_WifiStability.capture_pictures_or_video);
 				minWait();
-				clickBtn(Locators_DeviceStability.take_picture_MMS);
+				clickBtn(Locators_WifiStability.take_picture_MMS);
 				customWait(10000);
 			}
 		} catch (Exception e) {
@@ -2814,7 +2814,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 	public void clickAttachment() throws InterruptedException {
 		try {
 			minWait();
-			clickBtn(Locators_DeviceStability.attachment);
+			clickBtn(Locators_WifiStability.attachment);
 			minWait();
 		} catch (Exception e) {
 		}
@@ -2823,15 +2823,15 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 	public void capturePic_MMS_O() {
 		try {
 			minWait();
-			clickBtn(Locators_DeviceStability.button_Attach_SMS);
+			clickBtn(Locators_WifiStability.button_Attach_SMS);
 			minWait();
-			clickBtn(Locators_DeviceStability.camera_MMS);
+			clickBtn(Locators_WifiStability.camera_MMS);
 			customWait(2000);
-			clickBtn(Locators_DeviceStability.OptionPhoto_Icon);
+			clickBtn(Locators_WifiStability.OptionPhoto_Icon);
 			customWait(2000);
-			clickBtn(Locators_DeviceStability.cameraCapture_Icon);
+			clickBtn(Locators_WifiStability.cameraCapture_Icon);
 			minWait();
-			clickBtn(Locators_DeviceStability.send_Cam_SMS);
+			clickBtn(Locators_WifiStability.send_Cam_SMS);
 			customWait(3000);
 		} catch (Exception e) {
 
@@ -2842,17 +2842,17 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 	public void captureVideo_MMS_O() {
 		try {
 			minWait();
-			clickBtn(Locators_DeviceStability.button_Attach_SMS);
+			clickBtn(Locators_WifiStability.button_Attach_SMS);
 			minWait();
-			clickBtn(Locators_DeviceStability.camera_MMS);
+			clickBtn(Locators_WifiStability.camera_MMS);
 			customWait(2000);
-			clickBtn(Locators_DeviceStability.OptionVideo_Icon);
+			clickBtn(Locators_WifiStability.OptionVideo_Icon);
 			customWait(2000);
 			TouchAction action = new TouchAction(aDriver);
-			action.longPress(Locators_DeviceStability.cameraCapture_Icon).release().perform();
-			// clickBtn(Locators_DeviceStability.cameraCapture_Icon);
+			action.longPress(Locators_WifiStability.cameraCapture_Icon).release().perform();
+			// clickBtn(Locators_WifiStability.cameraCapture_Icon);
 			minWait();
-			clickBtn(Locators_DeviceStability.send_Cam_SMS);
+			clickBtn(Locators_WifiStability.send_Cam_SMS);
 			customWait(3000);
 		} catch (Exception e) {
 
@@ -2866,14 +2866,14 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 			scrollToText("Users & accounts");
 			// clickOnAccounts();
 			minWait();
-			if (isElementExist(Locators_DeviceStability.connectedAccount)) {
+			if (isElementExist(Locators_WifiStability.connectedAccount)) {
 				System.out.println("Account is present");
 				minWait();
-				clickBtn(Locators_DeviceStability.connectedAccount);
+				clickBtn(Locators_WifiStability.connectedAccount);
 				minWait();
-				clickBtn(Locators_DeviceStability.REMOVE_ACCOUNT);
+				clickBtn(Locators_WifiStability.REMOVE_ACCOUNT);
 				minWait();
-				clickBtn(Locators_DeviceStability.REMOVE_ACCOUNT);
+				clickBtn(Locators_WifiStability.REMOVE_ACCOUNT);
 				customWait(3000);
 			} else {
 				System.out.println("No Google account present");
@@ -2889,9 +2889,9 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		WebDriverWait wt = new WebDriverWait(aDriver, 60);
 		try {
 			scrollToText("Users & accounts");
-			clickBtn(Locators_DeviceStability.add_Account);
+			clickBtn(Locators_WifiStability.add_Account);
 			minWait();
-			clickBtn(Locators_DeviceStability.google_Account);
+			clickBtn(Locators_WifiStability.google_Account);
 			customWait(1600);
 			wt.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//*[contains(@text,'Checking info')]")));
 			minWait();
@@ -2923,21 +2923,21 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		WebDriverWait wt = new WebDriverWait(aDriver, 60);
 		try {
 			minWait();
-			enterTextToInputField(Locators_DeviceStability.email_googleAcnt, emailId);
+			enterTextToInputField(Locators_WifiStability.email_googleAcnt, emailId);
 			minWait();
-			clickBtn(Locators_DeviceStability.next);
+			clickBtn(Locators_WifiStability.next);
 			minWait();
 			wt.until(ExpectedConditions
 					.visibilityOfElementLocated(By.xpath("//*[@text='Welcome' or @resource-id='profileIdentifier']")));
 			minWait();
-			enterTextToInputField(Locators_DeviceStability.password_googleAcnt, password);
+			enterTextToInputField(Locators_WifiStability.password_googleAcnt, password);
 			customWait(5000);
-			clickBtn(Locators_DeviceStability.next);
+			clickBtn(Locators_WifiStability.next);
 			customWait(3000);
 			scroll();
 			scroll();
 			minWait();
-			clickBtn(Locators_DeviceStability.skip_);
+			clickBtn(Locators_WifiStability.skip_);
 			// aDriver.findElementByAndroidUIAutomator("new UiScrollable(new
 			// UiSelector().className(\"android.widget.Button\")).scrollIntoView(new
 			// UiSelector().textContains(\"Skip\"))").click();
@@ -2954,13 +2954,13 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 				}
 			}
 			customWait(1000);
-			clickBtn(Locators_DeviceStability.i_agree);
+			clickBtn(Locators_WifiStability.i_agree);
 			minWait();
 			wt.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//*[contains(@text,'Checking info')]")));
 			minWait();
-			clickBtn(Locators_DeviceStability.MORE);
+			clickBtn(Locators_WifiStability.MORE);
 			minWait();
-			clickBtn(Locators_DeviceStability.ACCEPTorAGREE);
+			clickBtn(Locators_WifiStability.ACCEPTorAGREE);
 			customWait(3000);
 		} catch (Exception e) {
 		}
@@ -2969,8 +2969,8 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 	public void checkWifiConnected1() throws InterruptedException {
 		try {
 			customWait(4000);
-			if (isElementExist(Locators_DeviceStability.connectedWIFI1)) {
-				String getTxt = Locators_DeviceStability.connectedWIFI1.getText();
+			if (isElementExist(Locators_WifiStability.connectedWIFI1)) {
+				String getTxt = Locators_WifiStability.connectedWIFI1.getText();
 				System.out.println("Connected " + getTxt);
 				// test.log(LogStatus.INFO, "Wi-Fi is Connected");
 			} else {
@@ -2986,18 +2986,18 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 
 	public void install_App(String appName, WebElement element) throws InterruptedException, IOException {
 
-		if (isElementExist(Locators_DeviceStability.account_Page)) {
+		if (isElementExist(Locators_WifiStability.account_Page)) {
 			clearRecentApps();
-			launch_APP(Locators_DeviceStability.PlayStore);
+			launch_APP(Locators_WifiStability.PlayStore);
 		}
 
 		WebDriverWait wait = new WebDriverWait(aDriver, 60);
 		try {
 			System.out.println("To Be install " + appName);
 			customWait(3000);
-			clickBtn(Locators_DeviceStability.google_Play);
+			clickBtn(Locators_WifiStability.google_Play);
 			customWait(3000);
-			enterTextToInputField(Locators_DeviceStability.search_PlayStore, appName);
+			enterTextToInputField(Locators_WifiStability.search_PlayStore, appName);
 			customWait(3000);
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_ENTER);
 			customWait(8000);
@@ -3007,11 +3007,11 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@text='INSTALL']")));
 			customWait(6000);
-			if (isElementExist(Locators_DeviceStability.INSTALL)) {
+			if (isElementExist(Locators_WifiStability.INSTALL)) {
 				minWait();
-				clickBtn(Locators_DeviceStability.INSTALL);
+				clickBtn(Locators_WifiStability.INSTALL);
 				minWait();
-				clickBtn(Locators_DeviceStability.ACCEPT);
+				clickBtn(Locators_WifiStability.ACCEPT);
 				minWait();
 				wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@text='UNINSTALL']")));
 				minWait();
@@ -3034,9 +3034,9 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		try {
 			boolean check = false;
 			clickOnAppList();
-			enterTextToInputField(Locators_DeviceStability.searchApps, appName);
+			enterTextToInputField(Locators_WifiStability.searchApps, appName);
 			minWait();
-			if (isElementExist(Locators_DeviceStability.apkExtractor)) {
+			if (isElementExist(Locators_WifiStability.apkExtractor)) {
 				check = true;
 				soft.assertTrue(check, "TestCase Valiation is PASS");
 				test.log(LogStatus.PASS,
@@ -3062,37 +3062,37 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 
 		clickOnAppList();
 
-		enterTextToInputField(Locators_DeviceStability.searchApps, appName);
+		enterTextToInputField(Locators_WifiStability.searchApps, appName);
 		minWait();
 		System.out.println("Checking....");
-		if (isElementExist(Locators_DeviceStability.apkExtractor)) {
+		if (isElementExist(Locators_WifiStability.apkExtractor)) {
 			System.out.println("Yes App is Present...");
 			if (appName.contains("Tech Support")) {
 				System.out.println("Im in Staples");
-				launch_APP(Locators_DeviceStability.PlayStore);
+				launch_APP(Locators_WifiStability.PlayStore);
 				unInstall_App("Tech Support Staples");
 
 			} else if (appName.contains("Meeting App")) {
 				System.out.println("Im in MAcys");
-				launch_APP(Locators_DeviceStability.PlayStore);
+				launch_APP(Locators_WifiStability.PlayStore);
 				unInstall_App("Macys");
 			}
 
 			else if (appName.contains("MCDelivery App")) {
 				System.out.println("MCDelivery");
-				launch_APP(Locators_DeviceStability.PlayStore);
+				launch_APP(Locators_WifiStability.PlayStore);
 				unInstall_App("McDonald's");
 			}
 
 			else if (appName.contains("Craigslist")) {
 				System.out.println("App for Craigslist");
-				launch_APP(Locators_DeviceStability.PlayStore);
+				launch_APP(Locators_WifiStability.PlayStore);
 				unInstall_App("App for Craigslist");
 			}
 
 			else {
 				System.out.println("Im in Gen");
-				launch_APP(Locators_DeviceStability.PlayStore);
+				launch_APP(Locators_WifiStability.PlayStore);
 				unInstall_App(appName);
 			}
 			System.out.println("Uninstalled");
@@ -3104,31 +3104,31 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		WebDriverWait wait = new WebDriverWait(aDriver, 60);
 		try {
 			minWait();
-			clickBtn(Locators_DeviceStability.google_Play);
+			clickBtn(Locators_WifiStability.google_Play);
 			minWait();
-			enterTextToInputField(Locators_DeviceStability.search_PlayStore, appName);
+			enterTextToInputField(Locators_WifiStability.search_PlayStore, appName);
 			minWait();
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_ENTER);
 			customWait(5000);
-			if (isElementExist(Locators_DeviceStability.installed_Playstore1)) {
+			if (isElementExist(Locators_WifiStability.installed_Playstore1)) {
 				customWait(3000);
-				clickBtn(Locators_DeviceStability.installed_Playstore1);
+				clickBtn(Locators_WifiStability.installed_Playstore1);
 			}
-			if (isElementExist(Locators_DeviceStability.UNINSTALL)) {
+			if (isElementExist(Locators_WifiStability.UNINSTALL)) {
 				System.out.println("Uninstalling");
 				minWait();
-				clickBtn(Locators_DeviceStability.UNINSTALL);
+				clickBtn(Locators_WifiStability.UNINSTALL);
 				minWait();
-				clickBtn(Locators_DeviceStability.OK);
+				clickBtn(Locators_WifiStability.OK);
 				minWait();
 				wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@text='INSTALL']")));
 				minWait();
-			} else if (isElementExist(Locators_DeviceStability.UNINSTALL1)) {
+			} else if (isElementExist(Locators_WifiStability.UNINSTALL1)) {
 				System.out.println("Uninstalling....");
 				minWait();
-				clickBtn(Locators_DeviceStability.UNINSTALL1);
+				clickBtn(Locators_WifiStability.UNINSTALL1);
 				minWait();
-				clickBtn(Locators_DeviceStability.OK);
+				clickBtn(Locators_WifiStability.OK);
 				minWait();
 				wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@text='INSTALL']")));
 				minWait();
@@ -3148,9 +3148,9 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		try {
 			boolean check = false;
 			clickOnAppList();
-			enterTextToInputField(Locators_DeviceStability.searchApps, appName);
+			enterTextToInputField(Locators_WifiStability.searchApps, appName);
 			minWait();
-			if (isElementExist(Locators_DeviceStability.apkExtractor)) {
+			if (isElementExist(Locators_WifiStability.apkExtractor)) {
 				test.log(LogStatus.FAIL, "APK didn't Uninstalled " + "\" " + appName + "\"" + "at iteration: " + n);
 				soft.fail();
 			} else {
@@ -3178,15 +3178,15 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 			String notes) {
 
 		try {
-			clickBtn(Locators_DeviceStability.add_ContactIcon_O);
+			clickBtn(Locators_WifiStability.add_ContactIcon_O);
 			minWait();
-			clickBtn(Locators_DeviceStability.contact_SavingTo);
+			clickBtn(Locators_WifiStability.contact_SavingTo);
 			minWait();
-			clickBtn(Locators_DeviceStability.savingTo_Phone);
+			clickBtn(Locators_WifiStability.savingTo_Phone);
 			minWait();
 			// aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
 			minWait();
-			clickBtn(Locators_DeviceStability.more_Fields);
+			clickBtn(Locators_WifiStability.more_Fields);
 			minWait();
 			scrollToAndEnterText("First name", contactName);
 			minWait();
@@ -3222,7 +3222,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 			minWait();
 			Runtime.getRuntime().exec("adb -s " + p_Id + " shell input tap 888 84");
 			minWait();
-			// clickBtn(Locators_DeviceStability.SAVE);
+			// clickBtn(Locators_WifiStability.SAVE);
 			// minWait();
 			clearAllow();
 			// aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
@@ -3272,40 +3272,40 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		 */
 		try {
 			minWait();
-			clickBtn(Locators_DeviceStability.add_ContactIcon_O);
+			clickBtn(Locators_WifiStability.add_ContactIcon_O);
 			minWait();
-			// clickBtn(Locators_DeviceStability.contact_SavingTo);
+			// clickBtn(Locators_WifiStability.contact_SavingTo);
 			minWait();
-			// clickBtn(Locators_DeviceStability.add_NewContact);
+			// clickBtn(Locators_WifiStability.add_NewContact);
 			minWait();
 			if (enter1forPhone_2forSimMemory == 1) {
-				clickBtn(Locators_DeviceStability.contact_SavingTo);
+				clickBtn(Locators_WifiStability.contact_SavingTo);
 				minWait();
-				clickBtn(Locators_DeviceStability.savingTo_Phone);
+				clickBtn(Locators_WifiStability.savingTo_Phone);
 				minWait();
-				enterTextToInputField(Locators_DeviceStability.name_NewContact, contactName);
+				enterTextToInputField(Locators_WifiStability.name_NewContact, contactName);
 				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
 				minWait();
-				enterTextToInputField(Locators_DeviceStability.phone_NewContact, contactNum);
+				enterTextToInputField(Locators_WifiStability.phone_NewContact, contactNum);
 				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
 				minWait();
 				//
 			} else if (enter1forPhone_2forSimMemory == 2) {
-				clickBtn(Locators_DeviceStability.contact_SavingTo);
+				clickBtn(Locators_WifiStability.contact_SavingTo);
 				minWait();
-				clickBtn(Locators_DeviceStability.savingTo_SIM);
+				clickBtn(Locators_WifiStability.savingTo_SIM);
 				minWait();
-				enterTextToInputField(Locators_DeviceStability.name_NewContact, contactName);
+				enterTextToInputField(Locators_WifiStability.name_NewContact, contactName);
 				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
 				minWait();
-				enterTextToInputField(Locators_DeviceStability.phone_NewContact, contactNum);
+				enterTextToInputField(Locators_WifiStability.phone_NewContact, contactNum);
 				// aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
 				minWait();
-				// enterTextToInputField(Locators_DeviceStability.phone_NewContact, contactNum);
+				// enterTextToInputField(Locators_WifiStability.phone_NewContact, contactNum);
 				// aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
 				// minWait();
 			}
-			clickBtn(Locators_DeviceStability.save_Icon);
+			clickBtn(Locators_WifiStability.save_Icon);
 			minWait();
 			clearAllow();
 			// aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);

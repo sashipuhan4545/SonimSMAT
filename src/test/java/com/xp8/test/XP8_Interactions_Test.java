@@ -11,6 +11,8 @@ import java.util.Properties;
 
 import org.json.simple.parser.ParseException;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -148,8 +150,10 @@ public class XP8_Interactions_Test extends XP8_Interactions_Util{
 			//Delete the contact 
 			deleteIfContactsPresent(sa);
 			//Set default saving account
+			launch_an_app("contacts");
 			setDefaultSavingAccount();
-
+			launch_an_app("messaging");
+			enablemsg_notification(sa);
 
 			sa.assertAll();
 		}
@@ -173,7 +177,12 @@ public class XP8_Interactions_Test extends XP8_Interactions_Util{
 			aDriver.pressKeyCode(AndroidKeyCode.HOME);
 			//During Voice call send sms
 			launch_an_app("messaging");
-			create_NewSMS(refNum, data.get("typeMessage"));
+			//create_NewSMS(refNum, data.get("typeMessage"));
+			navigateTo_NewSMS_ATT();
+			enterTextToInputField(Locators_Interactions.TO_Field_Text1_att,refNum);
+		    aDriver.pressKeyCode(AndroidKeyCode.BACK);
+		     System.out.println("Enter Text");
+			enterText_MessageField(data.get("typeMessage"));
 			clickOn_Send();
 			validate_SentMessage(sa) ;
 			aDriver.pressKeyCode(AndroidKeyCode.HOME);
@@ -184,9 +193,8 @@ public class XP8_Interactions_Test extends XP8_Interactions_Util{
 			sendSMS_fromRefDevice(data.get("typeMessage1"));
 			System.out.println("reply for received msg");
 			//During voice call reply for received sms
-			launch_an_app("messaging");
+			//launch_an_app("messaging");
 			reply_received_sms(data.get("typeMessage1"));
-			clickOn_Send();
 			clickBackButton(4);
 			launch_an_app("messaging");
 			Validate_reply_received_sms(sa);
@@ -201,6 +209,7 @@ public class XP8_Interactions_Test extends XP8_Interactions_Util{
 			launch_APP(Locators_BaseUtil.clockApp);
 			validate_set_alarm(sa);
 			//During voice call set timer
+			launch_APP(Locators_BaseUtil.clockApp);
 			validate_set_timer(sa);
 			launch_APP(Locators_Interactions.camera);
 			//During voice call take photo
@@ -216,7 +225,7 @@ public class XP8_Interactions_Test extends XP8_Interactions_Util{
 			launch_APP(Locators_Interactions.soundrecorder);
 			validate_soundrecorder(sa);
 			//During voice call access notification 
-			validate_accessnotification(sa);
+			//validate_accessnotification(sa);
 			access_settingsmenu();
 			//During voice call enable mobiledata and wifi
 			//enable_mobiledata_wifi();
@@ -225,25 +234,22 @@ public class XP8_Interactions_Test extends XP8_Interactions_Util{
 			//During voice call play music
 			launch_APP(Locators_Interactions.gaana);
 			Musicplay_gaana(sa);
-			clearRecentApps();
+			
 			//During voice call browse
 			launch_APP(Locators_Interactions.chrome);
 			openbrowser_browse(sa,data.get("Web"));
-			aDriver.openNotifications();
-			clickBtn(Locators_Interactions.clearall);
 			//During voice call use fmradio
 			launch_an_app("fm");
 			validate_fmradio(sa);
 			aDriver.pressKeyCode(AndroidKeyCode.HOME);
-			fmradio_off();
 			System.out.println("coming to skype");
 			//During voice call skype chat
-			launch_APP(Locators_Interactions.skype);
+         	launch_APP(Locators_Interactions.skype);
 			skype_chat(sa,data.get("skypephoneno"),data.get("skypetext"),data.get("typeMessage1"));
 			//During voice call enable disable airplanemode
 			checkairplanemode(sa);
 			//endCall_PrmyDevice();
-
+           clearRecentApps();
 
 
 		}
@@ -257,6 +263,8 @@ public class XP8_Interactions_Test extends XP8_Interactions_Util{
 		APP_LOGS.info("===========XP8_Interactions_002_While_PlayingMusic============");
 		startAdbLog("XP8_Interactions_002");
 		if (p_b_No.contains("-10.")||p_b_No.contains("-00.")||p_b_No.contains("-15.")||p_b_No.contains("-11.")||p_b_No.contains("-29.")||p_b_No.contains("-12.")||p_b_No.contains("-26.")) {
+			launch_an_app("contacts");
+			deleteIfContactsPresent(sa);
 			clearRecentApps();
 			launch_APP(Locators_Interactions.gaana);
 			Musicplay_gaana(sa);
@@ -265,12 +273,16 @@ public class XP8_Interactions_Test extends XP8_Interactions_Util{
 			customWait(3000);
 			endCall_PrmyDevice();
 			launch_an_app("messaging");
-			create_NewSMS(refNum, data.get("typeMessage"));
+			//create_NewSMS(refNum, data.get("typeMessage"));
+			navigateTo_NewSMS_ATT();
+			enterTextToInputField(Locators_Interactions.TO_Field_Text1_att,refNum);
+		    aDriver.pressKeyCode(AndroidKeyCode.BACK);
+		     System.out.println("Enter Text");
+			enterText_MessageField(data.get("typeMessage"));
 			clickOn_Send();
 			validate_SentMessage(sa) ;
 			aDriver.pressKeyCode(AndroidKeyCode.HOME);
-			launch_an_app("contacts");
-			deleteIfContactsPresent(sa);
+		
 			//During voice call create contact 
 			launch_an_app("contacts");
 			validate_createContactWithNameandPhone(data.get("name"),data.get("lastname"),data.get("phoneno"),sa);
@@ -278,9 +290,8 @@ public class XP8_Interactions_Test extends XP8_Interactions_Util{
 			sendSMS_fromRefDevice(data.get("typeMessage1"));
 			System.out.println("reply for received msg");
 			//During voice call reply for received sms
-			launch_an_app("messaging");
+			//launch_an_app("messaging");
 			reply_received_sms(data.get("typeMessage1"));
-			clickOn_Send();
 			clickBackButton(4); 
 			launch_an_app("messaging");
 			Validate_reply_received_sms(sa);
@@ -295,6 +306,7 @@ public class XP8_Interactions_Test extends XP8_Interactions_Util{
 			launch_APP(Locators_BaseUtil.clockApp);
 			validate_set_alarm(sa);
 			//During voice call set timer
+			launch_APP(Locators_BaseUtil.clockApp);
 			validate_set_timer(sa);
 			launch_APP(Locators_Interactions.camera);
 			//During voice call take photo
@@ -341,6 +353,8 @@ public class XP8_Interactions_Test extends XP8_Interactions_Util{
 		APP_LOGS.info("===========XP8_Interactions_003_While_PlayingFMradio============");
 		startAdbLog("XP8_Interactions_003");
 		if (p_b_No.contains("-10.")||p_b_No.contains("-00.")||p_b_No.contains("-15.")||p_b_No.contains("-11.")||p_b_No.contains("-29.")||p_b_No.contains("-12.")||p_b_No.contains("-26.")) {
+			launch_an_app("contacts");
+			deleteIfContactsPresent(sa);
 			clearRecentApps();
 			launch_an_app("fm");
 			validate_fmradio_on(sa);
@@ -348,7 +362,12 @@ public class XP8_Interactions_Test extends XP8_Interactions_Util{
 			customWait(3000);
 			endCall_PrmyDevice();
 			launch_an_app("messaging");
-			create_NewSMS(refNum, data.get("typeMessage"));
+			//create_NewSMS(refNum, data.get("typeMessage"));
+			navigateTo_NewSMS_ATT();
+			enterTextToInputField(Locators_Interactions.TO_Field_Text1_att,refNum);
+		    aDriver.pressKeyCode(AndroidKeyCode.BACK);
+		     System.out.println("Enter Text");
+			enterText_MessageField(data.get("typeMessage"));
 			clickOn_Send();
 			validate_SentMessage(sa) ;
 			aDriver.pressKeyCode(AndroidKeyCode.HOME);
@@ -361,10 +380,9 @@ public class XP8_Interactions_Test extends XP8_Interactions_Util{
 			sendSMS_fromRefDevice(data.get("typeMessage1"));
 			System.out.println("reply for received msg");
 			//During voice call reply for received sms
-			launch_an_app("messaging");
+			//launch_an_app("messaging");
 			reply_received_sms(data.get("typeMessage1"));
-			clickOn_Send();
-			clickBackButton(4);
+	        clickBackButton(4);
 			launch_an_app("messaging");
 			Validate_reply_received_sms(sa);
 			
@@ -402,8 +420,7 @@ public class XP8_Interactions_Test extends XP8_Interactions_Util{
 			//During voice call browse
 			launch_APP(Locators_Interactions.chrome);
 			openbrowser_browse(sa,data.get("Web"));
-			aDriver.openNotifications();
-			clickBtn(Locators_Interactions.clearall);
+			
 			//During voice call use fmradio
 			launch_APP(Locators_Interactions.gaana);
 			Musicplay_gaana(sa);
@@ -429,6 +446,8 @@ public class XP8_Interactions_Test extends XP8_Interactions_Util{
 		APP_LOGS.info("===========XP8_Interactions_004_While_user_browsers============");
 		startAdbLog("XP8_Interactions_004");
 		if (p_b_No.contains("-10.")||p_b_No.contains("-00.")||p_b_No.contains("-15.")||p_b_No.contains("-11.")||p_b_No.contains("-29.")||p_b_No.contains("-12.")||p_b_No.contains("-26.")) {
+			launch_an_app("contacts");
+			deleteIfContactsPresent(sa);
 			clearRecentApps();
 			enable_mobiledata_wifi();
 			aDriver.pressKeyCode(AndroidKeyCode.HOME);
@@ -440,7 +459,12 @@ public class XP8_Interactions_Test extends XP8_Interactions_Util{
 			customWait(3000);
 			endCall_PrmyDevice();
 			launch_an_app("messaging");
-			create_NewSMS(refNum, data.get("typeMessage"));
+			//create_NewSMS(refNum, data.get("typeMessage"));
+			navigateTo_NewSMS_ATT();
+			enterTextToInputField(Locators_Interactions.TO_Field_Text1_att,refNum);
+		    aDriver.pressKeyCode(AndroidKeyCode.BACK);
+		     System.out.println("Enter Text");
+			enterText_MessageField(data.get("typeMessage"));
 			clickOn_Send();
 			validate_SentMessage(sa) ;
 			aDriver.pressKeyCode(AndroidKeyCode.HOME);
@@ -453,9 +477,8 @@ public class XP8_Interactions_Test extends XP8_Interactions_Util{
 			sendSMS_fromRefDevice(data.get("typeMessage1"));
 			System.out.println("reply for received msg");
 			//During voice call reply for received sms
-			launch_an_app("messaging");
+			//launch_an_app("messaging");
 			reply_received_sms(data.get("typeMessage1"));
-			clickOn_Send();
 			clickBackButton(4);
 			launch_an_app("messaging");
 			Validate_reply_received_sms(sa);
@@ -516,10 +539,18 @@ public class XP8_Interactions_Test extends XP8_Interactions_Util{
 		APP_LOGS.info("===========XP8_Interactions_005_While_sending_composing_sms============");
 		startAdbLog("XP8_Interactions_005");
 		if (p_b_No.contains("-10.")||p_b_No.contains("-00.")||p_b_No.contains("-15.")||p_b_No.contains("-11.")||p_b_No.contains("-29.")||p_b_No.contains("-12.")||p_b_No.contains("-26.")) {
+			launch_an_app("contacts");
+			deleteIfContactsPresent(sa);
 			clearRecentApps();
 			launch_an_app("messaging");
-			create_NewSMS(refNum, data.get("typeMessage"));
+			//create_NewSMS(refNum, data.get("typeMessage"));
+			navigateTo_NewSMS_ATT();
+			enterTextToInputField(Locators_Interactions.TO_Field_Text1_att,refNum);
+		    aDriver.pressKeyCode(AndroidKeyCode.BACK);
+		     System.out.println("Enter Text");
+			enterText_MessageField(data.get("typeMessage"));
 			clickOn_Send();
+			validate_SentMessage(sa);
 			aDriver.pressKeyCode(AndroidKeyCode.HOME);
 			make_Call_from_PrmyDev();
 			customWait(3000);
@@ -533,9 +564,8 @@ public class XP8_Interactions_Test extends XP8_Interactions_Util{
 			sendSMS_fromRefDevice(data.get("typeMessage1"));
 			System.out.println("reply for received msg");
 			//During voice call reply for received sms
-			launch_an_app("messaging");
+			//launch_an_app("messaging");
 			reply_received_sms(data.get("typeMessage1"));
-			clickOn_Send();
 			clickBackButton(4);
 			launch_an_app("messaging");
 			Validate_reply_received_sms(sa);
@@ -603,6 +633,8 @@ public class XP8_Interactions_Test extends XP8_Interactions_Util{
 		APP_LOGS.info("===========XP8_Interactions_006_While_streaming_youtube_videos============");
 		startAdbLog("XP8_Interactions_006");
 		if (p_b_No.contains("-10.")||p_b_No.contains("-00.")||p_b_No.contains("-15.")||p_b_No.contains("-11.")||p_b_No.contains("-29.")||p_b_No.contains("-12.")||p_b_No.contains("-26.")) {
+			launch_an_app("contacts");
+			deleteIfContactsPresent(sa);
 			clearRecentApps();
 			enable_mobiledata_wifi();
 			launch_APP(Locators_Interactions.youtube);
@@ -616,10 +648,7 @@ public class XP8_Interactions_Test extends XP8_Interactions_Util{
 			validate_chrome_sharemsg(sa);
 			sendSMS_fromRefDevice(data.get("typeMessage1"));
 			System.out.println("reply for received msg");
-			//During taking photo reply for received sms
-			launch_an_app("messaging");
 			reply_received_sms(data.get("typeMessage1"));
-			clickOn_Send();
 			clickBackButton(4);
 			launch_an_app("messaging");
 			Validate_reply_received_sms(sa);
@@ -659,15 +688,16 @@ public class XP8_Interactions_Test extends XP8_Interactions_Util{
 		APP_LOGS.info("===========XP8_Interactions_007_While_VOIP_Chat============");
 		startAdbLog("XP8_Interactions_007");
 		if (p_b_No.contains("-10.")||p_b_No.contains("-00.")||p_b_No.contains("-15.")||p_b_No.contains("-11.")||p_b_No.contains("-29.")||p_b_No.contains("-12.")||p_b_No.contains("-26.")) {
+			launch_an_app("contacts");
+			deleteIfContactsPresent(sa);
 			clearRecentApps();
 			launch_APP(Locators_Interactions.skype);
 			skype_chat(sa,data.get("skypephoneno"),data.get("skypetext"),data.get("typeMessage1"));
 			sendSMS_fromRefDevice(data.get("typeMessage1"));
 			System.out.println("reply for received msg");
 			//During taking photo reply for received sms
-			launch_an_app("messaging");
+			//launch_an_app("messaging");
 			reply_received_sms(data.get("typeMessage1"));
-			clickOn_Send();
 			clickBackButton(4);
 			launch_an_app("messaging");
 			Validate_reply_received_sms(sa);
@@ -715,9 +745,8 @@ public class XP8_Interactions_Test extends XP8_Interactions_Util{
 			sendSMS_fromRefDevice(data.get("typeMessage1"));
 			System.out.println("reply for received msg");
 			//During taking photo reply for received sms
-			launch_an_app("messaging");
+			//launch_an_app("messaging");
 			reply_received_sms(data.get("typeMessage1"));
-			clickOn_Send();
 			clickBackButton(4);
 			launch_an_app("messaging");
 			Validate_reply_received_sms(sa);
@@ -749,15 +778,16 @@ public class XP8_Interactions_Test extends XP8_Interactions_Util{
 		APP_LOGS.info("===========XP8_Interactions_009_While_capturing_photo============");
 		startAdbLog("XP8_Interactions_009");
 		if (p_b_No.contains("-10.")||p_b_No.contains("-00.")||p_b_No.contains("-15.")||p_b_No.contains("-11.")||p_b_No.contains("-29.")||p_b_No.contains("-12.")||p_b_No.contains("-26.")) {
+			launch_an_app("contacts");
+			deleteIfContactsPresent(sa);
 			clearRecentApps();
 			launch_an_app("camera");
 			taking_photo(sa);
 			sendSMS_fromRefDevice(data.get("typeMessage1"));
 			System.out.println("reply for received msg");
 			//During taking photo reply for received sms
-			launch_an_app("messaging");
+			//launch_an_app("messaging");
 			reply_received_sms(data.get("typeMessage1"));
-			clickOn_Send();
 		    clickBackButton(4);
 			launch_an_app("messaging");
 			Validate_reply_received_sms(sa);
