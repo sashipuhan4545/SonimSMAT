@@ -187,6 +187,7 @@ public class New_SanityUtil extends BaseUtil {
 	public void dialCallUsingDialPad(String dailNum) throws InterruptedException, IOException {
 
 		try {
+			minWait();
 			dialNumber(dailNum);
 			if (!isElementExist(New_SanityLocators.turnOff_Airplane_PopUp)) {
 				try {
@@ -227,6 +228,7 @@ public class New_SanityUtil extends BaseUtil {
 
 	public void dialNumber(String dailNum) throws IOException {
 		try {
+			minWait();
 			minWait();
 			clickBtn(New_SanityLocators.dailerPad);
 			minWait();
@@ -635,11 +637,12 @@ public class New_SanityUtil extends BaseUtil {
 	// This Method validating calculated value from calci with added value
 	// Separately
 	public void basicOperationwithoutdecimalpt(SoftAssert sa) throws InterruptedException {
-		boolean check1 = false;
+ 		boolean check1 = false;
 		boolean check2 = false;
 		boolean check3 = false;
 		boolean check4 = false;
 		
+		minWait();
 		minWait();
 		// Addition
 		int num1 = firstclick();
@@ -747,6 +750,7 @@ public class New_SanityUtil extends BaseUtil {
 		}
 
 		// Division
+		minWait();
 		double num7 = firstclick();
 		minWait();
 		New_SanityLocators.calc_div_btn.click();
@@ -762,26 +766,51 @@ public class New_SanityUtil extends BaseUtil {
 			currentNumberText4 = New_SanityLocators.calc_Edit_text_field2.getText();
 		}
 		minWait();
-		String New = currentNumberText4.substring(0, currentNumberText4.indexOf(".") + 1);
-		New_SanityLocators.calc_Clear_btn.click();
-		// System.out.println(New);
-		// Manually(Separately) div 2 num
-		double s4 = (num7 / num8);
-		String sum4 = String.valueOf(s4);
-		String str1 = sum4.substring(0, sum4.indexOf(".") + 1);
-		// System.out.println(str1);
-		if (New.equalsIgnoreCase(str1)) {
-			check4 = true;
-			APP_LOGS.info("Pass: Division of 2 numbers verified successfully.");
-			sa.assertTrue(true, "Pass: Division of 2 numbers verified successfully.");
-			test.log(LogStatus.PASS, "Pass: Division of 2 numbers verified successfully.");
-			Assert.assertTrue(check4);
-		} else {
-			APP_LOGS.info("Failed: Division of 2 numbers verified Unsuccessfully.");
-			sa.assertTrue(true, "Failed: Division of 2 numbers verified Unsuccessfully.");
-			test.log(LogStatus.FAIL, "Failed: Division of 2 numbers verified Unsuccessfully.");
-			Assert.assertFalse(check4);
+		if(currentNumberText4.contains(".")) {
+			
+			String New = currentNumberText4.substring(0, currentNumberText4.indexOf(".") + 1);
+			New_SanityLocators.calc_Clear_btn.click();
+			// System.out.println(New);
+			// Manually(Separately) div 2 num
+			double s4 = (num7 / num8);
+			String sum4 = String.valueOf(s4);
+			String str1 = sum4.substring(0, sum4.indexOf(".") + 1);
+			// System.out.println(str1);
+			if (New.equalsIgnoreCase(str1)) {
+				check4 = true;
+				APP_LOGS.info("Pass: Division of 2 numbers verified successfully.");
+				sa.assertTrue(true, "Pass: Division of 2 numbers verified successfully.");
+				test.log(LogStatus.PASS, "Pass: Division of 2 numbers verified successfully.");
+				Assert.assertTrue(check4);
+			} else {
+				APP_LOGS.info("Failed: Division of 2 numbers verified Unsuccessfully.");
+				sa.assertTrue(true, "Failed: Division of 2 numbers verified Unsuccessfully.");
+				test.log(LogStatus.FAIL, "Failed: Division of 2 numbers verified Unsuccessfully.");
+				Assert.assertFalse(check4);
+			}
+			
 		}
+		else {
+			double s4 = (num7 / num8);
+			String sum4 = String.valueOf(s4);
+			String str1 = sum4.substring(0, sum4.indexOf("."));
+			if (currentNumberText4.equalsIgnoreCase(str1)) {
+				check4 = true;
+				APP_LOGS.info("Pass: Division of 2 numbers verified successfully.");
+				sa.assertTrue(true, "Pass: Division of 2 numbers verified successfully.");
+				test.log(LogStatus.PASS, "Pass: Division of 2 numbers verified successfully.");
+				Assert.assertTrue(check4);
+			} else {
+				APP_LOGS.info("Failed: Division of 2 numbers verified Unsuccessfully.");
+				sa.assertTrue(true, "Failed: Division of 2 numbers verified Unsuccessfully.");
+				test.log(LogStatus.FAIL, "Failed: Division of 2 numbers verified Unsuccessfully.");
+				Assert.assertFalse(check4);
+			}
+			
+		}
+		
+		
+		
 
 		customWait(2000);
 	}
@@ -1336,7 +1365,7 @@ public class New_SanityUtil extends BaseUtil {
 		try {
 			boolean check1 = scrollToTextClick("Connected");
 			boolean check2 = scrollToTextClick("Check password and try again");
-
+			minWait();
 			if (check1 == true) {
 				scrollToTextClick("FORGET");
 
@@ -2681,7 +2710,7 @@ public class New_SanityUtil extends BaseUtil {
 			customWait(2000);
 			enterTextToInputField(New_SanityLocators.google_urlBar, "https://start.att.net");		
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_ENTER);
-			wait(New_SanityLocators.Att_homepageLogo, 15);
+			wait(New_SanityLocators.Att_homepageLogo, 30);
 			boolean check1 = New_SanityLocators.Att_homepageLogo.isDisplayed();
 			wait(New_SanityLocators.Att_mailIcon, 15);
 			boolean check2 = New_SanityLocators.Att_mailIcon.isDisplayed();
@@ -2925,9 +2954,12 @@ public class New_SanityUtil extends BaseUtil {
 
 		try {
 		minWait();
+		
+			getNotificationWindow();
+			clickBtn(New_SanityLocators.incomingCall_Lnk);
 			
 			// clickBtn(New_SanityLocators.incoming_Call);
-			Runtime.getRuntime().exec("adb -s " + p_Id + " shell input tap 660 160");
+			//Runtime.getRuntime().exec("adb -s " + p_Id + " shell input tap 660 160");
 			minWait();
 			aDriver.swipe(80, 1840, 300, 600, 750);
 			clickBtn(New_SanityLocators.write_Your_Own);
@@ -2943,6 +2975,39 @@ public class New_SanityUtil extends BaseUtil {
 			test.log(LogStatus.ERROR, "Error in locators->reject_Call_With_SMS_O()");
 		} catch (Exception e) {
 			test.log(LogStatus.ERROR, "Exeption in ->reject_Call_With_SMS_O()");
+		}
+	}
+	
+	public void deleteContact_ifExsist() throws InterruptedException {
+
+		try {
+		    minWait();
+		aDriver.startActivity("com.android.contacts", "com.android.contacts.activities.PeopleActivity");
+		minWait();
+		
+			clickBtn(New_SanityLocators.contact_searchIcon);
+			enterTextToInputField(New_SanityLocators.contactSearch_EditBx, refNum);
+			minWait();
+			for (int i = 0; i <= 5; i++) {
+			if(isElementExist(New_SanityLocators.contact_searchedCnctact)) {
+				clickBtn(New_SanityLocators.contact_searchedCnctact);
+				clickBtn(New_SanityLocators.MoreOptionsBtn);
+				scrollToText("Delete");
+				clickBtn(New_SanityLocators.Allow_Btn);
+			}
+			else {
+				break;
+			}
+		}
+		minWait();
+		aDriver.pressKeyCode(AndroidKeyCode.HOME);
+		
+		
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in locators->deleteContact_ifExsist()");
+		} catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->deleteContact_ifExsist()");
 		}
 	}
 
