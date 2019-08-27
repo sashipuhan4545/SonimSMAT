@@ -2978,23 +2978,26 @@ public class New_SanityUtil extends BaseUtil {
 		}
 	}
 	
-	public void deleteContact_ifExsist(String num,String pkg,String act) throws InterruptedException {
+	public void deleteContact_ifExsist() throws InterruptedException {
 
 		try {
-		minWait();
+		    minWait();
 		aDriver.startActivity("com.android.contacts", "com.android.contacts.activities.PeopleActivity");
 		minWait();
-		clickBtn(New_SanityLocators.contact_searchIcon);
-		enterTextToInputField(New_SanityLocators.Search_ConatctIcon, num);
-		minWait();
-		if(isElementExist(New_SanityLocators.contact_searchedCnctact)) {
-			clickBtn(New_SanityLocators.contact_searchedCnctact);
-			clickBtn(New_SanityLocators.MoreOptionsBtn);
-			scrollToText("Delete");
-			clickBtn(New_SanityLocators.Allow_Btn);
-		}
-		else {
-			
+		
+			clickBtn(New_SanityLocators.contact_searchIcon);
+			enterTextToInputField(New_SanityLocators.contactSearch_EditBx, refNum);
+			minWait();
+			for (int i = 0; i <= 5; i++) {
+			if(isElementExist(New_SanityLocators.contact_searchedCnctact)) {
+				clickBtn(New_SanityLocators.contact_searchedCnctact);
+				clickBtn(New_SanityLocators.MoreOptionsBtn);
+				scrollToText("Delete");
+				clickBtn(New_SanityLocators.Allow_Btn);
+			}
+			else {
+				break;
+			}
 		}
 		minWait();
 		aDriver.pressKeyCode(AndroidKeyCode.HOME);

@@ -426,8 +426,11 @@ public class New_SanityLocators {
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.view.ViewGroup\").index(1)")
 	public static AndroidElement contact_searchedCnctact;
 	
-	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Search contacts\")") 
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").description(\"Search contacts\")") 
 	public static AndroidElement contact_searchIcon;
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.EditText\").text(\"Search contacts\")") 
+	public static AndroidElement contactSearch_EditBx;
 	
 	/***************** Testing Code *********************/
 	

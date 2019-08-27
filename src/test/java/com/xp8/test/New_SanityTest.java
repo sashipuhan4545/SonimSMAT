@@ -509,7 +509,7 @@ public class New_SanityTest extends New_SanityUtil {
 		APP_LOGS.info("===================== XP8_DeviceSanity_0021_MO_calls_From_CallLog ======================");
 		SoftAssert sa = new SoftAssert();
 		endCall_RefDevice();
-		//deleteContact_ifExsist(refNum);
+		deleteContact_ifExsist();
 		make_Call_from_RefDev();
 		customWait(5000);
 		endCall_RefDevice();
