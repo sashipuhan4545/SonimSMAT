@@ -406,7 +406,7 @@ public class XP8_Data_Usage_Setting_Test extends XP8_Data_Usage_Setting_Util{
 			}
 	*/	
 		}
-	@Test(priority=-3,dataProvider="XP8_Data_Usage_Setting", dataProviderClass=DataProviders.class)
+	@Test(priority=3,dataProvider="XP8_Data_Usage_Setting", dataProviderClass=DataProviders.class)
 	public void XP8_TC_03_Data_Usage_Setting_Set_Data_Warning(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException
 	{  
 		APP_LOGS.info("===========XP8_TC_03_Data_Usage_Setting============");

@@ -24,6 +24,8 @@ import com.graphics.gui.JsonFileReaderAndWriter;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTestInterruptedException;
 import com.relevantcodes.extentreports.LogStatus;
+import com.xp5S.util.GetMethods;
+import com.xp5S.util.appiumService;
 import com.xp8.util.DataProviders;
 import com.xp8.util.ExcelConstants;
 import com.xp8.util.ExcelReader;
@@ -68,6 +70,16 @@ public class XP8_Wifi_Test extends XP8_Wifi_Util {
 		test = extent.startTest( (this.getClass().getSimpleName() +" :: "+  method.getName()),method.getName()); //Test Case Start Here
 		clearRecentApps();
 	//	test.assignAuthor("Farheen Taj"); //Test Script Author Name
+
+	}
+	
+	
+	@BeforeSuite
+	public void numofTestCases() throws ClassNotFoundException {
+
+
+		appiumService.TOTAL_NUM_OF_TESTCASES=GetMethods.TotalTestcase("XP8_TC", this.getClass());
+
 
 	}
 	
