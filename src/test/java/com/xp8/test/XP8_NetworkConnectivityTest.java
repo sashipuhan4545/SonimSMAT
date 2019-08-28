@@ -13,6 +13,7 @@ import java.util.TimerTask;
 
 
 import org.json.simple.parser.ParseException;
+import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.support.PageFactory;
 
 import org.testng.ITestResult;
@@ -47,7 +48,7 @@ public class XP8_NetworkConnectivityTest extends XP8_Network_Stability_Util_orio
 	public int  itr =AllQA.NUMOFCALLS;
 	boolean value = false;
 	public Timer timer1;
-	
+	public String operator;
 	public  String SSID=AllQA.SSID;
 	public  String PWD=AllQA.WIFIPASSWORD;
 	public String PRIMARY_BT_DEVICE_NAME="Sashi";
@@ -105,13 +106,15 @@ public class XP8_NetworkConnectivityTest extends XP8_Network_Stability_Util_orio
 
 
 	@BeforeTest()
-	public void setupSys() throws MalformedURLException, InterruptedException, FileNotFoundException, AWTException{
+	public void setupSys() throws InterruptedException, AWTException, IOException, ParseException{
 		properties=loadDriverAndProperties();
 		Locators_Network_DeviceStability loc=new Locators_Network_DeviceStability(aDriver);
 		Locators_BaseUtil loc1 = new Locators_BaseUtil(aDriver);	
 		PageFactory.initElements(new AppiumFieldDecorator(aDriver),loc);
 		PageFactory.initElements(new AppiumFieldDecorator(aDriver),loc1);
 		excel=new ExcelReader(ExcelConstants.XP5S_XL_PATH);	
+		operator=JsonFileReaderAndWriter.primaryDevFirmwareReader();
+
 	}
 	
 	@BeforeTest
@@ -132,6 +135,8 @@ public class XP8_NetworkConnectivityTest extends XP8_Network_Stability_Util_orio
 					}
 */				}
 			}, 0, 10*(100*1));
+			aDriver.rotate(ScreenOrientation.PORTRAIT);
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -141,67 +146,21 @@ public class XP8_NetworkConnectivityTest extends XP8_Network_Stability_Util_orio
 	@Test(priority=1,dataProvider="XP8_Stability", dataProviderClass=DataProviders.class)
 	public void XP8_TC_001_Stability_Enable_Disable_MobileData_DeviceSettings(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException
 	{
-		APP_LOGS.info("===========XP8_Network_Stability_001============");
-		SoftAssert sa1 = new SoftAssert();
+		APP_LOGS.info("===========XP8_TC_001_Stability_Enable_Disable_MobileData_DeviceSettings============");
+		SoftAssert sa = new SoftAssert();
+
 		clearRecentApps();
-		String operator=JsonFileReaderAndWriter.primaryDevFirmwareReader();
-		if(operator.contains("-10")) {
-		//For ATT operators
 		launch_an_app("settings");
 		clickOn_NetworkAndInternet();
 		disable_AirplaneMode();	
 		clickOn_Wifi();		
 		disable_Wifi();
 		for(int i =1; i<=itr; i++) {			
-			launch_an_app("settings");
-			clickOn_NetworkAndInternet();
-			clickOn_MobileNetwork();
-			disable_MobileData();
-			launch_an_app("chrome");
-			clear_ChromePermission();	
-			enterURL(i, url1);
-			validate_PageIsNotLoaded(i,"Mobile data ", sa1);
-			launch_an_app("settings");
-			clickOn_NetworkAndInternet();
-			clickOn_MobileNetwork();
-			enable_Mobiledata();
-			launch_an_app("chrome");		
-			clear_ChromePermission();
-			enterURL(i, URL2);
-			validate_PageIsLoaded("Mobile data ",i,sa1);
-		}}else if(operator.contains("-15")) {
-			//For VSW operators
-			launch_an_app("settings");
-			clickOn_NetworkAndInternet();
-			disable_AirplaneMode();
-			clickOn_Wifi();
-			disable_Wifi();
-			for(int i =1; i<=itr; i++) {			
-				launch_an_app("settings");
-				clickOn_NetworkAndInternet();
-				clickOn_MobileNetwork();
-				disable_MobileData();
-				launch_an_app("chrome");
-				clear_ChromePermission_VSW();	
-				enterURL(i, url1);
-				validate_PageIsNotLoaded(i,"Mobile data ", sa1);
-				launch_an_app("settings");
-				clickOn_NetworkAndInternet();
-				clickOn_MobileNetwork();
-				enable_Mobiledata();
-				launch_an_app("chrome");		
-				clear_ChromePermission_VSW();
-				enterURL(i, URL2);
-				validate_PageIsLoaded("Mobile data ",i,sa1);
-			}
-		}else if(operator.contains("-26")) {
-			//For SL operators
-			launch_an_app("settings");
-			clickOn_NetworkAndInternet();
-			disable_AirplaneMode();
-			clickOn_Wifi();
-			disable_Wifi();
-			for(int i =1; i<=itr; i++) {			
+
+		if(operator.contains("-10") || operator.contains("-11") || operator.contains("-15") ||
+				operator.contains("-26") || operator.contains("-29")) {
+		//For ATT,BELL,VERIZON,SL,SPRINT
+		
 				launch_an_app("settings");
 				clickOn_NetworkAndInternet();
 				clickOn_MobileNetwork();
@@ -209,7 +168,7 @@ public class XP8_NetworkConnectivityTest extends XP8_Network_Stability_Util_orio
 				launch_an_app("chrome");
 				clear_ChromePermission();	
 				enterURL(i, url1);
-				validate_PageIsNotLoaded(i,"Mobile data ", sa1);
+				validate_PageIsNotLoaded(i,"Mobile data ", sa);
 				launch_an_app("settings");
 				clickOn_NetworkAndInternet();
 				clickOn_MobileNetwork();
@@ -217,17 +176,9 @@ public class XP8_NetworkConnectivityTest extends XP8_Network_Stability_Util_orio
 				launch_an_app("chrome");		
 				clear_ChromePermission();
 				enterURL(i, URL2);
-				validate_PageIsLoaded("Mobile data ",i,sa1);
-			}
-			
-		}else if(operator.contains("-29")) {
-			//For Sprint operators
-			launch_an_app("settings");
-			clickOn_NetworkAndInternet();
-			disable_AirplaneMode();
-			clickOn_Wifi();
-			disable_Wifi();
-			for(int i =1; i<=itr; i++) {			
+				validate_PageIsLoaded("Mobile data ",i,sa);
+		}else {
+				
 				launch_an_app("settings");
 				clickOn_NetworkAndInternet();
 				clickOn_MobileNetwork();
@@ -235,7 +186,7 @@ public class XP8_NetworkConnectivityTest extends XP8_Network_Stability_Util_orio
 				launch_an_app("chrome");
 				clear_ChromePermission();	
 				enterURL(i, url1);
-				validate_PageIsNotLoaded(i,"Mobile data ", sa1);
+				validate_PageIsNotLoaded(i,"Mobile data ", sa);
 				launch_an_app("settings");
 				clickOn_NetworkAndInternet();
 				clickOn_MobileNetwork();
@@ -243,46 +194,18 @@ public class XP8_NetworkConnectivityTest extends XP8_Network_Stability_Util_orio
 				launch_an_app("chrome");		
 				clear_ChromePermission();
 				enterURL(i, URL2);
-				validate_PageIsLoaded("Mobile data ",i,sa1);
-			}
-		}
-		else {
-			//For BELL operator
-			launch_an_app("settings");
-			clickOn_NetworkAndInternet();
-			disable_AirplaneMode();
-			clickOn_Wifi();
-			disable_Wifi();
-			for(int i =1; i<=itr; i++) {			
-				launch_an_app("settings");
-				clickOn_NetworkAndInternet();
-				clickOn_MobileNetwork();
-				disable_MobileData();
-				launch_an_app("chrome");
-				clear_ChromePermission();	
-				enterURL(i, url1);
-				validate_PageIsNotLoaded(i,"Mobile data ", sa1);
-				launch_an_app("settings");
-				clickOn_NetworkAndInternet();
-				clickOn_MobileNetwork();
-				enable_Mobiledata();
-				launch_an_app("chrome");		
-				clear_ChromePermission();
-				enterURL(i, URL2);
-				validate_PageIsLoaded("Mobile data ",i,sa1);
+				validate_PageIsLoaded("Mobile data ",i,sa);
 			}
 		
 		}
-		sa1.assertAll();
+		sa.assertAll();
 	}
 	@Test(priority=2,dataProvider="XP8_Stability", dataProviderClass=DataProviders.class)
 	public void XP8_TC_002_Stability_Enable_Disable_Connection_Secured_Wifi_DeviceSettings(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException
 	{
-		APP_LOGS.info("======================XP8_Network_Stability_002=======================");
-		SoftAssert sa2 = new SoftAssert();
+		APP_LOGS.info("======================XP8_TC_002_Stability_Enable_Disable_Connection_Secured_Wifi_DeviceSettings=======================");
+		SoftAssert sa = new SoftAssert();
 		clearRecentApps();
-		if(JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("-10")) {
-		//For ATT devices
 		launch_an_app("settings");
 		clickOn_NetworkAndInternet();
 		disable_AirplaneMode();
@@ -295,6 +218,10 @@ public class XP8_NetworkConnectivityTest extends XP8_Network_Stability_Util_orio
 		select_Wifi_SSID(SSID);	
 		enter_WifiPwd(PWD);
 		for(int i=1; i<=itr; i++) {	
+
+		if(operator.contains("-10") || operator.contains("-11") || operator.contains("-15") ||
+				operator.contains("-26") || operator.contains("-29")) {
+		//For ATT,BELL,VERIZON,SL,SPRINT
 			launch_an_app("settings");
 			clickOn_NetworkAndInternet();
 			clickOn_Wifi();
@@ -302,7 +229,7 @@ public class XP8_NetworkConnectivityTest extends XP8_Network_Stability_Util_orio
 			launch_an_app("chrome");
 			clear_ChromePermission();	
 			enterURL(i, url1);
-			validate_PageIsNotLoaded(i,"Wifi ", sa2);
+			validate_PageIsNotLoaded(i,"Wifi ", sa);
 			launch_an_app("settings");
 			clickOn_NetworkAndInternet();
 			clickOn_Wifi();
@@ -310,264 +237,85 @@ public class XP8_NetworkConnectivityTest extends XP8_Network_Stability_Util_orio
 			launch_an_app("chrome");
 			clear_ChromePermission();	
 			enterURL(i, URL2);
-			validate_PageIsLoaded("Wifi ",i,sa2);
-			}
-		}else if(JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("-15")) {
-				//For VSW operators
-				launch_an_app("settings");
-				clickOn_NetworkAndInternet();
-				disable_AirplaneMode();
-				clickOn_MobileNetwork();
-				disable_MobileData();
-				clickOn_BackBtn();
-				clickOn_Wifi();
-				enable_Wifi();remove_connectedNtwrk();
-				select_Wifi_SSID(SSID);	
-				enter_WifiPwd(PWD);
-				for(int i=1; i<=itr; i++) {	
-					launch_an_app("settings");
-					clickOn_NetworkAndInternet();
-					clickOn_Wifi();
-					disable_Wifi();
-					launch_an_app("chrome");
-					clear_ChromePermission_VSW();	
-					enterURL(i, url1);
-					validate_PageIsNotLoaded(i,"Wifi ", sa2);
-					launch_an_app("settings");
-					clickOn_NetworkAndInternet();
-					clickOn_Wifi();
-					enable_Wifi();	
-					launch_an_app("chrome");
-					clear_ChromePermission_VSW();	
-					enterURL(i, URL2);
-					validate_PageIsLoaded("Wifi ",i,sa2);
-					}
-			}else if(JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("-26")) {
-				//For SL operators
-				launch_an_app("settings");
-				clickOn_NetworkAndInternet();
-				disable_AirplaneMode();
-				clickOn_MobileNetwork();
-				disable_MobileData();
-				clickOn_BackBtn();
-				clickOn_Wifi();
-				enable_Wifi();remove_connectedNtwrk();
-				select_Wifi_SSID(SSID);	
-				enter_WifiPwd(PWD);
-				for(int i=1; i<=itr; i++) {	
-					launch_an_app("settings");
-					clickOn_NetworkAndInternet();
-					clickOn_Wifi();
-					disable_Wifi();
-					launch_an_app("chrome");
-					clear_ChromePermission();	
-					enterURL(i, url1);
-					validate_PageIsNotLoaded(i,"Wifi ", sa2);
-					launch_an_app("settings");
-					clickOn_NetworkAndInternet();
-					clickOn_Wifi();
-					enable_Wifi();	
-					launch_an_app("chrome");
-					clear_ChromePermission();	
-					enterURL(i, URL2);
-					validate_PageIsLoaded("Wifi ",i,sa2);
-				}
-			}else if(JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("-29")) {
-				//For Sprint operators
-				launch_an_app("settings");
-				clickOn_NetworkAndInternet();
-				disable_AirplaneMode();
-				clickOn_MobileNetwork();
-				disable_MobileData();
-				clickOn_BackBtn();
-				clickOn_Wifi();
-				enable_Wifi();remove_connectedNtwrk();
-				select_Wifi_SSID(SSID);	
-				enter_WifiPwd(PWD);
-				for(int i=1; i<=itr; i++) {	
-					launch_an_app("settings");
-					clickOn_NetworkAndInternet();
-					clickOn_Wifi();
-					disable_Wifi();
-					launch_an_app("chrome");
-					clear_ChromePermission();	
-					enterURL(i, url1);
-					validate_PageIsNotLoaded(i,"Wifi ", sa2);
-					launch_an_app("settings");
-					clickOn_NetworkAndInternet();
-					clickOn_Wifi();
-					enable_Wifi();	
-					launch_an_app("chrome");
-					clear_ChromePermission();	
-					enterURL(i, URL2);
-					validate_PageIsLoaded("Wifi ",i,sa2);
-				}}
-				else {
-					//for BELL operator
-					launch_an_app("settings");
-					clickOn_NetworkAndInternet();
-					disable_AirplaneMode();
-					clickOn_MobileNetwork();
-					disable_MobileData();
-					clickOn_BackBtn();
-					clickOn_Wifi();
-					enable_Wifi();remove_connectedNtwrk();
-					select_Wifi_SSID(SSID);	
-					enter_WifiPwd(PWD);
-					for(int i=1; i<=itr; i++) {	
-						launch_an_app("settings");
-						clickOn_NetworkAndInternet();
-						clickOn_Wifi();
-						disable_Wifi();
-						launch_an_app("chrome");
-						clear_ChromePermission();	
-						enterURL(i, url1);
-						validate_PageIsNotLoaded(i,"Wifi ", sa2);
-						launch_an_app("settings");
-						clickOn_NetworkAndInternet();
-						clickOn_Wifi();
-						enable_Wifi();	
-						launch_an_app("chrome");
-						clear_ChromePermission();	
-						enterURL(i, URL2);
-						validate_PageIsLoaded("Wifi ",i,sa2);
+			validate_PageIsLoaded("Wifi ",i,sa);
+		}else {
+			launch_an_app("settings");
+			clickOn_NetworkAndInternet();
+			clickOn_Wifi();
+			disable_Wifi();
+			launch_an_app("chrome");
+			clear_ChromePermission();	
+			enterURL(i, url1);
+			validate_PageIsNotLoaded(i,"Wifi ", sa);
+			launch_an_app("settings");
+			clickOn_NetworkAndInternet();
+			clickOn_Wifi();
+			enable_Wifi();	
+			launch_an_app("chrome");
+			clear_ChromePermission();	
+			enterURL(i, URL2);
+			validate_PageIsLoaded("Wifi ",i,sa);
 					
 				}
 			}
-		sa2.assertAll();
+		sa.assertAll();
 	}
 	
 	@Test(priority=3,dataProvider="XP8_Stability", dataProviderClass=DataProviders.class)
 	public void XP8_TC_003_Stability_Enable_Disable_Airplane_Devicesettings(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException
 	{
-		APP_LOGS.info("======================XP8_Network_Stability_003=======================");
-		SoftAssert sa3 = new SoftAssert();
+		APP_LOGS.info("======================XP8_TC_003_Stability_Enable_Disable_Airplane_Devicesettings=======================");
+		SoftAssert sa = new SoftAssert();
 		clearRecentApps();
-		if(JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("-10")) {		
 		for(int i=1; i<=itr; i++) {
-			launch_an_app("settings");
-			clickOn_NetworkAndInternet();
-			enable_AirplaneMode();
-			launch_an_app("phone");
-			makeCall(refNum);
-			validate_Airplane_Enable(sa3,i);
-			launch_an_app("settings");
-			clickOn_NetworkAndInternet();
-			disable_AirplaneMode();
-			launch_an_app("phone");
-			makeCall(refNum);
-			validate_Airplane_Disable(sa3,i);
-			endCall();
-		}}else if(JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("-15")) {
-			//For VSW operators
-			for(int i=1; i<=itr; i++) {
-				launch_an_app("settings");
-				clickOn_NetworkAndInternet();
-				enable_AirplaneMode();
-				clickBtn(Locators_Network_DeviceStability.OK);
-				launch_an_app("phone");
-				makeCall(refNum);
-				validate_Airplane_Enable(sa3,i);
-				launch_an_app("settings");
-				clickOn_NetworkAndInternet();
-				disable_AirplaneMode();
-				launch_an_app("phone");
-				makeCall(refNum);
-				validate_Airplane_Disable(sa3,i);
-				endCall();
-			}
-		}else if(JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("-29")) {
-			//For Sprint operators
-			for(int i=1; i<=itr; i++) {
-				launch_an_app("settings");
-				clickOn_NetworkAndInternet();
-				enable_AirplaneMode();
-				launch_an_app("phone");
-				makeCall(refNum);
-				validate_Airplane_Enable(sa3,i);
-				launch_an_app("settings");
-				clickOn_NetworkAndInternet();
-				disable_AirplaneMode();
-				launch_an_app("phone");
-				makeCall(refNum);
-				validate_Airplane_Disable(sa3,i);
-				endCall();
-			}
-		}else if(JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("-26")) {
-			//For SL operators
-			for(int i=1; i<=itr; i++) {
-				launch_an_app("settings");
-				clickOn_NetworkAndInternet();
-				enable_AirplaneMode();
-				launch_an_app("phone");
-				makeCall(refNum);
-				validate_Airplane_Enable(sa3,i);
-				launch_an_app("settings");
-				clickOn_NetworkAndInternet();
-				disable_AirplaneMode();
-				launch_an_app("phone");
-				makeCall(refNum);
-				validate_Airplane_Disable(sa3,i);
-				endCall();
-			}}
-			else {
-				//For BELL operator
-				for(int i=1; i<=itr; i++) {
+
+		if(operator.contains("-10") || operator.contains("-11") || operator.contains("-15") ||
+				operator.contains("-26") || operator.contains("-29")) {
+		//For ATT,BELL,VERIZON,SL,SPRINT
 					launch_an_app("settings");
 					clickOn_NetworkAndInternet();
 					enable_AirplaneMode();
 					launch_an_app("phone");
 					makeCall(refNum);
-					validate_Airplane_Enable(sa3,i);
+					validate_Airplane_Enable(sa,i);
 					launch_an_app("settings");
 					clickOn_NetworkAndInternet();
 					disable_AirplaneMode();
 					launch_an_app("phone");
 					makeCall(refNum);
-					validate_Airplane_Disable(sa3,i);
+					validate_Airplane_Disable(sa,i);
+					endCall();
+		}else {					//other devices
+					launch_an_app("settings");
+					clickOn_NetworkAndInternet();
+					enable_AirplaneMode();
+					launch_an_app("phone");
+					makeCall(refNum);
+					validate_Airplane_Enable(sa,i);
+					launch_an_app("settings");
+					clickOn_NetworkAndInternet();
+					disable_AirplaneMode();
+					launch_an_app("phone");
+					makeCall(refNum);
+					validate_Airplane_Disable(sa,i);
 					endCall();
 				}
 			
 			}
 		
-		sa3.assertAll();
+		sa.assertAll();
 	}
-	
-//@Ignore
-	@Test(priority=4,dataProvider="XP8_Stability", dataProviderClass=DataProviders.class)
+	/*@Test(priority=4,dataProvider="XP8_Stability", dataProviderClass=DataProviders.class)
 	public void XP8_TC_004_Stability_Enable_Disable_BT_And_Scan_BT_Devices(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException
 	{
 		APP_LOGS.info("======================XP8_DeviceStability_004=======================");
-		SoftAssert sa4 = new SoftAssert();
-		if(JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("-10")) {
+		SoftAssert sa = new SoftAssert();
 		for(int i=1; i<=itr; i++) {
-		//	Runtime.getRuntime().exec("adb -s "+r_Id+" shell input tap 777 1083"); // To Clear Battery full Popup if present.
-			
-			disable_BT_RefDevice();
-			enable_BT_RefDevice();
-			setName_RefBTDevice(REF_BT_DEVICE_NAME);
-			launch_an_app("settings");
-			scrollToText("Connected devices");
-			scrollToText("Bluetooth");
-			enable_BT();
-			clickOn_BTSetting();
-			clickOn_BTFORGET();
-			clickOnText("Pair new device");
-			select_BT_RefDevice(REF_BT_DEVICE_NAME);
-			ref_TapOnPAIR();
-			clickOnPAIR();
-			validate_BluetoothIsEnabled(REF_BT_DEVICE_NAME, sa4, itr);
-			clickOn_BackBtn();
-			disable_BT();
-			customWait(2000);
-			validate_BluetoothIsDisabled(sa4,i);
-			enable_BT_RefDevice(); // With the same Method we can Disable the BT.
-		}}else if(JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("-15"))
-		{
-			//For VSW operator
-			for(int i=1; i<=itr; i++) {
-				//	Runtime.getRuntime().exec("adb -s "+r_Id+" shell input tap 777 1083"); // To Clear Battery full Popup if present.
-					
+
+			if(operator.contains("-10") || operator.contains("-11") || operator.contains("-15") ||
+					operator.contains("-26") || operator.contains("-29")) {
+			//For ATT,BELL,VERIZON,SL,SPRINT
+						
 					disable_BT_RefDevice();
 					enable_BT_RefDevice();
 					setName_RefBTDevice(REF_BT_DEVICE_NAME);
@@ -581,69 +329,14 @@ public class XP8_NetworkConnectivityTest extends XP8_Network_Stability_Util_orio
 					select_BT_RefDevice(REF_BT_DEVICE_NAME);
 					ref_TapOnPAIR();
 					clickOnPAIR();
-					validate_BluetoothIsEnabled(REF_BT_DEVICE_NAME, sa4, itr);
+					validate_BluetoothIsEnabled(REF_BT_DEVICE_NAME, sa, itr);
 					clickOn_BackBtn();
 					disable_BT();
 					customWait(2000);
-					validate_BluetoothIsDisabled(sa4,i);
+					validate_BluetoothIsDisabled(sa,i);
 					enable_BT_RefDevice(); // With the same Method we can Disable the BT.
-				}
-			
-		}else if(JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("-26"))
-		{
-			//For SL operator
-			for(int i=1; i<=itr; i++) {
-				//	Runtime.getRuntime().exec("adb -s "+r_Id+" shell input tap 777 1083"); // To Clear Battery full Popup if present.
-					
-					disable_BT_RefDevice();
-					enable_BT_RefDevice();
-					setName_RefBTDevice(REF_BT_DEVICE_NAME);
-					launch_an_app("settings");
-					scrollToText("Connected devices");
-					scrollToText("Bluetooth");
-					enable_BT();
-					clickOn_BTSetting();
-					clickOn_BTFORGET();
-					clickOnText("Pair new device");
-					select_BT_RefDevice(REF_BT_DEVICE_NAME);
-					ref_TapOnPAIR();
-					clickOnPAIR();
-					validate_BluetoothIsEnabled(REF_BT_DEVICE_NAME, sa4, itr);
-					clickOn_BackBtn();
-					disable_BT();
-					customWait(2000);
-					validate_BluetoothIsDisabled(sa4,i);
-					enable_BT_RefDevice(); // With the same Method we can Disable the BT.
-				}
-		}else if(JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("-29"))
-		{
-			//For Sprint operator
-			for(int i=1; i<=itr; i++) {
-				//	Runtime.getRuntime().exec("adb -s "+r_Id+" shell input tap 777 1083"); // To Clear Battery full Popup if present.
-					
-					disable_BT_RefDevice();
-					enable_BT_RefDevice();
-					setName_RefBTDevice(REF_BT_DEVICE_NAME);
-					launch_an_app("settings");
-					scrollToText("Connected devices");
-					scrollToText("Bluetooth");
-					enable_BT();
-					clickOn_BTSetting();
-					clickOn_BTFORGET();
-					clickOnText("Pair new device");
-					select_BT_RefDevice(REF_BT_DEVICE_NAME);
-					ref_TapOnPAIR();
-					clickOnPAIR();
-					validate_BluetoothIsEnabled(REF_BT_DEVICE_NAME, sa4, itr);
-					clickOn_BackBtn();
-					disable_BT();
-					validate_BluetoothIsDisabled(sa4,i);
-					enable_BT_RefDevice(); // With the same Method we can Disable the BT.
-				}
 		}else {
-			//For BELL operator
-			for(int i=1; i<=itr; i++) {
-				//	Runtime.getRuntime().exec("adb -s "+r_Id+" shell input tap 777 1083"); // To Clear Battery full Popup if present.
+			//For other operator
 					
 					disable_BT_RefDevice();
 					enable_BT_RefDevice();
@@ -658,15 +351,15 @@ public class XP8_NetworkConnectivityTest extends XP8_Network_Stability_Util_orio
 					select_BT_RefDevice(REF_BT_DEVICE_NAME);
 					ref_TapOnPAIR();
 					clickOnPAIR();
-					validate_BluetoothIsEnabled(REF_BT_DEVICE_NAME, sa4, itr);
+					validate_BluetoothIsEnabled(REF_BT_DEVICE_NAME, sa, itr);
 					clickOn_BackBtn();
 					disable_BT();
 					customWait(2000);
-					validate_BluetoothIsDisabled(sa4,i);
+					validate_BluetoothIsDisabled(sa,i);
 					enable_BT_RefDevice(); // With the same Method we can Disable the BT.
 				}
 		}
-		sa4.assertAll();
+		sa.assertAll();
 	}
-
+*/
 }

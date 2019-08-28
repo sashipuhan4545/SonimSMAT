@@ -90,14 +90,16 @@ public class XP8_Messaging_Util extends BaseUtil {
 								clickBtn(Locators_Messaging.deletesms);
 								clickBtn(Locators_Messaging.delete_Confirm_a);
 							}
-
-							else {
-
+                           if(isElementExist(Locators_Messaging.oneselected1)) {
+                                    System.out.println("1 select");
 								clickBtn(Locators_Messaging.oneselected1);
-								clickBtn(Locators_Messaging.deletesms);
-								clickBtn(Locators_Messaging.delete_Confirm_s);
+								System.out.println("clicked on one selevt");
+								wait(Locators_Messaging.delete, 20);
+								TouchAction ta1=new TouchAction(aDriver);
+								ta1.tap(Locators_Messaging.delete).perform();
+								System.out.println("delete");
+								clickBtn(Locators_Messaging.delete_Confirm_a);
 
-								// longpress(Locators_DeviceStability.msg1);
 							}
 
 						}
@@ -420,9 +422,7 @@ System.out.println("to");
 						Locators_Messaging.group_sms, null, null, 0, 0));
 				clickBtn(Locators_Messaging.recive_sms_A);
 				clickBtn(Locators_Messaging.recive_sms1);
-//				clickBtn(multi_Loc_Strategy(Locators_Messaging.OKBtn1, Locators_Messaging.OKBtn2,
-//						Locators_Messaging.OKBtn3, null, null, 0, 0));
-//				
+				
 
 
 			} else if (p_b_No.contains("-15.")) {
@@ -444,6 +444,35 @@ System.out.println("to");
 		} catch (Exception e) {
 
 			test.log(LogStatus.ERROR, "Exeption in ->group_Coversation()");
+		}
+	}
+	public void disable_Group_Messaging() throws InterruptedException {
+		/* Method is used to Enter Number into TO Field. */
+		try {
+			if (p_b_No.contains("-10.")) {
+				launch_APP(Locators_Messaging.Messaging);
+				 wait(Locators_Messaging.MoreOptions, 80);
+					clickBtn(Locators_Messaging.MoreOptions);
+
+					clickBtn(Locators_Messaging.setting);
+					scrollToText("Multimedia (MMS) messages settings");
+					if (Locators_Messaging.groupmsgbtn.getText().equalsIgnoreCase("on")) {
+						clickBtn(Locators_Messaging.groupmsgbtn);
+					}
+
+			} else if (p_b_No.contains("-15.")) {
+
+			} else if (p_b_No.contains("-26.") || p_b_No.contains("-29.") || p_b_No.contains("-11.")) {
+				
+			}
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->disable_Group_Messaging()");
+			e.printStackTrace();
+
+		} catch (Exception e) {
+
+			test.log(LogStatus.ERROR, "Exeption in ->disable_Group_Messaging()");
 		}
 	}
 	public void add_Picture() throws InterruptedException {
@@ -906,8 +935,11 @@ System.out.println("text");
 			if (p_b_No.contains("-10.")) {
 				minWait();
 				System.err.println("sonim");
-              minWait();
-               launchAppThroughABD("adb shell input tap 985 149");
+              maxWait();
+            //   launchAppThroughABD("adb shell input tap 985 149");
+              TouchAction ta=new TouchAction(aDriver);
+            //  ta.tap(Locators_Messaging.group_sms, 985, 149).perform();
+              ta.tap(985, 149).perform();
                minWait();
 				clickBtn(Locators_Messaging.sonim1);
 
@@ -1370,6 +1402,29 @@ System.out.println("text");
 		}
 
 	}
+	public void validate_Postcondition(SoftAssert soft) throws InterruptedException {
+		/* To validate the Sent Message. */
+
+		try {
+
+					APP_LOGS.info("PostCondition Excecuted Sucessfully");
+					soft.assertTrue(true, "PostCondition Excecuted Sucessfully");
+					test.log(LogStatus.PASS, "PostCondition Excecuted Sucessfully");
+
+		
+
+			
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->validate_Postcondition()");
+			e.printStackTrace();
+
+		} catch (Exception e) {
+
+			test.log(LogStatus.ERROR, "Exeption in ->validate_Postcondition()");
+		}
+
+	}
 
 	public void validate_UpperCaseandLowerCase(SoftAssert soft, String expected) throws InterruptedException {
 		/* To validate the Sent Message. */
@@ -1748,10 +1803,11 @@ if (p_b_No.contains("-10.")) {
 	public void reject_Call_With_SMS_O(String message) throws InterruptedException {
 
 		try {
-
-		// clickBtn(New_SanityLocators.incoming_Call);
-		TouchAction ta= new TouchAction(aDriver);
-		ta.tap(207, 143).release().perform();
+                 minWait();
+		 clickBtn(Locators_Messaging.Notificationbar);
+		 System.out.println("incoming call");
+//		TouchAction ta= new TouchAction(aDriver);
+//		ta.tap(207, 143).release().perform();
 		//Runtime.getRuntime().exec("adb -s " + p_Id + " shell input tap 207 143");
 		minWait();
 		aDriver.swipe(80, 1840, 300, 600, 750);
@@ -1990,9 +2046,9 @@ if (p_b_No.contains("-10.")) {
 		try {
 			
 				if (Locators_Messaging.recive_sms_A.isDisplayed()) {
-					APP_LOGS.info("Selected contact removed Sucessfully ");
-					soft.assertTrue(true, "Selected contact removed Sucessfully ");
-					test.log(LogStatus.PASS, "Selected contact removed Sucessfully ");
+					APP_LOGS.info("Selected recipient removed Sucessfully ");
+					soft.assertTrue(true, "Selected recipient removed Sucessfully ");
+					test.log(LogStatus.PASS, "Selected recipient removed Sucessfully ");
 
 				} else {
 					APP_LOGS.info("Failed to remove the recipient");
@@ -2007,6 +2063,33 @@ if (p_b_No.contains("-10.")) {
 				} catch (Exception e) {
 
 					test.log(LogStatus.ERROR, "Exeption in ->validate_Remove_Recipient_From_To_Field()");
+				}
+
+			}
+
+	public void validate_receive_Message_In_Notificationbar(SoftAssert soft) throws InterruptedException {
+		/* To validate the Sent Message. */
+
+		try {
+			
+				if (Locators_Messaging.forward_Text_A.isDisplayed()) {
+					APP_LOGS.info("Sucessfully send SMS through Notification");
+					soft.assertTrue(true, "Sucessfully send SMS through Notification");
+					test.log(LogStatus.PASS, "Sucessfully send SMS through Notification");
+
+				} else {
+					APP_LOGS.info("Failed to send the SMS");
+					soft.fail();
+					test.log(LogStatus.FAIL, "Failed to send the SMS");
+
+				}	} catch (org.openqa.selenium.NoSuchElementException e) {
+
+					test.log(LogStatus.ERROR, "Error in the locators->validate_receive_Message_In_Notificationbar()");
+					e.printStackTrace();
+
+				} catch (Exception e) {
+
+					test.log(LogStatus.ERROR, "Exeption in ->validate_receive_Message_In_Notificationbar()");
 				}
 
 			}
@@ -2550,7 +2633,8 @@ clickBtn(multi_Loc_Strategy(Locators_Messaging.forward_Text_A, Locators_Messagin
 		try {
 			if (p_b_No.contains("-10.")) {
 				java.lang.String actual = Locators_Messaging.Multiple_Recipients.getText();
-				if (actual.equalsIgnoreCase("Test1, Test2")) {
+				System.out.println(actual);
+				if (Locators_Messaging.Multiple_Recipients.isDisplayed()) {
 					APP_LOGS.info("old number and New number are displayed Sucessfully");
 					soft.assertTrue(true, "old number and New number are displayed Sucessfully");
 					test.log(LogStatus.PASS, "old number and New number are displayed Sucessfully");
@@ -2578,12 +2662,12 @@ clickBtn(multi_Loc_Strategy(Locators_Messaging.forward_Text_A, Locators_Messagin
 			}
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 
-			test.log(LogStatus.ERROR, "Error in the locators->validate_New_Phno()");
+			test.log(LogStatus.ERROR, "Error in the locators->validate_New_And_Old_Recipients()");
 			e.printStackTrace();
 
 		} catch (Exception e) {
 
-			test.log(LogStatus.ERROR, "Exeption in ->validate_New_Phno()");
+			test.log(LogStatus.ERROR, "Exeption in ->validate_New_And_Old_Recipients()");
 		}
 
 	}
@@ -2940,7 +3024,7 @@ clickBtn(multi_Loc_Strategy(Locators_Messaging.forward_Text_A, Locators_Messagin
 		try {
 			Runtime.getRuntime()
 					.exec("adb -s " + r_Id + " shell am start -a android.intent.action.CALL -d tel:" + pryNum);
-			minWait();
+			
 		} catch (Exception e) {
 			test.log(LogStatus.ERROR, "Exeption in ->make_Call_from_RefDev()");
 
@@ -3226,6 +3310,7 @@ clickBtn(multi_Loc_Strategy(Locators_Messaging.forward_Text_A, Locators_Messagin
 	{
 	try {
 System.out.println("click on sms");
+wait(Locators_Messaging.Reply, 20);
 clickBtn(Locators_Messaging.Reply);
 
 	}

@@ -134,6 +134,7 @@ public class XP8_SMS_StabilityTest_Orio extends XP8_SMS_Stability_Util_orio{
 				clearRecentApps();
 				
 				if (p_b_No.contains("-10.")||p_b_No.contains("-00.")) {
+					
 					launch_APP(Locators_SMS_DeviceStability.messaging);
 					//clearSMSPermissions();
 					create_NewSMS(refNum, data.get("typeMessage"));

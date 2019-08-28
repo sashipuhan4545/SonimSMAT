@@ -50,13 +50,12 @@ public class XP8_Wifi_Util extends BaseUtil {
 			wait.until(ExpectedConditions.visibilityOf(ele));
 			
 		} catch (org.openqa.selenium.NoSuchElementException e) {
-
 			test.log(LogStatus.ERROR, "Error in the locators->waituntilnew()");
 			e.printStackTrace();
 
 		}catch (Exception e) {
-
 			test.log(LogStatus.ERROR, "Exeption in ->waituntilnew()");
+			e.printStackTrace();
 		}
 	
 	}
@@ -222,7 +221,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 			test.log(LogStatus.ERROR, "Error in the locators->clickOn_Addnetwork()");
 			e.printStackTrace();
 		}catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exeption in ->clickOn_Addnetwork()");
+			test.log(LogStatus.ERROR, "Exeption in functionality->clickOn_Addnetwork()");
 			e.printStackTrace();
 		}
 	}
@@ -329,11 +328,18 @@ public class XP8_Wifi_Util extends BaseUtil {
 	public void Add_Network_security_None(String name)
 	{
 		try{
-			wait(Locators_Wifi.Wifi_ssidTxtBx, 90);
+			if(wait(Locators_Wifi.Wifi_ssidTxtBx, 90)) {
 			enterTextToInputField(Locators_Wifi.Wifi_ssidTxtBx, name);
+			System.out.println("1.ssid entered");}
+			if(wait(Locators_Wifi.Wifi_securityLst,10)) {
 			clickBtn(Locators_Wifi.Wifi_securityLst);
+			System.out.println("2.clicked on dropdown");}
+			if(wait(Locators_Wifi.WiFi_securityLst_Open,10)) {
 			clickBtn(Locators_Wifi.WiFi_securityLst_Open);
+			System.out.println("3.selected open / none");}
+			if(wait(Locators_Wifi.WiFi_saveBtn, 10)) {
 			clickBtn(Locators_Wifi.WiFi_saveBtn);
+			System.out.println("4.clicked on save");}
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 			test.log(LogStatus.ERROR,"Error in locators->Add_Network_security_None()");
 			e.printStackTrace();
@@ -346,13 +352,21 @@ public class XP8_Wifi_Util extends BaseUtil {
 	public void Add_Network_security_WEP(String name,String pswd)
 	{
 		try{
-			wait(Locators_Wifi.Wifi_ssidTxtBx, 90);
+			if(wait(Locators_Wifi.Wifi_ssidTxtBx, 90)) {
 			enterTextToInputField(Locators_Wifi.Wifi_ssidTxtBx, name);
+			System.out.println("1.ssid entered");}
+			if(wait(Locators_Wifi.Wifi_securityLst,10)) {
 			clickBtn(Locators_Wifi.Wifi_securityLst);
+			System.out.println("2.clicked on dropdown");}
+			if(wait(Locators_Wifi.WiFi_securityLst_WEP, 10)) {
 			clickBtn(Locators_Wifi.WiFi_securityLst_WEP);
+			System.out.println("3.selected WEP security");}
+			if(wait(Locators_Wifi.Wifi_PasswordTxt,10)) {
 			enterTextToInputField(Locators_Wifi.Wifi_PasswordTxt,pswd);
+			System.out.println("4.entered wep password");}
+			if(wait(Locators_Wifi.WiFi_saveBtn,10)) {
 			clickBtn(Locators_Wifi.WiFi_saveBtn);
-
+			System.out.println("5.clicked on save");}
 		}catch (org.openqa.selenium.NoSuchElementException e) {
 			test.log(LogStatus.ERROR,"Error in locators->Add_Network_security_WEP()");
 			e.printStackTrace();
@@ -547,15 +561,37 @@ public class XP8_Wifi_Util extends BaseUtil {
 			e.printStackTrace();
 		}
 	}
-	
-	
+	public void remove_ConnectedWifi() {
+		try {
+			boolean wifiConnected=false;wait(Locators_Wifi.Connected,10);
+			boolean wifiConnectionStatus=Locators_Wifi.check_Wifi_Connection.getAttribute("contentDescription").contains("Connected");
+			while(wifiConnectionStatus==true) {
+				wifiConnected=wait(Locators_Wifi.Wifi_Connected, 10);
+			if(wait(Locators_Wifi.Wifi_FORGET,10)) 
+				{
+					clickBtn(Locators_Wifi.Wifi_FORGET);
+				}
+			wait(Locators_Wifi.Connected,10);
+			wifiConnectionStatus=Locators_Wifi.check_Wifi_Connection.getAttribute("contentDescription").contains("Connected");
+		}
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+			test.log(LogStatus.ERROR,"Error in locators->remove_connectedNtwrk()");
+			e.printStackTrace();
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR,"Exeption in ->remove_connectedNtwrk()");
+			e.printStackTrace();
+		}
+	}
 	public void remove_connectedNtwrk()
 	{
 		try{
-			if( wait(Locators_Wifi.Connected,50)==true)
+			/*if (wait(Locators_Wifi.Wifi_FORGET,10)) {
+				clickBtn(Locators_Wifi.Wifi_FORGET);
+			}*/
+			if( scrollToTextClick("Connected")==true)
 			{
-					if(wait(Locators_Wifi.FORGET,10)) {
-						clickBtn(Locators_Wifi.FORGET);
+					if(wait(Locators_Wifi.Wifi_FORGET,10)) {
+						clickBtn(Locators_Wifi.Wifi_FORGET);
 					}else {
 						scrollToText("FORGET");
 					}
@@ -700,6 +736,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 				sn=scrollToText("Saved networks");
 			}
 			boolean checkSSID = scrollTo(ssid);
+			
 			if(checkSSID == true){	
 				APP_LOGS.info(type+" Network Added Succesfully ");
 				sa.assertTrue(true, type+" Network Added Succesfully");
@@ -869,7 +906,9 @@ public class XP8_Wifi_Util extends BaseUtil {
 			
 			 aDriver.pressKeyCode(AndroidKeyCode.HOME);
 			 aDriver.startActivity("com.google.android.youtube", "com.google.android.apps.youtube.app.WatchWhileActivity");
-			 
+			 if(isElementExist(Locators_Wifi.NOT_NOW_txt)) {
+				 clickBtn(Locators_Wifi.NOT_NOW_txt);
+			 }
 			 if(!isElementExist(Locators_Wifi.Wifi_youtubeErrorMsg)) {
 				APP_LOGS.info("Wifi Connected and given site is opened successfully");
 				sa.assertTrue(true, "Wifi Connected  and given site is opened successfully");
@@ -1131,7 +1170,10 @@ public class XP8_Wifi_Util extends BaseUtil {
 			if(isElementExist(Locators_Wifi.WiFi_preferences)) {
 				clickBtn(Locators_Wifi.WiFi_preferences);
 			}else {
-				scrollToTextContains("preferences");
+				boolean pf=scrollToTextContains("preferences");
+				while(pf==false) {
+					pf=scrollToTextContains("preferences");
+				}
 			}
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 			test.log(LogStatus.ERROR, "Error in the locators->clickOn_WifiPreferences()");
@@ -1149,7 +1191,10 @@ public class XP8_Wifi_Util extends BaseUtil {
 			if(isElementExist(Locators_Wifi.Advanced)) {
 				clickBtn(Locators_Wifi.Advanced);
 			}else {
-				scrollToTextClick("Advanced");
+				boolean ad=scrollToText("Advanced");
+				while(ad==false) {
+					ad=scrollToText("Advanced");
+				}
 			}
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 			test.log(LogStatus.ERROR, "Error in the locators->clickOn_Advanced()");
@@ -2110,21 +2155,21 @@ public class XP8_Wifi_Util extends BaseUtil {
 	public void validate_ToggleScanningBtn(SoftAssert sa)
 	{
 		try{
-			
+			wait(Locators_Wifi.WifiScanningBtn,10);
 			String wifi = Locators_Wifi.WifiScanningBtn.getText();
-			String BT = Locators_Wifi.BluetoothScanningBtn.getText();
 			
 			if(wifi.equalsIgnoreCase("ON")){
-				
-				clickBtn(Locators_Wifi.WifiScanningBtn);
+				if(isElementExist(Locators_Wifi.WifiScanningBtn)) {
+				clickBtn(Locators_Wifi.WifiScanningBtn);}
 				APP_LOGS.info("Wifi scanning button is disabled successfully");
 				sa.assertTrue(true, "Wifi scanning button is disabled successfully");
 				test.log(LogStatus.PASS,"Wifi scanning button is disabled successfully");	
 			}
 			else if(wifi.equalsIgnoreCase("OFF")) {
+				if(isElementExist(Locators_Wifi.WifiScanningBtn)) {
 				clickBtn(Locators_Wifi.WifiScanningBtn);
 				clickBtn(Locators_Wifi.Wifi_scngOKBtn);
-				
+				}
 				APP_LOGS.info("Wifi scanning button is enabled successfully");
 				sa.assertTrue(true, "Wifi scanning button is enabled successfully");
 				test.log(LogStatus.PASS,"Wifi scanning button is enabled successfully");	
@@ -2134,6 +2179,8 @@ public class XP8_Wifi_Util extends BaseUtil {
 				sa.fail();
 				test.log(LogStatus.FAIL, "Failed to enable/disable wifi scanning button");
 			}
+			wait(Locators_Wifi.BluetoothScanningBtn,10);
+			String BT = Locators_Wifi.BluetoothScanningBtn.getText();
 			if(BT.equalsIgnoreCase("ON")){
 				clickBtn(Locators_Wifi.BluetoothScanningBtn);
 				APP_LOGS.info("Bluetooth scanning button is disabled successfully");
@@ -2229,7 +2276,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 		test.log(LogStatus.ERROR, "Error in the locators-> enable_BTScanning()");
 		e.printStackTrace();
 	}catch (Exception e) {
-		test.log(LogStatus.ERROR, "Exeption in -> enable_BTScanning()");
+		test.log(LogStatus.ERROR, "Exeption in functionality-> enable_BTScanning()");
 		e.printStackTrace();
 	}
 		return wifiScanningSwitchState;
@@ -2247,7 +2294,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 		test.log(LogStatus.ERROR, "Error in the locators-> disable_BTScanning()");
 		e.printStackTrace();
 	}catch (Exception e) {
-		test.log(LogStatus.ERROR, "Exeption in -> disable_BTScanning()");
+		test.log(LogStatus.ERROR, "Exeption in functionality-> disable_BTScanning()");
 		e.printStackTrace();
 	}
 		return wifiScanningSwitchState;
@@ -2267,7 +2314,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 			test.log(LogStatus.ERROR, "Error in the locators-> toggle_WifiScanning()");
 			e.printStackTrace();
 		}catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exeption in -> toggle_WifiScanning()");
+			test.log(LogStatus.ERROR, "Exeption in functionality-> toggle_WifiScanning()");
 			e.printStackTrace();
 		}
 		return wifiScanningSwitchState;
@@ -2294,7 +2341,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 			test.log(LogStatus.ERROR,"Error in locators-> verify_WifiScanning_IsDisabled_InLocation()");
 			e.printStackTrace();
 		}catch (Exception e) {
-			test.log(LogStatus.ERROR,"Exeption in -> verify_WifiScanning_IsDisabled_InLocation()");
+			test.log(LogStatus.ERROR,"Exeption in functionality-> verify_WifiScanning_IsDisabled_InLocation()");
 			e.printStackTrace();
 		}
 	}
@@ -2319,7 +2366,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 			test.log(LogStatus.ERROR,"Error in locators-> verify_BTScanning_IsDisabled_InLocation()");
 			e.printStackTrace();
 		}catch (Exception e) {
-			test.log(LogStatus.ERROR,"Exeption in -> verify_BTScanning_IsDisabled_InLocation()");
+			test.log(LogStatus.ERROR,"Exeption in functionality-> verify_BTScanning_IsDisabled_InLocation()");
 			e.printStackTrace();
 		}
 	}
@@ -2343,7 +2390,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 			test.log(LogStatus.ERROR,"Error in locators-> verify_BTScanning_IsEnabled_InSetting()");
 			e.printStackTrace();
 		}catch (Exception e) {
-			test.log(LogStatus.ERROR,"Exeption in -> verify_BTScanning_IsEnabled_InSetting()");
+			test.log(LogStatus.ERROR,"Exeption in functionality-> verify_BTScanning_IsEnabled_InSetting()");
 			e.printStackTrace();
 		}
 	}
@@ -2369,7 +2416,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 			test.log(LogStatus.ERROR,"Error in locators-> verify_WifiScanning_IsEnabled_Wifi()");
 			e.printStackTrace();
 		}catch (Exception e) {
-			test.log(LogStatus.ERROR,"Exeption in -> verify_WifiScanning_IsEnabled_Wifi()");
+			test.log(LogStatus.ERROR,"Exeption in functionality-> verify_WifiScanning_IsEnabled_Wifi()");
 			e.printStackTrace();
 		}
 	}
@@ -2404,12 +2451,12 @@ public class XP8_Wifi_Util extends BaseUtil {
 			
 		}
 		catch (org.openqa.selenium.NoSuchElementException e) {
-			test.log(LogStatus.ERROR, "Error in the locators->tapOn_ScanningSetting()");
+			test.log(LogStatus.ERROR, "Error in the locators->tapOn_firstLink()");
 			e.printStackTrace();
 
 		}catch (Exception e) {
-
-			test.log(LogStatus.ERROR, "Exeption in ->tapOn_ScanningSetting()");
+			test.log(LogStatus.ERROR, "Exeption in functionality->tapOn_firstLink()");
+			e.printStackTrace();
 		}
 	}
 	
@@ -2426,7 +2473,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 			test.log(LogStatus.ERROR, "Error in the locators->clickOn_HotspotLnk()");
 			e.printStackTrace();
 		}catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exeption in ->clickOn_HotspotLnk()");
+			test.log(LogStatus.ERROR, "Exeption in functionality->clickOn_HotspotLnk()");
 			e.printStackTrace();
 		}
 	}
@@ -2444,7 +2491,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 			test.log(LogStatus.ERROR, "Error in the locators-> clickOn_setUpWiFiHotspot()");
 			e.printStackTrace();
 		}catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exeption in -> clickOn_setUpWiFiHotspot()");
+			test.log(LogStatus.ERROR, "Exeption in functionality-> clickOn_setUpWiFiHotspot()");
 			e.printStackTrace();
 		}
 	}
@@ -2464,7 +2511,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 			test.log(LogStatus.ERROR, "Error in the locators-> setup_WiFiHotspot_Open()");
 			e.printStackTrace();
 		}catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exeption in -> setup_WiFiHotspot_Open()");
+			test.log(LogStatus.ERROR, "Exeption in functionality-> setup_WiFiHotspot_Open()");
 			e.printStackTrace();
 		}
 	}
@@ -2487,7 +2534,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 			test.log(LogStatus.ERROR,"Error in locators-> validate_WiFiHotspot_setupOpen()");
 			e.printStackTrace();
 		}catch (Exception e) {
-			test.log(LogStatus.ERROR,"Exeption in -> validate_WiFiHotspot_setupOpen()");
+			test.log(LogStatus.ERROR,"Exeption in functionality-> validate_WiFiHotspot_setupOpen()");
 			e.printStackTrace();
 		}
 	}
@@ -2505,7 +2552,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 			test.log(LogStatus.ERROR, "Error in the locators-> setup_WiFiHotspot_Secure()");
 			e.printStackTrace();
 		}catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exeption in -> setup_WiFiHotspot_Secure()");
+			test.log(LogStatus.ERROR, "Exeption in functionality-> setup_WiFiHotspot_Secure()");
 			e.printStackTrace();
 		}
 	}
@@ -2529,7 +2576,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 			test.log(LogStatus.ERROR,"Error in locators-> validate_WiFiHotspot_setupSecure()");
 			e.printStackTrace();
 		}catch (Exception e) {
-			test.log(LogStatus.ERROR,"Exeption in -> validate_WiFiHotspot_setupSecure()");
+			test.log(LogStatus.ERROR,"Exeption in functionality-> validate_WiFiHotspot_setupSecure()");
 			e.printStackTrace();
 		}
 	}
@@ -2542,13 +2589,13 @@ public class XP8_Wifi_Util extends BaseUtil {
 				 clickBtn(Locators_Wifi.MobileNtwrk_Lnk);
 			 }
 			 else {
-				 scrollText("Mobile network");
+				 scrollToText("Mobile network");
 			 }
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 			test.log(LogStatus.ERROR, "Error in the locators->clickOn_MobileNtwrk()");
 			e.printStackTrace();
 		}catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exeption in ->clickOn_MobileNtwrk()");
+			test.log(LogStatus.ERROR, "Exeption in functionality->clickOn_MobileNtwrk()");
 		}
 	}
 	public void turnOff_MobileNtwrk(){
@@ -2565,7 +2612,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 			test.log(LogStatus.ERROR, "Error in the locators-> turnOff_MobileNtwrk()");
 			e.printStackTrace();
 		}catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exeption in -> turnOff_MobileNtwrk()");
+			test.log(LogStatus.ERROR, "Exeption in functionality-> turnOff_MobileNtwrk()");
 			e.printStackTrace();
 		}
 	}
@@ -2579,7 +2626,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 			test.log(LogStatus.ERROR, "Error in the locators->turnOn_MobileNtwrk()");
 			e.printStackTrace();
 		}catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exeption in ->turnOn_MobileNtwrk()");
+			test.log(LogStatus.ERROR, "Exeption in functionality->turnOn_MobileNtwrk()");
 			e.printStackTrace();
 		}
 	}
@@ -2600,7 +2647,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 				test.log(LogStatus.ERROR,"Error in locators-> validate_HideInternalStorage_IsNotPresent()");
 				e.printStackTrace();
 			}catch (Exception e) {
-				test.log(LogStatus.ERROR,"Exeption in -> validate_HideInternalStorage_IsNotPresent()");
+				test.log(LogStatus.ERROR,"Exeption in functionality-> validate_HideInternalStorage_IsNotPresent()");
 				e.printStackTrace();
 			}
 		}
@@ -2612,13 +2659,16 @@ public class XP8_Wifi_Util extends BaseUtil {
 				if(isElementExist(Locators_Wifi.Connected_devices)) {
 					clickBtn(Locators_Wifi.Connected_devices);
 				}else {
-					scrollToTextClick("Connected devices");
+					boolean cd=scrollToTextClick("Connected devices");
+					while(cd==false) {
+						cd=scrollToTextClick("Connected devices");
+					}
 				}
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 			test.log(LogStatus.ERROR, "Error in the locators->clickon_ConnectedDevices()");
 			e.printStackTrace();
 		}catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exeption in ->clickon_ConnectedDevices()");
+			test.log(LogStatus.ERROR, "Exeption in functionality->clickon_ConnectedDevices()");
 			e.printStackTrace();
 		}
 	}
@@ -2637,7 +2687,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 			test.log(LogStatus.ERROR, "Error in the locators->clickon_Bluetooth()");
 			e.printStackTrace();
 		}catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exeption in ->clickon_Bluetooth()");
+			test.log(LogStatus.ERROR, "Exeption in functionality->clickon_Bluetooth()");
 			e.printStackTrace();
 		}
 	}
@@ -2659,7 +2709,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 			test.log(LogStatus.ERROR,"Error in locators-> verify_Peer_Displayed_InWifiDirect()");
 			e.printStackTrace();
 		}catch (Exception e) {
-			test.log(LogStatus.ERROR,"Exeption in -> verify_Peer_Displayed_InWifiDirect()");
+			test.log(LogStatus.ERROR,"Exeption in functionality-> verify_Peer_Displayed_InWifiDirect()");
 			e.printStackTrace();
 		}
 	}
@@ -2681,7 +2731,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 			test.log(LogStatus.ERROR,"Error in locators->validate_BTScanning()");
 			e.printStackTrace();
 		}catch (Exception e) {
-			test.log(LogStatus.ERROR,"Exeption in ->validate_BTScanning()");
+			test.log(LogStatus.ERROR,"Exeption in functionality->validate_BTScanning()");
 			e.printStackTrace();
 		}
 	}
@@ -2697,7 +2747,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 			test.log(LogStatus.ERROR, "Error in the locators->  turnOff_BTScanning()");
 			e.printStackTrace();
 		}catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exeption in ->  turnOff_BTScanning()");
+			test.log(LogStatus.ERROR, "Exeption in functionality->  turnOff_BTScanning()");
 			e.printStackTrace();
 		}
 	}
@@ -2726,7 +2776,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 			test.log(LogStatus.ERROR,"Error in locators-> verify_AutoConnect_IsPresent()");
 			e.printStackTrace();
 		}catch (Exception e) {
-			test.log(LogStatus.ERROR,"Exeption in -> verify_AutoConnect_IsPresent()");
+			test.log(LogStatus.ERROR,"Exeption in functionality-> verify_AutoConnect_IsPresent()");
 			e.printStackTrace();
 		}
 	}
@@ -2748,7 +2798,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 				test.log(LogStatus.ERROR,"Error in locators-> validate_LongPressOn_ConnectedSSID()");
 				e.printStackTrace();
 			}catch (Exception e) {
-				test.log(LogStatus.ERROR,"Exeption in -> validate_LongPressOn_ConnectedSSID()");
+				test.log(LogStatus.ERROR,"Exeption in functionality-> validate_LongPressOn_ConnectedSSID()");
 				e.printStackTrace();
 			}
 		}
@@ -2770,7 +2820,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 
 	}catch (Exception e) {
 
-		test.log(LogStatus.ERROR, "Exeption in ->turnOn_AutoRotate()");
+		test.log(LogStatus.ERROR, "Exeption in functionality->turnOn_AutoRotate()");
 	}
 }
 	
@@ -2791,7 +2841,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 
 	}catch (Exception e) {
 
-		test.log(LogStatus.ERROR, "Exeption in ->turnOn_AutoRotate()");
+		test.log(LogStatus.ERROR, "Exeption in functionality->turnOn_AutoRotate()");
 	}
 }
 	
@@ -2808,7 +2858,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 			test.log(LogStatus.ERROR, "Error in the locators->clickOn_Battery()");
 			e.printStackTrace();
 		}catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exeption in ->clickOn_Battery()");
+			test.log(LogStatus.ERROR, "Exeption in functionality->clickOn_Battery()");
 			e.printStackTrace();
 	}
 }
@@ -2834,7 +2884,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 				test.log(LogStatus.ERROR,"Error in locators-> validate_DeviceCharging()");
 				e.printStackTrace();
 			}catch (Exception e) {
-				test.log(LogStatus.ERROR,"Exeption in -> validate_DeviceCharging()");
+				test.log(LogStatus.ERROR,"Exeption in functionality -> validate_DeviceCharging()");
 				e.printStackTrace();
 			}
 		}
@@ -2856,7 +2906,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 				test.log(LogStatus.ERROR,"Error in locators->validate_ableToCntWifi()");
 				e.printStackTrace();
 			}catch (Exception e) {
-				test.log(LogStatus.ERROR,"Exeption in ->validate_ableToCntWifi()");
+				test.log(LogStatus.ERROR,"Exeption in functionality->validate_ableToCntWifi()");
 				e.printStackTrace();
 			}
 		}
@@ -2881,7 +2931,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 				test.log(LogStatus.ERROR,"Error in locators-> verify_SecurityType_IsDisplayed()");
 				e.printStackTrace();
 			}catch (Exception e) {
-				test.log(LogStatus.ERROR,"Exeption in -> verify_SecurityType_IsDisplayed()");
+				test.log(LogStatus.ERROR,"Exeption in functionality-> verify_SecurityType_IsDisplayed()");
 				e.printStackTrace();
 			}
 		}
@@ -2906,7 +2956,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 				test.log(LogStatus.ERROR,"Error in locators-> verify_WifiSignalLevel_IsDisplayed()");
 				e.printStackTrace();
 			}catch (Exception e) {
-				test.log(LogStatus.ERROR,"Exeption in -> verify_WifiSignalLevel_IsDisplayed()");
+				test.log(LogStatus.ERROR,"Exeption in functionality-> verify_WifiSignalLevel_IsDisplayed()");
 				e.printStackTrace();
 			}
 		}
@@ -2925,21 +2975,21 @@ public class XP8_Wifi_Util extends BaseUtil {
 				else {
 					APP_LOGS.info("Failed -> Wifi SSID is not displayed");
 					sa.fail();
-					test.log(LogStatus.FAIL, "Failed -> Wifi SSIDis not displayed");
+					test.log(LogStatus.FAIL, "Failed -> Wifi SSID is not displayed");
 				}
 			}
 			} catch (org.openqa.selenium.NoSuchElementException e) {
 				test.log(LogStatus.ERROR,"Error in locators-> verify_WifiSSID_IsDisplayed()");
 				e.printStackTrace();
 			}catch (Exception e) {
-				test.log(LogStatus.ERROR,"Exeption in -> verify_WifiSSID_IsDisplayed()");
+				test.log(LogStatus.ERROR,"Exeption in functionality-> verify_WifiSSID_IsDisplayed()");
 				e.printStackTrace();
 			}
 		}
 	public void verify_WifiSignalLevel_IsDisplayed(SoftAssert sa){
 
 		try {
-			if(isElementExist(Locators_Wifi.Wifi_img)) {
+			if(wait(Locators_Wifi.Wifi_img,10)) {
 				String wifiInfo=Locators_Wifi.Wifi_img.getAttribute("contentDescription");
 				System.out.println("Wifi info => "+wifiInfo);
 				if(wifiInfo.contains("bar") || wifiInfo.contains("full")) {
@@ -2980,7 +3030,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 				test.log(LogStatus.ERROR,"Error in locators-> verify_PasswordScreen_IsDisplayed()");
 				e.printStackTrace();
 			}catch (Exception e) {
-				test.log(LogStatus.ERROR,"Exeption in -> verify_PasswordScreen_IsDisplayed()");
+				test.log(LogStatus.ERROR,"Exeption in functionality-> verify_PasswordScreen_IsDisplayed()");
 				e.printStackTrace();
 			}
 		}
@@ -3002,7 +3052,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 				test.log(LogStatus.ERROR,"Error in locators-> verify_AdvancedOption_IsDisplayed()");
 				e.printStackTrace();
 			}catch (Exception e) {
-				test.log(LogStatus.ERROR,"Exeption in -> verify_AdvancedOption_IsDisplayed()");
+				test.log(LogStatus.ERROR,"Exeption in functionality-> verify_AdvancedOption_IsDisplayed()");
 				e.printStackTrace();
 			}
 		}
@@ -3014,7 +3064,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 			test.log(LogStatus.ERROR, "Error in the locators-> clickOn_ConnectToNtwrk()");
 			e.printStackTrace();
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exeption in -> clickOn_ConnectToNtwrk()");
+			test.log(LogStatus.ERROR, "Exeption in functionality-> clickOn_ConnectToNtwrk()");
 			e.printStackTrace();
 		}
 	}
@@ -3038,7 +3088,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 				test.log(LogStatus.ERROR,"Error in locators-> verify_Connected_IsDisplayed()");
 				e.printStackTrace();
 			}catch (Exception e) {
-				test.log(LogStatus.ERROR,"Exeption in -> verify_Connected_IsDisplayed()");
+				test.log(LogStatus.ERROR,"Exeption in functionality-> verify_Connected_IsDisplayed()");
 				e.printStackTrace();
 			}
 		}
@@ -3063,7 +3113,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 				test.log(LogStatus.ERROR,"Error in locators-> verify_Wifi_IsNotConnected()");
 				e.printStackTrace();
 			}catch (Exception e) {
-				test.log(LogStatus.ERROR,"Exeption in -> verify_Wifi_IsNotConnected()");
+				test.log(LogStatus.ERROR,"Exeption in functionality-> verify_Wifi_IsNotConnected()");
 				e.printStackTrace();
 			}
 		}
@@ -3081,7 +3131,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 			test.log(LogStatus.ERROR, "Error in the locators->clickOn_DataUsage()");
 			e.printStackTrace();
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exeption in ->clickOn_DataUsage()");
+			test.log(LogStatus.ERROR, "Exeption in functionality->clickOn_DataUsage()");
 			e.printStackTrace();
 		}
 	}
@@ -3101,7 +3151,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 			test.log(LogStatus.ERROR, "Error in the locators-> disable_AirplaneMode() ");
 			e.printStackTrace();
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> disable_AirplaneMode()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> disable_AirplaneMode()");
 		}
 		return disabled;
 	}
@@ -3155,7 +3205,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 			test.log(LogStatus.ERROR, "Error in the locators-> get_MobileDataUsage()");
 			e.printStackTrace();
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exeption in -> get_MobileDataUsage()");
+			test.log(LogStatus.ERROR, "Exeption in functionality-> get_MobileDataUsage()");
 			e.printStackTrace();
 		}
 		System.out.println("Mobile data usage details = "+dataUsage);
@@ -3179,7 +3229,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 				test.log(LogStatus.ERROR,"Error in locators->Validate_deviceBehaviour()");
 				e.printStackTrace();
 			}catch (Exception e) {
-				test.log(LogStatus.ERROR,"Exeption in ->Validate_deviceBehaviour()");
+				test.log(LogStatus.ERROR,"Exeption in functionality->Validate_deviceBehaviour()");
 				e.printStackTrace();
 			}
 		}
@@ -3204,7 +3254,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 
 		} catch (Exception e) {
 
-			test.log(LogStatus.ERROR, "Exeption in ->ResetWifi_Mob_BT_stng()");
+			test.log(LogStatus.ERROR, "Exeption in functionality->ResetWifi_Mob_BT_stng()");
 		}
 	}
 	
@@ -3221,7 +3271,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 			test.log(LogStatus.ERROR, "Error in the locators->ResetWifi_Mob_BT_stng()");
 			e.printStackTrace();
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exeption in ->ResetWifi_Mob_BT_stng()");
+			test.log(LogStatus.ERROR, "Exeption in functionality->ResetWifi_Mob_BT_stng()");
 			e.printStackTrace();
 		}
 	}
@@ -3247,7 +3297,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 			test.log(LogStatus.ERROR, "Error in the locators->  tapOn_BTScanningSetting()");
 			e.printStackTrace();
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exeption in -> tapOn_BTScanningSetting()");
+			test.log(LogStatus.ERROR, "Exeption in functionality-> tapOn_BTScanningSetting()");
 			e.printStackTrace();
 		}
 	}
@@ -3271,7 +3321,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 		Runtime.getRuntime().exec("adb -s "+r_Id+" shell input keyevent 6");
 		Thread.sleep(1000);
 		}catch (Exception e) {
-		test.log(LogStatus.ERROR, "Exeption in ->endCall_RefDevice()");
+		test.log(LogStatus.ERROR, "Exeption in functionality->endCall_RefDevice()");
 
 		}
 		}
@@ -3337,7 +3387,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 				test.log(LogStatus.ERROR,"Error in locators-> verify_CallReceived()");
 				e.printStackTrace();
 			}catch (Exception e) {
-				test.log(LogStatus.ERROR,"Exeption in -> verify_CallReceived()");
+				test.log(LogStatus.ERROR,"Exeption in functionality-> verify_CallReceived()");
 				e.printStackTrace();
 			}
 		}
@@ -3354,7 +3404,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 				test.log(LogStatus.ERROR,"Error in locators-> connect_to_WiFi_Landscape()");
 				e.printStackTrace();
 			}catch (Exception e) {
-				test.log(LogStatus.ERROR,"Exeption in -> connect_to_WiFi_Landscape()");
+				test.log(LogStatus.ERROR,"Exeption in functionality-> connect_to_WiFi_Landscape()");
 				e.printStackTrace();
 			}
 		}
@@ -3444,7 +3494,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 				test.log(LogStatus.ERROR,"Error in locators-> verify_BrowsingIsContinuedAfterReceivingCall()");
 				e.printStackTrace();
 			}catch (Exception e) {
-				test.log(LogStatus.ERROR,"Exeption in -> verify_BrowsingIsContinuedAfterReceivingCall()");
+				test.log(LogStatus.ERROR,"Exeption in functionality -> verify_BrowsingIsContinuedAfterReceivingCall()");
 				e.printStackTrace();
 			}
 		}
@@ -3468,7 +3518,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 				test.log(LogStatus.ERROR,"Error in locators->validate_browsingInMobileData()");
 				e.printStackTrace();
 			}catch (Exception e) {
-				test.log(LogStatus.ERROR,"Exeption in ->validate_browsingInMobileData()");
+				test.log(LogStatus.ERROR,"Exeption in functionality->validate_browsingInMobileData()");
 				e.printStackTrace();
 			}
 		}
@@ -3494,7 +3544,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 					test.log(LogStatus.ERROR,"Error in locators-> verify_WifiIsUsedToBrowse_MobileDataEnabled()");
 					e.printStackTrace();
 				}catch (Exception e) {
-					test.log(LogStatus.ERROR,"Exeption in -> verify_WifiIsUsedToBrowse_MobileDataEnabled()");
+					test.log(LogStatus.ERROR,"Exeption in functionality-> verify_WifiIsUsedToBrowse_MobileDataEnabled()");
 					e.printStackTrace();
 				}
 			}
@@ -3519,7 +3569,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 					test.log(LogStatus.ERROR,"Error in locators-> verify_WifiIsUsedToBrowse_MobileDataDisabled()");
 					e.printStackTrace();
 				}catch (Exception e) {
-					test.log(LogStatus.ERROR,"Exeption in -> verify_WifiIsUsedToBrowse_MobileDataDisabled()");
+					test.log(LogStatus.ERROR,"Exeption in functionality-> verify_WifiIsUsedToBrowse_MobileDataDisabled()");
 					e.printStackTrace();
 				}
 			}
@@ -3566,7 +3616,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 			test.log(LogStatus.ERROR,"Error in locators->validate_browingInWifiData()");
 			
 		}catch (Exception e) {
-			test.log(LogStatus.ERROR,"Exeption in ->validate_browingInWifiData()");
+			test.log(LogStatus.ERROR,"Exeption in functionality->validate_browingInWifiData()");
 		}
 	}
 		
@@ -3625,7 +3675,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 			test.log(LogStatus.ERROR,"Error in locators-> verify_WifiIsNotDisabled_WhileDiallingEmergency()");
 			e.printStackTrace();
 		}catch (Exception e) {
-			test.log(LogStatus.ERROR,"Exeption in -> verify_WifiIsNotDisabled_WhileDiallingEmergency()");
+			test.log(LogStatus.ERROR,"Exeption in functionality-> verify_WifiIsNotDisabled_WhileDiallingEmergency()");
 			e.printStackTrace();
 		}
 	}
@@ -3648,7 +3698,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 			test.log(LogStatus.ERROR,"Error in locators-> verify_Wifi_IsConnected()");
 			e.printStackTrace();
 		}catch (Exception e) {
-			test.log(LogStatus.ERROR,"Exeption in -> verify_Wifi_IsConnected()");
+			test.log(LogStatus.ERROR,"Exeption in functionality-> verify_Wifi_IsConnected()");
 			e.printStackTrace();
 		}
 	}
@@ -3671,7 +3721,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 			test.log(LogStatus.ERROR,"Error in locators-> verify_Wifi_IsDisconnected()");
 			e.printStackTrace();
 		}catch (Exception e) {
-			test.log(LogStatus.ERROR,"Exeption in -> verify_Wifi_IsDisconnected()");
+			test.log(LogStatus.ERROR,"Exeption in functionality-> verify_Wifi_IsDisconnected()");
 			e.printStackTrace();
 		}
 	}
@@ -3700,7 +3750,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 			test.log(LogStatus.ERROR,"Error in locators-> verify_Addnetwork_IsPresent_InWifiSetting()");
 			e.printStackTrace();
 		}catch (Exception e) {
-			test.log(LogStatus.ERROR,"Exeption in -> verify_Addnetwork_IsPresent_InWifiSetting()");
+			test.log(LogStatus.ERROR,"Exeption in functionality-> verify_Addnetwork_IsPresent_InWifiSetting()");
 			e.printStackTrace();
 		}
 	}
@@ -3749,7 +3799,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 			test.log(LogStatus.ERROR,"Error in locators-> verify_CancelButtonFunctionality()");
 			e.printStackTrace();
 		}catch (Exception e) {
-			test.log(LogStatus.ERROR,"Exeption in -> verify_CancelButtonFunctionality()");
+			test.log(LogStatus.ERROR,"Exeption in functionality-> verify_CancelButtonFunctionality()");
 			e.printStackTrace();
 		}
 	}
@@ -3765,7 +3815,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 			test.log(LogStatus.ERROR,"Error in locators-> clickOn_LanguagesAndInput()");
 			e.printStackTrace();
 		}catch (Exception e) {
-			test.log(LogStatus.ERROR,"Exeption in -> clickOn_LanguagesAndInput()");
+			test.log(LogStatus.ERROR,"Exeption in functionality-> clickOn_LanguagesAndInput()");
 			e.printStackTrace();
 		}
 	}
@@ -3781,7 +3831,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 			test.log(LogStatus.ERROR,"Error in locators-> clickOn_Languages()");
 			e.printStackTrace();
 		}catch (Exception e) {
-			test.log(LogStatus.ERROR,"Exeption in -> clickOn_Languages()");
+			test.log(LogStatus.ERROR,"Exeption in functionality-> clickOn_Languages()");
 			e.printStackTrace();
 		}
 	}
@@ -3799,7 +3849,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 			test.log(LogStatus.ERROR,"Error in locators-> search_FrenchLanguage()");
 			e.printStackTrace();
 		}catch (Exception e) {
-			test.log(LogStatus.ERROR,"Exeption in -> search_FrenchLanguage()");
+			test.log(LogStatus.ERROR,"Exeption in functionality-> search_FrenchLanguage()");
 			e.printStackTrace();
 		}
 		return french;
@@ -3816,7 +3866,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 			test.log(LogStatus.ERROR,"Error in locators-> clickOn_AddALanguage()");
 			e.printStackTrace();
 		}catch (Exception e) {
-			test.log(LogStatus.ERROR,"Exeption in -> clickOn_AddALanguage()");
+			test.log(LogStatus.ERROR,"Exeption in functionality-> clickOn_AddALanguage()");
 			e.printStackTrace();
 		}
 	}
@@ -3832,7 +3882,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 			test.log(LogStatus.ERROR,"Error in locators-> clickOn_French()");
 			e.printStackTrace();
 		}catch (Exception e) {
-			test.log(LogStatus.ERROR,"Exeption in -> clickOn_French()");
+			test.log(LogStatus.ERROR,"Exeption in functionality-> clickOn_French()");
 			e.printStackTrace();
 		}
 	}
@@ -3845,7 +3895,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 			test.log(LogStatus.ERROR,"Error in locators-> clickOn_MoreOptions()");
 			e.printStackTrace();
 		}catch (Exception e) {
-			test.log(LogStatus.ERROR,"Exeption in -> clickOn_MoreOptions()");
+			test.log(LogStatus.ERROR,"Exeption in functionality-> clickOn_MoreOptions()");
 			e.printStackTrace();
 		}
 	}
@@ -3858,7 +3908,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 			test.log(LogStatus.ERROR,"Error in locators-> clickOn_Remove()");
 			e.printStackTrace();
 		}catch (Exception e) {
-			test.log(LogStatus.ERROR,"Exeption in -> clickOn_Remove()");
+			test.log(LogStatus.ERROR,"Exeption in functionality-> clickOn_Remove()");
 			e.printStackTrace();
 		}
 	}
@@ -3878,7 +3928,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 			test.log(LogStatus.ERROR,"Error in locators-> remove_LanguagesOtherthanFrench()");
 			e.printStackTrace();
 		}catch (Exception e) {
-			test.log(LogStatus.ERROR,"Exeption in -> remove_LanguagesOtherthanFrench()");
+			test.log(LogStatus.ERROR,"Exeption in functionality-> remove_LanguagesOtherthanFrench()");
 			e.printStackTrace();
 		}
 	}
@@ -3941,7 +3991,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 
 		} catch (Exception e) {
 
-		test.log(LogStatus.ERROR, "Exeption in ->select_Language()");
+		test.log(LogStatus.ERROR, "Exeption in functionality->select_Language()");
 		}
 
 		}
@@ -3958,7 +4008,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 				test.log(LogStatus.ERROR,"Error in locators-> clickOn_UsersAndAccounts()");
 				e.printStackTrace();
 			}catch (Exception e) {
-				test.log(LogStatus.ERROR,"Exeption in -> clickOn_UsersAndAccounts()");
+				test.log(LogStatus.ERROR,"Exeption in functionality-> clickOn_UsersAndAccounts()");
 				e.printStackTrace();
 			}
 		}
@@ -3974,7 +4024,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 				test.log(LogStatus.ERROR,"Error in locators-> clickOn_Addaccount()");
 				e.printStackTrace();
 			}catch (Exception e) {
-				test.log(LogStatus.ERROR,"Exeption in -> clickOn_Addaccount()");
+				test.log(LogStatus.ERROR,"Exeption in functionality-> clickOn_Addaccount()");
 				e.printStackTrace();
 			}
 		}
@@ -3990,7 +4040,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 				test.log(LogStatus.ERROR,"Error in locators-> clickOn_Google()");
 				e.printStackTrace();
 			}catch (Exception e) {
-				test.log(LogStatus.ERROR,"Exeption in -> clickOn_Google()");
+				test.log(LogStatus.ERROR,"Exeption in functionality-> clickOn_Google()");
 				e.printStackTrace();
 			}
 		}
@@ -4006,7 +4056,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 				test.log(LogStatus.ERROR,"Error in locators-> enter_EmailAddress()");
 				e.printStackTrace();
 			}catch (Exception e) {
-				test.log(LogStatus.ERROR,"Exeption in -> enter_EmailAddress()");
+				test.log(LogStatus.ERROR,"Exeption in functionality-> enter_EmailAddress()");
 				e.printStackTrace();
 			}
 
@@ -4023,7 +4073,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 				test.log(LogStatus.ERROR,"Error in locators-> enter_EmailPassword()");
 				e.printStackTrace();
 			}catch (Exception e) {
-				test.log(LogStatus.ERROR,"Exeption in -> enter_EmailPassword()");
+				test.log(LogStatus.ERROR,"Exeption in functionality-> enter_EmailPassword()");
 				e.printStackTrace();
 			}
 
@@ -4037,7 +4087,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 				test.log(LogStatus.ERROR,"Error in locators-> clickOn_Iagree()");
 				e.printStackTrace();
 			}catch (Exception e) {
-				test.log(LogStatus.ERROR,"Exeption in -> clickOn_Iagree()");
+				test.log(LogStatus.ERROR,"Exeption in functionality-> clickOn_Iagree()");
 				e.printStackTrace();
 			}
 		}
@@ -4050,7 +4100,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 				test.log(LogStatus.ERROR,"Error in locators-> clickOn_MORE()");
 				e.printStackTrace();
 			}catch (Exception e) {
-				test.log(LogStatus.ERROR,"Exeption in -> clickOn_MORE()");
+				test.log(LogStatus.ERROR,"Exeption in functionality-> clickOn_MORE()");
 				e.printStackTrace();
 			}
 		}
@@ -4063,7 +4113,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 				test.log(LogStatus.ERROR,"Error in locators-> clickOn_Yes_i_am_in()");
 				e.printStackTrace();
 			}catch (Exception e) {
-				test.log(LogStatus.ERROR,"Exeption in -> clickOn_Yes_i_am_in()");
+				test.log(LogStatus.ERROR,"Exeption in functionality -> clickOn_Yes_i_am_in()");
 				e.printStackTrace();
 			}
 		}
@@ -4076,7 +4126,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 				test.log(LogStatus.ERROR,"Error in locators-> clickOn_ACCEPT()");
 				e.printStackTrace();
 			}catch (Exception e) {
-				test.log(LogStatus.ERROR,"Exeption in -> clickOn_ACCEPT()");
+				test.log(LogStatus.ERROR,"Exeption in functionality-> clickOn_ACCEPT()");
 				e.printStackTrace();
 			}
 		}
@@ -4112,12 +4162,15 @@ public class XP8_Wifi_Util extends BaseUtil {
 			test.log(LogStatus.ERROR,"Error in locators->  verify_ToastMessgeIsDisplayed_WhileEnteringWrongPassword()");
 			e.printStackTrace();
 		}catch (Exception e) {
-			test.log(LogStatus.ERROR,"Exeption in ->  verify_ToastMessgeIsDisplayed_WhileEnteringWrongPassword()");
+			test.log(LogStatus.ERROR,"Exeption in functionality->  verify_ToastMessgeIsDisplayed_WhileEnteringWrongPassword()");
 			e.printStackTrace();
 		}
 	}
 		public void dial_Code(String contactNo) {
 			try {
+				if(wait(Locators_Wifi.OK,10)) {
+					clickBtn(Locators_Wifi.OK);
+				}
 				if(isElementExist(Locators_Wifi.keypad)) {
 					clickBtn(Locators_Wifi.keypad);
 					minWait();
@@ -4135,6 +4188,9 @@ public class XP8_Wifi_Util extends BaseUtil {
 
 		public void clickOn_dialPad() {
 			try {
+				if(wait(Locators_Wifi.OK,10)) {
+					clickBtn(Locators_Wifi.OK);
+				}
 				if(wait(Locators_Wifi.dialPad,10)) {
 				clickBtn(Locators_Wifi.dialPad);
 				}
@@ -4161,7 +4217,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 				test.log(LogStatus.ERROR,"Error in locators->clickOn_wifiInformation()");
 				
 			}catch (Exception e) {
-				test.log(LogStatus.ERROR, "clickOn_wifiInformation");
+				test.log(LogStatus.ERROR, "Exception in functionality -> clickOn_wifiInformation");
 			}
 			
 		}
@@ -4243,7 +4299,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 			test.log(LogStatus.ERROR,"Error in locators-> verify_ErrorMsgDisplayed_WhenEnteringMoreNonNumerics()");
 			e.printStackTrace();
 		}catch (Exception e) {
-			test.log(LogStatus.ERROR,"Exeption in -> verify_ErrorMsgDisplayed_WhenEnteringMoreNonNumerics()");
+			test.log(LogStatus.ERROR,"Exeption in functionality-> verify_ErrorMsgDisplayed_WhenEnteringMoreNonNumerics()");
 			e.printStackTrace();
 		}
 	}
@@ -4273,7 +4329,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 			test.log(LogStatus.ERROR,"Error in locators-> verify_AvailableWifiNetworksDisplayed()");
 			e.printStackTrace();
 		}catch (Exception e) {
-			test.log(LogStatus.ERROR,"Exeption in -> verify_AvailableWifiNetworksDisplayed()");
+			test.log(LogStatus.ERROR,"Exeption in functionality-> verify_AvailableWifiNetworksDisplayed()");
 			e.printStackTrace();
 		}
 	}
@@ -4294,7 +4350,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 
 				test.log(LogStatus.ERROR,"Error in locators->skip_welcomeGmail()");
 			}catch (Exception e) {
-				test.log(LogStatus.ERROR,"Exeption in ->skip_welcomeGmail()");
+				test.log(LogStatus.ERROR,"Exeption in functionality->skip_welcomeGmail()");
 			}
 		}	
 		public void gmail_setup() {
@@ -4303,10 +4359,10 @@ public class XP8_Wifi_Util extends BaseUtil {
 					clickBtn(Locators_Wifi.ACCEPT);
 				}
 			}catch (org.openqa.selenium.NoSuchElementException e) {
-				test.log(LogStatus.ERROR,"Error in locators-> clickkOn_ACCEPT()");
+				test.log(LogStatus.ERROR,"Error in locators-> gmail_setup()");
 				e.printStackTrace();
 			}catch (Exception e) {
-				test.log(LogStatus.ERROR,"Exeption in -> clickkOn_ACCEPT()");
+				test.log(LogStatus.ERROR,"Exeption in functionality-> gmail_setup()");
 				e.printStackTrace();
 			}
 		}
@@ -4327,7 +4383,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 
 				test.log(LogStatus.ERROR,"Error in locators->check_gmailAlreadyPresent()");
 			}catch (Exception e) {
-				test.log(LogStatus.ERROR,"Exeption in ->check_gmailAlreadyPresent()");
+				test.log(LogStatus.ERROR,"Exeption in functionality->check_gmailAlreadyPresent()");
 			}
 		}	
 		
@@ -4342,24 +4398,11 @@ public class XP8_Wifi_Util extends BaseUtil {
 
 				test.log(LogStatus.ERROR,"Error in locators->clickOn_google()");
 			}catch (Exception e) {
-				test.log(LogStatus.ERROR,"Exeption in ->clickOn_google()");
+				test.log(LogStatus.ERROR,"Exeption in functionality->clickOn_google()");
 			}
 		}	
 		
-		public void clickNextBtn()
-		{
-			try{
-				
-				Locators_Wifi.gmailNxtBtn.click();
-				
-
-			} catch (org.openqa.selenium.NoSuchElementException e) {
-
-				test.log(LogStatus.ERROR,"Error in locators->clickNextBtn()");
-			}catch (Exception e) {
-				test.log(LogStatus.ERROR,"Exeption in ->clickNextBtn()");
-			}
-		}	
+		
 		public boolean check_GmailAlreadyAdded(String email)
 		{
 			boolean emailIdAdded=false;
@@ -4372,7 +4415,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 			test.log(LogStatus.ERROR,"Error in locators-> check_GmailAlreadyAdded()");
 			e.printStackTrace();
 		}catch (Exception e) {
-			test.log(LogStatus.ERROR,"Exeption in -> check_GmailAlreadyAdded()");
+			test.log(LogStatus.ERROR,"Exeption in functionality-> check_GmailAlreadyAdded()");
 			e.printStackTrace();
 		}
 			return emailIdAdded;
@@ -4399,7 +4442,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 			test.log(LogStatus.ERROR,"Error in locators-> verify_GmailAccountAdded()");
 			e.printStackTrace();
 		}catch (Exception e) {
-			test.log(LogStatus.ERROR,"Exeption in -> verify_GmailAccountAdded()");
+			test.log(LogStatus.ERROR,"Exeption in functionality-> verify_GmailAccountAdded()");
 			e.printStackTrace();
 		}
 			return emailIdAdded;
@@ -4421,7 +4464,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 				test.log(LogStatus.ERROR,"Error in locators-> postCond_RemoveGmailAccount()");
 				e.printStackTrace();
 			}catch (Exception e) {
-				test.log(LogStatus.ERROR,"Exeption in -> postCond_RemoveGmailAccount()");
+				test.log(LogStatus.ERROR,"Exeption in functionality-> postCond_RemoveGmailAccount()");
 				e.printStackTrace();
 			}
 		}
@@ -4430,7 +4473,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 			try {
 				Runtime.getRuntime().exec("adb -s "+p_Id+" shell settings put system screen_off_timeout 1800000");
 			}catch (Exception e) {
-				test.log(LogStatus.ERROR, "Exception in -> preCond_setSleepTime()");
+				test.log(LogStatus.ERROR, "Exception in functionality-> preCond_setSleepTime()");
 				e.printStackTrace();
 			}
 		}	
@@ -4527,7 +4570,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 				test.log(LogStatus.ERROR, "Error in the locators->clickOn_Search()");
 				e.printStackTrace();
 			} catch (Exception e) {
-				test.log(LogStatus.ERROR, "Exception in ->clickOn_Search()");
+				test.log(LogStatus.ERROR, "Exception in functionality->clickOn_Search()");
 				e.printStackTrace();
 			}
 
@@ -4543,7 +4586,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 				test.log(LogStatus.ERROR, "Error in the locators->search_Video()");
 				e.printStackTrace();
 			} catch (Exception e) {
-				test.log(LogStatus.ERROR, "Exception in ->search_Video()");
+				test.log(LogStatus.ERROR, "Exception in functionality->search_Video()");
 				e.printStackTrace();
 			}
 
@@ -4563,13 +4606,35 @@ public class XP8_Wifi_Util extends BaseUtil {
 				test.log(LogStatus.ERROR, "Error in the locators->launchYoutube()");
 				e.printStackTrace();
 			} catch (Exception e) {
-				test.log(LogStatus.ERROR, "Exception in ->launchYoutube()");
+				test.log(LogStatus.ERROR, "Exception in functionality->launchYoutube()");
 				e.printStackTrace();
 			}	
 		}
+		  public boolean wifi_ScrollToElement(AndroidElement e) throws InterruptedException {
+			  boolean avail=false;
+			   try {
+				minWait();
+				   
+				   for(int i=1; i<=5;i++)
+				   {
+					   if(wait(e,2)) {		   
+						   customWait(2000);
+						   break;
+					   }
+					   else {
+						   scroll();
+						   continue;
+					   }
+				   }
+			} catch (Exception e1) {
+				avail=false;
+			}
+			   return avail;
+		   }
+
 		public void play_Video() {
 			try {
-				if (wait(Locators_Wifi.sonimvideo, 120)==true) {
+				if (wait(Locators_Wifi.sonimvideo, 100)==true) {
 					if(isElementExist(Locators_Wifi.sonimvideo)) {
 						clickBtn(Locators_Wifi.sonimvideo);
 					}else {
@@ -4577,9 +4642,9 @@ public class XP8_Wifi_Util extends BaseUtil {
 						if(isElementExist(Locators_Wifi.sonimvideo)) {
 							clickBtn(Locators_Wifi.sonimvideo);
 						}else {
-							boolean sonimVideo=scrollToTextContains("Sonim XP8. First look.");
+							boolean sonimVideo=scrollToTextContains("Sonim XP8.");
 							while(sonimVideo==false) {
-								sonimVideo=scrollToTextContains("Sonim XP8. First look.");
+								sonimVideo=scrollToTextContains("Sonim XP8.");
 							}
 						}
 					}
@@ -4592,7 +4657,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 				test.log(LogStatus.ERROR, "Error in the locators-> play_Video()");
 				e.printStackTrace();
 			} catch (Exception e) {
-				test.log(LogStatus.ERROR, "Exception in -> play_Video()");
+				test.log(LogStatus.ERROR, "Exception in functionality-> play_Video()");
 				e.printStackTrace();
 			}
 
@@ -4612,7 +4677,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 					System.out.println("Video played for three minutes ");
 					}
 			} catch (Exception e) {
-				test.log(LogStatus.ERROR, "Exception in -> wait_TenMinutes()");
+				test.log(LogStatus.ERROR, "Exception in functionality-> wait_TenMinutes()");
 				e.printStackTrace();
 			}
 
@@ -4636,7 +4701,7 @@ public class XP8_Wifi_Util extends BaseUtil {
 		test.log(LogStatus.ERROR,"Error in locators-> verify_MobileData_NotUsed()");
 		e.printStackTrace();
 	}catch (Exception e) {
-		test.log(LogStatus.ERROR,"Exeption in -> verify_MobileData_NotUsed()");
+		test.log(LogStatus.ERROR,"Exeption in functionality -> verify_MobileData_NotUsed()");
 		e.printStackTrace();
 	}
 		}

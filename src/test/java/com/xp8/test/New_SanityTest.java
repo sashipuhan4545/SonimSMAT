@@ -154,9 +154,6 @@ public class New_SanityTest extends New_SanityUtil {
 
 	
 	@Test(priority = 1, dataProvider = "XP8_NewSanityTest", dataProviderClass = DataProviders.class)
-
-	
-
 	public void XP8_DeviceSanity_001_Check_Switching_of_camera_FandB(Hashtable<String, String> dt)
 
 			throws InterruptedException, IOException, AWTException {

@@ -107,10 +107,10 @@ public class Locators_Interactions {
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Now\")")
 	public static AndroidElement now_Text; //To validate after sending SMS.
 
-	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Now • SMS\")")
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Now â€¢ SMS\")")
 	public static AndroidElement justnow_Text; //To validate after sending SMS.
 
-	@AndroidFindBy(xpath="//android.widget.TextView[@text='Sending…']")
+	@AndroidFindBy(xpath="//android.widget.TextView[@text='Sendingâ€¦']")
 	public static AndroidElement sending_Txt;
 
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.Button\").text(\"REPLY\")")
@@ -198,6 +198,9 @@ public class Locators_Interactions {
 	
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"Mobile data\")")
 	public static AndroidElement data;
+	
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.Button\").text(\"TURN OFF\")")
+	public static AndroidElement dataturnoff;
 	
 	
 	@AndroidFindBy(xpath = "//android.widget.Switch[@text='On' or @text='Off']")
@@ -313,7 +316,7 @@ public class Locators_Interactions {
 	@AndroidFindBy(xpath="//android.widget.EditText[@index='0']")
 	public static AndroidElement wlcmpassword;
 	
-	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.Button\").text(\"Yes, I’m in\")")
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.Button\").text(\"Yes, Iâ€™m in\")")
 	public static AndroidElement yesiamin;
 	
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.Button\").text(\"I agree\")")
@@ -565,6 +568,9 @@ public class Locators_Interactions {
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.EditText\").resourceId(\"i0118\")")
 	public static AndroidElement skypepassword;
 	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.view.View\").resourceId(\"usernameError\")")
+	public static AndroidElement skypeusernameerror;
+	
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.Button\").text(\"Sign in\")")
 	public static AndroidElement skypesign;
 	
@@ -574,6 +580,9 @@ public class Locators_Interactions {
 	//android.widget.Button[@content-desc="New conversation"]
 	//@AndroidFindBy(xpath ="//android.widget.Button[@content-desc='New Conversation']")
 	//@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.Button\").description(\"New Conversation\")")
+	//@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"î��\")")
+	//public static AndroidElement skypestart;
+	
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"\")")
 	public static AndroidElement skypestart;
 	
@@ -657,11 +666,11 @@ public class Locators_Interactions {
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"Copied\")")
 	public static AndroidElement youtubedcopied;
 	
-	//@AndroidFindBy(uiAutomator="new UiSelector().resourceId(\"com.android.chrome:id/menu_button\").description(\"More options\")")
-	@AndroidFindBy(xpath="//*[@content-desc='Update available. More options' or @content-desc='More options']")
+	@AndroidFindBy(uiAutomator="new UiSelector().resourceId(\"com.android.chrome:id/menu_button\")")
+	//@AndroidFindBy(xpath="//*[@content-desc='Update available. More options' or @content-desc='More options']")
 	public static AndroidElement chromemenu;
 	
-	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"Share…\")")
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"Shareâ€¦\")")
 	public static AndroidElement chromeshare;
 
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"Messaging\")")

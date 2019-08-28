@@ -96,7 +96,7 @@ public class Locators_Messaging {
 	@AndroidFindBy(xpath = "//android.widget.MultiAutoCompleteTextView[@index='0']")
 	public static AndroidElement To_Field_B2;
 	
-	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").resourceId(\"com.google.android.apps.messaging:id/conversation_title\")")
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"3 people\")")
 	public static AndroidElement Multiple_Recipients;
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").resourceId(\"com.android.launcher3:id/bubble_text\")")
 	public static AndroidElement app_info;
@@ -404,6 +404,8 @@ public class Locators_Messaging {
 	public static AndroidElement callHistory_O1;
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.EditText\").resourceId(\"android:id/title\")")
 	public static AndroidElement callHistory_O2;
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").resourceId(\"android:id/text\")")
+	public static AndroidElement Notificationbar;
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.LinearLayout\").resourceId(\"com.android.dialer:id/primary_action_view\")")
 	public static AndroidElement First_Contact;
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.LinearLayout\").index(0)")
@@ -488,6 +490,8 @@ public class Locators_Messaging {
 	public static AndroidElement msgtemplate;
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").resourceId(\"android:id/text1\")")
 	public static AndroidElement msgtemplate1;
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.Switch\").resourceId(\"android:id/switch_widget\")")
+	public static AndroidElement groupmsgbtn;
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.LinearLayout\").index(7)")
 	public static AndroidElement textmsgsetting;
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").resourceId(\"android:id/message\")")
@@ -549,7 +553,8 @@ public class Locators_Messaging {
 	public static AndroidElement deleteContactOptn1;
 	@FindBy(how=How.XPATH, using =("//android.widget.TextView[@index='3']"))
 	public static AndroidElement deleteContactOptn3;
-	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").description(\"Delete\")")
+	public static AndroidElement delete;
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").resourceId(\"com.android.contacts:id/menu_delete\")")
 	public static AndroidElement deleteContactOptn2;
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.Button\").resourceId(\"com.android.contacts:id/selection_menu\")")
@@ -584,4 +589,8 @@ public class Locators_Messaging {
 	public static AndroidElement ALL_Selection_menu2;
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").resourceId(\"com.android.contacts:id/popup_list_title\")")
 	public static AndroidElement ALL_Selection_menu;
+	
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.QuickContactBadge\").resourceId(\"com.android.dialer:id/quick_contact_photo\")")
+	public static AndroidElement img;
+	
 }

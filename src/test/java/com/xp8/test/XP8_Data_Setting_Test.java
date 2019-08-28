@@ -27,6 +27,8 @@ import com.graphics.gui.JsonFileReaderAndWriter;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTestInterruptedException;
 import com.relevantcodes.extentreports.LogStatus;
+import com.xp5S.util.GetMethods;
+import com.xp5S.util.appiumService;
 import com.xp8.util.DataProviders;
 import com.xp8.util.ExcelConstants;
 import com.xp8.util.ExcelReader;
@@ -65,13 +67,12 @@ public class XP8_Data_Setting_Test extends XP8_Data_Setting_Util {
 		fetch_Devices_Details();
 
 	}
-//
-//	@BeforeSuite
-//	public void numofTestCases() throws ClassNotFoundException {
-//
-//		appiumService.TOTAL_NUM_OF_TESTCASES = GetMethods.TotalTestcase("XP8_TC", this.getClass());
-//
-//	}
+
+	@BeforeSuite
+	public void numofTestCases() throws ClassNotFoundException {
+
+		appiumService.TOTAL_NUM_OF_TESTCASES = GetMethods.TotalTestcase("XP8_TC", this.getClass());
+	}
 
 	@BeforeMethod()
 	public void beforeMethod(Method method) {
@@ -124,7 +125,7 @@ public class XP8_Data_Setting_Test extends XP8_Data_Setting_Util {
 		excel = new ExcelReader(ExcelConstants.XP5S_XL_PATH);
 	}
 //----------------------test-----------------------------
-	@Test(priority = -0, dataProvider = "XP8_Data_Setting", dataProviderClass = DataProviders.class)
+	@Test(priority = 0, dataProvider = "XP8_Data_Setting", dataProviderClass = DataProviders.class)
 	public void XP8_TC_00_Data_Setting_Precondition(Hashtable<String, String> data)
 			throws InterruptedException, AWTException, IOException {
 		SoftAssert sa = new SoftAssert();

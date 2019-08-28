@@ -1439,9 +1439,9 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 				sa.assertTrue(true, "Data usage cycle changed successfully");
 				test.log(LogStatus.PASS, "Data usage cycle changed successfully");
 			} else {
-				APP_LOGS.info("Data usage cycle cannot be changed");
+				APP_LOGS.info("Failed -> Data usage cycle is not changet");
 				sa.fail();
-				test.log(LogStatus.FAIL, "Data usage cycle cannot be changed");
+				test.log(LogStatus.FAIL, "Failed -> Data usage cycle is not changet");
 			}
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 
@@ -1449,7 +1449,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> validate_DataUsageCycle()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> validate_DataUsageCycle()");
 			e.printStackTrace();
 		}
 
@@ -1486,7 +1486,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			test.log(LogStatus.ERROR, "Error in the locators-> verify_ProgressBar_IsDisplayed()");
 			e.printStackTrace();
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> verify_ProgressBar_IsDisplayed()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> verify_ProgressBar_IsDisplayed()");
 			e.printStackTrace();
 		}
 
@@ -1516,7 +1516,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> verify_DataWarningAndDataLimit_AreDisplayed()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> verify_DataWarningAndDataLimit_AreDisplayed()");
 			e.printStackTrace();
 		}
 
@@ -1544,7 +1544,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> verify_DateCycle_IsDisplayed()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> verify_DateCycle_IsDisplayed()");
 			e.printStackTrace();
 		}
 
@@ -1568,7 +1568,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> verify_DataUsageValue_IsDisplayed()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> verify_DataUsageValue_IsDisplayed()");
 			e.printStackTrace();
 		}
 
@@ -1592,7 +1592,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> verify_AvailabilityOfBackgroundData()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> verify_AvailabilityOfBackgroundData()");
 			e.printStackTrace();
 		}
 
@@ -1622,7 +1622,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exeption in -> verify_AppDataUsageDetails()");
+			test.log(LogStatus.ERROR, "Exeption in functionality-> verify_AppDataUsageDetails()");
 			e.printStackTrace();
 		}
 	}
@@ -1658,7 +1658,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exeption in -> verify_TFB_IsDisplayed()");
+			test.log(LogStatus.ERROR, "Exeption in functionality-> verify_TFB_IsDisplayed()");
 			e.printStackTrace();
 		}
 	}
@@ -1695,7 +1695,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 
 		} catch (Exception e) {
 
-			test.log(LogStatus.ERROR, "Exception in -> validate_Wifi_Data_Usage()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> validate_Wifi_Data_Usage()");
 		}
 	}
 
@@ -1729,7 +1729,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			test.log(LogStatus.ERROR, "Error in the locators-> open_AppSettings()");
 			e.printStackTrace();
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> open_AppSettings()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> open_AppSettings()");
 		}
 	}
 
@@ -1741,7 +1741,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			test.log(LogStatus.ERROR, "Error in the locators-> open_AppInfo()");
 			e.printStackTrace();
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> open_AppInfo()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> open_AppInfo()");
 			e.printStackTrace();
 		}
 	}
@@ -1761,7 +1761,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			test.log(LogStatus.ERROR, "Error in the locators->validate_AppSettings()");
 			e.printStackTrace();
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> validate_AppSettings()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> validate_AppSettings()");
 			e.printStackTrace();
 		}
 	}
@@ -1781,7 +1781,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			test.log(LogStatus.ERROR, "Error in the locators-> validate_AppInfo()");
 			e.printStackTrace();
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> validate_AppInfo()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> validate_AppInfo()");
 			e.printStackTrace();
 		}
 	}
@@ -1802,7 +1802,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			test.log(LogStatus.ERROR, "Error in the locators-> verify_WifiDataUsage_Graph()");
 			e.printStackTrace();
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> verify_WifiDataUsage_Graph()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> verify_WifiDataUsage_Graph()");
 		}
 	}
 
@@ -1831,7 +1831,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			test.log(LogStatus.ERROR, "Error in the locators-> validate_WifiDataUsage_Graph_AsPerCycle()");
 			e.printStackTrace();
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> validate_WifiDataUsage_Graph_AsPerCycle()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> validate_WifiDataUsage_Graph_AsPerCycle()");
 			e.printStackTrace();
 		}
 	}
@@ -1857,7 +1857,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> verify_MeteredNetworksInfo_IsDisplayed()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> verify_MeteredNetworksInfo_IsDisplayed()");
 			e.printStackTrace();
 		}
 	}
@@ -1881,7 +1881,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> verify_ListOfMeteredNetworks_IsDisplayed()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> verify_ListOfMeteredNetworks_IsDisplayed()");
 			e.printStackTrace();
 		}
 	}
@@ -1974,7 +1974,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			test.log(LogStatus.ERROR, "Error in the locators-> tapOn_MoreOptions()");
 			e.printStackTrace();
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> tapOn_MoreOptions()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> tapOn_MoreOptions()");
 			e.printStackTrace();
 		}
 	}
@@ -2009,7 +2009,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> validate_MobileNetworkSetting()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> validate_MobileNetworkSetting()");
 			e.printStackTrace();
 		}
 	}
@@ -2040,7 +2040,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> validate_BillingCycle()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> validate_BillingCycle()");
 			e.printStackTrace();
 		}
 	}
@@ -2062,7 +2062,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> validate_CancelSetDataLimit()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> validate_CancelSetDataLimit()");
 			e.printStackTrace();
 		}
 	}
@@ -2095,7 +2095,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> clickOn_DataUsageBar()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> clickOn_DataUsageBar()");
 			e.printStackTrace();
 		}
 	}
@@ -2108,7 +2108,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			test.log(LogStatus.ERROR, "Error in the locators-> fetch_DateCycleValue()");
 			e.printStackTrace();
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> fetch_DateCycleValue()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> fetch_DateCycleValue()");
 			e.printStackTrace();
 		}
 		return bfr;
@@ -2125,7 +2125,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exeption in -> changeDate()");
+			test.log(LogStatus.ERROR, "Exeption in functionality-> changeDate()");
 			e.printStackTrace();
 		}
 
@@ -2142,7 +2142,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exeption in -> clickOn_DataUsageMenu()");
+			test.log(LogStatus.ERROR, "Exeption in functionality-> clickOn_DataUsageMenu()");
 			e.printStackTrace();
 		}
 
@@ -2166,7 +2166,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in ->verify_DataUsageMenu()");
+			test.log(LogStatus.ERROR, "Exception in functionality->verify_DataUsageMenu()");
 			e.printStackTrace();
 		}
 
@@ -2189,7 +2189,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> verify_SetDataWarning_IsDisplayed()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> verify_SetDataWarning_IsDisplayed()");
 			e.printStackTrace();
 		}
 
@@ -2204,7 +2204,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> clickOn_BillingCycle()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> clickOn_BillingCycle()");
 			e.printStackTrace();
 		}
 
@@ -2228,7 +2228,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in ->verify_DateUsageCycleResetField()");
+			test.log(LogStatus.ERROR, "Exception in functionality->verify_DateUsageCycleResetField()");
 			e.printStackTrace();
 		}
 
@@ -2253,7 +2253,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in ->validate_DateSetting_WithoutModifyingDateCycle()");
+			test.log(LogStatus.ERROR, "Exception in functionality->validate_DateSetting_WithoutModifyingDateCycle()");
 			e.printStackTrace();
 		}
 
@@ -2279,7 +2279,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> validate_BillingCycle_Without_Modifying_SetDataLimit()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> validate_BillingCycle_Without_Modifying_SetDataLimit()");
 			e.printStackTrace();
 		}
 	}
@@ -2321,7 +2321,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception error in -> clickOn_SetDataLimit()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> clickOn_SetDataLimit()");
 		}
 	}
 
@@ -2385,7 +2385,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			test.log(LogStatus.ERROR, "Error in the locators->disable_SetDataWarning()");
 			e.printStackTrace();
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception error in disable_SetDataWarning()");
+			test.log(LogStatus.ERROR, "Exception in functionality -> disable_SetDataWarning()");
 			e.printStackTrace();
 		}
 		System.out.println("Data warning is disabled ? " + disabled);
@@ -2422,7 +2422,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in ->enable_SetDataLimit()");
+			test.log(LogStatus.ERROR, "Exception in functionality->enable_SetDataLimit()");
 		}
 		System.out.println("Data limit is enabled ? " + enabled);
 		return enabled;
@@ -2456,7 +2456,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in ->disable_SetDataLimit()");
+			test.log(LogStatus.ERROR, "Exception in functionality->disable_SetDataLimit()");
 		}
 		System.out.println("Data limit is disabled ? " + disabled);
 		return disabled;
@@ -2479,7 +2479,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			test.log(LogStatus.ERROR, "Error in the locators->verify_SetDataWarning_IsEnabled()");
 			e.printStackTrace();
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> verify_SetDataWarning_IsEnabled()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> verify_SetDataWarning_IsEnabled()");
 			e.printStackTrace();
 		}
 	}
@@ -2501,7 +2501,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> verify_SetDataWarning_IsDisabled()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> verify_SetDataWarning_IsDisabled()");
 			e.printStackTrace();
 		}
 	}
@@ -2524,7 +2524,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> verify_SetDataLimit_IsEnabled()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> verify_SetDataLimit_IsEnabled()");
 			e.printStackTrace();
 		}
 	}
@@ -2548,7 +2548,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in  -> verify_SetDataLimit_IsDisabled()");
+			test.log(LogStatus.ERROR, "Exception in  functionality-> verify_SetDataLimit_IsDisabled()");
 			e.printStackTrace();
 		}
 	}
@@ -2572,7 +2572,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in validate_MobileDataUsage()");
+			test.log(LogStatus.ERROR, "Exception in functionality ->  validate_MobileDataUsage()");
 			e.printStackTrace();
 		}
 	}
@@ -2596,7 +2596,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in validate_MobileDataUsage_AppSetting()");
+			test.log(LogStatus.ERROR, "Exception in functionality -> validate_MobileDataUsage_AppSetting()");
 			e.printStackTrace();
 		}
 	}
@@ -2615,7 +2615,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 
 		} catch (Exception e) {
 			enabled = false;
-			test.log(LogStatus.ERROR, "Exeption in -> enable_RestrictBackgroundData()");
+			test.log(LogStatus.ERROR, "Exeption in functionality-> enable_RestrictBackgroundData()");
 			e.printStackTrace();
 		}
 		return enabled;
@@ -2633,7 +2633,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exeption in -> disable_RestrictBackgroundData()");
+			test.log(LogStatus.ERROR, "Exeption in functionality-> disable_RestrictBackgroundData()");
 			e.printStackTrace();
 		}
 		return disabled;
@@ -2656,7 +2656,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 
 		} catch (Exception e) {
 			enabled = false;
-			test.log(LogStatus.ERROR, "Exeption in ->enable_BackgroundData()");
+			test.log(LogStatus.ERROR, "Exeption in functionality->enable_BackgroundData()");
 			e.printStackTrace();
 		}
 		return enabled;
@@ -2680,7 +2680,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 
 		} catch (Exception e) {
 			disabled = false;
-			test.log(LogStatus.ERROR, "Exeption in ->disable_BackgroundData()");
+			test.log(LogStatus.ERROR, "Exeption in functionality->disable_BackgroundData()");
 			e.printStackTrace();
 		}
 		return disabled;
@@ -2705,7 +2705,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> verify_BackgroundData_IsEnabled()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> verify_BackgroundData_IsEnabled()");
 			e.printStackTrace();
 		}
 	}
@@ -2751,7 +2751,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 
 		} catch (Exception e) {
 			enabled = false;
-			test.log(LogStatus.ERROR, "Exeption in -> enable_UnrestrictedDataUsage()");
+			test.log(LogStatus.ERROR, "Exeption in functionality-> enable_UnrestrictedDataUsage()");
 			e.printStackTrace();
 		}
 		return enabled;
@@ -2777,7 +2777,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 
 		} catch (Exception e) {
 			disabled = false;
-			test.log(LogStatus.ERROR, "Exeption in ->  disable_UnrestrictedDataUsage()");
+			test.log(LogStatus.ERROR, "Exeption in functionality->  disable_UnrestrictedDataUsage()");
 			e.printStackTrace();
 		}
 		return disabled;
@@ -2801,7 +2801,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> verify_UDU_YouTube_IsEnabled()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> verify_UDU_YouTube_IsEnabled()");
 			e.printStackTrace();
 		}
 	}
@@ -2849,7 +2849,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> verify_YouTube_IsEnabled_InDataSaver()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> verify_YouTube_IsEnabled_InDataSaver()");
 			e.printStackTrace();
 		}
 	}
@@ -2876,7 +2876,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> verify_GooglePlaystore_IsEnabled_InDataSaver()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> verify_GooglePlaystore_IsEnabled_InDataSaver()");
 			e.printStackTrace();
 		}
 	}
@@ -2896,7 +2896,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> disable_UDU_GooglePlayStore()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> disable_UDU_GooglePlayStore()");
 			e.printStackTrace();
 		}
 		return disabled;
@@ -2917,7 +2917,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> disable_UDU_YouTube()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> disable_UDU_YouTube()");
 			e.printStackTrace();
 		}
 		return disabled;
@@ -2941,7 +2941,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> verify_UDU_GooglePlayStore_IsDisabled()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> verify_UDU_GooglePlayStore_IsDisabled()");
 			e.printStackTrace();
 		}
 	}
@@ -2964,7 +2964,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> verify_UDU_YouTube_IsDisabled()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> verify_UDU_YouTube_IsDisabled()");
 			e.printStackTrace();
 		}
 	}
@@ -2988,7 +2988,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> verify_UnrestrictedDataUsage_IsEnabled()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> verify_UnrestrictedDataUsage_IsEnabled()");
 			e.printStackTrace();
 		}
 	}
@@ -3010,7 +3010,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> verify_UnrestrictedDataUsage_IsDisabled()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> verify_UnrestrictedDataUsage_IsDisabled()");
 			e.printStackTrace();
 		}
 	}
@@ -3033,7 +3033,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> verify_UnrestrictedDataUsage_IsPresent()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> verify_UnrestrictedDataUsage_IsPresent()");
 			e.printStackTrace();
 		}
 
@@ -3067,7 +3067,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in ->verify_SystemApps()");
+			test.log(LogStatus.ERROR, "Exception in functionality->verify_SystemApps()");
 			e.printStackTrace();
 		}
 		return systemApps;
@@ -3096,7 +3096,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in ->verify_SystemApps()");
+			test.log(LogStatus.ERROR, "Exception in functionality->verify_SystemApps()");
 			e.printStackTrace();
 		}
 	}
@@ -3119,7 +3119,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> verify_ShowSystem()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> verify_ShowSystem()");
 			e.printStackTrace();
 		}
 
@@ -3143,7 +3143,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> verify_HideSystem()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> verify_HideSystem()");
 			e.printStackTrace();
 		}
 	}
@@ -3166,7 +3166,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> verify_DataLimit_IsGreyedOut()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> verify_DataLimit_IsGreyedOut()");
 			e.printStackTrace();
 		}
 	}
@@ -3189,7 +3189,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Error in the locators-> verify_DataWarning_IsGreyedOut()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> verify_DataWarning_IsGreyedOut()");
 			e.printStackTrace();
 		}
 	}
@@ -3212,7 +3212,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in ->verify_GreyColor_DataWarning()");
+			test.log(LogStatus.ERROR, "Exception in functionality->verify_GreyColor_DataWarning()");
 			e.printStackTrace();
 		}
 	}
@@ -3236,7 +3236,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in ->verify_GreyColor_DataLimit()");
+			test.log(LogStatus.ERROR, "Exception in functionality->verify_GreyColor_DataLimit()");
 			e.printStackTrace();
 		}
 	}
@@ -3263,7 +3263,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in ->getColorValue()");
+			test.log(LogStatus.ERROR, "Exception in functionality->getColorValue()");
 			e.printStackTrace();
 		}
 		return hexaDecimal;
@@ -3323,7 +3323,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			test.log(LogStatus.ERROR, "Error in the locators->clickOn_Search()");
 			e.printStackTrace();
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in ->clickOn_Search()");
+			test.log(LogStatus.ERROR, "Exception in functionality->clickOn_Search()");
 			e.printStackTrace();
 		}
 
@@ -3339,7 +3339,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			test.log(LogStatus.ERROR, "Error in the locators->search_Video()");
 			e.printStackTrace();
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in ->search_Video()");
+			test.log(LogStatus.ERROR, "Exception in functionality ->search_Video()");
 			e.printStackTrace();
 		}
 
@@ -3376,7 +3376,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			test.log(LogStatus.ERROR, "Error in the locators->launchYoutube()");
 			e.printStackTrace();
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in ->launchYoutube()");
+			test.log(LogStatus.ERROR, "Exception in functionality->launchYoutube()");
 			e.printStackTrace();
 		}	
 	}
@@ -3390,9 +3390,9 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 					   if(isElementExist(Locators_DataUsageSetting.sonimvideo)) {
 						  clickBtn(Locators_DataUsageSetting.sonimvideo);
 					   }else {
-						  boolean sonimVideo=scrollToTextContains("Sonim XP8. First look.");
+						  boolean sonimVideo=scrollToTextContains("Sonim XP8.");
 						  while(sonimVideo==false) {
-							sonimVideo=scrollToTextContains("Sonim XP8. First look.");
+							sonimVideo=scrollToTextContains("Sonim XP8.");
 						}
 					}
 				}
@@ -3405,7 +3405,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			test.log(LogStatus.ERROR, "Error in the locators-> play_Video()");
 			e.printStackTrace();
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> play_Video()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> play_Video()");
 			e.printStackTrace();
 		}
 
@@ -3419,7 +3419,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			test.log(LogStatus.ERROR, "Error in the locators-> clickOn_RESUME()");
 			e.printStackTrace();
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> clickOn_RESUME()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> clickOn_RESUME()");
 			e.printStackTrace();
 		}
 	}
@@ -3446,10 +3446,10 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 		try {
 			accountConfigured = (isElementExist(Locators_DataUsageSetting.dusTestMail)) ? true : false;
 		} catch (org.openqa.selenium.NoSuchElementException e) {
-			test.log(LogStatus.ERROR, "Error in the locators->launch_YouTube()");
+			test.log(LogStatus.ERROR, "Error in the locators->checkGoogleAccountConfiguration()");
 			e.printStackTrace();
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in ->launch_YouTube()");
+			test.log(LogStatus.ERROR, "Exception infunctionality ->checkGoogleAccountConfiguration()");
 			e.printStackTrace();
 		}
 		return accountConfigured;
@@ -3494,7 +3494,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			test.log(LogStatus.ERROR, "Error in the locators -> disableWifi()");
 			e.printStackTrace();
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exeption in -> disableWifi()");
+			test.log(LogStatus.ERROR, "Exeption in functionality-> disableWifi()");
 		}
 		return disabled;
 	}
@@ -3511,7 +3511,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			test.log(LogStatus.ERROR, "Error in the locators -> enable_Donotdistrub()");
 			e.printStackTrace();
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exeption in -> enable_Donotdistrub()");
+			test.log(LogStatus.ERROR, "Exeption in functionality-> enable_Donotdistrub()");
 		}
 		return enabled;
 	}
@@ -3531,7 +3531,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			test.log(LogStatus.ERROR, "Error in the locators -> disable_Donotdistrub()");
 			e.printStackTrace();
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exeption in -> disable_Donotdistrub()");
+			test.log(LogStatus.ERROR, "Exeption in functionality-> disable_Donotdistrub()");
 		}
 		return disabled;
 	}
@@ -3571,7 +3571,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> verify_Donotdistrub_IsEnabled()");
+			test.log(LogStatus.ERROR, "Exception infunctionality -> verify_Donotdistrub_IsEnabled()");
 			e.printStackTrace();
 		}
 	}
@@ -3595,7 +3595,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> verify_Airplane_IsEnabled()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> verify_Airplane_IsEnabled()");
 			e.printStackTrace();
 		}
 	}
@@ -3646,7 +3646,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> verify_Bluetooth_IsEnabled()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> verify_Bluetooth_IsEnabled()");
 			e.printStackTrace();
 		}
 	}
@@ -3655,7 +3655,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 		try {
 			Runtime.getRuntime().exec("adb -s "+p_Id+" shell settings put system screen_off_timeout 1800000");
 		}catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> preCond_setSleepTime()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> preCond_setSleepTime()");
 			e.printStackTrace();
 		}
 	}
@@ -3729,7 +3729,7 @@ public class XP8_Data_Usage_Setting_Util extends BaseUtil {
 			e.printStackTrace();
 
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in -> preCond_browseData()");
+			test.log(LogStatus.ERROR, "Exception in functionality-> preCond_browseData()");
 			e.printStackTrace();
 		}
 

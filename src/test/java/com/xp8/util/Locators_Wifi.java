@@ -96,8 +96,18 @@ private static AndroidDriver<AndroidElement> aDriver;
 	@AndroidFindBy(uiAutomator="new UiSelector().textContains(\"Connected\")")
 	public static AndroidElement Connected;
 	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").textContains(\"Connected\")")
+	public static AndroidElement Wifi_Connected;
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.LinearLayout\").index(1)")
+	public static AndroidElement check_Wifi_Connection;
+	
 	@AndroidFindBy(uiAutomator="new UiSelector().textContains(\"FORGET\")")
 	public static AndroidElement FORGET;
+
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.Button\").textContains(\"FORGET\")")
+	public static AndroidElement Wifi_FORGET;
+	
 
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.Button\").textContains(\"CANCEL\")")
 	public static AndroidElement CANCEL;
@@ -486,7 +496,7 @@ private static AndroidDriver<AndroidElement> aDriver;
 	@AndroidFindBy(id="android:id/button1")
 	public static AndroidElement WifiDirect_OKBtn;
 
-	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"LanguagesÂ & input\")")
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"Languages & input\")")
 	public static  AndroidElement Languages_inputLnk;
 	
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"Languages\")")
@@ -507,7 +517,7 @@ private static AndroidDriver<AndroidElement> aDriver;
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.CheckBox\")")
 	public static  AndroidElement checkbox;
 
-	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"FranÃƒÂ§ais (France)\")")
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"FranÃ§ais (France)\")")
 	public static  AndroidElement France;
 	
 	@AndroidFindBy(xpath = "//android.widget.ImageButton[@content-desc='More options']")

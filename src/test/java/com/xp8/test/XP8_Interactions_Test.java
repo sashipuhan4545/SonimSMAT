@@ -295,7 +295,7 @@ public class XP8_Interactions_Test extends XP8_Interactions_Util{
 			clickBackButton(4); 
 			launch_an_app("messaging");
 			Validate_reply_received_sms(sa);
-
+			aDriver.pressKeyCode(AndroidKeyCode.HOME);
 			//During voice call enable disable bluetooth
 			enable_disable_BT();
 			//During voice call enable disable wifi
@@ -377,6 +377,7 @@ public class XP8_Interactions_Test extends XP8_Interactions_Util{
 			launch_an_app("contacts");
 			validate_createContactWithNameandPhone(data.get("name"),data.get("lastname"),data.get("phoneno"),sa);
 			//During voice call receive sms
+			aDriver.pressKeyCode(AndroidKeyCode.HOME);
 			sendSMS_fromRefDevice(data.get("typeMessage1"));
 			System.out.println("reply for received msg");
 			//During voice call reply for received sms
@@ -385,7 +386,7 @@ public class XP8_Interactions_Test extends XP8_Interactions_Util{
 	        clickBackButton(4);
 			launch_an_app("messaging");
 			Validate_reply_received_sms(sa);
-			
+			aDriver.pressKeyCode(AndroidKeyCode.HOME);
 
 			//During voice call enable disable bluetooth
 			enable_disable_BT();
@@ -397,6 +398,7 @@ public class XP8_Interactions_Test extends XP8_Interactions_Util{
 			launch_APP(Locators_BaseUtil.clockApp);
 			validate_set_alarm(sa);
 			//During voice call set timer
+			launch_APP(Locators_BaseUtil.clockApp);
 			validate_set_timer(sa);
 			launch_APP(Locators_Interactions.camera);
 			//During voice call take photo
@@ -469,7 +471,7 @@ public class XP8_Interactions_Test extends XP8_Interactions_Util{
 			validate_SentMessage(sa) ;
 			aDriver.pressKeyCode(AndroidKeyCode.HOME);
 			launch_an_app("contacts");
-			deleteIfContactsPresent(sa);
+			setDefaultSavingAccount();
 			//During voice call create contact 
 			launch_an_app("contacts");
 			validate_createContactWithNameandPhone(data.get("name"),data.get("lastname"),data.get("phoneno"),sa);
@@ -482,7 +484,7 @@ public class XP8_Interactions_Test extends XP8_Interactions_Util{
 			clickBackButton(4);
 			launch_an_app("messaging");
 			Validate_reply_received_sms(sa);
-
+			aDriver.pressKeyCode(AndroidKeyCode.HOME);
 			//During voice call enable disable bluetooth
 			enable_disable_BT();
 			//During voice call enable disable wifi
@@ -515,7 +517,7 @@ public class XP8_Interactions_Test extends XP8_Interactions_Util{
 			aDriver.pressKeyCode(AndroidKeyCode.HOME);
 			launch_an_app("fm");
 			validate_fmradio_on(sa);
-			aDriver.openNotifications();
+			
 			aDriver.pressKeyCode(AndroidKeyCode.HOME);
 			fmradio_off();
 			//During voice call use fmradio
@@ -556,7 +558,7 @@ public class XP8_Interactions_Test extends XP8_Interactions_Util{
 			customWait(3000);
 			endCall_PrmyDevice();
 			launch_an_app("contacts");
-			deleteIfContactsPresent(sa);
+			setDefaultSavingAccount();
 			//During voice call create contact 
 			launch_an_app("contacts");
 			validate_createContactWithNameandPhone(data.get("name"),data.get("lastname"),data.get("phoneno"),sa);
@@ -642,10 +644,10 @@ public class XP8_Interactions_Test extends XP8_Interactions_Util{
 			copy_youtubelink(sa);
 			launch_APP(Locators_Interactions.chrome);
 			openbrowser_browse(sa,data.get("Web"));
-			share_browser_page(refNum, sa);
+			/*share_browser_page(refNum, sa);
 			clickOn_Send();
 			clickBackButton(4);
-			validate_chrome_sharemsg(sa);
+			validate_chrome_sharemsg(sa);*/
 			sendSMS_fromRefDevice(data.get("typeMessage1"));
 			System.out.println("reply for received msg");
 			reply_received_sms(data.get("typeMessage1"));
@@ -675,7 +677,7 @@ public class XP8_Interactions_Test extends XP8_Interactions_Util{
 			aDriver.pressKeyCode(AndroidKeyCode.HOME);
 			launch_APP(Locators_Interactions.soundrecorder);
 			validate_soundrecorder_enabled(sa);
-			enable_disable_airplanemode();
+			aDriver.pressKeyCode(AndroidKeyCode.HOME);
 			clearRecentApps();
 
 		}
@@ -693,6 +695,7 @@ public class XP8_Interactions_Test extends XP8_Interactions_Util{
 			clearRecentApps();
 			launch_APP(Locators_Interactions.skype);
 			skype_chat(sa,data.get("skypephoneno"),data.get("skypetext"),data.get("typeMessage1"));
+			clickBackButton(4);
 			sendSMS_fromRefDevice(data.get("typeMessage1"));
 			System.out.println("reply for received msg");
 			//During taking photo reply for received sms
@@ -741,6 +744,8 @@ public class XP8_Interactions_Test extends XP8_Interactions_Util{
 			deleteIfContactsPresent(sa);
 			//During voice call create contact 
 			launch_an_app("contacts");
+			setDefaultSavingAccount();
+			launch_an_app("contacts");
 			validate_createContactWithNameandPhone(data.get("name"),data.get("lastname"),data.get("phoneno"),sa);
 			sendSMS_fromRefDevice(data.get("typeMessage1"));
 			System.out.println("reply for received msg");
@@ -750,7 +755,9 @@ public class XP8_Interactions_Test extends XP8_Interactions_Util{
 			clickBackButton(4);
 			launch_an_app("messaging");
 			Validate_reply_received_sms(sa);
+			aDriver.pressKeyCode(AndroidKeyCode.HOME);
 			validate_accessnotification(sa);
+			aDriver.pressKeyCode(AndroidKeyCode.HOME);
 			enable_disable_BT();
 			enable_disable_WiFi();
 			enable_disable_location();
@@ -783,6 +790,7 @@ public class XP8_Interactions_Test extends XP8_Interactions_Util{
 			clearRecentApps();
 			launch_an_app("camera");
 			taking_photo(sa);
+			aDriver.pressKeyCode(AndroidKeyCode.HOME);
 			sendSMS_fromRefDevice(data.get("typeMessage1"));
 			System.out.println("reply for received msg");
 			//During taking photo reply for received sms
@@ -805,6 +813,7 @@ public class XP8_Interactions_Test extends XP8_Interactions_Util{
 			validate_fmradio_on(sa);
 			aDriver.pressKeyCode(AndroidKeyCode.HOME);
 			fmradio_off();
+			aDriver.pressKeyCode(AndroidKeyCode.HOME);
 			enable_disable_data();
 			launch_APP(Locators_Interactions.photos);
 			share_photos(sa);

@@ -902,16 +902,13 @@ public class XP8_Network_Stability_Util_orio extends BaseUtil {
 		 */
 		try{
 				boolean ssidAvailable=false;
-				AndroidElement element=aDriver.findElementByXPath("//android.widget.TextView[@text='"+ssid+"']");
-			if(	wait(element,40)==true) {
-				clickBtn(element);
-			}else {
 				ssidAvailable=scrollToText(ssid);
 				while(ssidAvailable==false) {
 					ssidAvailable=scrollToText(ssid);
-				}
 			}
-			if(ssidAvailable) {	APP_LOGS.info(" Wifi network available and selected ");
+			if(ssidAvailable)
+			{	
+				APP_LOGS.info(" Wifi network available and selected ");
 			}
 		}catch (NoSuchElementException ne) {
 			test.log(LogStatus.ERROR,"Error in the locators => select_Wifi_SSID()");
@@ -1930,8 +1927,14 @@ public class XP8_Network_Stability_Util_orio extends BaseUtil {
 	public void clickOn_NetworkAndInternet() {
 		try {
 		scrollTo("Network & Internet");
-		clickBtn(multi_Loc_Strategy(Locators_Network_DeviceStability.NetworkAndInternet_tc1,Locators_Network_DeviceStability.NetworkAndInternet_tc2, Locators_Network_DeviceStability.NetworkAndInternet_x3, null,null, 414, 1004));
-	minWait();
+		if(isElementExist(Locators_Network_DeviceStability.NetworkAndInternet_tc1)) {
+			clickBtn(multi_Loc_Strategy(Locators_Network_DeviceStability.NetworkAndInternet_tc1,Locators_Network_DeviceStability.NetworkAndInternet_tc2, Locators_Network_DeviceStability.NetworkAndInternet_x3, null,null, 414, 1004));
+		}else {
+			boolean ni=scrollText("Network & Internet");
+			while(ni==false) {
+				ni=scrollText("Network & Internet");
+			}
+		}
 		} catch (NoSuchElementException e) {
 			test.log(LogStatus.ERROR,"Error in the locators => clickOn_NetworkAndInternet()");
 			e.printStackTrace();
@@ -1943,8 +1946,8 @@ public class XP8_Network_Stability_Util_orio extends BaseUtil {
 	public void clickOn_MobileNetwork() {
 		try {
 			scrollTo("Mobile network");
-		AndroidElement element=multi_Loc_Strategy(Locators_Network_DeviceStability.MobileNetwork_tc1, null, null, null, null, 371, 546);
-		clickBtn(element);
+			AndroidElement element=multi_Loc_Strategy(Locators_Network_DeviceStability.MobileNetwork_tc1, null, null, null, null, 371, 546);
+			clickBtn(element);
 		} catch (NoSuchElementException e) {
 			test.log(LogStatus.ERROR,"Error in the locators => clickOn_MobileNetwork()");
 			e.printStackTrace();
@@ -2062,17 +2065,16 @@ public class XP8_Network_Stability_Util_orio extends BaseUtil {
 		 * Method can be Used Validate Airplane Mode activation via by making the call.
 		 */
 		try {
-			customWait(2000);
-			if(isElementExist(Locators_Network_DeviceStability.turnOff_Airplane_PopUp)) {
+			if(wait(Locators_Network_DeviceStability.turnOff_Airplane_PopUp,60)) {
 				minWait();
-				APP_LOGS.info("Turn off Airplane mode popup is displayed -> Airplane mode is enabled successfully at iteration : "+ n);
-				soft.assertTrue(true, "Turn off Airplane mode popup is displayed -> Airplane mode is enabled successfully at iteration : "+n);
-				test.log(LogStatus.PASS, "Turn off Airplane mode popup is displayed -> Airplane mode is enabled successfully at iteration : "+n);
+				APP_LOGS.info("Airplane mode is enabled -> Turn off airplane mode popup displayed at iteration : "+n);
+				soft.assertTrue(true, "Airplane mode is enabled -> Turn off airplane mode popup displayed at iteration : "+n);
+				test.log(LogStatus.PASS, "Airplane mode is enabled -> Turn off airplane mode popup displayed at iteration : "+n);
 			} else  {
 				minWait();
-				APP_LOGS.info("TurnOff Airplane Mode Popup is not Displayed");			
+				APP_LOGS.info("Failed -> Turnoff airplane mode popup is not displayed");			
 				soft.fail();
-				test.log(LogStatus.FAIL,"TurnOff Airplane Mode Popup is not Displayed"+n);
+				test.log(LogStatus.FAIL,"Failed -> Turnoff airplane mode popup is not displayed"+n);
 			}
 		} catch (NoSuchElementException e) {
 			test.log(LogStatus.ERROR,"Error in the locators => validate_Airplane_Enable()");
@@ -2088,21 +2090,19 @@ public class XP8_Network_Stability_Util_orio extends BaseUtil {
 		 * Method can be Used Validate Airplane Mode activation via by making the call.
 		 */
 		try {		
-			minWait();
 			if(!isElementExist(Locators_Network_DeviceStability.turnOff_Airplane_PopUp)) {
 				minWait();
 				check=true;
-				APP_LOGS.info("Turn off Airplane mode popup is not displayed -> Airplane mode is disabled successfully at iteration : "+n);
-				soft.assertTrue(true, "Turn off Airplane mode popup is not displayed -> Airplane mode is disabled successfully at iteration : "+n);
-				test.log(LogStatus.PASS, "Turn off Airplane mode popup is not displayed -> Airplane mode is disabled successfully at iteration : "+n);
+				APP_LOGS.info("Airplane mode is disabled -> Airplane mode popup is not displayed at iteration : "+n);
+				soft.assertTrue(true, "Airplane mode is disabled -> Airplane mode popup is not displayed at iteration : "+n);
+				test.log(LogStatus.PASS, "Airplane mode is disabled -> Airplane mode popup is not displayed at iteration : "+n);
 			} else  {
 				minWait();
-				APP_LOGS.info(" Airplane mode is not disabled at iteration : "+n);	
+				APP_LOGS.info("Failed -> Airplane mode is not disabled");	
 				soft.fail();
-				test.log(LogStatus.FAIL,"Airplane mode is not disabled at iteration : "+n);
+				test.log(LogStatus.FAIL,"Failed -> Airplane mode is not disabled");
 			}
-			minWait();
-			minWait();
+			
 		} catch (NoSuchElementException e) {
 			test.log(LogStatus.ERROR,"Error in the locators => validate_Airplane_Disable()");
 			e.printStackTrace();
@@ -2399,13 +2399,10 @@ public void disable_BT() {
 			aDriver.findElementByAndroidUIAutomator(scrollable+textElement).click();
 			APP_LOGS.info("Searched application is found sucessfully : ");
 			check = true;
-			}
-		 catch (NoSuchElementException e) {
-				test.log(LogStatus.ERROR,"Error in the locators => scrollToText()");
-				e.printStackTrace();
+			}catch (NoSuchElementException e) {
+				check=false;
 			}catch (Exception e) {
-				test.log(LogStatus.ERROR,"Exception in functionality=> scrollToText()");
-				e.printStackTrace();
+				check=false;
 			}
 		return check;
 	}
@@ -2443,13 +2440,13 @@ public void disable_BT() {
 		try {
 				boolean noInternet=wait(Locators_Network_DeviceStability.No_Internet,7);
 				if(!noInternet) {
-					APP_LOGS.info("URL is loaded -> "+type+" is enabled successfully at iteration :"+n);
-					soft.assertTrue(true, "URL is loaded -> "+type+" is enabled successfully at iteration :"+n);
-					test.log(LogStatus.PASS, "URL is loaded -> "+type+" is enabled successfully at iteration :"+n);
+					APP_LOGS.info(type+"is connected successfully and given website is loaded at iteration : "+n);
+					soft.assertTrue(true,type+"is connected successfully and given website is loaded at iteration : "+n);
+					test.log(LogStatus.PASS, type+"is connected successfully and given website is loaded at iteration : "+n);
 				} else {
-					APP_LOGS.info("URL is not loaded -> "+type+" is not enabled at iteration :"+n);
+					APP_LOGS.info("Failed -> "+type+" is not connected ");
 					soft.fail();
-					test.log(LogStatus.FAIL,"URL is not loaded -> "+type+" is not enabled at iteration :"+n);
+					test.log(LogStatus.FAIL,"Failed -> "+type+" is not connected ");
 									}
 		} catch (NoSuchElementException e) {
 			test.log(LogStatus.ERROR,"Error in the locators => validate_PageIsLoaded()");
@@ -2485,9 +2482,12 @@ public void disable_BT() {
 		boolean enabled = false;
 		try {
 				scrollTo("Mobile network");
-			if(Locators_Network_DeviceStability.checkMobilenetwork.isEnabled()) {
+			if(Locators_Network_DeviceStability.checkMobilenetwork.isEnabled()==true) {
 				scrollTo("Airplane mode");
 				ON_Switch("Airplane mode");
+				if(wait(Locators_Network_DeviceStability.OK,5)) {
+					clickBtn(Locators_Network_DeviceStability.OK);
+				}
 				enabled=true;
 			}
 		} catch (org.openqa.selenium.NoSuchElementException e) {
@@ -2506,7 +2506,7 @@ public void disable_BT() {
 		boolean enabled = false;
 		try {
 			scrollTo("Mobile network");
-			if(!Locators_Network_DeviceStability.checkMobilenetwork.isEnabled()) {
+			if(Locators_Network_DeviceStability.checkMobilenetwork.isEnabled()==false) {
 				scrollTo("Airplane mode");
 				OFF_Switch("Airplane mode");
 			enabled=true;}
@@ -2589,24 +2589,7 @@ public void disable_BT() {
 			test.log(LogStatus.ERROR, "Exeption in -> clickOn_Wifi()");
 		}
 
-	}
-	public void enableWifi() {
-		try {
-		AndroidElement element=multi_Loc_Strategy
-	(Locators_Network_DeviceStability.wifiConnectionSate,Locators_Network_DeviceStability.wifiConnectionState_2,Locators_Network_DeviceStability.wifiConnectionState_3,null,null,500,300);
-				if(element.getText().equalsIgnoreCase("off"))
-				{
-					clickBtn(element);
-				}
-		}catch (org.openqa.selenium.NoSuchElementException e) {
-			test.log(LogStatus.ERROR, "Error in the locators -> enableWifi()");
-			e.printStackTrace();
-		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exeption in -> enableWifi()");
-		}
-	
-	}
-	
+	}	
 	public boolean enable_Wifi() {
 		boolean enabled=false;
 		try {
@@ -2725,14 +2708,14 @@ public void disable_BT() {
 			System.out.println("results text = "+Locators_Network_DeviceStability.Results_will_be_available.getText());
 			}
 			if(noInternet || Results_will_be_available) {
-				APP_LOGS.info("URL is not loaded -> "+typ+" is disabled successfully at iteration : "+n);
-				soft.assertTrue(true, "URL is not loaded -> "+typ+" is disabled successfully at iteration : "+n);
-				test.log(LogStatus.PASS, "URL is not loaded -> "+typ+" is disabled successfully at iteration : "+n);	
+				APP_LOGS.info(typ+"is disconnected successfully and given website is not loaded at iteration : "+n);
+				soft.assertTrue(true, typ+"is disconnected successfully and given website is not loaded at iteration : "+n);
+				test.log(LogStatus.PASS, typ+"is disconnected successfully and given website is not loaded at iteration : "+n);	
 			
 			}else {
-				APP_LOGS.info("URL is  loaded -> "+typ+" is not disabled  at iteration : "+n);
+				APP_LOGS.info("Failed -> "+typ+"is not disconnected");
 				soft.fail();
-				test.log(LogStatus.FAIL,"URL is  loaded -> "+typ+" is not disabled  at iteration : "+n);
+				test.log(LogStatus.FAIL,"Failed -> "+typ+"is not disconnected");
 			
 			}
 		} catch (NoSuchElementException e) {
@@ -3471,7 +3454,7 @@ public void disable_BT() {
 		 * enter Password for SSID
 		 */
 		try {
-			if(isElementExist(Locators_Network_DeviceStability.wifi_enterPwd_index)) {
+			if(wait(Locators_Network_DeviceStability.wifi_enterPwd_index,10)) {
 			enterTextToInputField(Locators_Network_DeviceStability.wifi_enterPwd_index,pwd);
 			clickBtn(Locators_Network_DeviceStability.CONNECT_t1);
 			}	
@@ -3487,7 +3470,6 @@ public void disable_BT() {
 	{
 		try{
 			boolean connected = scrollToText("Connected");
-			boolean tryagain = scrollToText("Check password and try again");
 			if(connected == true)
 			{
 					if(isElementExist(Locators_Network_DeviceStability.FORGET)) {
@@ -3497,7 +3479,7 @@ public void disable_BT() {
 					}
 					wait(Locators_Network_DeviceStability.Wi_Fi,10);
 			}
-			else if(tryagain == true)
+			else if(scrollToText("Check password and try again") == true)
 			{
 					scrollToTextLongPress("Check password and try again");
 					scrollToText("Forget network");

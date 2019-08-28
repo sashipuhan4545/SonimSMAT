@@ -29,7 +29,7 @@ public class Locators_Data_Setting {
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"Airplane mode\")")
 	public static AndroidElement airplanemode;
 	
-	@AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"android:id/switch_widget\")")
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.Switch\").resourceId(\"android:id/switch_widget\")")
 	public static AndroidElement airplanemodeswitchonoff;
 	@AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.android.settings:id/switchWidget\")")
 	public static AndroidElement wifiswitchonoff;
@@ -117,9 +117,9 @@ public class Locators_Data_Setting {
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").resourceId(\"android:id/message\")")
 	public static AndroidElement errormsginname1;
 
-	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"The Name field can't be empty.\")")
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"The Name field canâ€™t be empty.\")")
 	public static AndroidElement errormsginname;
-	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"The APN can't be empty.\")")
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"The APN can’t be empty.\")")
 	public static AndroidElement errormsginapn;
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"The APN cannot be empty.\")")
 	public static AndroidElement errormsginapn_b;

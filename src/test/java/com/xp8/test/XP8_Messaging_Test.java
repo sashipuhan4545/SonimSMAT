@@ -15,6 +15,7 @@ import java.util.Hashtable;
 import java.util.Properties;
 
 import org.json.simple.parser.ParseException;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
@@ -30,6 +31,8 @@ import com.graphics.gui.JsonFileReaderAndWriter;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTestInterruptedException;
 import com.relevantcodes.extentreports.LogStatus;
+import com.xp5S.util.GetMethods;
+import com.xp5S.util.appiumService;
 import com.xp8.util.DataProviders;
 import com.xp8.util.ExcelConstants;
 import com.xp8.util.ExcelReader;
@@ -50,7 +53,7 @@ public class XP8_Messaging_Test extends XP8_Messaging_Util {
 	public ExcelReader excel;
 	Properties properties;
 	public static ExtentTestInterruptedException testexception;
-	public int itr = 1;
+	public int itr = AllQA.NUMOFCALLS;
 	boolean value = false;
 	public String pw = AllQA.WIFIPASSWORD;
 	int n = 3;
@@ -69,8 +72,14 @@ public class XP8_Messaging_Test extends XP8_Messaging_Util {
 		// and
 		// Name
 		extent.loadConfig(new File(System.getProperty("user.dir") + "//ReportsConfig.xml"));
-		extent.addSystemInfo("Appium", "1.2.7").addSystemInfo("Environment", "TEST");
+		
 		fetch_Devices_Details();
+		try {
+			appiumService.TOTAL_NUM_OF_TESTCASES=GetMethods.TotalTestcase("XP8_TC", this.getClass());
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@BeforeMethod()
@@ -78,7 +87,7 @@ public class XP8_Messaging_Test extends XP8_Messaging_Util {
 		test = extent.startTest((this.getClass().getSimpleName() + " :: " + method.getName()), method.getName()); // Test
 																													// Case
 																													// Start
-		test.assignAuthor("Navya Shree"); // Test Script Author Name
+		
 
 	}
 
@@ -143,10 +152,14 @@ public class XP8_Messaging_Test extends XP8_Messaging_Util {
 			throws InterruptedException, AWTException, IOException {
 		SoftAssert sa = new SoftAssert();
 		APP_LOGS.info("===========XP8_Messaging============");
+		clearRecentApps();
 		deleteall_SMS();
+
 		delete_contact();
 		performAction();
-validate_Precondition(sa);
+		//deleteall_SMS();
+  disable_Group_Messaging();
+  validate_Precondition(sa);
 	
 	}
 
@@ -186,6 +199,7 @@ validate_Precondition(sa);
 		minWait();
 		clickBtn(Locators_Messaging.forward_Text1);
 		validate_SMS_Details(sa);
+		aDriver.pressKeyCode(AndroidKeyCode.BACK);
 		validate_SentMessage(sa);
 		sa.assertAll();
 	}
@@ -200,7 +214,6 @@ validate_Precondition(sa);
 		launch_APP(Locators_Messaging.Messaging);
        wait(Locators_Messaging.MoreOptions, 80);
 		clickBtn(Locators_Messaging.MoreOptions);
-
 		clickBtn(Locators_Messaging.setting);
 		vibration_On(sa);
 		memory_status();
@@ -332,7 +345,7 @@ validate_Precondition(sa);
 		navigateTo_NewSMS();
 		enter_Num_ToField(refNum);
 		make_Call_from_RefDev();
-		customWait(5000);
+		customWait(10000);
 		receiveCallInpriDevice();
 		customWait(5000);
 		endCall_RefDevice();
@@ -418,7 +431,7 @@ validate_Precondition(sa);
 		clearSMSPermissions();
 		navigateTo_NewSMS();
 		enter_Num_ToField(refNum);
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < itr; i++) {
 			enterText_MessageField(data.get("typeMessage"));
 			clickOn_Send();
 
@@ -520,7 +533,7 @@ validate_Precondition(sa);
 		SoftAssert sa = new SoftAssert();
 		clearRecentApps();
 		launch_an_app("contacts");
-		for (int i = 1; i < 5; i++) {
+		for (int i = 1; i < itr; i++) {
 			Click_ON_Phone();
 			clickBtn(Locators_Messaging.AddtoContact);
 			createContact_A("Test" + i, data.get("number" + i));
@@ -569,7 +582,7 @@ validate_Precondition(sa);
 
 		launch_an_app("contacts");
 
-		for (int i = 1; i < 5; i++) {
+		for (int i = 1; i < itr; i++) {
 			clickBtn(Locators_Messaging.AddtoContact);
 			Click_ON_SIM();
 
@@ -637,7 +650,7 @@ validate_Precondition(sa);
 		enterText_MessageField(data.get("typeMessage"));
 		enter_Name_To_Field("Te");
 		takeScreenShot();
-		Read_File.takeScreenShotForOcr("Test1");
+		Read_File.takeScreenShotForOcr("Tes");
 		my_main.validate_Using_OCR("Test1.jpeg");
 		validate_text(sa);
 		aDriver.pressKeyCode(AndroidKeyCode.ENTER);
@@ -645,12 +658,15 @@ validate_Precondition(sa);
 	         minWait();
 			clickOn_Send();
 			validate_SentMessage(sa);
+			aDriver.pressKeyCode(AndroidKeyCode.BACK);
+
+			
 
 		sa.assertAll();
 	}
 
 
-	@Test(priority =25, dataProvider = "XP8_Messaging", dataProviderClass = DataProviders.class)
+	@Test(priority = 25, dataProvider = "XP8_Messaging", dataProviderClass = DataProviders.class)
 	public void XP8_TC_25_XP8_Messaging_Use_SIM_Contacts_and_Phone_contacts_Send_SMS(Hashtable<String, String> data)
 			throws InterruptedException, AWTException, IOException {
 		APP_LOGS.info("===========XP8_Messaging============");
@@ -663,8 +679,8 @@ validate_Precondition(sa);
 		select_SIM_And_Phone_Contact();
 		validate_Select_Contact_In_SIM_Phone(sa);
 		clickBtn(Locators_Messaging.OKBtn1);
-			clickOn_Send();
-			validate_SentMessage(sa);
+		clickOn_Send();
+		validate_SentMessage(sa);
 		sa.assertAll();
 	}
 	@Test(priority = 26, dataProvider = "XP8_Messaging", dataProviderClass = DataProviders.class)
@@ -724,6 +740,8 @@ validate_Precondition(sa);
 		wait(Locators_Messaging.type_text1, 80);
 		clickOn_Send();
 		validate_New_And_Old_Recipients(sa);
+		validate_SentMessage(sa);
+
 		sa.assertAll();
 	}
 	@Test(priority = 29, dataProvider = "XP8_Messaging", dataProviderClass = DataProviders.class)
@@ -739,6 +757,9 @@ validate_Precondition(sa);
 		enterText_MessageField(data.get("typeMessage"));
 
 		group_Coversation();
+		clickBtn(Locators_Messaging.OKBtn1);
+		wait(Locators_Messaging.TO_Field_phno1, 60);
+		clickBtn(Locators_Messaging.TO_Field_phno1);
 		aDriver.pressKeyCode(AndroidKeyCode.BACKSPACE);
 		aDriver.pressKeyCode(AndroidKeyCode.ENTER);
 		minWait();
@@ -757,13 +778,13 @@ validate_Precondition(sa);
 		clearRecentApps();
 
 		launch_APP(Locators_Messaging.Messaging);
-		customWait(5000);
+		aDriver.openNotifications();
 		make_Call_from_RefDev();
-		customWait(5000);
+		customWait(15000);
 		reject_Call_With_SMS_O("hi");
 		customWait(5000);
 		endCall_RefDevice();
-	
+	wait(Locators_Messaging.Messaging, 20);
 		validate_SentMessage(sa);
 
 
@@ -777,25 +798,35 @@ validate_Precondition(sa);
 		SoftAssert sa = new SoftAssert();
 		APP_LOGS.info("===========XP8_Messaging============");
 		clearRecentApps();
-
+//
 		launch_APP(Locators_Messaging.Messaging);
-		
-
-		aDriver.openNotifications();
-		sendSMS_fromRefDevice();
-		wait(Locators_Messaging.recive_sms, 80);
-		reply_From_Notification_bar();
-		enterText_MessageField(data.get("typeMessage"));
-		clickOn_Send();
-
+		enable_Notification();
+		validate_enable_Notification(sa);
 		aDriver.pressKeyCode(AndroidKeyCode.BACK);
-		disable_Notification();
-		validate_Disable_Notification(sa);
 		aDriver.openNotifications();
 		sendSMS_fromRefDevice();
-		validate_Disabled_Notification_Received_SMS_InPrimary(sa);
-
+		wait(Locators_Messaging.forward_Text_A, 80);
+		reply_From_Notification_bar();
+        enterTextToInputField1(Locators_Messaging.type_text2, data.get("typeMessage"));
+         clickBtn(Locators_Messaging.send_Icon3);
+		aDriver.pressKeyCode(AndroidKeyCode.BACK);
+		validate_SentMessage(sa);
 		sa.assertAll();
+	}
+	@Test(priority = 32, dataProvider = "XP8_Data_Setting", dataProviderClass = DataProviders.class)
+	public void XP8_TC_32_XP8_Messaging_Postcondition(Hashtable<String, String> data)
+			throws InterruptedException, AWTException, IOException {
+		SoftAssert sa = new SoftAssert();
+		APP_LOGS.info("===========XP8_TC_01_Data_Setting============");
+		clearRecentApps();
+		delete_contact();
+		performAction();
+		deleteall_SMS();
+  disable_Group_Messaging();
+  validate_Postcondition(sa);
+		
+		sa.assertAll();
+
 	}
 
 }

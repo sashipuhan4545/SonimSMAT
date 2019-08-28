@@ -460,7 +460,7 @@ import io.appium.java_client.android.AndroidDriver;
 		public static AndroidElement MORE;
 		@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.Button\").textContains(\"ACCEPT\")")
 		public static AndroidElement ACCEPT;
-		@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.ImageView\").descriptionContains(\"WiÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬ËœFi\")")
+		@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.ImageView\").descriptionContains(\"WiÃ¢â‚¬â€˜Fi\")")
 		public static AndroidElement WIFI_STATE;
 		
 		@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").textContains(\"YouTube\")")

@@ -113,6 +113,8 @@ public class XP8_Wifi_Test extends XP8_Wifi_Util {
 		PageFactory.initElements(new AppiumFieldDecorator(aDriver),loc1);
 		excel=new ExcelReader(ExcelConstants.XP5S_XL_PATH);	
 		preCond_setSleepTime();
+		aDriver.rotate(ScreenOrientation.PORTRAIT);System.out.println("Before test excuted");
+
 	}
 	
 	//============================================================Test Case=======================================================================================
@@ -124,7 +126,8 @@ public class XP8_Wifi_Test extends XP8_Wifi_Util {
 		SoftAssert sa=new SoftAssert();
 		//Giving Wrong Password and Checking the Wifi
 		APP_LOGS.info("===========XP8_TC_01_Wifi_WrongPassword============");
-		
+	//	aDriver.rotate(ScreenOrientation.PORTRAIT);
+
 		 for(int i=1;i<=itr;i++) {
 		if(operator.contains("-10") || operator.contains("-11") || operator.contains("-15") || operator.contains("-26") || operator.contains("-29")) {
 			launch_an_app("settings");
@@ -356,7 +359,7 @@ public class XP8_Wifi_Test extends XP8_Wifi_Util {
 			verify_WifiScanningDevice(sa);
 			verify_SignalLevel_IsDisplayed(sa);
 			verify_SecurityType_IsDisplayed(sa);
-			verify_quickWifiConnected(sa);
+			//verify_quickWifiConnected(sa);
 		
 		}else  {																//others
 			getNotificationWindow();
@@ -370,7 +373,7 @@ public class XP8_Wifi_Test extends XP8_Wifi_Util {
 			verify_WifiScanningDevice(sa);
 			verify_SignalLevel_IsDisplayed(sa);
 			verify_SecurityType_IsDisplayed(sa);
-			verify_quickWifiConnected(sa);
+			//verify_quickWifiConnected(sa);
 		 }
 		 }
 		sa.assertAll();
@@ -680,7 +683,7 @@ public class XP8_Wifi_Test extends XP8_Wifi_Util {
 			remove_connectedNtwrk();
 			longPress_Ssid(WIFI_SSID);
 			validate_ConnectToNetwork(sa);
-			clickOn_ConnectToNetwork();
+	//		clickOn_ConnectToNetwork();
 		}else  {																		//others
 			launch_an_app("settings");
 			clickOnNetwork_Internet();
@@ -689,7 +692,7 @@ public class XP8_Wifi_Test extends XP8_Wifi_Util {
 			remove_connectedNtwrk();
 			longPress_Ssid(WIFI_SSID);
 			validate_ConnectToNetwork(sa);
-			clickOn_ConnectToNetwork();
+	//		clickOn_ConnectToNetwork();
 		 }}
 		sa.assertAll();
 		}
@@ -824,7 +827,8 @@ if(operator.contains("-10") || operator.contains("-11") || operator.contains("-1
 		remove_connectedNtwrk();
 		connect_to_WiFi_Landscape(WIFI_SSID,WIFI_PWD);
 		validate_WifiConnected(sa);
-		verify_quickWifiConnected(sa);		
+		clearRecentApps();
+		//verify_quickWifiConnected(sa);		
 		customWait(10000);
 		aDriver.rotate(ScreenOrientation.PORTRAIT);
 }else {
@@ -835,8 +839,9 @@ if(operator.contains("-10") || operator.contains("-11") || operator.contains("-1
 		turnOn_Wifi();
 		remove_connectedNtwrk();
 		connect_to_WiFi_Landscape(WIFI_SSID,WIFI_PWD);
-		validate_WifiConnected(sa);
-		verify_quickWifiConnected(sa);		
+		validate_WifiConnected(sa);	
+		clearRecentApps();
+		//verify_quickWifiConnected(sa);		
 		customWait(10000);
 		aDriver.rotate(ScreenOrientation.PORTRAIT);
         }
@@ -981,9 +986,9 @@ if(operator.contains("-10") || operator.contains("-11") || operator.contains("-1
 			launch_an_app("settings");
 			clickOnNetwork_Internet();
 			clickOn_Wifi_Lnk();
-			turnOn_Wifi();
-			remove_connectedNtwrk();
-			connect_to_WiFi(WIFI_SSID,WIFI_PWD);
+			turnOn_Wifi();customWait(2000);
+			remove_connectedNtwrk();customWait(2000);
+			connect_to_WiFi(WIFI_SSID,WIFI_PWD);customWait(2000);
 			clickOn_WifiPreferences();
 			clickOn_Advanced();
 			verify_IP_MAC_NotEditable(sa);

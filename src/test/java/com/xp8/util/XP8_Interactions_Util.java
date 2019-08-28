@@ -83,6 +83,10 @@ public class XP8_Interactions_Util extends BaseUtil {
 				enterTextToInputField(Locators_Interactions.skypeedittxt, phone);
 				wait.until(ExpectedConditions.visibilityOf(Locators_Interactions.skypenext));
 				clickBtn(Locators_Interactions.skypenext);
+				if(isElementExist(Locators_Interactions.skypeusernameerror))
+					{
+					clickBtn(Locators_Interactions.skypenext);
+					}
 				wait.until(ExpectedConditions.visibilityOf(Locators_Interactions.skypepassword));
 				enterTextToInputField(Locators_Interactions.skypepassword,text);
 				wait.until(ExpectedConditions.visibilityOf(Locators_Interactions.skypesign));
@@ -166,7 +170,7 @@ public class XP8_Interactions_Util extends BaseUtil {
 				 minWait();
 				 aDriver.pressKeyCode(AndroidKeyCode.BACK);
 				 minWait();
-
+				 aDriver.pressKeyCode(AndroidKeyCode.HOME);
 					//clickBtn(Locators_Interactions.gaanaskip);
 				/* wait.until(ExpectedConditions.visibilityOf(Locators_Interactions.gaanacontinue));
 					clickBtn(Locators_Interactions.gaanacontinue);
@@ -179,8 +183,11 @@ public class XP8_Interactions_Util extends BaseUtil {
 			    aDriver.pressKeyCode(AndroidKeyCode.HOME);
 				Runtime.getRuntime().exec("adb -s "+p_Id+" install .\\src\\test\\resources\\StorageFile\\Gaanamusicapp.apk");
 				customWait(5000);
+			 aDriver.pressKeyCode(AndroidKeyCode.HOME);
 				launch_APP(Locators_Interactions.gaana);
+				System.out.println("gaana in");
 				wait.until(ExpectedConditions.visibilityOf(Locators_Interactions.gaanacontinue2));
+				System.out.println("gaana out");
 				 clickBtn(Locators_Interactions.gaanacontinue2);
 					//clickBtn(Locators_Interactions.gaanaskip);
 				 aDriver.pressKeyCode(AndroidKeyCode.BACK);
@@ -702,8 +709,7 @@ public class XP8_Interactions_Util extends BaseUtil {
 				customWait(2000);
 				clickBtn(Locators_Interactions.bt);
 				customWait(2000);
-				clickBtn(Locators_Interactions.bt);
-				customWait(2000);
+				
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -733,15 +739,12 @@ public class XP8_Interactions_Util extends BaseUtil {
 public void enable_disable_data(){
 			
 			try {
-				swipe_NotificationBar();
-				swipe_QuickPanel_SecondPage();
-				clickBtn(Locators_Interactions.data);
-				customWait(2000);
-				clickBtn(Locators_Interactions.data);
-				customWait(2000);
-				clickBtn(Locators_Interactions.data);
-				customWait(2000);
-			} catch (InterruptedException e) {
+				launch_an_app("settings");
+				clickOn_Networks_and_Internet();
+				scrollToText("Mobile network");
+				enable_Mobile_Data();
+				minWait();
+				} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -755,8 +758,7 @@ public void enable_disable_data(){
 				customWait(2000);
 				clickBtn(Locators_Interactions.wifi);
 				customWait(2000);
-				clickBtn(Locators_Interactions.wifi);
-				customWait(2000);
+				
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -774,8 +776,7 @@ public void enable_disable_data(){
 			customWait(2000);
 			clickBtn(Locators_Interactions.locationswitch);
 			customWait(2000);
-			clickBtn(Locators_Interactions.locationswitch);
-			customWait(2000);
+			
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -840,8 +841,7 @@ public void enable_disable_data(){
     		 customWait(5000);
     		 if(isElementExist(Locators_Interactions.ontimer)){
     			 wait.until(ExpectedConditions.visibilityOf(Locators_Interactions.deletetimer));
-     			
-    			 clickBtn(Locators_Interactions.deletetimer);
+     		     clickBtn(Locators_Interactions.deletetimer);
     			 APP_LOGS.info("Timer saved");
  				System.out.println("Timer saved");
  				sa.assertTrue(true, "Timer saved");
@@ -1067,13 +1067,14 @@ public void enable_disable_data(){
 		try{
 			Runtime.getRuntime().exec("adb -s "+p_Id+" shell pm clear com.google.android.apps.maps");
     		launch_APP(Locators_Interactions.maps);
-    		clickBtn(Locators_Interactions.skip);
+    		if(isElementExist(Locators_Interactions.skip)){
+    			clickBtn(Locators_Interactions.skip);
+    		}
+    		
     		if(isElementExist(Locators_Interactions.okBtn)){
     			clickBtn(Locators_Interactions.okBtn);
     		}
-    		else{
     		clickBtn(Locators_Interactions.go);
-    		}
     		if(isElementExist(Locators_Interactions.mapvalidate)){
 				APP_LOGS.info("map is validated");
 				System.out.println("map is validated");
@@ -1206,16 +1207,19 @@ public void enable_disable_data(){
 		
 	}
 	public void Musicplay_gaana(SoftAssert sa){
+		WebDriverWait wait = new WebDriverWait(aDriver, 60);
 		try{
-		     	customWait(10000);
+			  wait.until(ExpectedConditions.visibilityOf(Locators_Interactions.gaanaframe));
 			    clickBtn(Locators_Interactions.gaanaframe);
+			    wait.until(ExpectedConditions.visibilityOf(Locators_Interactions.gaanahome));
 			    clickBtn(Locators_Interactions.gaanahome);
 				scrollToText("Trending Songs");
 				//clickBtn(Locators_Interactions.gaanasongslt);
+				wait.until(ExpectedConditions.visibilityOf(Locators_Interactions.gaanaplay));
 				clickBtn(Locators_Interactions.gaanaplay);
 				customWait(10000);
 				aDriver.openNotifications();
-				customWait(5000);
+				wait.until(ExpectedConditions.visibilityOf(Locators_Interactions.gaananotification));
 			if(isElementExist(Locators_Interactions.gaananotification)){
 				
 				APP_LOGS.info("GaanaNotification is validated");
@@ -1356,14 +1360,16 @@ public void enable_disable_data(){
 		launch_an_app("browser");
 		wait.until(ExpectedConditions.visibilityOf(Locators_Interactions.chromeaccept));
 		clickBtn(Locators_Interactions.chromeaccept);
+		wait.until(ExpectedConditions.visibilityOf(Locators_Interactions.chromenext));
 	    clickBtn(Locators_Interactions.chromenext);
+	    wait.until(ExpectedConditions.visibilityOf(Locators_Interactions.chromenothanks));
 	    clickBtn(Locators_Interactions.chromenothanks);
 	   Runtime.getRuntime().exec("adb -s "+p_Id+" shell am start -a android.intent.action.VIEW -d https://"+url);
 		customWait(3000); 
 		aDriver.pressKeyCode(AndroidKeyCode.ENTER);
 		minWait();
 		System.out.println("URL Entered");
-		customWait(10000);
+		wait.until(ExpectedConditions.visibilityOf(Locators_Interactions.chromegoogle));
 		if(isElementExist(Locators_Interactions.chromegoogle)){
 			APP_LOGS.info("Browser is validated");
 			System.out.println("Browser is validated");
@@ -1597,9 +1603,9 @@ public void enable_disable_data(){
 				wait.until(ExpectedConditions.visibilityOf(Locators_Interactions.skypehomechats));
 					clickBtn(Locators_Interactions.skypehomechats);
 					
-					customWait(8000);
-					//Runtime.getRuntime().exec("adb -s "+p_Id+" shell input tap 843 1707");
 					
+					//Runtime.getRuntime().exec("adb -s "+p_Id+" shell input tap 843 1707");
+					wait.until(ExpectedConditions.visibilityOf(Locators_Interactions.skypestart));
 					clickBtn(Locators_Interactions.skypestart);
 					
 					//clickBtn(Locators_Interactions.skypeNEWCHT);

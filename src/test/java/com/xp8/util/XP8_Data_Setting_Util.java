@@ -102,7 +102,6 @@ public class XP8_Data_Setting_Util extends BaseUtil {
 		boolean disabled = false;
 		try {
 			scrollTo("Airplane mode");
-			scrollToElements(Locators_Data_Setting.airplanemodeswitchonoff);
 			if(Locators_Data_Setting.airplanemodeswitchonoff.getText().equalsIgnoreCase("on")) {
 			clickBtn(Locators_Data_Setting.airplanemodeswitchonoff);
 			}

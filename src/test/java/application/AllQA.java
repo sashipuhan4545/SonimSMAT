@@ -121,8 +121,8 @@ public class AllQA  extends CommonConfig {
 	ObservableList<String> stability = FXCollections.observableArrayList("Contacts Stability",/*"Multitasking",*/"Wifi","Network Stability","Browser Stability","Device Stability","SMS"/*,*/);
 	ObservableList<String> ATTStablity = FXCollections.observableArrayList("Telephony","Email");
 	ObservableList<String> ptt = FXCollections.observableArrayList("KodiakPTT");
-	ObservableList<String> IOT = FXCollections.observableArrayList("Interaction Cases","Interruption Cases");
-	ObservableList<String> dataconnectivity = FXCollections.observableArrayList("DataUsageSettings","Wi-fi","Data Settings");
+	ObservableList<String> IOT = FXCollections.observableArrayList("Interaction Cases");
+	ObservableList<String> dataconnectivity = FXCollections.observableArrayList("DataUsageSettings","Wi-fi","DataSettings");
 
 
 
@@ -1492,6 +1492,7 @@ public class AllQA  extends CommonConfig {
 								TestNG runner=new TestNG();
 								List<String> suitefiles=new ArrayList<String>();
 								suitefiles.add("src/test/resources/drivers/XP8_Messaging.xml");
+								System.out.println("XP8 messaging ..............");
 								runner.setTestSuites(suitefiles);
 								runner.run();	
 
@@ -1528,6 +1529,7 @@ public class AllQA  extends CommonConfig {
 								TestNG runner=new TestNG();
 								List<String> suitefiles=new ArrayList<String>();
 								suitefiles.add("src/test/resources/drivers/XP8_DataUsageSettings.xml");
+								System.out.println("XP8 DataUsagesettings..........");
 								runner.setTestSuites(suitefiles);
 								runner.run();	
 
@@ -5587,6 +5589,15 @@ public class AllQA  extends CommonConfig {
 						CommonConfig.CALL_MODULE="";
 						System.out.println("Here we are reseting the Call Module to null");
 						iteration_Input_Dialog();
+						
+					}else if (newValue.equals("Device Sanity") || newValue.equals("Interaction Cases")) {
+						
+						CommonConfig.CALL_MODULE="";
+						System.out.println("Here we are reseting the Call Module to null");
+						testCaseDisplay.setStyle("-fx-text-inner-color: green;");
+						testCaseDisplay.setText("Please follow the below preconditions :\n\n1. Side Connector should be connected \n2. Head phone should be connected");
+						
+						
 					}else {
 						System.out.println("Here we are reseting the Call Module to null");
 						CommonConfig.CALL_MODULE="";

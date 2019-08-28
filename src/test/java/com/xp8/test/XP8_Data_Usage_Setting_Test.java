@@ -9,6 +9,7 @@ import java.util.Hashtable;
 import java.util.Properties;
 
 import org.json.simple.parser.ParseException;
+import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
@@ -23,6 +24,8 @@ import com.graphics.gui.JsonFileReaderAndWriter;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTestInterruptedException;
 import com.relevantcodes.extentreports.LogStatus;
+import com.xp5S.util.GetMethods;
+import com.xp5S.util.appiumService;
 import com.xp8.util.DataProviders;
 import com.xp8.util.ExcelConstants;
 import com.xp8.util.ExcelReader;
@@ -57,12 +60,12 @@ public class XP8_Data_Usage_Setting_Test extends XP8_Data_Usage_Setting_Util{
 		fetch_Devices_Details();	
 		
 		
-		/*try {
+		try {
 			appiumService.TOTAL_NUM_OF_TESTCASES=GetMethods.TotalTestcase("XP8_TC", this.getClass());
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}*/
+		}
 	}
 
 	
@@ -126,6 +129,7 @@ public class XP8_Data_Usage_Setting_Test extends XP8_Data_Usage_Setting_Util{
 		APP_LOGS.info("===========XP8_TC_00_Data_Usage_Setting_PreConditions============");
 		System.out.println("Precondition start");
 		SoftAssert sa=new SoftAssert();
+		aDriver.rotate(ScreenOrientation.PORTRAIT);
 		preCond_setSleepTime();
 		preCond_enableData();
 		preCond_browseData(videoName,durationInSeconds);
@@ -402,7 +406,7 @@ public class XP8_Data_Usage_Setting_Test extends XP8_Data_Usage_Setting_Util{
 			}
 	*/	
 		}
-	@Test(priority=3,dataProvider="XP8_Data_Usage_Setting", dataProviderClass=DataProviders.class)
+	@Test(priority=-3,dataProvider="XP8_Data_Usage_Setting", dataProviderClass=DataProviders.class)
 	public void XP8_TC_03_Data_Usage_Setting_Set_Data_Warning(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException, ParseException
 	{  
 		APP_LOGS.info("===========XP8_TC_03_Data_Usage_Setting============");
