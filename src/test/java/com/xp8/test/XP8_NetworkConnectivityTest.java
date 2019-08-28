@@ -30,6 +30,8 @@ import com.graphics.gui.JsonFileReaderAndWriter;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTestInterruptedException;
 import com.relevantcodes.extentreports.LogStatus;
+import com.xp5S.util.GetMethods;
+import com.xp5S.util.appiumService;
 import com.xp8.util.DataProviders;
 import com.xp8.util.ExcelConstants;
 import com.xp8.util.ExcelReader;
@@ -63,13 +65,19 @@ public class XP8_NetworkConnectivityTest extends XP8_Network_Stability_Util_orio
 		extent.loadConfig(new File(System.getProperty("user.dir")+"//ReportsConfig.xml"));
 		extent.addSystemInfo("Appium", "1.2.7").addSystemInfo("Environment", "TEST");
 		fetch_Devices_Details();	
+		
+		try {
+			appiumService.TOTAL_NUM_OF_TESTCASES=GetMethods.TotalTestcase("XP8_TC", this.getClass());
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@BeforeMethod()
 	public  void beforeMethod(Method method) 
 	{
 		test = extent.startTest( (this.getClass().getSimpleName() +" :: "+  method.getName()),method.getName()); //Test Case Start Here
-		test.assignAuthor("Farheen Taj"); //Test Script Author Name
 		clear_ChromeHistory();
 	}
 
@@ -114,6 +122,7 @@ public class XP8_NetworkConnectivityTest extends XP8_Network_Stability_Util_orio
 		PageFactory.initElements(new AppiumFieldDecorator(aDriver),loc1);
 		excel=new ExcelReader(ExcelConstants.XP5S_XL_PATH);	
 		operator=JsonFileReaderAndWriter.primaryDevFirmwareReader();
+		
 
 	}
 	
