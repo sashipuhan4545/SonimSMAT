@@ -469,6 +469,7 @@ public class New_SanityTest extends New_SanityUtil {
 		disable_AirplaneMode();
 		navigateTo_Apn();
 		add_Apn(dt.get("APN_name"), dt.get("APN"), dt.get("APN_type"));
+		customWait(2000);
 		validate_AddedApn(sa, dt.get("APN_name"), dt.get("APN"));
 		delete_Apn(dt.get("APN_name"));
 		validate_DeletedApn(sa, dt.get("APN_name"));
@@ -1041,29 +1042,7 @@ public class New_SanityTest extends New_SanityUtil {
 		  sa.assertAll();
 	}
 	
-	/*@Test(priority = 16, dataProvider = "XP8_NewSanityTest", dataProviderClass = DataProviders.class) // 137
-	public void XP8_DeviceSanity_0020_Enable_Disable_AirplaneMode_In_QuickStng(Hashtable<String, String> dt)
-			throws InterruptedException, IOException, AWTException {
-		APP_LOGS.info("===================== XP8_DeviceSanity_0020_Enable_Disable_AirplaneMode_In_QuickStng ======================");
-		SoftAssert sa = new SoftAssert();
-		launch_APP(New_SanityLocators.phone);
-		swipe_NotificationBar();
-		swipe_QuickPanel_SecondPage();
-		enable_Shortcuts_In_QuickPanel(New_SanityLocators.airplane_OffState_QuickPanel_O);
-		launch_APP(New_SanityLocators.phone);
-		dialCallUsingDialPad(refNum);
-		validate_Airplane_Enable(refNum);
-		swipe_NotificationBar();
-		swipe_QuickPanel_SecondPage();
-		disable_Shortcuts_QuickPanel(New_SanityLocators.airplane_OnState_QuickPanel_O);
-		launch_APP(New_SanityLocators.phone);
-		dialCallUsingDialPad(refNum);
-		validate_Airplane_Disable(refNum);
-		end_Call();
-		sa.assertAll();
-	}*/
-	
-	/*@Test(priority = 50, dataProvider = "XP8_NewSanityTest", dataProviderClass = DataProviders.class) // 82
+	@Test(priority = 50, dataProvider = "XP8_NewSanityTest", dataProviderClass = DataProviders.class) // 82
 	public void XP8_DeviceSanity_0050_RejectMT_call_With_SMS(Hashtable<String, String> dt)
 			throws InterruptedException, IOException, AWTException {
 		APP_LOGS.info("===================== XP8_DeviceSanity_0021_RejectMT_call_With_SMS ======================");
@@ -1078,6 +1057,6 @@ public class New_SanityTest extends New_SanityUtil {
 		validate_SentMessage(sa);
 		delete_SMS();
 		sa.assertAll();
-	}*/
+	}
 	
 }

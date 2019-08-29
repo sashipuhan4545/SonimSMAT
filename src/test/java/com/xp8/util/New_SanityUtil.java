@@ -2006,6 +2006,7 @@ public class New_SanityUtil extends BaseUtil {
 		/* To validate the Sent Message. */
 
 		WebDriverWait wait = new WebDriverWait(aDriver, 120);
+		launch_an_app("messaging");
 		wait.until(ExpectedConditions.visibilityOf(New_SanityLocators.now_Text));
 		try {
 			if (isElementExist(New_SanityLocators.now_Text) || isElementExist(New_SanityLocators.not_Sent_Text)) {
@@ -2560,28 +2561,39 @@ public class New_SanityUtil extends BaseUtil {
 
 		try {
 			clickBtn(New_SanityLocators.Apn_addNewApnBtn);
-
+			wait(New_SanityLocators.APNname, 5);
 			// Add Apn Name
 			clickBtn(New_SanityLocators.APNname);
-			enterTextToInputField(New_SanityLocators.APNinput, Apn_name);
+			minWait();
+			//enterTextToInputField(New_SanityLocators.APNinput, Apn_name); //the field is pasting the text previsiouly copied also
+			//New_SanityLocators.APNinput.sendKeys(Apn_name);
+			Runtime.getRuntime().exec("adb -s " + p_Id + " shell input text "+ Apn_name);
+			minWait();
 			wait(New_SanityLocators.Allow_Btn, 30);
 			clickBtn(New_SanityLocators.Allow_Btn);
 			minWait();
 
 			// Add Apn No
 			clickBtn(New_SanityLocators.APNno);
-			enterTextToInputField(New_SanityLocators.APNinput, Apn);
+			minWait();
+			Runtime.getRuntime().exec("adb -s " + p_Id + " shell input text "+ Apn);
+			minWait();
 			wait(New_SanityLocators.Allow_Btn, 30);
 			clickBtn(New_SanityLocators.Allow_Btn);
 
 			// Add Apn Type
 			scrollToText("APN type");
-			enterTextToInputField(New_SanityLocators.APNinput, Apn_Type);
+			minWait();
+			New_SanityLocators.APNinput.clear();
+			minWait();
+			Runtime.getRuntime().exec("adb -s " + p_Id + " shell input text "+ Apn_Type);
+			minWait();
 			wait(New_SanityLocators.Allow_Btn, 30);
 			clickBtn(New_SanityLocators.Allow_Btn);
 
 			// save the apn
 			clickBtn(New_SanityLocators.MoreOptionsBtn);
+			minWait();
 			clickBtn(New_SanityLocators.APN_SaveOpt);
 
 			customWait(2000);
@@ -2708,18 +2720,19 @@ public class New_SanityUtil extends BaseUtil {
 
 			New_SanityLocators.google_urlBar.clear();
 			customWait(2000);
-			enterTextToInputField(New_SanityLocators.google_urlBar, "https://start.att.net");		
+			enterTextToInputField(New_SanityLocators.google_urlBar, " https://start.att.net");		
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_ENTER);
-			wait(New_SanityLocators.Att_homepageLogo, 30);
-			boolean check1 = New_SanityLocators.Att_homepageLogo.isDisplayed();
-			wait(New_SanityLocators.Att_mailIcon, 15);
-			boolean check2 = New_SanityLocators.Att_mailIcon.isDisplayed();
+			wait(New_SanityLocators.Att_netlogo, 30);
+			boolean check3 = isElementExist(New_SanityLocators.Att_netlogo);
+			boolean check1 = isElementExist(New_SanityLocators.Att_homepageLogo);
+			boolean check2 = isElementExist(New_SanityLocators.Att_mailIcon);
+			
 			minWait();
 
 			
 			
 
-			if (check1 && check2) {
+			if (check1 || check2 || check3 ) {
 				APP_LOGS.info("Suggeted URL Page Displayed Succeessfully using IPv4");
 				soft.assertTrue(true, "Suggeted URL Page Displayed Succeessfully using IPv4");
 				test.log(LogStatus.PASS, "Suggeted URL Page Displayed Succeessfully using IPv4");
