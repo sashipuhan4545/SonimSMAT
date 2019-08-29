@@ -1360,8 +1360,10 @@ public void enable_disable_data(){
 		launch_an_app("browser");
 		wait.until(ExpectedConditions.visibilityOf(Locators_Interactions.chromeaccept));
 		clickBtn(Locators_Interactions.chromeaccept);
-		wait.until(ExpectedConditions.visibilityOf(Locators_Interactions.chromenext));
-	    clickBtn(Locators_Interactions.chromenext);
+		wait.until(ExpectedConditions.visibilityOf(multi_Loc_Strategy(Locators_Interactions.chromenext, Locators_Interactions.chromenext_index, Locators_Interactions.chromenext_spath, Locators_Interactions.chromenext_txt, Locators_Interactions.chromenext_xpathtext, 408, 1872)));
+		multi_Loc_Strategy(Locators_Interactions.chromenext, Locators_Interactions.chromenext_index, Locators_Interactions.chromenext_spath, Locators_Interactions.chromenext_txt, Locators_Interactions.chromenext_xpathtext, 408, 1872);
+
+	    //clickBtn(Locators_Interactions.chromenext);
 	    wait.until(ExpectedConditions.visibilityOf(Locators_Interactions.chromenothanks));
 	    clickBtn(Locators_Interactions.chromenothanks);
 	   Runtime.getRuntime().exec("adb -s "+p_Id+" shell am start -a android.intent.action.VIEW -d https://"+url);
@@ -1647,16 +1649,28 @@ public void enable_disable_data(){
 				
 			}
 		public void skype_call(){
+			WebDriverWait wait = new WebDriverWait(aDriver, 600);
 			try{
 				clickBtn(Locators_Interactions.skypetouch);
 				clickBtn(Locators_Interactions.skypehomecontact);
 				customWait(3000);
 				clickBtn(Locators_Interactions.skypecontact);
+				multi_Loc_Strategy(Locators_Interactions.skypeaudiocall, Locators_Interactions.skypeaudiocall_desc,Locators_Interactions.skypeaudiocall_indx, Locators_Interactions.skypeaudiocall_txt,Locators_Interactions.skypeaudiocall_xpath,978,198);
 				clickBtn(Locators_Interactions.skypeaudiocall);
+				if(isElementExist(Locators_Interactions.skypecall)){
 				clickBtn(Locators_Interactions.skypecall);
-				customWait(9000);
+				}
+				customWait(10000);
+				if(isElementExist(Locators_Interactions.skypenotonline)){
+					aDriver.pressKeyCode(AndroidKeyCode.HOME);
+				}
+				if(isElementExist(Locators_Interactions.skypeaudioendcall)){
 				clickBtn(Locators_Interactions.skypeaudioendcall);
-				
+				aDriver.pressKeyCode(AndroidKeyCode.BACK);
+				}
+				else{
+					aDriver.pressKeyCode(AndroidKeyCode.HOME);
+				}
 			}catch (org.openqa.selenium.NoSuchElementException e) {
 
 				test.log(LogStatus.ERROR, "Error in the locators->skype_call()");
@@ -1670,6 +1684,7 @@ public void enable_disable_data(){
 			
 		}
 		public void share_photos(SoftAssert sa){
+			WebDriverWait wait = new WebDriverWait(aDriver, 600);
 			try{
 			if(isElementExist(Locators_Interactions.photosbackup)){
 				aDriver.pressKeyCode(AndroidKeyCode.BACK);
@@ -1681,11 +1696,15 @@ public void enable_disable_data(){
 				clickBtn(Locators_Interactions.skype);
 				if(isElementExist(Locators_BaseUtil.allow_PopUp)){
 				clearAllow();
+				wait.until(ExpectedConditions.visibilityOf(Locators_Interactions.skypesend));
 				clickBtn(Locators_Interactions.skypesend);
 				clickBtn(Locators_Interactions.skypedone);
+				customWait(10000);
 				}else{
+				wait.until(ExpectedConditions.visibilityOf(Locators_Interactions.skypesend));	
 				clickBtn(Locators_Interactions.skypesend);
 				clickBtn(Locators_Interactions.skypedone);
+				customWait(10000);
 				}
 			}
 			
@@ -1697,11 +1716,15 @@ public void enable_disable_data(){
 				clickBtn(Locators_Interactions.skype);
 				if(isElementExist(Locators_BaseUtil.allow_PopUp)){
 					clearAllow();
+					wait.until(ExpectedConditions.visibilityOf(Locators_Interactions.skypesend));
 					clickBtn(Locators_Interactions.skypesend);
 					clickBtn(Locators_Interactions.skypedone);
+					customWait(10000);
 					}else{
+				wait.until(ExpectedConditions.visibilityOf(Locators_Interactions.skypesend));		
 				clickBtn(Locators_Interactions.skypesend);
 				clickBtn(Locators_Interactions.skypedone);
+				customWait(10000);
 					}
     		 }
 			else if(isElementExist(Locators_Interactions.photonotnow)){
@@ -1713,13 +1736,18 @@ public void enable_disable_data(){
 				clickBtn(Locators_Interactions.skype);
 				if(isElementExist(Locators_BaseUtil.allow_PopUp)){
 					clearAllow();
+					wait.until(ExpectedConditions.visibilityOf(Locators_Interactions.skypesend));
 					clickBtn(Locators_Interactions.skypesend);
 					clickBtn(Locators_Interactions.skypedone);
+					customWait(10000);
 					}else{
+				wait.until(ExpectedConditions.visibilityOf(Locators_Interactions.skypesend));
 				  clickBtn(Locators_Interactions.skypesend);
 				clickBtn(Locators_Interactions.skypedone);
+				customWait(10000);
 					}	
 			}
+			
 			if(isElementExist(Locators_Interactions.skypeforward)){
 				APP_LOGS.info("photo shared via skype");
 				System.out.println("photo shared via skype");

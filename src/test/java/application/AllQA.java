@@ -90,7 +90,7 @@ import javafx.util.Pair;
 public class AllQA  extends CommonConfig {
 
 	//ObservableList<String> items=FXCollections.observableArrayList("Sanity Test","MultiMedia","Messaging","Connectivity","GMS","Browser","Settings","Tools","Contacts","Call","ScoutApps","Performance","DeviceFunctionality");
-	ObservableList<String> items=FXCollections.observableArrayList("New Sanity",/*"PTT"*//*"Sanity Test",*/"DataAndConnectivity","VOLTE-CallPerformance","3G-CallPerformance","Stability","Interaction","Messaging","Call"/*,"SCOUT","Call","Stability_AT&T-15595"*/);
+	ObservableList<String> items=FXCollections.observableArrayList("New Sanity",/*"PTT"*//*"Sanity Test",*/"DataAndConnectivity","VOLTE-CallPerformance","3G-CallPerformance","Stability","Interaction","Messaging","Call","Interruption"/*,"SCOUT","Call","Stability_AT&T-15595"*/);
 
 	//ObservableList<String> items=FXCollections.observableArrayList("Quick Sanity","Performance");
 	//	ObservableList<String> Sanity = FXCollections.observableArrayList("Sanity");
@@ -122,6 +122,8 @@ public class AllQA  extends CommonConfig {
 	ObservableList<String> ATTStablity = FXCollections.observableArrayList("Telephony","Email");
 	ObservableList<String> ptt = FXCollections.observableArrayList("KodiakPTT");
 	ObservableList<String> IOT = FXCollections.observableArrayList("Interaction Cases");
+	ObservableList<String> interruption = FXCollections.observableArrayList("Interruption Cases");
+
 	ObservableList<String> dataconnectivity = FXCollections.observableArrayList("DataUsageSettings","Wi-fi","DataSettings");
 
 
@@ -988,6 +990,11 @@ public class AllQA  extends CommonConfig {
 				listView.setItems(dataconnectivity);
 				listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 				
+			}else if (comboBoxItems=="Interruption") {
+				
+				listView.setItems(interruption);
+				listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+				
 			}
 
 
@@ -1537,6 +1544,24 @@ public class AllQA  extends CommonConfig {
 							}
 						});
 						usage.start();
+						break;
+
+						
+					case "Interruption Cases":
+
+						Thread interruption=new Thread(new Runnable() {
+							public void run() {
+
+								TestNG runner=new TestNG();
+								List<String> suitefiles=new ArrayList<String>();
+								suitefiles.add("src/test/resources/drivers/XP8_Interaction.xml");
+								runner.setTestSuites(suitefiles);
+								runner.run();	
+
+
+							}
+						});
+						interruption.start();
 						break;
 
 					
@@ -4245,6 +4270,35 @@ public class AllQA  extends CommonConfig {
 
 						try {
 							BaseUtil.openReportPath(interpath);
+						} catch (IOException e) {
+
+							e.printStackTrace();
+						}
+
+					}
+					else {
+						executionReportDoesnotExist("Test Report is not generated yet");
+
+					}
+					break;	
+					
+					
+					
+				case "Interruption Cases":
+
+					File interruption = new File("src/test/resources/extentreport/XP8_Interruption_Test.html");
+					File interrupDest = new File(System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog");
+					String interepath=System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog";
+					try {
+						FileUtils.copyFileToDirectory(interruption, interrupDest);
+					} catch (IOException e) {
+
+						e.printStackTrace();
+					}
+					if(interruption.exists()) {
+
+						try {
+							BaseUtil.openReportPath(interepath);
 						} catch (IOException e) {
 
 							e.printStackTrace();

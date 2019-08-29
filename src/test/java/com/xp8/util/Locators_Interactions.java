@@ -519,6 +519,19 @@ public class Locators_Interactions {
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.Button\").resourceId(\"com.android.chrome:id/next_button\")")
 	public static AndroidElement chromenext;
 	
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.Button\").resourceId(\"com.android.chrome:id/next_button\").text(\"Next\"")
+	public static AndroidElement chromenext_txt;
+	
+	@AndroidFindBy(xpath ="//android.widget.Button[@text='Next']")
+	public static AndroidElement chromenext_xpathtext;
+	
+	@AndroidFindBy(xpath = "//android.widget.Button[@resource-id='com.android.chrome:id/next_button']/../..//android.widget.Button[@text='Next']")
+	public static AndroidElement chromenext_spath;
+	
+	@AndroidFindBy(xpath = "//android.widget.Button[@index='1']/../..//android.widget.Button[@text='Next']")
+	public static AndroidElement chromenext_index;
+	
+	
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.Button\").resourceId(\"com.android.chrome:id/negative_button\")")
 	public static AndroidElement chromenothanks;
 	
@@ -623,24 +636,42 @@ public class Locators_Interactions {
 	public static AndroidElement share;
 	
 	//@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"Send\")")
-	@AndroidFindBy(xpath = "//android.widget.TextView[@text='Sonim Automation']/../..//android.widget.TextView[@text='Send']")
+	//@AndroidFindBy(xpath = "//android.widget.TextView[@text='Sonim Automation']/../..//android.widget.TextView[@text='Send']")
 	//@AndroidFindBy(xpath = "//android.view.ViewGroup[@index='1']/../..//android.widget.TextView[@text='Send']")
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.Button\").description(\"Send to Sonim Automation\")")
 	public static AndroidElement skypesend;
 	
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"Done\")")
 	public static AndroidElement skypedone;
 	
-	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.Button\").description(\"Forward\")")
+	@AndroidFindBy(accessibility="Open image")
+	//@AndroidFindBy(xpath = "//android.widget.ImageView[@index='0']/../..//android.widget.Button[@content-desc='Open image']")
 	public static AndroidElement skypeforward;
 	
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.Button\").description(\"Send message\")")
 	public static AndroidElement skypesendmsg;
+	
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"Sonim isn't online.\")")
+	public static AndroidElement skypenotonline;
 	
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"File Manager\")")
 	public static AndroidElement filemanager;
 	
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.Button\").description(\"Audio Call\")")
 	public static AndroidElement skypeaudiocall;
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.Button\").text(\"\")")
+	public static AndroidElement skypeaudiocall_txt;
+	
+	@AndroidFindBy(xpath ="//android.widget.Button[@content-desc='Audio Call']")
+	public static AndroidElement skypeaudiocall_desc;
+	
+	@AndroidFindBy(xpath = "//android.widget.Button[@index='3']/../..//android.widget.TextView[@index='1']")
+	public static AndroidElement skypeaudiocall_indx;
+	
+	@AndroidFindBy(xpath="//android.widget.TextView[@text='']")
+	public static AndroidElement skypeaudiocall_xpath;
+
 	
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Call\")")
 	public static AndroidElement skypecall;
@@ -670,7 +701,7 @@ public class Locators_Interactions {
 	//@AndroidFindBy(xpath="//*[@content-desc='Update available. More options' or @content-desc='More options']")
 	public static AndroidElement chromemenu;
 	
-	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"Shareâ€¦\")")
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"Share...\")")
 	public static AndroidElement chromeshare;
 
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"Messaging\")")
