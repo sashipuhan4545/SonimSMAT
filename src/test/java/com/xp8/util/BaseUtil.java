@@ -1311,12 +1311,56 @@ public class BaseUtil extends CommonConfig
 					
 				case "PTT":
 					
-				  
-					
-					
+					break;
+									
 				case "chrome":
 					scrollToElements(Locators_BaseUtil.chrome);
 					clickBtn(Locators_BaseUtil.chrome);
+					
+					break;
+				case "memoryFill":
+					scrollToElements(multi_Loc_Strategy(Locators_BaseUtil.memoryfillIcon, Locators_BaseUtil.memoryfillIconByXpath, null, null, null, 0, 0));
+					clickBtn(Locators_BaseUtil.memoryfillIcon);
+
+					APP_LOGS.info("Clicked on Memory_Fill_Icon successfully.");
+					break;
+					
+				case "messagePlus":
+					scrollToElements(Locators_BaseUtil.MessagePlus);
+					clickBtn(Locators_BaseUtil.MessagePlus);
+					APP_LOGS.info("Clicked on MessagePlus successfully.");
+					break;	
+					
+				case "youTube":
+					scrollToElements(Locators_BaseUtil.YouTube);
+					clickBtn(Locators_BaseUtil.YouTube);
+					APP_LOGS.info("Clicked on YouTube successfully.");
+					break;	
+					
+				case "playMusic":
+					scrollToElements(Locators_BaseUtil.PlayMusic);
+					clickBtn(Locators_BaseUtil.PlayMusic);
+					APP_LOGS.info("Clicked on Play Music successfully.");
+					break;	
+					
+				case "maps":
+					scrollToElements(Locators_BaseUtil.GoogleMaps);
+					clickBtn(Locators_BaseUtil.GoogleMaps);
+					APP_LOGS.info("Clicked on Google Maps successfully.");
+					break;	
+					
+				case "fileManager":
+					scrollToElements(Locators_BaseUtil.fileManager);
+					clickBtn(Locators_BaseUtil.fileManager);
+					APP_LOGS.info("Clicked on File Manager successfully.");
+					break;	
+					
+				case "photos":
+					scrollToElements(Locators_BaseUtil.googlePhotos);
+					clickBtn(Locators_BaseUtil.googlePhotos);
+					APP_LOGS.info("Clicked on Google Photos successfully.");
+					break;
+	
 					
 
 					
@@ -1797,5 +1841,38 @@ public class BaseUtil extends CommonConfig
 					
 				}
 				
+				
+				public void clickBackButton(int number) throws InterruptedException
+				{
+					/*
+					 * clicks on back button with iteration as user input
+					 */
+
+					try {
+						for(int i=0;i<number;i++){
+							minWait();
+							aDriver.pressKeyCode(AndroidKeyCode.BACK);
+						}
+					} catch (org.openqa.selenium.NoSuchElementException e) {
+						test.log(LogStatus.ERROR, "Error in the locators->clickBackButton()");
+						e.printStackTrace();
+
+					}catch (Exception e) {
+						test.log(LogStatus.ERROR, "Exception in clickBackButton()");
+						e.printStackTrace();
+					}
+				}
+
+				public void clickBackButton_without_try_catch(int number) throws InterruptedException
+				{
+					/*
+					 * clicks on back button with iteration as user input
+					 */
+
+					for(int i=0;i<number;i++){
+						minWait();
+						aDriver.pressKeyCode(AndroidKeyCode.BACK);
+					}
+				}
 			
 }

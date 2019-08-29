@@ -171,6 +171,43 @@ public class Locators_BaseUtil {
 
 	@AndroidFindBy(xpath = "//android.widget.TextView[@text='FillMemory']")
     public static AndroidElement fillmemoryIcon;
+	
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"Memory Fill\")")
+    public static AndroidElement memoryfillIcon;
+
+	@AndroidFindBy(xpath = "//android.widget.TextView[@content-desc='Memory Fill']")
+    public static AndroidElement memoryfillIconByXpath;
+	//=================================Message+===============================//
+
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Message+\")")
+	public static AndroidElement MessagePlus ;
+
+	//===============YouTube==================//
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"YouTube\")")
+	public static AndroidElement YouTube ;
+
+	//===========Play Music===================//
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Play Music\")")
+	public static AndroidElement PlayMusic ;
+
+	//================Google Maps==================//
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Maps\")")
+	public static AndroidElement GoogleMaps ;
+
+	//================File Manager==================//
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"File Manager\")")
+	public static AndroidElement fileManager;
+
+	//===============Google Photos=============================//
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Photos\")")
+	public static AndroidElement googlePhotos;
+	
+
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.Button\").text(\"Confirm\")")
+	public static AndroidElement confirmBtn;
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.Button\").text(\"Skip\")")
+	public static AndroidElement skipBtn;
 
 
 

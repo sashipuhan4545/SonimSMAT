@@ -1554,7 +1554,7 @@ public class AllQA  extends CommonConfig {
 
 								TestNG runner=new TestNG();
 								List<String> suitefiles=new ArrayList<String>();
-								suitefiles.add("src/test/resources/drivers/XP8_Interaction.xml");
+								suitefiles.add("src/test/resources/drivers/XP8_Interruption.xml");
 								runner.setTestSuites(suitefiles);
 								runner.run();	
 

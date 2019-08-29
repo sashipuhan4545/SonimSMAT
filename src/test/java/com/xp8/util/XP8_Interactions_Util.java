@@ -1360,10 +1360,11 @@ public void enable_disable_data(){
 		launch_an_app("browser");
 		wait.until(ExpectedConditions.visibilityOf(Locators_Interactions.chromeaccept));
 		clickBtn(Locators_Interactions.chromeaccept);
-		wait.until(ExpectedConditions.visibilityOf(multi_Loc_Strategy(Locators_Interactions.chromenext, Locators_Interactions.chromenext_index, Locators_Interactions.chromenext_spath, Locators_Interactions.chromenext_txt, Locators_Interactions.chromenext_xpathtext, 408, 1872)));
-		multi_Loc_Strategy(Locators_Interactions.chromenext, Locators_Interactions.chromenext_index, Locators_Interactions.chromenext_spath, Locators_Interactions.chromenext_txt, Locators_Interactions.chromenext_xpathtext, 408, 1872);
+		//wait.until(ExpectedConditions.visibilityOf(multi_Loc_Strategy(Locators_Interactions.chromenext, Locators_Interactions.chromenext_index, Locators_Interactions.chromenext_spath, Locators_Interactions.chromenext_txt, Locators_Interactions.chromenext_xpathtext, 408, 1872)));
+		//multi_Loc_Strategy(Locators_Interactions.chromenext, Locators_Interactions.chromenext_index, Locators_Interactions.chromenext_spath, Locators_Interactions.chromenext_txt, Locators_Interactions.chromenext_xpathtext, 408, 1872);
+		wait.until(ExpectedConditions.visibilityOf(Locators_Interactions.chromenext));
 
-	    //clickBtn(Locators_Interactions.chromenext);
+	    clickBtn(Locators_Interactions.chromenext);
 	    wait.until(ExpectedConditions.visibilityOf(Locators_Interactions.chromenothanks));
 	    clickBtn(Locators_Interactions.chromenothanks);
 	   Runtime.getRuntime().exec("adb -s "+p_Id+" shell am start -a android.intent.action.VIEW -d https://"+url);
