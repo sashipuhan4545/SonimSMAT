@@ -283,5 +283,13 @@ public class DataProviders {
 
 		return ExcelUtils.getData_aosp(testcase, excel,"XP8_Messaging");
 	}
+	
+	@DataProvider(name ="XP8_Interruption")
+	public static Object[][] XP8_Interruption_Test(Method m) throws Exception{
+		System.out.println(m.getName());
+		ExcelReader excel = new ExcelReader(ExcelConstants.XP5S_XL_PATH);
+		String testcase = m.getName();
+		return ExcelUtils.getData_aosp(testcase, excel,"XP8_Interruption");
+	}
 
 }
