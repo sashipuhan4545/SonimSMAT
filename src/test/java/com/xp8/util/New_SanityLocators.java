@@ -598,6 +598,9 @@ public class New_SanityLocators {
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.view.MenuItem\").text(\"Mail\")")
 	public static AndroidElement Att_mailIcon;
 	
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.Image\").text(\"att.net logo\")")
+	public static AndroidElement Att_netlogo;
+	
 	
 	
 	//////////////////// gobi sanity Locators //////////////////////
