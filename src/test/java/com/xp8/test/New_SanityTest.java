@@ -602,7 +602,7 @@ public class New_SanityTest extends New_SanityUtil {
 
 	/////////////////////////// gobi sanity//////////////////////////////////////////
 
-	@Test(priority= 26,dataProvider="XP8_NewSanityTest", dataProviderClass= DataProviders.class)
+/*	@Test(priority= 26,dataProvider="XP8_NewSanityTest", dataProviderClass= DataProviders.class)
 	public void XP8_DeviceSanity_26_Check_animation_during_call(Hashtable<String, String> data) throws InterruptedException, IOException, AWTException, ParseException 
 	{
 		SoftAssert sa=new SoftAssert();//88
@@ -1038,7 +1038,7 @@ public class New_SanityTest extends New_SanityUtil {
 		  validate_callHistory(sa,refNum);
 		  sa.assertAll();
 	}
-	
+*/	
 	@Test(priority = 50, dataProvider = "XP8_NewSanityTest", dataProviderClass = DataProviders.class) // 82
 	public void XP8_DeviceSanity_0050_RejectMT_call_With_SMS(Hashtable<String, String> dt)
 			throws InterruptedException, IOException, AWTException {

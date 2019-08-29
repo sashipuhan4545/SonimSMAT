@@ -90,7 +90,7 @@ import javafx.util.Pair;
 public class AllQA  extends CommonConfig {
 
 	//ObservableList<String> items=FXCollections.observableArrayList("Sanity Test","MultiMedia","Messaging","Connectivity","GMS","Browser","Settings","Tools","Contacts","Call","ScoutApps","Performance","DeviceFunctionality");
-	ObservableList<String> items=FXCollections.observableArrayList("New Sanity",/*"PTT"*//*"Sanity Test",*/"Sanity","DataAndConnectivity","VOLTE-CallPerformance","3G-CallPerformance","Stability","PTT","Interaction","Messaging","Call"/*,"SCOUT","Call","Stability_AT&T-15595"*/);
+	ObservableList<String> items=FXCollections.observableArrayList("New Sanity",/*"PTT"*//*"Sanity Test",*/"DataAndConnectivity","VOLTE-CallPerformance","3G-CallPerformance","Stability","Interaction","Messaging","Call"/*,"SCOUT","Call","Stability_AT&T-15595"*/);
 
 	//ObservableList<String> items=FXCollections.observableArrayList("Quick Sanity","Performance");
 	//	ObservableList<String> Sanity = FXCollections.observableArrayList("Sanity");
@@ -1568,6 +1568,8 @@ public class AllQA  extends CommonConfig {
 								TestNG runner=new TestNG();
 								List<String> suitefiles=new ArrayList<String>();
 								suitefiles.add("src/test/resources/drivers/XP8_Contact_Stability.xml");
+								
+								System.out.println("XP8 Contact stability");
 								runner.setTestSuites(suitefiles);
 								runner.run();	
 

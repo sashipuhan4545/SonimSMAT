@@ -56,7 +56,7 @@ public class XP8_Messaging_Test extends XP8_Messaging_Util {
 	public int itr = AllQA.NUMOFCALLS;
 	boolean value = false;
 	public String pw = AllQA.WIFIPASSWORD;
-	int n = 3;
+	int n = 5;
 
 	@BeforeSuite
 	public void beforeSuite() throws FileNotFoundException, InterruptedException, IOException, ParseException {
@@ -431,7 +431,7 @@ public class XP8_Messaging_Test extends XP8_Messaging_Util {
 		clearSMSPermissions();
 		navigateTo_NewSMS();
 		enter_Num_ToField(refNum);
-		for (int i = 0; i < itr; i++) {
+		for (int i = 0; i < n; i++) {
 			enterText_MessageField(data.get("typeMessage"));
 			clickOn_Send();
 
@@ -533,7 +533,7 @@ public class XP8_Messaging_Test extends XP8_Messaging_Util {
 		SoftAssert sa = new SoftAssert();
 		clearRecentApps();
 		launch_an_app("contacts");
-		for (int i = 1; i < itr; i++) {
+		for (int i = 1; i < n; i++) {
 			Click_ON_Phone();
 			clickBtn(Locators_Messaging.AddtoContact);
 			createContact_A("Test" + i, data.get("number" + i));
@@ -582,7 +582,7 @@ public class XP8_Messaging_Test extends XP8_Messaging_Util {
 
 		launch_an_app("contacts");
 
-		for (int i = 1; i < itr; i++) {
+		for (int i = 1; i < n; i++) {
 			clickBtn(Locators_Messaging.AddtoContact);
 			Click_ON_SIM();
 
