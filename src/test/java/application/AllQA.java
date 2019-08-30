@@ -4286,7 +4286,7 @@ public class AllQA  extends CommonConfig {
 					
 				case "Interruption Cases":
 
-					File interruption = new File("src/test/resources/extentreport/XP8_Interruption_Test.html");
+					File interruption = new File("src/test/resources/extentreport/XP8_Interruption_TestReport.html");
 					File interrupDest = new File(System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog");
 					String interepath=System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog";
 					try {
