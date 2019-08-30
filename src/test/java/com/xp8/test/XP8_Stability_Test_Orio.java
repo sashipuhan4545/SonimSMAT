@@ -53,51 +53,60 @@ public class XP8_Stability_Test_Orio extends XP8_DeviceStability_Util_orio {
 	boolean value = false;
 	public String pw =AllQA.WIFIPASSWORD;
 
-	//	@BeforeSuite
-	//	public void beforeSuite() throws FileNotFoundException, InterruptedException, IOException, ParseException, ParseException  
-	//	{
-	//		extent = new ExtentReports("src/test/resources/extentreport/XP8_DeviceStability_Orio_TestReport.html", true); //Provide Desired Report Directory Location and Name
-	//
-	//		extent.loadConfig(new File(System.getProperty("user.dir")+"//ReportsConfig.xml"));
-	//
-	//		extent.loadConfig(new File("src/test/resources/StorageFile/ReportsConfig.xml"));
-	//		extent.addSystemInfo("Build #",JsonFileReaderAndWriter.primaryDevFirmwareReader())
-	//		.addSystemInfo("Product",JsonFileReaderAndWriter.primaryDevModelReader())
-	//		.addSystemInfo("Operator", JsonFileReaderAndWriter.primaryDevOperatorReader());		
-	//
-	//		fetch_Devices_Details();	
-	//	}
+//	@BeforeSuite
+//	public void beforeSuite() throws FileNotFoundException, InterruptedException, IOException, ParseException, ParseException  
+//	{
+//		extent = new ExtentReports("src/test/resources/extentreport/XP8_DeviceStability_Orio_TestReport.html", true); //Provide Desired Report Directory Location and Name
+//
+//		extent.loadConfig(new File(System.getProperty("user.dir")+"//ReportsConfig.xml"));
+//
+//		extent.loadConfig(new File("src/test/resources/StorageFile/ReportsConfig.xml"));
+//		extent.addSystemInfo("Build #",JsonFileReaderAndWriter.primaryDevFirmwareReader())
+//		.addSystemInfo("Product",JsonFileReaderAndWriter.primaryDevModelReader())
+//		.addSystemInfo("Operator", JsonFileReaderAndWriter.primaryDevOperatorReader());		
+//
+//		fetch_Devices_Details();	
+//	}
 
 	@BeforeSuite
 	public void beforeSuite() throws FileNotFoundException, InterruptedException, IOException, ParseException {
 		extent = new ExtentReports("src/test/resources/extentreport/XP8_Device_Stability_Orio_TestReport.html", true); // Provide
-		// Desired
-		// Report
-		// Directory
-		// Location
+																														// Desired
+																														// Report
+																														// Directory
+																														// Location
 		extent.loadConfig(new File("src/test/resources/StorageFile/ReportsConfig.xml"));
 		extent.addSystemInfo("Build #", JsonFileReaderAndWriter.primaryDevFirmwareReader())
-		.addSystemInfo("Product", JsonFileReaderAndWriter.primaryDevModelReader())
-		.addSystemInfo("Operator", JsonFileReaderAndWriter.primaryDevOperatorReader());
-		
+				.addSystemInfo("Product", JsonFileReaderAndWriter.primaryDevModelReader())
+				.addSystemInfo("Operator", JsonFileReaderAndWriter.primaryDevOperatorReader());
+																			// and
+																														// Name
 		extent.loadConfig(new File(System.getProperty("user.dir") + "//ReportsConfig.xml"));
 		extent.addSystemInfo("Appium", "1.2.7").addSystemInfo("Environment", "TEST");
 		fetch_Devices_Details();
 	}
 
-		@BeforeSuite
-		public void numofTestCases() throws ClassNotFoundException {
-			
-			appiumService.TOTAL_NUM_OF_TESTCASES=GetMethods.TotalTestcase("XP8_TC", this.getClass());
-		}
-	
-	
+	@BeforeSuite
+	public void numofTestCases() throws ClassNotFoundException {
+		
+		appiumService.TOTAL_NUM_OF_TESTCASES=GetMethods.TotalTestcase("XP8_TC", this.getClass());
+	}
+
+//	@BeforeMethod()
+//	public  void beforeMethod(Method method) 
+//	{
+//		test = extent.startTest( (this.getClass().getSimpleName() +" :: "+  method.getName()),method.getName()); //Test Case Start Here
+//		test.assignAuthor(""); //Test Script Author Name
+//		String BuildNumber=BaseUtil.fetchDeviceProperty("adb shell getprop ro.build.id");
+//		test.assignCategory("Build #:"+BuildNumber);
+//	}
 
 	@BeforeMethod()
 	public void beforeMethod(Method method) throws IOException, InterruptedException {
 		test = extent.startTest((this.getClass().getSimpleName() + " :: " + method.getName()), method.getName()); // Test
-		// Case
-		// Start
+																													// Case
+																													// Start
+	test.assignAuthor("Navya Shree"); // Test Script Author Name
 
 	}
 
@@ -165,7 +174,7 @@ public class XP8_Stability_Test_Orio extends XP8_DeviceStability_Util_orio {
 		SoftAssert sa1 = new SoftAssert();
 		clearRecentApps();
 		performAction();
-
+	
 
 		deleteall_SMS();
 		delete_contact();
@@ -181,7 +190,7 @@ public class XP8_Stability_Test_Orio extends XP8_DeviceStability_Util_orio {
 		clearRecentApps();
 		launch_an_app("contacts");
 		for (int i = 1; i <= itr; i++) {
-
+			
 			if (p_b_No.contains("-29.")) {
 
 				createContact("Test" + i, refNum);
@@ -213,7 +222,7 @@ public class XP8_Stability_Test_Orio extends XP8_DeviceStability_Util_orio {
 	}
 
 
-
+ 
 	@Test(priority = 2, dataProvider = "XP8_Stability", dataProviderClass = DataProviders.class)
 	public void XP8_TC_02_Stability_Validate_Send_MO_IMS_SMS(Hashtable<String, String> data)
 			throws InterruptedException, AWTException, IOException, ParseException {
@@ -221,20 +230,20 @@ public class XP8_Stability_Test_Orio extends XP8_DeviceStability_Util_orio {
 		startAdbLog("XP8_Stability_02");
 		SoftAssert sa2 = new SoftAssert();
 		clearRecentApps();
+		
+ String fN = startRIL_Log();
+ 
+ System.err.println(value);
+value =  validate_RIL_Logs(fN, "RIL_REQUEST_IMS_REGISTRATION_STATE {1, 1} [SUB0]","Failure may also be because Operator is NOT IMS Registered(NOT VoLTE).");
 
-		String fN = startRIL_Log();
-
-		System.err.println(value);
-		value =  validate_RIL_Logs(fN, "RIL_REQUEST_IMS_REGISTRATION_STATE {1, 1} [SUB0]","Failure may also be because Operator is NOT IMS Registered(NOT VoLTE).");
-
-		//	value =  validate_RIL_Logs(fN, "RIL_REQUEST_IMS_REGISTRATION_STATE {1, 1} [SUB0]","Failure may also be because Operator is NOT IMS Registered(NOT VoLTE).");
-
+//	value =  validate_RIL_Logs(fN, "RIL_REQUEST_IMS_REGISTRATION_STATE {1, 1} [SUB0]","Failure may also be because Operator is NOT IMS Registered(NOT VoLTE).");
+		
 		System.out.println(value);
 		if (value) {
 			for (int i = 1; i <= itr; i++) {
 
 				if (p_b_No.contains("-10.") || p_b_No.contains("-00.")) {
-
+					
 					launch_APP(Locators_DeviceStability.Messageing);
 					clearSMSPermissions();
 					navigateTo_NewSMS();
@@ -253,7 +262,7 @@ public class XP8_Stability_Test_Orio extends XP8_DeviceStability_Util_orio {
 					clickOn_Send();
 					validate_SentMessage(i, sa2);
 
-
+				
 				} else if (p_b_No.contains("-29.")) {
 					System.out.println("sprint");
 					launch_APP(Locators_DeviceStability.messages);
@@ -275,7 +284,7 @@ public class XP8_Stability_Test_Orio extends XP8_DeviceStability_Util_orio {
 					clickOn_Send();
 					validate_SentMessage(i, sa2);
 
-
+					
 				} else if (p_b_No.contains("-26")) {
 					System.out.println("SL");
 					launch_APP(Locators_DeviceStability.messages);
@@ -299,11 +308,11 @@ public class XP8_Stability_Test_Orio extends XP8_DeviceStability_Util_orio {
 			}
 		} else {
 			test.log(LogStatus.SKIP, "NT: IMS is not Enabled");
-		}
-
+	}
+	
 		sa2.assertAll();
 	}
-
+	
 	@Test(priority = 3, dataProvider = "XP8_Stability", dataProviderClass = DataProviders.class)
 	public void XP8_TC_03_Stability_Validate_Send_MO_Non_IMS_SMS(Hashtable<String, String> data)
 			throws InterruptedException, AWTException, IOException, ParseException {
@@ -315,7 +324,7 @@ public class XP8_Stability_Test_Orio extends XP8_DeviceStability_Util_orio {
 		if (!value) {
 			for (int i = 1; i <= itr; i++) {
 				if (p_b_No.contains("-10.") || p_b_No.contains("-00.")) {
-
+                  
 					launch_APP(Locators_DeviceStability.Messageing);
 					clearSMSPermissions();
 					navigateTo_NewSMS();
@@ -324,7 +333,7 @@ public class XP8_Stability_Test_Orio extends XP8_DeviceStability_Util_orio {
 					enterText_MessageField("Automation Test");
 					clickOn_Send();
 					validate_SentMessage(i, sa3);
-
+					
 				} else if (p_b_No.contains("-15.")) {
 					launch_APP(Locators_DeviceStability.MessagePlus);
 					clearSMSPermissions();
@@ -335,7 +344,7 @@ public class XP8_Stability_Test_Orio extends XP8_DeviceStability_Util_orio {
 					clickOn_Send();
 					validate_SentMessage(i, sa3);
 				} else if (p_b_No.contains("-29.")) {
-
+				
 					System.out.println("sprint");
 					launch_APP(Locators_DeviceStability.messages);
 					clearSMSPermissions();
@@ -365,7 +374,7 @@ public class XP8_Stability_Test_Orio extends XP8_DeviceStability_Util_orio {
 					enterText_MessageField("Automation Test");
 					clickOn_Send();
 					validate_SentMessage(i, sa3);
-
+					
 				} else {
 					System.out.println("Executing Else part");
 					launch_APP(Locators_DeviceStability.messaging);
@@ -379,7 +388,7 @@ public class XP8_Stability_Test_Orio extends XP8_DeviceStability_Util_orio {
 		} else {
 			test.log(LogStatus.SKIP, "NT: IMS is Enabled");
 		}
-
+		
 		sa3.assertAll();
 	}
 
@@ -421,7 +430,7 @@ public class XP8_Stability_Test_Orio extends XP8_DeviceStability_Util_orio {
 				enterText_MessageField(data.get("typeMessage3"));
 				clickOn_Send();
 				validate_SentMessage(i, sa4);
-			}
+					}
 
 			else if (p_b_No.contains("-11.")) {
 				System.out.println("bell");
@@ -457,7 +466,7 @@ public class XP8_Stability_Test_Orio extends XP8_DeviceStability_Util_orio {
 				validate_SentMessage(i, sa4);
 			}
 		}
-
+		
 		sa4.assertAll();
 	}
 
@@ -475,7 +484,7 @@ public class XP8_Stability_Test_Orio extends XP8_DeviceStability_Util_orio {
 				sendSMS_fromRefDevice(data.get("typeMessage1"));
 				minWait();
 				validate_ReceivedMessage(i, sa5);
-				maxWait();
+		maxWait();
 			} else if (p_b_No.contains("-15.")) {
 				launch_APP(Locators_DeviceStability.MessagePlus);
 				sendSMS_fromRefDevice(data.get("typeMessage1"));
@@ -519,7 +528,7 @@ public class XP8_Stability_Test_Orio extends XP8_DeviceStability_Util_orio {
 		APP_LOGS.info("===========XP8_Stability_08============");
 		startAdbLog("XP8_Stability_08");
 		SoftAssert sa6 = new SoftAssert();
-		minWait();
+	minWait();
 		clearRecentApps();
 		String fN = startRIL_Log();
 		value =  validate_RIL_Logs(fN, "RIL_REQUEST_IMS_REGISTRATION_STATE {1, 1} [SUB0]","Failure may also be because Operator is NOT IMS Registered(NOT VoLTE).");
@@ -537,7 +546,7 @@ public class XP8_Stability_Test_Orio extends XP8_DeviceStability_Util_orio {
 					initiateCall();
 					validateCallLog_Orio("called", i, "contacts", sa6);
 				} else if (p_b_No.contains("-11.")) {
-
+					 
 					launch_an_app("contacts");
 					searchContact("Test" + i);
 					initiateCall();
@@ -565,7 +574,7 @@ public class XP8_Stability_Test_Orio extends XP8_DeviceStability_Util_orio {
 		sa6.assertAll();
 
 	}
-
+   
 	@Test(priority = 7, dataProvider = "XP8_Stability", dataProviderClass = DataProviders.class)
 	public void XP8_TC_07_Stability_Validate_MOVoiceCall_CSFB_from_CallHistory(Hashtable<String, String> data)
 			throws InterruptedException, AWTException, IOException, ParseException {
@@ -716,7 +725,7 @@ public class XP8_Stability_Test_Orio extends XP8_DeviceStability_Util_orio {
 		sa9.assertAll();
 	}
 
-
+	
 	@Test(priority = 10, dataProvider = "XP8_Stability", dataProviderClass = DataProviders.class)
 	public void XP8_TC_10_Stability_Validate_WiFi_ConnectDisconnect_SSID(Hashtable<String, String> data)
 			throws InterruptedException, AWTException, IOException, ParseException {
@@ -728,8 +737,8 @@ public class XP8_Stability_Test_Orio extends XP8_DeviceStability_Util_orio {
 		clearRecentApps();
 		if (p_b_No.contains("-10.") || p_b_No.contains("-00.")) {
 			launch_an_app("settings");
-			clickOn_Networks_and_Internet();
-			scrollToText("Mobile network");
+	       clickOn_Networks_and_Internet();
+    		scrollToText("Mobile network");
 			disable_MobileData();
 			clickOn_BackBtn();
 			clickOn_Wifi();
@@ -797,7 +806,7 @@ public class XP8_Stability_Test_Orio extends XP8_DeviceStability_Util_orio {
 				launch_an_app("settings");
 				clickOn_Networks_and_Internet();
 				clickOn_Wifi();
-
+				
 				selectSSIDwifi();
 				disconnectSSIDifConnected();
 			}
@@ -848,7 +857,7 @@ public class XP8_Stability_Test_Orio extends XP8_DeviceStability_Util_orio {
 				launch_an_app("settings");
 				clickOn_Networks_and_Internet();
 				clickOn_Wifi();
-
+				
 				selectSSIDwifi();
 				disconnectSSIDifConnected();
 			}
@@ -868,7 +877,7 @@ public class XP8_Stability_Test_Orio extends XP8_DeviceStability_Util_orio {
 		chrome_Clear();
 		clearRecentApps();
 		if (p_b_No.contains("-10.") || p_b_No.contains("-00.")) {
-
+			 
 			launch_an_app("settings");
 			clickOn_Networks_and_Internet();
 			scrollToText("Mobile network");
@@ -904,8 +913,8 @@ public class XP8_Stability_Test_Orio extends XP8_DeviceStability_Util_orio {
 					System.out.println("Im Clicking Ok 3rd ");
 				}
 			}
-		} else if (p_b_No.contains("-15.")) {
-
+			} else if (p_b_No.contains("-15.")) {
+			
 			launch_an_app("settings");
 			clickOn_Networks_and_Internet();
 			scrollToText("Mobile network");
@@ -933,7 +942,7 @@ public class XP8_Stability_Test_Orio extends XP8_DeviceStability_Util_orio {
 
 				launch_an_app("browser");
 				clearChromePermission_vzw();
-
+				
 				validate_Page_IsNotLoaded_InChrome(j, sa11);
 				customWait(3000);
 				if (isElementExist(Locators_DeviceStability.alert_OKBtn)) {
@@ -941,8 +950,8 @@ public class XP8_Stability_Test_Orio extends XP8_DeviceStability_Util_orio {
 					System.out.println("Im Clicking Ok 3rd ");
 				}
 			}
-		} else if (p_b_No.contains("-26.")) {
-
+			} else if (p_b_No.contains("-26.")) {
+			 
 			launch_an_app("settings");
 			clickOn_Networks_and_Internet();
 			scrollToText("Mobile network");
@@ -970,7 +979,7 @@ public class XP8_Stability_Test_Orio extends XP8_DeviceStability_Util_orio {
 
 				launch_an_app("browser");
 				clearChromePermission();
-
+				
 				validate_Page_IsNotLoaded_InChrome(j, sa11);
 				customWait(3000);
 				if (isElementExist(Locators_DeviceStability.alert_OKBtn)) {
@@ -979,7 +988,7 @@ public class XP8_Stability_Test_Orio extends XP8_DeviceStability_Util_orio {
 				}
 			}
 		} else if (p_b_No.contains("-29.")) {
-
+			 
 			launch_an_app("settings");
 			clickOn_Networks_and_Internet();
 			scrollToText("Mobile network");
@@ -1007,7 +1016,7 @@ public class XP8_Stability_Test_Orio extends XP8_DeviceStability_Util_orio {
 
 				launch_an_app("browser");
 				clearChromePermission();
-
+				
 				validate_Page_IsNotLoaded_InChrome(j, sa11);
 				customWait(3000);
 				if (isElementExist(Locators_DeviceStability.alert_OKBtn)) {
@@ -1017,7 +1026,7 @@ public class XP8_Stability_Test_Orio extends XP8_DeviceStability_Util_orio {
 			}		}
 
 		else if (p_b_No.contains("-11.")) {
-
+			 
 			launch_an_app("settings");
 			clickOn_Networks_and_Internet();
 			scrollToText("Mobile network");
@@ -1045,7 +1054,7 @@ public class XP8_Stability_Test_Orio extends XP8_DeviceStability_Util_orio {
 
 				launch_an_app("browser");
 				clearChromePermission();
-
+				
 				validate_Page_IsNotLoaded_InChrome(j, sa11);
 				customWait(3000);
 				if (isElementExist(Locators_DeviceStability.alert_OKBtn)) {
@@ -1066,14 +1075,14 @@ public class XP8_Stability_Test_Orio extends XP8_DeviceStability_Util_orio {
 		chrome_Clear();
 		clearRecentApps();
 		if (p_b_No.contains("-10.") || p_b_No.contains("-00.")) {
-
+			 
 			launch_an_app("settings");
 			clickOn_Networks_and_Internet();
 			scrollToText("Mobile network");
 			enable_Mobiledata();
 			clickOn_BackBtn();
 			clickOn_Wifi();
-			enable_Wifi();
+            enable_Wifi();
 			launch_an_app("browser");
 
 			clearChromePermission();
@@ -1084,14 +1093,14 @@ public class XP8_Stability_Test_Orio extends XP8_DeviceStability_Util_orio {
 		}
 
 		else if (p_b_No.contains("-15.")) {
-
+			 
 			launch_an_app("settings");
 			clickOn_Networks_and_Internet();
 			scrollToText("Mobile network");
 			enable_Mobiledata();
 			clickOn_BackBtn();
 			clickOn_Wifi();
-			enable_Wifi();
+            enable_Wifi();
 			launch_an_app("browser");
 
 			clearChromePermission_vzw();
@@ -1106,7 +1115,7 @@ public class XP8_Stability_Test_Orio extends XP8_DeviceStability_Util_orio {
 			enable_Mobiledata();
 			clickOn_BackBtn();
 			clickOn_Wifi();
-			enable_Wifi();
+            enable_Wifi();
 			launch_an_app("browser");
 
 			clearChromePermission();
@@ -1115,15 +1124,15 @@ public class XP8_Stability_Test_Orio extends XP8_DeviceStability_Util_orio {
 				customWait(5000);
 			}
 		} else if (p_b_No.contains("-26.")) {
-
+			 
 			launch_an_app("settings");
 			clickOn_Networks_and_Internet();
 			scrollToText("Mobile network");
 
-			enable_Mobiledata();
+           enable_Mobiledata();
 			clickOn_BackBtn();
 			clickOn_Wifi();
-			enable_Wifi();
+            enable_Wifi();
 			launch_an_app("browser");
 
 			clearChromePermission();
@@ -1132,17 +1141,17 @@ public class XP8_Stability_Test_Orio extends XP8_DeviceStability_Util_orio {
 				customWait(5000);
 			}
 		} else if (p_b_No.contains("-11.")) {
-
+			 
 			launch_an_app("settings");
 			clickOn_Networks_and_Internet();
 			scrollToText("Mobile network");
 
-			enable_Mobiledata();
+           enable_Mobiledata();
 			clickOn_BackBtn();
 			clickOn_Wifi();
-
-
-			enable_Wifi();
+			
+			
+            enable_Wifi();
 			launch_an_app("browser");
 
 			clearChromePermission();
@@ -1165,5 +1174,5 @@ public class XP8_Stability_Test_Orio extends XP8_DeviceStability_Util_orio {
 		delete_Call_From_Call_History();
 		delete_contact();
 	}
-
+	
 }

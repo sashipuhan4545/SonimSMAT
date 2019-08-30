@@ -6,11 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.json.simple.parser.ParseException;
 import org.openqa.selenium.By;
@@ -21,7 +17,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
 import org.testng.asserts.SoftAssert;
 
-import com.google.common.collect.ImmutableMap;
 import com.graphics.gui.JsonFileReaderAndWriter;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
@@ -103,10 +98,10 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		}
 	}
 
-	/*public void clickOn_Wifi_Lnk() {
+	public void clickOn_Wifi_Lnk() {
 
 		try {
-			Locators_Wifi.WiFi_Lnk.click();
+			//Locators_Wifi.WiFi_Lnk.click();
 
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 
@@ -117,7 +112,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 
 			test.log(LogStatus.ERROR, "Exeption in ->clickOn_Wifi_Lnk()");
 		}
-	}*/
+	}
 
 	public void deleteContacts() throws InterruptedException {
 		try {
@@ -1981,6 +1976,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 			clickBtn(multi_Loc_Strategy(Locators_WifiStability.setting_Network_InternetLnk_txt1,
 					Locators_WifiStability.setting_Network_InternetLnk_ind2,
 					Locators_WifiStability.setting_Network_InternetLnk_SubTxt3, null, null, 419, 934));
+			APP_LOGS.info("Clicked On Network and Internet");
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 
 			test.log(LogStatus.ERROR, "Error in the locators->clickOn_Networks_and_Internet()");
@@ -2002,6 +1998,8 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 					Locators_WifiStability.network_Internet_MobileNtwrk_Lnk_Instance2, null, null, null, 312, 698));
 			clickBtn(multi_Loc_Strategy(Locators_WifiStability.network_Internet_MobileNtwrk_Lnk_Txt1,
 					Locators_WifiStability.network_Internet_MobileNtwrk_Lnk_Instance2, null, null, null, 312, 698));
+			
+			APP_LOGS.info("Clicked On Mobile Network");
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 
 			test.log(LogStatus.ERROR, "Error in the locators->clickOn_MobileNetwork()");
@@ -2421,20 +2419,30 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 		}
 	}
 
-	public void OFF_Switch() {
+	public void MobileData_Switch() {
 		try {
 			minWait();
 			if(Locators_WifiStability.MobileDataSwitch.getText().equalsIgnoreCase("On")) {
 				Locators_WifiStability.MobileDataSwitch.click();
 				minWait();
 				Locators_WifiStability.OkBtn_ID.click();
+				
+				APP_LOGS.info("Switching off the Mobile Data");
 			}
+			
+			APP_LOGS.info("Currently Mobile data is in Off Condition ");
 				
 			minWait();
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->MobileData_Switch()");
+			e.printStackTrace();
+
 		} catch (Exception e) {
+
+			test.log(LogStatus.ERROR, "Exeption in ->MobileData_Switch()");
 		}
 	}
-	
 	public void OFF_Switch_SPRN(String switch_To_OFF) {
 		try {
 			minWait();
@@ -2731,7 +2739,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 			minWait();
 			clickBtn(Locators_WifiStability.setting_chromeEle);
 			minWait();
-			scrollText("Storage");
+			scrollToText("Storage");
 			minWait();
 			clickBtn(Locators_WifiStability.setting_manageSpaceBtn_Txt1);
 			minWait();
@@ -2759,7 +2767,7 @@ public class XP8_Stability_Util_orio extends BaseUtil {
 			minWait();
 			scrollToText("Chrome");
 			minWait();
-			scrollText("Storage");
+			scrollToText("Storage");
 			minWait();
 			clickBtn(Locators_WifiStability.setting_manageSpaceBtn_Txt1);
 			customWait(5000);

@@ -79,7 +79,7 @@ public class Locators_Messaging {
 	public static AndroidElement done;
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.ImageView\").descriptionContains(\"Review done\")")
 	public static AndroidElement done1;
-	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.ImageButton\").text(\"ALLOW\")")	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.Button\").text(\"ALLOW\")")	
 	public static AndroidElement allow;
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.Button\").text(\"VIEW\")")	
 	public static AndroidElement view;
@@ -354,9 +354,9 @@ public class Locators_Messaging {
 	public static AndroidElement forward_Text1;
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.LinearLayout\").index(1)")
 	public static AndroidElement forward_Text2;
-	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.ImageView\").descriptionContains(\"More options\")")
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.ImageView\").description(\"More options\")")
 	public static AndroidElement more_option;
-	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.ImageButton\").descriptionContains(\"More options\")")
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.ImageButton\").description(\"More options\")")
 	public static AndroidElement more_option_a;
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.ImageView\").descriptionContains(\"Test\")")
 	public static AndroidElement details;
@@ -397,7 +397,8 @@ public class Locators_Messaging {
 	public static AndroidElement MoreOptions1;
 	@AndroidFindBy(xpath="//*[@content-desc='More options']")
 	public static AndroidElement moreOptions;
-
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"Restore default settings\")")
+	public static AndroidElement restore_default_settings;
 	@FindBy(how=How.XPATH, using =("//android.widget.TextView[@text='Call history']"))
 	public static AndroidElement callHistory_O;
 	@FindBy(how=How.XPATH, using =("//android.widget.TextView[@index='0']"))

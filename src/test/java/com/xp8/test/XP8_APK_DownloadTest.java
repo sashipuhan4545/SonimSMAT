@@ -1,4 +1,4 @@
-package com.xp8.test;
+/*package com.xp8.test;
 
 
 import java.awt.AWTException;
@@ -1179,3 +1179,4 @@ public class XP8_APK_DownloadTest extends XP8_Stability_Util_orio{
 		sa51.assertAll();
 	}
 }
+*/

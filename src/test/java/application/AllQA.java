@@ -112,7 +112,7 @@ public class AllQA  extends CommonConfig {
 	ObservableList<String> Settings = FXCollections.observableArrayList("Settings","Programmable Key","Power ON/OFF","All");
 	ObservableList<String> Tools = FXCollections.observableArrayList("Calculator","Calendar","Clock","SoundRecorder","Downloads","FileManager","All");
 	ObservableList<String> Contacts = FXCollections.observableArrayList("PhoneContacts");
-	ObservableList<String> call = FXCollections.observableArrayList("PhoneDialer","CallHistory","CallSettings");
+	ObservableList<String> call = FXCollections.observableArrayList("PhoneDialer","CallHistory","CallSettings","Phone Contacts");
 	//ObservableList<String> ScoutApps = FXCollections.observableArrayList("AppUpdater","SafeGuard","SonimCare","SonimWarranty","ContactTransfer","All");
 	ObservableList<String> ScoutApps = FXCollections.observableArrayList("SafeGuard","SonimCare","ContactTransfer","WarrantyRegistration");
 
@@ -1562,6 +1562,24 @@ public class AllQA  extends CommonConfig {
 							}
 						});
 						interruption.start();
+						break;
+
+					case "Phone Contacts":
+
+						Thread PC=new Thread(new Runnable() {
+							public void run() {
+								System.out.println("XP8 phone contacts --------------------------");
+
+								TestNG runner=new TestNG();
+								List<String> suitefiles=new ArrayList<String>();
+								suitefiles.add("src/test/resources/drivers/XP8_PC.xml");
+								runner.setTestSuites(suitefiles);
+								runner.run();	
+
+
+							}
+						});
+						PC.start();
 						break;
 
 					
@@ -4284,6 +4302,9 @@ public class AllQA  extends CommonConfig {
 					
 					
 					
+					
+					
+					
 				case "Interruption Cases":
 
 					File interruption = new File("src/test/resources/extentreport/XP8_Interruption_TestReport.html");
@@ -4310,6 +4331,34 @@ public class AllQA  extends CommonConfig {
 
 					}
 					break;	
+					
+				case "Phone Contacts":
+
+					File PC = new File("src/test/resources/extentreport/XP8_Phone_Contacts.html");
+					File PCDest = new File(System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog");
+					String PCpath=System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog";
+					try {
+						FileUtils.copyFileToDirectory(PC, PCDest);
+					} catch (IOException e) {
+
+						e.printStackTrace();
+					}
+					if(PC.exists()) {
+
+						try {
+							BaseUtil.openReportPath(PCpath);
+						} catch (IOException e) {
+
+							e.printStackTrace();
+						}
+
+					}
+					else {
+						executionReportDoesnotExist("Test Report is not generated yet");
+
+					}
+					break;	
+					
 					
 					
 

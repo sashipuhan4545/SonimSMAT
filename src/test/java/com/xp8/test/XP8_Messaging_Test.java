@@ -53,7 +53,7 @@ public class XP8_Messaging_Test extends XP8_Messaging_Util {
 	public ExcelReader excel;
 	Properties properties;
 	public static ExtentTestInterruptedException testexception;
-	public int itr = AllQA.NUMOFCALLS;
+	public int itr = 5;
 	boolean value = false;
 	public String pw = AllQA.WIFIPASSWORD;
 	int n = 5;
@@ -72,14 +72,8 @@ public class XP8_Messaging_Test extends XP8_Messaging_Util {
 		// and
 		// Name
 		extent.loadConfig(new File(System.getProperty("user.dir") + "//ReportsConfig.xml"));
-		
+		extent.addSystemInfo("Appium", "1.2.7").addSystemInfo("Environment", "TEST");
 		fetch_Devices_Details();
-		try {
-			appiumService.TOTAL_NUM_OF_TESTCASES=GetMethods.TotalTestcase("XP8_TC", this.getClass());
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	@BeforeMethod()
@@ -87,7 +81,6 @@ public class XP8_Messaging_Test extends XP8_Messaging_Util {
 		test = extent.startTest((this.getClass().getSimpleName() + " :: " + method.getName()), method.getName()); // Test
 																													// Case
 																													// Start
-		
 
 	}
 
@@ -126,6 +119,13 @@ public class XP8_Messaging_Test extends XP8_Messaging_Util {
 		PageFactory.initElements(new AppiumFieldDecorator(aDriver), loc1);
 		excel = new ExcelReader(ExcelConstants.XP5S_XL_PATH);
 		System.out.println("before Test");
+	}
+	
+	
+	@BeforeSuite
+	public void numofTestCases() throws ClassNotFoundException {
+		
+		appiumService.TOTAL_NUM_OF_TESTCASES=GetMethods.TotalTestcase("XP8_TC", this.getClass());
 	}
 
 	@BeforeTest
@@ -205,21 +205,22 @@ public class XP8_Messaging_Test extends XP8_Messaging_Util {
 	}
 
 	@Test(priority = 3, dataProvider = "XP8_Messaging", dataProviderClass = DataProviders.class)
-	public void XP8_TC_3_XP8_Messaging_Memory_Status_Notification_vibration(Hashtable<String, String> data)
+	public void XP8_TC_03_XP8_Messaging_Memory_Status_Notification_vibration(Hashtable<String, String> data)
 			throws InterruptedException, AWTException, IOException {
 		SoftAssert sa = new SoftAssert();
 		APP_LOGS.info("===========XP8_Messaging============");
 		clearRecentApps();
 
 		launch_APP(Locators_Messaging.Messaging);
-       wait(Locators_Messaging.MoreOptions, 80);
-		clickBtn(Locators_Messaging.MoreOptions);
-		clickBtn(Locators_Messaging.setting);
+        wait(Locators_Messaging.MoreOptions, 80);
+        Notifications();
+        validate_Notifications_oPtion(sa);
 		vibration_On(sa);
 		memory_status();
-
 		validate_Memory_status(sa);
 		clickBtn(Locators_Messaging.OKBtbtn2);
+		Restore_Default_Settings();
+		Validate_Restore_Default_Settings(sa);
 		sa.assertAll();
 	}
 
@@ -244,7 +245,7 @@ public class XP8_Messaging_Test extends XP8_Messaging_Util {
 	}
 
 	@Test(priority = 5, dataProvider = "XP8_Messaging", dataProviderClass = DataProviders.class)
-	public void XP8_TC_5_XP8_Messaging_LongPress_OnMessageIcon(Hashtable<String, String> data)
+	public void XP8_TC_05_XP8_Messaging_LongPress_OnMessageIcon(Hashtable<String, String> data)
 			throws InterruptedException, AWTException, IOException {
 		SoftAssert sa = new SoftAssert();
 		APP_LOGS.info("===========XP8_Messaging============");
@@ -258,7 +259,7 @@ public class XP8_Messaging_Test extends XP8_Messaging_Util {
 	}
 
 	@Test(priority = 6, dataProvider = "XP8_Messaging", dataProviderClass = DataProviders.class)
-	public void XP8_TC_6_XP8_Messaging_DeleteMessageTemplate(Hashtable<String, String> data)
+	public void XP8_TC_06_XP8_Messaging_DeleteMessageTemplate(Hashtable<String, String> data)
 			throws InterruptedException, AWTException, IOException {
 		SoftAssert sa = new SoftAssert();
 		APP_LOGS.info("===========XP8_Messaging============");
@@ -312,7 +313,7 @@ public class XP8_Messaging_Test extends XP8_Messaging_Util {
 	}
 
 	@Test(priority = 9, dataProvider = "XP8_Messaging", dataProviderClass = DataProviders.class)
-	public void XP8_TC_9_XP8_Messaging_Send_SMS_Press_HomeKey(Hashtable<String, String> data)
+	public void XP8_TC_09_XP8_Messaging_Send_SMS_Press_HomeKey(Hashtable<String, String> data)
 			throws InterruptedException, AWTException, IOException {
 		APP_LOGS.info("===========XP8_Messaging============");
 		SoftAssert sa = new SoftAssert();
@@ -349,6 +350,7 @@ public class XP8_Messaging_Test extends XP8_Messaging_Util {
 		receiveCallInpriDevice();
 		customWait(5000);
 		endCall_RefDevice();
+    	wait(Locators_Messaging.type_text1, 20);
 		enterText_MessageField(data.get("typeMessage"));
 		clickOn_Send();
 		validate_SentMessage(sa);
@@ -522,7 +524,7 @@ public class XP8_Messaging_Test extends XP8_Messaging_Util {
 		enterText_MessageField(data.get("typeMessage"));
 		clickOn_Send();
 		add_Contact_In_Editor_Screen();
-		validate_add_Contact(sa);
+		validate_added_Contact(sa);
 		sa.assertAll();
 	}
 
@@ -533,7 +535,7 @@ public class XP8_Messaging_Test extends XP8_Messaging_Util {
 		SoftAssert sa = new SoftAssert();
 		clearRecentApps();
 		launch_an_app("contacts");
-		for (int i = 1; i < n; i++) {
+		for (int i = 1; i < 5;i++) {
 			Click_ON_Phone();
 			clickBtn(Locators_Messaging.AddtoContact);
 			createContact_A("Test" + i, data.get("number" + i));
@@ -616,7 +618,9 @@ public class XP8_Messaging_Test extends XP8_Messaging_Util {
 		validate_add_Picture(sa);
 		enter_Num_ToField(refNum);
 		minWait();
+		enterText_MessageField(data.get("typeMessage"));
 		clickOn_Send();
+		validate_SentMessage(sa);
 
 		sa.assertAll();
 	}
@@ -745,7 +749,7 @@ public class XP8_Messaging_Test extends XP8_Messaging_Util {
 		sa.assertAll();
 	}
 	@Test(priority = 29, dataProvider = "XP8_Messaging", dataProviderClass = DataProviders.class)
-	public void XP8_TC_29_XP8_Messaging_Remove_Recipient_From_ToField(Hashtable<String, String> data)
+	public void XP8_TC_29_XP8_Messaging_check_Email_add_InContactList(Hashtable<String, String> data)
 			throws InterruptedException, AWTException, IOException {
 		SoftAssert sa = new SoftAssert();
 		APP_LOGS.info("===========XP8_Messaging============");
@@ -754,21 +758,40 @@ public class XP8_Messaging_Test extends XP8_Messaging_Util {
 		launch_APP(Locators_Messaging.Messaging);
 		clearSMSPermissions();
 		navigateTo_NewSMS();
+		enter_Name_To_Field("sonimtech@gmail.com");
+		takeScreenShot();
+		Read_File.takeScreenShotForOcr("email");
+		my_main.validate_Using_OCR("email.jpeg");
 		enterText_MessageField(data.get("typeMessage"));
-
-		group_Coversation();
-		clickBtn(Locators_Messaging.OKBtn1);
-		wait(Locators_Messaging.TO_Field_phno1, 60);
-		clickBtn(Locators_Messaging.TO_Field_phno1);
-		aDriver.pressKeyCode(AndroidKeyCode.BACKSPACE);
-		aDriver.pressKeyCode(AndroidKeyCode.ENTER);
-		minWait();
-		clickOn_Send();
-		validate_SentMessage(sa);
-		validate_Remove_Recipient_From_To_Field(sa);
-
+		validate_EmailID(sa);
 		sa.assertAll();
 	}
+	
+//	@Test(priority = 29, dataProvider = "XP8_Messaging", dataProviderClass = DataProviders.class)
+//	public void XP8_TC_29_XP8_Messaging_Remove_Recipient_From_ToField(Hashtable<String, String> data)
+//			throws InterruptedException, AWTException, IOException {
+//		SoftAssert sa = new SoftAssert();
+//		APP_LOGS.info("===========XP8_Messaging============");
+//		clearRecentApps();
+//
+//		launch_APP(Locators_Messaging.Messaging);
+//		clearSMSPermissions();
+//		navigateTo_NewSMS();
+//		enterText_MessageField(data.get("typeMessage"));
+//
+//		group_Coversation();
+//		clickBtn(Locators_Messaging.OKBtn1);
+//		wait(Locators_Messaging.TO_Field_phno1, 60);
+//		clickBtn(Locators_Messaging.TO_Field_phno1);
+//		aDriver.pressKeyCode(AndroidKeyCode.BACKSPACE);
+//		aDriver.pressKeyCode(AndroidKeyCode.ENTER);
+//		minWait();
+//		clickOn_Send();
+//		validate_SentMessage(sa);
+//		validate_Remove_Recipient_From_To_Field(sa);
+//
+//		sa.assertAll();
+//	}
 	
 	@Test(priority = 30, dataProvider = "XP8_Messaging", dataProviderClass = DataProviders.class)
 	public void XP8_TC_30_XP8_Messaging_Reject_Call_With_SMS(Hashtable<String, String> data)
@@ -798,7 +821,6 @@ public class XP8_Messaging_Test extends XP8_Messaging_Util {
 		SoftAssert sa = new SoftAssert();
 		APP_LOGS.info("===========XP8_Messaging============");
 		clearRecentApps();
-//
 		launch_APP(Locators_Messaging.Messaging);
 		enable_Notification();
 		validate_enable_Notification(sa);

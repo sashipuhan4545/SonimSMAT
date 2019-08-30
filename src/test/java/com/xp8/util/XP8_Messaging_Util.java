@@ -91,13 +91,10 @@ public class XP8_Messaging_Util extends BaseUtil {
 								clickBtn(Locators_Messaging.delete_Confirm_a);
 							}
                            if(isElementExist(Locators_Messaging.oneselected1)) {
-                                    System.out.println("1 select");
 								clickBtn(Locators_Messaging.oneselected1);
-								System.out.println("clicked on one selevt");
-								wait(Locators_Messaging.delete, 20);
+								wait(Locators_Messaging.deletesms, 20);
 								TouchAction ta1=new TouchAction(aDriver);
-								ta1.tap(Locators_Messaging.delete).perform();
-								System.out.println("delete");
+								ta1.tap(1010, 146).perform();
 								clickBtn(Locators_Messaging.delete_Confirm_a);
 
 							}
@@ -111,10 +108,10 @@ public class XP8_Messaging_Util extends BaseUtil {
 		}
 
 		catch (org.openqa.selenium.NoSuchElementException e) {
-			test.log(LogStatus.ERROR, "Error in the locators -> deleteall()");
+			test.log(LogStatus.ERROR, "Error in the locators -> deleteall_SMS()");
 			e.printStackTrace();
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exeption in -> deleteall()");
+			test.log(LogStatus.ERROR, "Exeption in -> deleteall_SMS()");
 		}
 
 		aDriver.pressKeyCode(AndroidKeyCode.BACK);
@@ -189,12 +186,12 @@ public class XP8_Messaging_Util extends BaseUtil {
 			}
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 
-			test.log(LogStatus.ERROR, "Error in the locators->clickOnAppList()");
+			test.log(LogStatus.ERROR, "Error in the locators->add_Contact_In_Editor_Screen()");
 			e.printStackTrace();
 
 		} catch (Exception e) {
 
-			test.log(LogStatus.ERROR, "Exeption in ->clickOnAppList()");
+			test.log(LogStatus.ERROR, "Exeption in ->add_Contact_In_Editor_Screen()");
 		}
 
 	}
@@ -255,8 +252,14 @@ public class XP8_Messaging_Util extends BaseUtil {
 
 			}
 
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->clearSMSPermissions()");
+			e.printStackTrace();
+
 		} catch (Exception e) {
-			e.getMessage();
+
+			test.log(LogStatus.ERROR, "Exeption in ->clearSMSPermissions()");
 		}
 	}
 
@@ -370,12 +373,12 @@ System.out.println("to");
 			}
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 
-			test.log(LogStatus.ERROR, "Error in the locators->enter_Num_ToField()");
+			test.log(LogStatus.ERROR, "Error in the locators->enter_Multiple_Number()");
 			e.printStackTrace();
 
 		} catch (Exception e) {
 
-			test.log(LogStatus.ERROR, "Exeption in ->enter_Num_ToField()");
+			test.log(LogStatus.ERROR, "Exeption in ->enter_Multiple_Number()");
 		}
 	}
 
@@ -405,12 +408,12 @@ System.out.println("to");
 			}
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 
-			test.log(LogStatus.ERROR, "Error in the locators->enter_Num_ToField()");
+			test.log(LogStatus.ERROR, "Error in the locators->click_To_Field()");
 			e.printStackTrace();
 
 		} catch (Exception e) {
 
-			test.log(LogStatus.ERROR, "Exeption in ->enter_Num_ToField()");
+			test.log(LogStatus.ERROR, "Exeption in ->click_To_Field()");
 		}
 	}
 
@@ -482,7 +485,7 @@ System.out.println("to");
 			
 				clickBtn(Locators_Messaging.attach);
 				clickBtn(Locators_Messaging.picture);
-			if(isElementExist(Locators_Messaging.allow))
+		if(wait(Locators_Messaging.allow, 20))
 			{
 				clickBtn(Locators_Messaging.allow);
 			}
@@ -501,12 +504,12 @@ System.out.println("to");
 			}
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 
-			test.log(LogStatus.ERROR, "Error in the locators->group_Coversation()");
+			test.log(LogStatus.ERROR, "Error in the locators->add_Picture ()");
 			e.printStackTrace();
 
 		} catch (Exception e) {
 
-			test.log(LogStatus.ERROR, "Exeption in ->group_Coversation()");
+			test.log(LogStatus.ERROR, "Exeption in ->add_Picture()");
 		}
 	}
 	public void validate_add_Picture(SoftAssert sa) {
@@ -647,7 +650,7 @@ minWait();
 		try {
 
 			if (p_b_No.contains("-10.")) {
-System.out.println("text");
+
 				enterTextToInputField(multi_Loc_Strategy(Locators_Messaging.type_text1, Locators_Messaging.type_text2,
 						Locators_Messaging.type_text3, null, null, 0, 0), message);
 				minWait();
@@ -703,12 +706,12 @@ System.out.println("text");
 
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 
-			test.log(LogStatus.ERROR, "Error in the locators->select_Deselect_The_Contact()");
+			test.log(LogStatus.ERROR, "Error in the locators->select_The_Contact()");
 			e.printStackTrace();
 
 		} catch (Exception e) {
 
-			test.log(LogStatus.ERROR, "Exeption in ->select_Deselect_The_Contact()");
+			test.log(LogStatus.ERROR, "Exeption in ->select_The_Contact()");
 		}
 	}
 	public void Scroll_To_Contact() throws InterruptedException {
@@ -761,12 +764,12 @@ System.out.println("text");
 
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 
-			test.log(LogStatus.ERROR, "Error in the locators->select_Deselect_The_Contact()");
+			test.log(LogStatus.ERROR, "Error in the locators->delect_The_Contact()");
 			e.printStackTrace();
 
 		} catch (Exception e) {
 
-			test.log(LogStatus.ERROR, "Exeption in ->select_Deselect_The_Contact()");
+			test.log(LogStatus.ERROR, "Exeption in ->delect_The_Contact()");
 		}
 	}
 	public void validate_Select_Contact(SoftAssert soft) throws InterruptedException {
@@ -866,12 +869,12 @@ System.out.println("text");
 				}
 			} catch (org.openqa.selenium.NoSuchElementException e) {
 
-				test.log(LogStatus.ERROR, "Error in the locators->select_Deselect_The_Contact()");
+				test.log(LogStatus.ERROR, "Error in the locators->validate_MMS()");
 				e.printStackTrace();
 
 			} catch (Exception e) {
 
-				test.log(LogStatus.ERROR, "Exeption in ->select_Deselect_The_Contact()");
+				test.log(LogStatus.ERROR, "Exeption in ->validate_MMS()");
 			}
 		}
 	public void validate_SMS(SoftAssert soft) throws InterruptedException {
@@ -880,11 +883,11 @@ System.out.println("text");
 		try {
 			java.lang.String mms = Locators_Messaging.sms.getText();
 				if (mms.equals("SMS")) {
-					APP_LOGS.info("SMS converted to MMS Sucessfully");
+					APP_LOGS.info("MMS converted to SMS Sucessfully");
 					soft.assertTrue(true,
-							"SMS converted to MMS Sucessfully");
+							"MMS converted to SMS Sucessfully");
 					test.log(LogStatus.PASS,
-							"SMS converted to MMS Sucessfully");
+							"MMS converted to SMS Sucessfully");
 
 				} else {
 					APP_LOGS.info("Failed to convert SMS  to MMS ");
@@ -920,12 +923,12 @@ System.out.println("text");
 				}
 			} catch (org.openqa.selenium.NoSuchElementException e) {
 
-				test.log(LogStatus.ERROR, "Error in the locators->validate_SMS()");
+				test.log(LogStatus.ERROR, "Error in the locators->validate_Forward_SMS()");
 				e.printStackTrace();
 
 			} catch (Exception e) {
 
-				test.log(LogStatus.ERROR, "Exeption in ->validate_SMS()");
+				test.log(LogStatus.ERROR, "Exeption in ->validate_Forward_SMS()");
 			}
 		}
 
@@ -959,12 +962,12 @@ System.out.println("text");
 
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 
-			test.log(LogStatus.ERROR, "Error in the locators->add_New_Number_To_Recipient()");
+			test.log(LogStatus.ERROR, "Error in the locators->adding_new_Recipients()");
 			e.printStackTrace();
 
 		} catch (Exception e) {
 
-			test.log(LogStatus.ERROR, "Exeption in ->add_New_Number_To_Recipient()");
+			test.log(LogStatus.ERROR, "Exeption in ->adding_new_Recipients()");
 		}
 	}
 
@@ -1024,12 +1027,12 @@ System.out.println("text");
 			}
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 
-			test.log(LogStatus.ERROR, "Error in the locators->clickOn_Send()");
+			test.log(LogStatus.ERROR, "Error in the locators->clickOn_Thread()");
 			e.printStackTrace();
 
 		} catch (Exception e) {
 
-			test.log(LogStatus.ERROR, "Exeption in ->clickOn_Send()");
+			test.log(LogStatus.ERROR, "Exeption in ->clickOn_Thread()");
 		}
 	}
 
@@ -1163,12 +1166,12 @@ System.out.println("text");
 			/* aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK); */
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 
-			test.log(LogStatus.ERROR, "Error in the locators->validate_SentMessage()");
+			test.log(LogStatus.ERROR, "Error in the locators->validate_ForwardMessage()");
 			e.printStackTrace();
 
 		} catch (Exception e) {
 
-			test.log(LogStatus.ERROR, "Exeption in ->validate_SentMessage()");
+			test.log(LogStatus.ERROR, "Exeption in ->validate_ForwardMessage()");
 		}
 
 	}
@@ -1475,12 +1478,12 @@ System.out.println("text");
 			/* aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK); */
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 
-			test.log(LogStatus.ERROR, "Error in the locators->validate_Small_and_Caps_Character()");
+			test.log(LogStatus.ERROR, "Error in the locators->validate_UpperCaseandLowerCase()");
 			e.printStackTrace();
 
 		} catch (Exception e) {
 
-			test.log(LogStatus.ERROR, "Exeption in ->validate_Small_and_Caps_Character()");
+			test.log(LogStatus.ERROR, "Exeption in ->validate_UpperCaseandLowerCase()");
 		}
 
 	}
@@ -1699,12 +1702,12 @@ System.out.println("text");
 			}
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 
-			test.log(LogStatus.ERROR, "Error in the locators->validate_Entered_URL()");
+			test.log(LogStatus.ERROR, "Error in the locators->Click_ON_URL()");
 			e.printStackTrace();
 
 		} catch (Exception e) {
 
-			test.log(LogStatus.ERROR, "Exeption in ->validate_Entered_URL()");
+			test.log(LogStatus.ERROR, "Exeption in ->Click_ON_URL()");
 		}
 
 	}
@@ -1849,12 +1852,12 @@ if (p_b_No.contains("-10.")) {
 			}
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 
-			test.log(LogStatus.ERROR, "Error in the locators->Click_ON_Phone()");
+			test.log(LogStatus.ERROR, "Error in the locators->Click_ON_SIM()");
 			e.printStackTrace();
 
 		} catch (Exception e) {
 
-			test.log(LogStatus.ERROR, "Exeption in ->Click_ON_Phone()");
+			test.log(LogStatus.ERROR, "Exeption in ->Click_ON_SIM()");
 		}
 
 	}
@@ -1905,12 +1908,12 @@ if (p_b_No.contains("-10.")) {
 			}
 		} }catch (org.openqa.selenium.NoSuchElementException e) {
 
-			test.log(LogStatus.ERROR, "Error in the locators->createContact()");
+			test.log(LogStatus.ERROR, "Error in the locators->createContact_A()");
 			e.printStackTrace();
 
 		} catch (Exception e) {
 
-			test.log(LogStatus.ERROR, "Exeption in ->createContact()");
+			test.log(LogStatus.ERROR, "Exeption in ->createContact_A()");
 		}
 
 	}
@@ -1955,12 +1958,12 @@ if (p_b_No.contains("-10.")) {
 			}
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 
-			test.log(LogStatus.ERROR, "Error in the locators->createContact()");
+			test.log(LogStatus.ERROR, "Error in the locators->createContact_IN_SIM()");
 			e.printStackTrace();
 
 		} catch (Exception e) {
 
-			test.log(LogStatus.ERROR, "Exeption in ->createContact()");
+			test.log(LogStatus.ERROR, "Exeption in ->createContact_IN_SIM()");
 		}
 
 	}
@@ -2141,12 +2144,12 @@ if (p_b_No.contains("-10.")) {
 			/* aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK); */
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 
-			test.log(LogStatus.ERROR, "Error in the locators->validate_Entered_URL()");
+			test.log(LogStatus.ERROR, "Error in the locators->validate_Contact_In_ToField()");
 			e.printStackTrace();
 
 		} catch (Exception e) {
 
-			test.log(LogStatus.ERROR, "Exeption in ->validate_Entered_URL()");
+			test.log(LogStatus.ERROR, "Exeption in ->validate_Contact_In_ToField()");
 		}
 
 	}
@@ -2485,7 +2488,32 @@ clickBtn(multi_Loc_Strategy(Locators_Messaging.forward_Text_A, Locators_Messagin
 			test.log(LogStatus.ERROR, "Exeption in ->validate_text()");
 		}
 	}
-	public void validate_add_Contact(SoftAssert soft) {
+	public void validate_EmailID(SoftAssert soft) {
+		try {
+			String path=System.getProperty("user.dir")+"\\src\\test\\resources\\OCR_FILES\\ocr.txt";
+
+			String content = readFile(path);
+			System.out.println("text from screenshot = " + content);
+			if (content.contains("sonimtech")) {
+				APP_LOGS.info("Entered Email id is Stored in contact");
+				soft.assertTrue(true, "Entered Email id is Stored in contact");
+				test.log(LogStatus.PASS, "Entered Email ic is Stored in contact");
+			} else {
+				APP_LOGS.info("Entered Email id  is not Stored in the contact");
+				soft.fail();
+				test.log(LogStatus.FAIL, "Entered Email id is Stored in the contact");
+			}
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->validate_EmailID()");
+			e.printStackTrace();
+
+		} catch (Exception e) {
+
+			test.log(LogStatus.ERROR, "Exeption in ->validate_EmailID()");
+		}
+	}
+	public void validate_added_Contact(SoftAssert soft) {
 		try {
 		
 			if (isElementExist(Locators_Messaging.demo1)) {
@@ -2499,12 +2527,12 @@ clickBtn(multi_Loc_Strategy(Locators_Messaging.forward_Text_A, Locators_Messagin
 			}
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 
-			test.log(LogStatus.ERROR, "Error in the locators->validate_Entered_URL()");
+			test.log(LogStatus.ERROR, "Error in the locators->validate_added_Contact()");
 			e.printStackTrace();
 
 		} catch (Exception e) {
 
-			test.log(LogStatus.ERROR, "Exeption in ->validate_Entered_URL()");
+			test.log(LogStatus.ERROR, "Exeption in ->validate_added_Contact()");
 		}
 	}
 	public void enter_Num1(String number) throws InterruptedException {
@@ -2584,12 +2612,12 @@ clickBtn(multi_Loc_Strategy(Locators_Messaging.forward_Text_A, Locators_Messagin
 			}
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 
-			test.log(LogStatus.ERROR, "Error in the locators->enter_New_Num_ToRecipiet()");
+			test.log(LogStatus.ERROR, "Error in the locators->adding_new_Recipients()");
 			e.printStackTrace();
 
 		} catch (Exception e) {
 
-			test.log(LogStatus.ERROR, "Exeption in ->enter_New_Num_ToRecipiet()");
+			test.log(LogStatus.ERROR, "Exeption in ->adding_new_Recipients()");
 		}
 	}
 	public void validate_SMS_Details(SoftAssert soft) throws InterruptedException {
@@ -2615,12 +2643,12 @@ clickBtn(multi_Loc_Strategy(Locators_Messaging.forward_Text_A, Locators_Messagin
 			}
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 
-			test.log(LogStatus.ERROR, "Error in the locators->validate_New_Phno()");
+			test.log(LogStatus.ERROR, "Error in the locators->validate_SMS_Details()");
 			e.printStackTrace();
 
 		} catch (Exception e) {
 
-			test.log(LogStatus.ERROR, "Exeption in ->validate_New_Phno()");
+			test.log(LogStatus.ERROR, "Exeption in ->validate_SMS_Details()");
 		}
 
 	}
@@ -2834,12 +2862,12 @@ clickBtn(multi_Loc_Strategy(Locators_Messaging.forward_Text_A, Locators_Messagin
 			}
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 
-			test.log(LogStatus.ERROR, "Error in the locators->callHistory()");
+			test.log(LogStatus.ERROR, "Error in the locators->dailpad()");
 			e.printStackTrace();
 
 		} catch (Exception e) {
 
-			test.log(LogStatus.ERROR, "Exeption in ->callHistory()");
+			test.log(LogStatus.ERROR, "Exeption in ->dailpad()");
 		}
 	}
 
@@ -2890,12 +2918,12 @@ clickBtn(multi_Loc_Strategy(Locators_Messaging.forward_Text_A, Locators_Messagin
 			}
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 
-			test.log(LogStatus.ERROR, "Error in the locators->validate_Entered_URL()");
+			test.log(LogStatus.ERROR, "Error in the locators->validate_delete_SMS()");
 			e.printStackTrace();
 
 		} catch (Exception e) {
 
-			test.log(LogStatus.ERROR, "Exeption in ->validate_Entered_URL()");
+			test.log(LogStatus.ERROR, "Exeption in ->validate_delete_SMS()");
 		}
 	}
 
@@ -2915,12 +2943,12 @@ clickBtn(multi_Loc_Strategy(Locators_Messaging.forward_Text_A, Locators_Messagin
 			}
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 
-			test.log(LogStatus.ERROR, "Error in the locators->validate_Entered_URL()");
+			test.log(LogStatus.ERROR, "Error in the locators->validate_dailpad()");
 			e.printStackTrace();
 
 		} catch (Exception e) {
 
-			test.log(LogStatus.ERROR, "Exeption in ->validate_Entered_URL()");
+			test.log(LogStatus.ERROR, "Exeption in ->validate_dailpad()");
 		}
 	}
 
@@ -2953,12 +2981,12 @@ clickBtn(multi_Loc_Strategy(Locators_Messaging.forward_Text_A, Locators_Messagin
 			}
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 
-			test.log(LogStatus.ERROR, "Error in the locators->callHistory()");
+			test.log(LogStatus.ERROR, "Error in the locators->Copy_And_Paste_IN_Text_Field()");
 			e.printStackTrace();
 
 		} catch (Exception e) {
 
-			test.log(LogStatus.ERROR, "Exeption in ->callHistory()");
+			test.log(LogStatus.ERROR, "Exeption in ->Copy_And_Paste_IN_Text_Field()");
 		}
 	}
 
@@ -3111,12 +3139,12 @@ clickBtn(multi_Loc_Strategy(Locators_Messaging.forward_Text_A, Locators_Messagin
 			}
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 
-			test.log(LogStatus.ERROR, "Error in the locators->validate_SentMessage()");
+			test.log(LogStatus.ERROR, "Error in the locators->enable_Notification()");
 			e.printStackTrace();
 
 		} catch (Exception e) {
 
-			test.log(LogStatus.ERROR, "Exeption in ->validate_SentMessage()");
+			test.log(LogStatus.ERROR, "Exeption in ->enable_Notification()");
 		}
 
 	}
@@ -3145,29 +3173,67 @@ clickBtn(multi_Loc_Strategy(Locators_Messaging.forward_Text_A, Locators_Messagin
 			}
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 
-			test.log(LogStatus.ERROR, "Error in the locators->validate_SentMessage()");
+			test.log(LogStatus.ERROR, "Error in the locators->vibration_On()");
 			e.printStackTrace();
 
 		} catch (Exception e) {
 
-			test.log(LogStatus.ERROR, "Exeption in ->validate_SentMessage()");
+			test.log(LogStatus.ERROR, "Exeption in ->vibration_On()");
 		}
 
 	}
-	public void Notification(SoftAssert soft) {
+	public void Notifications() {
 		try {
 			if (p_b_No.contains("-10.")) {
-				scrollToText("Vibrate");
-				if (isElementExist(Locators_Messaging.vibrate_on)) {
+				clickBtn(Locators_Messaging.MoreOptions);
+				clickBtn(Locators_Messaging.setting);
+				scrollToText("Notifications");
+			}
+
+		
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->Notification()");
+			e.printStackTrace();
+
+		} catch (Exception e) {
+
+			test.log(LogStatus.ERROR, "Exeption in ->Notification()");
+		}
+
+	}
+	public void Restore_Default_Settings() {
+		try {
+			if (p_b_No.contains("-10.")) {
+				clickBtn(Locators_Messaging.MoreOptions);
+			
+				
+			}
+		
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->Restore_Default_Settings()");
+			e.printStackTrace();
+
+		} catch (Exception e) {
+
+			test.log(LogStatus.ERROR, "Exeption in ->Restore_Default_Settings()");
+		}
+
+	}
+	public void Validate_Restore_Default_Settings(SoftAssert soft) {
+		try {
+			if (p_b_No.contains("-10.")) {
+				if (isElementExist(Locators_Messaging.restore_default_settings)) {
 					
-					APP_LOGS.info("vibrate is in on Condition");
-					soft.assertTrue(true, "vibrate is in on Condition");
-					test.log(LogStatus.PASS, "vibrate is in on Condition");
+					APP_LOGS.info("Restore default Settings option is present in Settings");
+					soft.assertTrue(true, "Restore default Settings option is present in Settings");
+					test.log(LogStatus.PASS, "Restore default Settings option is present in Settings");
 
 				} else {
-					APP_LOGS.info("vibrate is in off Condition");
+					APP_LOGS.info("Restore default Settings option is not present in Settings");
 					soft.fail();
-					test.log(LogStatus.FAIL, "vibrate is in off Condition");
+					test.log(LogStatus.FAIL, "Restore default Settings option is not present in Settings");
 				}}
 
 			else if (p_b_No.contains("-15.")) {
@@ -3179,16 +3245,48 @@ clickBtn(multi_Loc_Strategy(Locators_Messaging.forward_Text_A, Locators_Messagin
 			}
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 
-			test.log(LogStatus.ERROR, "Error in the locators->validate_SentMessage()");
+			test.log(LogStatus.ERROR, "Error in the locators->Validate_Restore_Default_Settings()");
 			e.printStackTrace();
 
 		} catch (Exception e) {
 
-			test.log(LogStatus.ERROR, "Exeption in ->validate_SentMessage()");
+			test.log(LogStatus.ERROR, "Exeption in ->Validate_Restore_Default_Settings()");
 		}
 
 	}
-		
+	public void validate_Notifications_oPtion(SoftAssert soft) {
+		try {
+			if (p_b_No.contains("-10.")) {
+				if (isElementExist(Locators_Messaging.Notifications_opt)) {
+					
+					APP_LOGS.info("Notification option is present in Settings");
+					soft.assertTrue(true, "Notification option is present in Settings");
+					test.log(LogStatus.PASS, "Notification option is present in Settings");
+
+				} else {
+					APP_LOGS.info("Notification option is not present in Settings");
+					soft.fail();
+					test.log(LogStatus.FAIL, "Notification option is not present in Settings");
+				}}
+
+			else if (p_b_No.contains("-15.")) {
+				
+			} else if (p_b_No.contains("-29.") || p_b_No.contains("-26.") || p_b_No.contains("-11.")) {
+
+				
+				
+			}
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->validate_Notifications_oPtion()");
+			e.printStackTrace();
+
+		} catch (Exception e) {
+
+			test.log(LogStatus.ERROR, "Exeption in ->validate_Notifications_oPtion()");
+		}
+
+	}
 	
 
 	
@@ -3202,12 +3300,12 @@ clickBtn(multi_Loc_Strategy(Locators_Messaging.forward_Text_A, Locators_Messagin
 			}
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 
-			test.log(LogStatus.ERROR, "Error in the locators->Notification_Option()");
+			test.log(LogStatus.ERROR, "Error in the locators->disable_Notification()");
 			e.printStackTrace();
 
 		} catch (Exception e) {
 
-			test.log(LogStatus.ERROR, "Exeption in ->Notification_Option()");
+			test.log(LogStatus.ERROR, "Exeption in ->disable_Notification()");
 		}
 	}
 
@@ -3227,12 +3325,12 @@ clickBtn(multi_Loc_Strategy(Locators_Messaging.forward_Text_A, Locators_Messagin
 			}
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 
-			test.log(LogStatus.ERROR, "Error in the locators->Notification_Option()");
+			test.log(LogStatus.ERROR, "Error in the locators->validate_enable_Notification()");
 			e.printStackTrace();
 
 		} catch (Exception e) {
 
-			test.log(LogStatus.ERROR, "Exeption in ->Notification_Option()");
+			test.log(LogStatus.ERROR, "Exeption in ->validate_enable_Notification()");
 		}
 	}
 
@@ -3251,12 +3349,12 @@ clickBtn(multi_Loc_Strategy(Locators_Messaging.forward_Text_A, Locators_Messagin
 			}
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 
-			test.log(LogStatus.ERROR, "Error in the locators->Notification_Option()");
+			test.log(LogStatus.ERROR, "Error in the locators->validate_Disable_Notification()");
 			e.printStackTrace();
 
 		} catch (Exception e) {
 
-			test.log(LogStatus.ERROR, "Exeption in ->Notification_Option()");
+			test.log(LogStatus.ERROR, "Exeption in ->validate_Disable_Notification()");
 		}
 	}
 
@@ -3275,12 +3373,12 @@ clickBtn(multi_Loc_Strategy(Locators_Messaging.forward_Text_A, Locators_Messagin
 
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 
-			test.log(LogStatus.ERROR, "Error in the locators->Notification_Option()");
+			test.log(LogStatus.ERROR, "Error in the locators->validate_Enabled_Notification_Received_SMS_InPrimary()");
 			e.printStackTrace();
 
 		} catch (Exception e) {
 
-			test.log(LogStatus.ERROR, "Exeption in ->Notification_Option()");
+			test.log(LogStatus.ERROR, "Exeption in ->validate_Enabled_Notification_Received_SMS_InPrimary()");
 		}
 	}
 	public void validate_Disabled_Notification_Received_SMS_InPrimary(SoftAssert soft) {
@@ -3298,12 +3396,12 @@ clickBtn(multi_Loc_Strategy(Locators_Messaging.forward_Text_A, Locators_Messagin
 
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 
-			test.log(LogStatus.ERROR, "Error in the locators->Notification_Option()");
+			test.log(LogStatus.ERROR, "Error in the locators->validate_Disabled_Notification_Received_SMS_InPrimary()");
 			e.printStackTrace();
 
 		} catch (Exception e) {
 
-			test.log(LogStatus.ERROR, "Exeption in ->Notification_Option()");
+			test.log(LogStatus.ERROR, "Exeption in ->validate_Disabled_Notification_Received_SMS_InPrimary()");
 		}
 	}
 	public void reply_From_Notification_bar()
@@ -3493,19 +3591,19 @@ clickBtn(Locators_Messaging.Reply);
 	public void validate_message_Template(SoftAssert soft) throws IOException {
 		try {
 		if (!isElementExist(Locators_Messaging.msgtemplate1)) {
-			APP_LOGS.info("Message template delete sucessfully");
-			soft.assertTrue(true, "Message template delete sucessfully");
-			test.log(LogStatus.PASS, "Message template delete sucessfully");
+			APP_LOGS.info("Message template deleted sucessfully");
+			soft.assertTrue(true, "Message template deleted sucessfully");
+			test.log(LogStatus.PASS, "Message template deleted sucessfully");
 		} else {
 			APP_LOGS.info("Failed to delete the Message template");
 			soft.fail();
 			test.log(LogStatus.FAIL, "Failed to delete the Message template");
 		}
 		} catch (org.openqa.selenium.NoSuchElementException e) {
-			test.log(LogStatus.ERROR, "Error in the locators->memory_status() ");
+			test.log(LogStatus.ERROR, "Error in the locators->validate_message_Template() ");
 			e.printStackTrace();
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in ->memory_status()");
+			test.log(LogStatus.ERROR, "Exception in ->validate_message_Template()");
 		}
 	}
 	public void memory_status() throws IOException {
@@ -3532,10 +3630,10 @@ clickBtn(Locators_Messaging.Reply);
 			test.log(LogStatus.FAIL, "Failed to display the memory status");
 		}
 		} catch (org.openqa.selenium.NoSuchElementException e) {
-			test.log(LogStatus.ERROR, "Error in the locators->memory_status() ");
+			test.log(LogStatus.ERROR, "Error in the locators->validate_Memory_status() ");
 			e.printStackTrace();
 		} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exception in ->memory_status()");
+			test.log(LogStatus.ERROR, "Exception in ->validate_Memory_status()");
 		}
 	}
 	public void remove_Recipient_In_To_Field(SoftAssert soft) throws IOException {

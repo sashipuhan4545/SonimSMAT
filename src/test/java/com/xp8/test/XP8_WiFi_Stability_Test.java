@@ -45,7 +45,7 @@ public class XP8_WiFi_Stability_Test extends XP8_Stability_Util_orio {
 	public static ExtentTestInterruptedException testexception;
 	public int itr = 1;
 	public Timer timer1;
-	public static String ssid = AllQA.SSID;
+	public static String ssid =AllQA.SSID;
 	public static String pswd = AllQA.WIFIPASSWORD;
 
 	@BeforeSuite
@@ -121,8 +121,8 @@ public class XP8_WiFi_Stability_Test extends XP8_Stability_Util_orio {
 				@Override
 				public void run() {
 					
-					if (isElementExist(Locators_DeviceStability.setting_TexkOKBTN)) {
-						Locators_DeviceStability.setting_TexkOKBTN.click();
+					if (isElementExist(Locators_WifiStability.setting_TexkOKBTN)) {
+						Locators_WifiStability.setting_TexkOKBTN.click();
 						try {
 							customWait(2000);
 						} catch (InterruptedException e) {
@@ -156,7 +156,7 @@ public class XP8_WiFi_Stability_Test extends XP8_Stability_Util_orio {
 			launch_an_app("settings");
 			clickOn_Networks_and_Internet();
 			clickOn_MobileNetwork();
-			OFF_Switch();
+			MobileData_Switch();
 
 			for (int i = 1; i <= itr; i++) {
 				clearRecentApps();
@@ -189,7 +189,7 @@ public class XP8_WiFi_Stability_Test extends XP8_Stability_Util_orio {
 			launch_an_app("settings");
 			clickOn_Networks_and_Internet();
 			clickOn_MobileNetwork();
-			OFF_Switch();
+			MobileData_Switch();
 
 			for (int i = 1; i <= itr; i++) {
 				clearRecentApps();
@@ -221,7 +221,7 @@ public class XP8_WiFi_Stability_Test extends XP8_Stability_Util_orio {
 				launch_an_app("settings");
 				clickOn_Networks_and_Internet();
 				clickOn_MobileNetwork();
-				OFF_Switch();
+				MobileData_Switch();
 
 				for (int i = 1; i <= itr; i++) {
 					clearRecentApps();
@@ -255,7 +255,7 @@ public class XP8_WiFi_Stability_Test extends XP8_Stability_Util_orio {
 				launch_an_app("settings");
 				clickOn_Networks_and_Internet();
 				clickOn_MobileNetwork();
-				OFF_Switch();
+				MobileData_Switch();
 
 				for (int i = 1; i <= itr; i++) {
 					clearRecentApps();
@@ -288,7 +288,7 @@ public class XP8_WiFi_Stability_Test extends XP8_Stability_Util_orio {
 				launch_an_app("settings");
 				clickOn_Networks_and_Internet();
 				clickOn_MobileNetwork();
-				OFF_Switch();
+				MobileData_Switch();
 
 				for (int i = 1; i <= itr; i++) {
 					clearRecentApps();
@@ -335,7 +335,7 @@ public class XP8_WiFi_Stability_Test extends XP8_Stability_Util_orio {
 			launch_an_app("settings");
 			clickOn_Networks_and_Internet();
 			scrollToText("Mobile network");
-			OFF_Switch();
+			MobileData_Switch();
 	
 		for (int i = 1; i <= itr; i++) {
 			clearRecentApps();
@@ -370,7 +370,7 @@ public class XP8_WiFi_Stability_Test extends XP8_Stability_Util_orio {
 			launch_an_app("settings");
 			clickOn_Networks_and_Internet();
 			scrollToText("Mobile network");
-			OFF_Switch();
+			MobileData_Switch();
 		
 			for (int i = 1; i <= itr; i++) {
 				clearRecentApps();
@@ -405,7 +405,7 @@ public class XP8_WiFi_Stability_Test extends XP8_Stability_Util_orio {
 				launch_an_app("settings");
 				clickOn_Networks_and_Internet();
 				scrollToText("Mobile network");
-				OFF_Switch();
+				MobileData_Switch();
 			
 				for (int i = 1; i <= itr; i++) {
 					clearRecentApps();
@@ -441,7 +441,7 @@ public class XP8_WiFi_Stability_Test extends XP8_Stability_Util_orio {
 			launch_an_app("settings");
 			clickOn_Networks_and_Internet();
 			clickOn_MobileNetwork();
-			OFF_Switch();
+			MobileData_Switch();
 		
 			for (int i = 1; i <= itr; i++) {
 				clearRecentApps();
@@ -477,7 +477,7 @@ public class XP8_WiFi_Stability_Test extends XP8_Stability_Util_orio {
 			launch_an_app("settings");
 			clickOn_Networks_and_Internet();
 			scrollToText("Mobile network");
-			OFF_Switch();
+			MobileData_Switch();
 		
 			for (int i = 1; i <= itr; i++) {
 				clearRecentApps();

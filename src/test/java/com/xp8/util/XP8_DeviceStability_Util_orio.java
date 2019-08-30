@@ -4109,7 +4109,7 @@ wait(Locators_DeviceStability.chromeSearch, 20);
 
 								clickBtn(Locators_DeviceStability.oneselected1);
 								clickBtn(Locators_DeviceStability.deletesms);
-								clickBtn(Locators_DeviceStability.delete_Confirm_s);
+								clickBtn(Locators_DeviceStability.delete_Confirm_a);
 
 								// longpress(Locators_DeviceStability.msg1);
 							}
