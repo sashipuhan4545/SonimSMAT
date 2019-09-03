@@ -1213,7 +1213,8 @@ public void enable_disable_data(){
 			    clickBtn(Locators_Interactions.gaanaframe);
 			    wait.until(ExpectedConditions.visibilityOf(Locators_Interactions.gaanahome));
 			    clickBtn(Locators_Interactions.gaanahome);
-				scrollToText("Trending Songs");
+			    clickBtn(Locators_Interactions.gaanahome);
+                scrollToText("Trending Songs");
 				//clickBtn(Locators_Interactions.gaanasongslt);
 				wait.until(ExpectedConditions.visibilityOf(Locators_Interactions.gaanaplay));
 				clickBtn(Locators_Interactions.gaanaplay);

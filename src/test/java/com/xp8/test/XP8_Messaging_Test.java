@@ -31,8 +31,6 @@ import com.graphics.gui.JsonFileReaderAndWriter;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTestInterruptedException;
 import com.relevantcodes.extentreports.LogStatus;
-import com.xp5S.util.GetMethods;
-import com.xp5S.util.appiumService;
 import com.xp8.util.DataProviders;
 import com.xp8.util.ExcelConstants;
 import com.xp8.util.ExcelReader;
@@ -81,6 +79,7 @@ public class XP8_Messaging_Test extends XP8_Messaging_Util {
 		test = extent.startTest((this.getClass().getSimpleName() + " :: " + method.getName()), method.getName()); // Test
 																													// Case
 																													// Start
+		test.assignAuthor("Navya Shree"); // Test Script Author Name
 
 	}
 
@@ -119,13 +118,6 @@ public class XP8_Messaging_Test extends XP8_Messaging_Util {
 		PageFactory.initElements(new AppiumFieldDecorator(aDriver), loc1);
 		excel = new ExcelReader(ExcelConstants.XP5S_XL_PATH);
 		System.out.println("before Test");
-	}
-	
-	
-	@BeforeSuite
-	public void numofTestCases() throws ClassNotFoundException {
-		
-		appiumService.TOTAL_NUM_OF_TESTCASES=GetMethods.TotalTestcase("XP8_TC", this.getClass());
 	}
 
 	@BeforeTest
@@ -510,7 +502,7 @@ public class XP8_Messaging_Test extends XP8_Messaging_Util {
 		sa.assertAll();
 	}
 
-	@Test(priority = 18, dataProvider = "XP8_Messaging", dataProviderClass = DataProviders.class)
+	@Test(priority = -18, dataProvider = "XP8_Messaging", dataProviderClass = DataProviders.class)
 	public void XP8_TC_18_XP8_Messaging_Stored_Contact_In_Editor_Screen(Hashtable<String, String> data)
 			throws InterruptedException, AWTException, IOException {
 		SoftAssert sa = new SoftAssert();
@@ -537,7 +529,6 @@ public class XP8_Messaging_Test extends XP8_Messaging_Util {
 		launch_an_app("contacts");
 		for (int i = 1; i < 5;i++) {
 			Click_ON_Phone();
-			clickBtn(Locators_Messaging.AddtoContact);
 			createContact_A("Test" + i, data.get("number" + i));
 			aDriver.pressKeyCode(AndroidKeyCode.BACK);
 		}
@@ -616,10 +607,10 @@ public class XP8_Messaging_Test extends XP8_Messaging_Util {
 		navigateTo_NewSMS();
 		add_Picture();
 		validate_add_Picture(sa);
-		enter_Num_ToField(refNum);
+		select_SIM_Contact();	
+		clickBtn(Locators_Messaging.OKBtn1);
 		minWait();
-		enterText_MessageField(data.get("typeMessage"));
-		clickOn_Send();
+		clickOn_Send_P();
 		validate_SentMessage(sa);
 
 		sa.assertAll();

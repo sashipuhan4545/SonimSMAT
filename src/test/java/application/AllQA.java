@@ -3579,7 +3579,7 @@ public class AllQA  extends CommonConfig {
 					File Call = new File(System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog");
 					String callsettingspath=System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog";
 					try {
-						FileUtils.copyDirectory(CallSettings, Call);
+						FileUtils.copyFileToDirectory(CallSettings, Call);
 
 					} catch (IOException e) {
 
@@ -5700,7 +5700,7 @@ public class AllQA  extends CommonConfig {
 						CommonConfig.CALL_MODULE="";
 						System.out.println("Here we are reseting the Call Module to null");
 						testCaseDisplay.setStyle("-fx-text-inner-color: green;");
-						testCaseDisplay.setText("Please follow the below preconditions :\n\n1. Side Connector should be connected \n2. Head phone should be connected");
+						testCaseDisplay.setText("Please follow the below preconditions :\n\n1. Side Connector should be connected \n2. Head phone should be connected \n3. Connect the Device to the Wi-fi network");
 						
 						
 					}else {

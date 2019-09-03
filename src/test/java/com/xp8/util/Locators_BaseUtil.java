@@ -18,6 +18,18 @@ public class Locators_BaseUtil {
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Gmail\")")
 	public static AndroidElement gmail;
 	
+	@AndroidFindBy(xpath = "//android.widget.TextView[@text='File Manager']")
+	public static AndroidElement FileManager_App;
+
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Duo\")")
+	public static AndroidElement Duo;
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Photos\")")
+	public static AndroidElement photos;
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Play Music\")")
+	public static AndroidElement playMusic;
 	//PTT locators below
 	
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").textContains(\"Push To Talk+\")")

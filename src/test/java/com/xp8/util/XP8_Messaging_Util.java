@@ -170,9 +170,18 @@ public class XP8_Messaging_Util extends BaseUtil {
 			clickBtn(Locators_Messaging.more_option_a);
 			clickBtn(Locators_Messaging.add_contact);
 			clickBtn(Locators_Messaging.create_contact);
+		if(isElementExist(Locators_Messaging.AddtoContact))
+		{
+		clickBtn(Locators_Messaging.AddtoContact);
+		}
+			Click_ON_SIM();
+
+		
+			
 			enterTextToInputField(multi_Loc_Strategy(Locators_Messaging.name_NewContact,
 					Locators_Messaging.name_NewContact1, Locators_Messaging.name_NewContact2, null, null, 0, 0), "Demo1");
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
+			
 			
 			minWait();
 			clickBtn(multi_Loc_Strategy(Locators_Messaging.Save_ConatctIcon1, Locators_Messaging.Save_ConatctIcon2,
@@ -296,7 +305,7 @@ public class XP8_Messaging_Util extends BaseUtil {
 		/* Method is used to Enter Number into TO Field. */
 		try {
 			if (p_b_No.contains("-10.")) {
-System.out.println("to");
+                   System.out.println("to");
 				enterTextToInputField(multi_Loc_Strategy(Locators_Messaging.TO_Field_phno1,
 						Locators_Messaging.TO_Field_phno2, Locators_Messaging.TO_Field_phno3, null, null, 0, 0),
 						number);
@@ -977,6 +986,46 @@ minWait();
 			if (p_b_No.contains("-10.")) {
 				if (isElementExist(Locators_Messaging.send_Icon)) {
 					clickBtn(multi_Loc_Strategy(Locators_Messaging.send_Icon, Locators_Messaging.send_Icon2,
+							Locators_Messaging.send_Icon3, null, null, 990, 1024));
+					APP_LOGS.info("Send icon");
+					minWait();
+				} else if (isElementExist(Locators_Messaging.send_SMS)) {
+					clickBtn(Locators_Messaging.send_SMS);
+					APP_LOGS.info("Send icon");
+					minWait();
+				} else {
+					clickBtn(Locators_Messaging.send_MMS_Icon);
+					minWait();
+				}
+			} else if (p_b_No.contains("-15.")) {
+				customWait(500);
+				clickBtn(Locators_Messaging.send_Icon_O);
+				minWait();
+			} else if (p_b_No.contains("-29.") || p_b_No.contains("-26.") || p_b_No.contains("-11.")) {
+
+				customWait(500);
+				clickBtn(multi_Loc_Strategy(Locators_Messaging.send_Icon_B, Locators_Messaging.send_Icon_B1,
+						Locators_Messaging.send_Icon_B2, null, null, 0, 0));
+				System.out.println("sending");
+				minWait();
+			}
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->clickOn_Send()");
+			e.printStackTrace();
+
+		} catch (Exception e) {
+
+			test.log(LogStatus.ERROR, "Exeption in ->clickOn_Send()");
+		}
+	}
+	public void clickOn_Send_P() throws InterruptedException {
+		/* Method used to click on Send Button. */
+		try {
+			if (p_b_No.contains("-10.")) {
+				wait(Locators_Messaging.send_Icon_P, 30);
+				if (isElementExist(Locators_Messaging.send_Icon_P)) {
+					clickBtn(multi_Loc_Strategy(Locators_Messaging.send_Icon_P, Locators_Messaging.send_Icon2,
 							Locators_Messaging.send_Icon3, null, null, 990, 1024));
 					APP_LOGS.info("Send icon");
 					minWait();
@@ -1868,9 +1917,11 @@ if (p_b_No.contains("-10.")) {
 		 */
 		try {
 if (p_b_No.contains("-10.")) {
-	clickBtn(Locators_Messaging.saving_to_phone);
-
-			
+	wait(Locators_Messaging.create_contact_A, 20);
+	
+	clickBtn(Locators_Messaging.create_contact_A);
+	
+	clickBtn(Locators_Messaging.AddtoContact);
 			if (isElementExist(Locators_Messaging.Choose_Phone_A)) {
 				minWait();
 				clickBtn(Locators_Messaging.Choose_Phone_A);
@@ -1884,7 +1935,7 @@ if (p_b_No.contains("-10.")) {
 			customWait(4000);
 			minWait();
 			// enterTextToInputField(Locators_DeviceStability.name_NewContact, name);
-			enterTextToInputField(multi_Loc_Strategy(Locators_Messaging.name_NewContact,
+			enterTextToInputField(multi_Loc_Strategy(Locators_Messaging.name_NewContact1,
 					Locators_Messaging.name_NewContact1, Locators_Messaging.name_NewContact2, null, null, 0, 0), name);
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
 			minWait();

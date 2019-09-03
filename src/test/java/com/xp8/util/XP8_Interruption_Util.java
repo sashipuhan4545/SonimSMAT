@@ -277,7 +277,7 @@ public class XP8_Interruption_Util extends BaseUtil {
 				customWait(3000);
 				aDriver.pressKeyCode(AndroidKeyCode.BACK);
 
-				Runtime.getRuntime().exec("adb -s"+p_Id+"uninstall fillememory.myapplication");
+				Runtime.getRuntime().exec("adb -s"+p_Id+"uninstall com.rektgames.memoryfill");
 				launch_an_app("memoryFill");
 				if(isElementExist(Locators_XP8_CallHistory.memoryfillIcon)){
 					System.out.println("Memory Fill app is not uninstalled");
@@ -302,8 +302,12 @@ public class XP8_Interruption_Util extends BaseUtil {
 					clickBtn(Locators_XP8_CallHistory.uninstallBtn);
 					minWait();
 					clickBtn(Locators_XP8_CallHistory.okBtn);
+					minWait();
+					System.out.println("Memory Fill app is uninstalled successfully");
+					test.log(LogStatus.PASS,"Memory Fill app is uninstalled successfully");
 				}else{
 					System.out.println("Memory Fill app is uninstalled successfully");
+					test.log(LogStatus.PASS,"Memory Fill app is uninstalled successfully");
 				}
 
 				aDriver.pressKeyCode(AndroidKeyCode.HOME);
@@ -362,7 +366,7 @@ public class XP8_Interruption_Util extends BaseUtil {
 	public void deleteSMSInPostCondition() throws InterruptedException{
 		try{
 			if(p_b_No.contains("-15.")){
-				System.out.println("Firmware Version ATT");
+				System.out.println("Firmware Version VZW");
 				test.log(LogStatus.INFO, "Firmware Version -15.");
 				launch_an_app("messagePlus");
 				minWait();
@@ -396,8 +400,9 @@ public class XP8_Interruption_Util extends BaseUtil {
 				test.log(LogStatus.INFO, "Firmware Version Others");
 				launch_an_app("messaging");
 				minWait();
-				TouchAction action = new TouchAction(aDriver);
-				action.longPress(Locators_XP8_CallHistory.contact_two, 10).release().perform();
+				TouchAction action1 = new TouchAction(aDriver);
+				action1.longPress(Locators_XP8_CallHistory.contact_two, 10).perform().release();
+				minWait();
 				clickBtn(multi_Loc_Strategy(Locators_XP8_CallHistory.SMSDeleteLogo, null, null, null, null, 0, 0));
 				minWait();
 				clickBtn(multi_Loc_Strategy(Locators_XP8_CallHistory.delete_BUTTONInUiSelector, Locators_XP8_CallHistory.delete_BUTTON, null, null, null, 0, 0));
@@ -1049,7 +1054,7 @@ public class XP8_Interruption_Util extends BaseUtil {
 				/*clickBtn(multi_Loc_Strategy(Locators_XP8_CallHistory.alarmInputHour, null, null, null, null, 180, 1007));*/
 				//customWait(2000);
 				clickBtn((multi_Loc_Strategy(Locators_XP8_CallHistory.alarmInputHour, null, null, null, null, 180, 1007)));
-				customWait(2000);
+				customWait(1000);
 				/*TouchAction action = new TouchAction(aDriver);
 				action.tap(285, 1069).perform();
 				customWait(2000);
@@ -1075,11 +1080,11 @@ public class XP8_Interruption_Util extends BaseUtil {
 				Runtime.getRuntime().exec("adb -s "+p_Id+" shell input keyevent 67");
 				minWait();*/
 				Runtime.getRuntime().exec("adb -s "+p_Id+" shell input text "+finalAlarmMinute);
-				customWait(2000);
+				customWait(1000);
 				clickBtn(Locators_XP8_CallHistory.Ok_option);
 				/*TouchAction action3 = new TouchAction(aDriver);
 				action3.tap(841, 1000).perform();*/
-				customWait(2000);
+				customWait(1000);
 				/*if(isElementExist(multi_Loc_Strategy(Locators_XP8_CallHistory.deleteOptInVZW, null, null, null, null, 72, 1488))){*/
 				System.out.println("Alarm is set to "+spiltFirstElementHH+":"+finalAlarmMinute+" "+split_Device_Time[1]);
 				test.log(LogStatus.PASS,"Alarm is set to "+spiltFirstElementHH+":"+finalAlarmMinute+" "+split_Device_Time[1]);
@@ -1287,11 +1292,13 @@ public class XP8_Interruption_Util extends BaseUtil {
 				clickBtn(Locators_XP8_CallHistory.clockStopBtn);
 				System.out.println("Timer expired Sucessfully");
 				APP_LOGS.info("Timer expired Sucessfully");
+				test.log(LogStatus.PASS, "Timer expired Sucessfully");
 				SA.assertTrue(true, "Timer expired Sucessfully");
 			}
 			else{
 				System.out.println("Timer not expired Sucessfully");
 				APP_LOGS.info("Timer not expired Sucessfully");
+				test.log(LogStatus.FAIL, "Timer not expired Sucessfully");
 				SA.assertTrue(true, "Timer not expired Sucessfully");
 			}
 			
@@ -1361,7 +1368,7 @@ public class XP8_Interruption_Util extends BaseUtil {
 		else{
 			System.out.println("NOW not Found");
 			APP_LOGS.info("NOW not Found");
-			test.log(LogStatus.FAIL, "NOW not Found");
+			test.log(LogStatus.INFO, "NOW not Found");
 		}
 		//clearTheFile();
 		/*takeScreenShot();
@@ -1408,11 +1415,12 @@ public class XP8_Interruption_Util extends BaseUtil {
 		try {
 			if(isElementExist(multi_Loc_Strategy(Locators_XP8_CallHistory.contactDetails, Locators_XP8_CallHistory.contactDetailsInVZW, null, null, null, 0, 0))){
 				System.out.println("Contact Clicked");
-				clickBtn(multi_Loc_Strategy(Locators_XP8_CallHistory.contactDetails, Locators_XP8_CallHistory.contactDetailsInVZW, null, null, null, 0, 0));
+				clickBtn(Locators_XP8_CallHistory.callDetailsOpt);
 				minWait();
 			}
-			clickBtn(Locators_XP8_CallHistory.callDetailsOpt);
-			minWait();
+			/*clickBtn(Locators_XP8_CallHistory.callDetailsOpt);
+			minWait();*/
+			System.out.println("Call Details is available");
 			APP_LOGS.info("Call Details is available");
 			test.log(LogStatus.PASS, "Call Details is available");
 		} 
@@ -1428,15 +1436,33 @@ public class XP8_Interruption_Util extends BaseUtil {
 		}
 	}
 
-	public void validateCallDetails(SoftAssert SA) throws InterruptedException{
-		launch_an_app("phone");
-		minWait();
-		clickBtn(multi_Loc_Strategy(Locators_XP8_CallHistory.callLogPage, null, null, null, null, 543, 334));
-		minWait();
-		/*clickBtn(multi_Loc_Strategy(Locators_XP8_CallHistory.contact_two, null, null, null, null, 379, 618));*/
-		callDetailsOpt(SA);
-		System.out.println(multi_Loc_Strategy(Locators_XP8_CallHistory.call_Time, Locators_XP8_CallHistory.call_TimeVZW, null, null, null, 0, 0).getText());
-		System.out.println("Last Call Duration"+(Locators_XP8_CallHistory.callDurationData).getText());	
+	public void validateCallDetails(SoftAssert SA) throws InterruptedException, IOException{
+		try {
+			launch_an_app("phone");
+			minWait();
+			/*clickBtn(multi_Loc_Strategy(Locators_XP8_CallHistory.callLogPage, null, null, null, null, 543, 334));
+			minWait();*/
+			/*clickBtn(multi_Loc_Strategy(Locators_XP8_CallHistory.contact_two, null, null, null, null, 379, 618));*/
+			navigateTocallHistory_Without_Try_Catch(SA);
+			minWait();
+			callDetailsOpt(SA);
+			minWait();
+			clickBtn(multi_Loc_Strategy(Locators_XP8_CallHistory.contact_two, null, null, null, null, 379, 618));
+			minWait();
+			clickBtn(multi_Loc_Strategy(Locators_XP8_CallHistory.callDetailsOpt, null, null, null, null, 0, 0));
+			minWait();
+			System.out.println(multi_Loc_Strategy(Locators_XP8_CallHistory.call_Time, Locators_XP8_CallHistory.call_TimeVZW, null, null, null, 0, 0).getText());
+			System.out.println("Last Call Duration"+(Locators_XP8_CallHistory.callDurationData).getText());
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+			test.log(LogStatus.ERROR, "Error in the locators->validateCallDetails()");
+			e.printStackTrace();
+			SA.fail();
+		}
+		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in validateCallDetails() ");
+			e.printStackTrace();
+			SA.fail();
+		}
 	}
 
 	public static void clearTheFile() throws IOException {
@@ -1575,7 +1601,7 @@ public class XP8_Interruption_Util extends BaseUtil {
 				else{
 					System.out.println("Gmail Account is not saved");
 					test.log(LogStatus.INFO, "Gmail Account is not saved");
-					clickBtn(Locators_XP8_CallHistory.addAnotherEmailAddressopt);
+					clickBtn(multi_Loc_Strategy(Locators_XP8_CallHistory.addAnotherEmailAddressopt, Locators_XP8_CallHistory.addEmailAddress, null, null, null, 0, 0));
 					minWait();
 					System.out.println("Click on Google Account");
 					clickBtn(Locators_XP8_CallHistory.googleAccountOpt);

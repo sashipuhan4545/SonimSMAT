@@ -60,7 +60,7 @@ public class New_SanityTest extends New_SanityUtil {
 	public static String ssid = AllQA.SSID;
 	public static String pwsd = AllQA.WIFIPASSWORD;
 
-//test
+	//test
 	@BeforeSuite
 	public void beforeSuite() throws FileNotFoundException, InterruptedException, IOException, ParseException {
 
@@ -70,7 +70,7 @@ public class New_SanityTest extends New_SanityUtil {
 		fetch_Devices_Details();
 
 		Runtime.getRuntime()
-				.exec("adb -s " + p_Id + " push src/test/resources/StorageFile/Kalimba.mp3 /storage/emulated/0");
+		.exec("adb -s " + p_Id + " push src/test/resources/StorageFile/Kalimba.mp3 /storage/emulated/0");
 	}
 
 	@BeforeTest
@@ -96,10 +96,10 @@ public class New_SanityTest extends New_SanityUtil {
 			}
 		}, 0, 10 * (100 * 1));
 
-		New_SanityLocators loc1 = new New_SanityLocators(aDriver);
+		/*	New_SanityLocators loc1 = new New_SanityLocators(aDriver);
 		Locators_BaseUtil loc2 = new Locators_BaseUtil(aDriver);
 		PageFactory.initElements(new AppiumFieldDecorator(aDriver), loc1);
-		PageFactory.initElements(new AppiumFieldDecorator(aDriver), loc2);
+		PageFactory.initElements(new AppiumFieldDecorator(aDriver), loc2);*/
 	}
 
 	@BeforeClass
@@ -118,6 +118,8 @@ public class New_SanityTest extends New_SanityUtil {
 		}
 	}
 
+
+
 	@BeforeSuite
 	public void numofTestCases() throws ClassNotFoundException {
 
@@ -127,11 +129,17 @@ public class New_SanityTest extends New_SanityUtil {
 
 	@BeforeMethod
 	public void beforeMethod(Method method) throws InterruptedException, IOException {
-		test = extent.startTest((/* this.getClass().getSimpleName() +" :: "+ */method.getName()), method.getName()); // Test
-																														// Case
-																														// Start
-																														// Here
-	
+		try {
+			test = extent.startTest((/* this.getClass().getSimpleName() +" :: "+ */method.getName()), method.getName()); 
+
+			Runtime.getRuntime().exec("adb -s "+p_Id+" shell svc wifi enable");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// Start
+		// Here
+
 
 		clearRecentApps();
 	}
@@ -152,7 +160,7 @@ public class New_SanityTest extends New_SanityUtil {
 
 	// ========================================= Test Method ============================================
 
-	
+
 	@Test(priority = 1, dataProvider = "XP8_NewSanityTest", dataProviderClass = DataProviders.class)
 	public void XP8_DeviceSanity_001_Check_Switching_of_camera_FandB(Hashtable<String, String> dt)
 
@@ -237,7 +245,7 @@ public class New_SanityTest extends New_SanityUtil {
 
 		SoftAssert sa = new SoftAssert();
 		launch_An_App(dt.get("SystemStorage_Package"), dt.get("SystemStorage_Activity")); // launching System Storage
-																							// Setting
+		// Setting
 		scrollToText("Storage");
 		validate_InternalStorage(sa, dt.get("PRD")); // space given in product requirements document
 		sa.assertAll();
@@ -376,7 +384,6 @@ public class New_SanityTest extends New_SanityUtil {
 		sa.assertAll();
 	}
 
-	
 	@Test(priority = 13, dataProvider = "XP8_NewSanityTest", dataProviderClass = DataProviders.class) // 131
 	public void XP8_DeviceSanity_0013_checkDeviceInformation_WithSwrealese_and_stng(Hashtable<String, String> dt)
 			throws InterruptedException, IOException, AWTException {
@@ -417,7 +424,7 @@ public class New_SanityTest extends New_SanityUtil {
 		Launch_App("Setting"); // launching System Setting
 		scrollToText("Battery");
 		validateBatteryStatus(sa);
-	
+
 	}
 
 	@Test(priority = 16, dataProvider = "XP8_NewSanityTest", dataProviderClass = DataProviders.class) // 139
@@ -598,23 +605,33 @@ public class New_SanityTest extends New_SanityUtil {
 		sa.assertAll();
 	}
 
-	
+
 
 	/////////////////////////// gobi sanity//////////////////////////////////////////
 
-/*	@Test(priority= 26,dataProvider="XP8_NewSanityTest", dataProviderClass= DataProviders.class)
+
+	@Test(priority= 26,dataProvider="XP8_NewSanityTest", dataProviderClass= DataProviders.class)
 	public void XP8_DeviceSanity_26_Check_animation_during_call(Hashtable<String, String> data) throws InterruptedException, IOException, AWTException, ParseException 
 	{
 		SoftAssert sa=new SoftAssert();//88
 		APP_LOGS.info("===================== DeviceSanity_26 ======================");
 		startAdbLog("DeviceSanity_26");
+		launch_an_app("settings");
+		scrollToText("Network & Internet");
+		scrollToText("Mobile network");
+		if (New_SanityLocators.data_switch.getText().equalsIgnoreCase("OFF"))
+		{  
+			clickBtn(New_SanityLocators.data_switch);
+		}
+		aDriver.pressKeyCode(AndroidKeyCode.HOME);
+		customWait(3000);
 		clearRecentApps();
 		launch_an_app("contacts");
 		deleteContacts();
 		addcontactsTO_Phone_Make_call(data.get("name1"),data.get("email1"), data.get("Address1"), sa);
 		sa.assertAll();
 	}
-	 
+
 	@Test(priority= 27,dataProvider="XP8_NewSanityTest", dataProviderClass= DataProviders.class)
 	public void XP8_DeviceSanity_27_Check_Mute_Unmute_Hold_Retrieve_Loudspeaker_in_VoiceCall(Hashtable<String, String> data) throws InterruptedException, IOException, AWTException, ParseException 
 	{
@@ -629,13 +646,17 @@ public class New_SanityTest extends New_SanityUtil {
 		endCall_RefDevice();
 		sa.assertAll();
 	}
-	
+
 	@Test(priority= 28,dataProvider="XP8_NewSanityTest", dataProviderClass= DataProviders.class)
 	public void XP8_DeviceSanity_28_Check_Call_rejection_with_SMS_notification(Hashtable<String, String> data) throws InterruptedException, IOException, AWTException, ParseException 
 	{
 		SoftAssert sa=new SoftAssert();//90
 		APP_LOGS.info("===================== DeviceSanity_28 ======================");
 		startAdbLog("DeviceSanity_28");
+	
+		Runtime.getRuntime().exec("adb -s "+p_Id+" shell settings put global heads_up_notifications_enabled 0"); 
+		
+		customWait(2000);
 		clearRecentApps();
 		make_Call_from_RefDev();
 		customWait(10000);
@@ -646,34 +667,40 @@ public class New_SanityTest extends New_SanityUtil {
 		Runtime.getRuntime().exec("adb -s "+p_Id+" shell service call isms 7 i32 0 s16 \"com.android.mms.service\" s16 "+refNum+" s16 \"null\" s16 \"SMAT\" s16 \"null\" s16 \"null\"");
 		customWait(5000);
 		test.log(LogStatus.PASS, "Call rejection with SMS is done");
+		Runtime.getRuntime().exec("adb -s "+p_Id+" shell settings put global heads_up_notifications_enabled 1"); //Enable Heads Up Notifications Again
 		sa.assertAll();
 	}
-	
+
 	@Test(priority= 29,dataProvider="XP8_NewSanityTest", dataProviderClass= DataProviders.class)
 	public void XP8_DeviceSanity_29_send_Receive_MO_MT_SMS(Hashtable<String, String> data) throws InterruptedException, IOException, AWTException, ParseException 
 	{
 		SoftAssert sa=new SoftAssert();//100
 		APP_LOGS.info("===================== DeviceSanity_29 ======================");
 		startAdbLog("DeviceSanity_29");
+		Runtime.getRuntime().exec("adb -s "+p_Id+" shell settings put global heads_up_notifications_enabled 0"); 
+		customWait(2000);//Disable Heads Up Notifications
 		clearRecentApps();
 		launch_an_app("contacts");
 		deleteContacts();
 		Runtime.getRuntime().exec("adb -s "+p_Id+" shell input keyevent KEYCODE_HOME");
 		minWait();
-		Runtime.getRuntime().exec("adb -s "+p_Id+" shell pm clear com.android.mms"); // clear Duo cache
+		Runtime.getRuntime().exec("adb -s "+p_Id+" shell pm clear com.android.mms"); // clear mms cache
 		minWait();
 		launch_an_app("messaging");
 		send_messaging(sa);
 		receive_messaging(sa);
+		Runtime.getRuntime().exec("adb -s "+p_Id+" shell settings put global heads_up_notifications_enabled 1"); //Enable Heads Up Notifications Again
 		sa.assertAll();
 	}
-	
+
 	@Test(priority= 30,dataProvider="XP8_NewSanityTest", dataProviderClass= DataProviders.class)
 	public void XP8_DeviceSanity_30_send_MSISDN_mailId_url_simultanously(Hashtable<String, String> data) throws InterruptedException, IOException, AWTException, ParseException 
 	{
 		SoftAssert sa=new SoftAssert();//101
 		APP_LOGS.info("===================== DeviceSanity_30 ======================");
 		startAdbLog("DeviceSanity_30");
+		Runtime.getRuntime().exec("adb -s "+p_Id+" shell settings put global heads_up_notifications_enabled 0"); 
+		customWait(2000);//Disable Heads Up Notifications
 		clearRecentApps();
 		launch_an_app("contacts");
 		deleteContacts();
@@ -683,15 +710,20 @@ public class New_SanityTest extends New_SanityUtil {
 		minWait();
 		launch_an_app("messaging");
 		send_MSISDN_mailId_url_simultanously(sa);
+		Runtime.getRuntime().exec("adb -s "+p_Id+" shell settings put global heads_up_notifications_enabled 1"); //Enable Heads Up Notifications Again
 		sa.assertAll();
 	}
-	
+
 	@Test(priority= 31,dataProvider="XP8_NewSanityTest", dataProviderClass= DataProviders.class)
 	public void XP8_DeviceSanity_31_send_SMS_to_New_number_Saved_Contact(Hashtable<String, String> data) throws InterruptedException, IOException, AWTException, ParseException 
 	{
 		SoftAssert sa=new SoftAssert();//102
 		APP_LOGS.info("===================== DeviceSanity_31 ======================");
 		startAdbLog("DeviceSanity_31");
+		Runtime.getRuntime().exec("adb -s "+p_Id+" shell settings put global heads_up_notifications_enabled  0"); 
+		//Disable Heads Up Notifications
+		
+		customWait(2000);
 		clearRecentApps();
 		Runtime.getRuntime().exec("adb -s "+p_Id+" shell pm clear com.android.contacts"); // clear contacts cache
 		launch_an_app("contacts");
@@ -708,9 +740,10 @@ public class New_SanityTest extends New_SanityUtil {
 		clearRecentApps();
 		launch_an_app("messaging");
 		send_messaging(sa);
+		Runtime.getRuntime().exec("adb -s "+p_Id+" shell settings put global heads_up_notifications_enabled  1"); //Enable Heads Up Notifications Again
 		sa.assertAll();
 	}
-	
+
 	@Test(priority= 32,dataProvider="XP8_NewSanityTest", dataProviderClass= DataProviders.class)
 	public void XP8_DeviceSanity_32_Launch_Playstore_and_verify_app_installation(Hashtable<String, String> data) throws InterruptedException, IOException, AWTException, ParseException 
 	{
@@ -718,7 +751,7 @@ public class New_SanityTest extends New_SanityUtil {
 		APP_LOGS.info("===================== DeviceSanity_32 ======================");
 		startAdbLog("DeviceSanity_32");
 		clearRecentApps();
-		
+
 		launch_an_app("settings");
 		remove_GoogleAcccount_Orio(sa);
 		launch_an_app("settings");
@@ -733,7 +766,7 @@ public class New_SanityTest extends New_SanityUtil {
 		customWait(4000);
 		install_App(data.get("appName"),New_SanityLocators.HuluApp1);
 		validate_Installed_App(data.get("appName"),sa);	
-		
+
 		launch_an_app("settings");
 		remove_GoogleAcccount_Orio(sa);
 		sa.assertAll();
@@ -742,29 +775,29 @@ public class New_SanityTest extends New_SanityUtil {
 	@Test(priority= 33,dataProvider="XP8_NewSanityTest", dataProviderClass= DataProviders.class)
 	public void XP8_DeviceSanity_33_launch_PlayMsic_and_play_pause_anymusic(Hashtable<String, String> data) throws InterruptedException, IOException, AWTException, ParseException 
 	{   WebDriverWait wait = new WebDriverWait(aDriver, 120);
-		SoftAssert sa=new SoftAssert();//141
-		APP_LOGS.info("===================== DeviceSanity_33 ======================");
-		startAdbLog("DeviceSanity_33");
-		//clearRecentApps();
-		aDriver.quit();       //   
-		customWait(2000);
-		Runtime.getRuntime().exec("adb -s "+p_Id+" reboot");   //
-		TimeUnit.SECONDS.sleep(60);                                //
-	    aDriver=new AndroidDriver<AndroidElement>(new URL("http://127.0.0.1:4723/wd/hub"),capabilities);  //
-	    minWait();
-	    setUpSys(); // initialize locator	    
-	    Runtime.getRuntime().exec("adb -s "+p_Id+"shell svc power stayon true");
-	    minWait();	   
-	    Runtime.getRuntime().exec("adb -s "+p_Id+"shell input keyevent 82");
-	    minWait();
-	    aDriver.pressKeyCode(AndroidKeyCode.BACK);
-	    wait.until(ExpectedConditions.visibilityOf(New_SanityLocators.app_List));
-	    Runtime.getRuntime().exec("adb -s "+p_Id+" shell pm clear  com.google.android.music"); //  Clear music cache
-		launch_an_app("playMusic");
-		PlayandPause_music(sa);
-		sa.assertAll();	
+	SoftAssert sa=new SoftAssert();//141
+	APP_LOGS.info("===================== DeviceSanity_33 ======================");
+	startAdbLog("DeviceSanity_33");
+	//clearRecentApps();
+	aDriver.quit();       //   
+	customWait(2000);
+	Runtime.getRuntime().exec("adb -s "+p_Id+" reboot");   //
+	TimeUnit.SECONDS.sleep(60);                                //
+	aDriver=new AndroidDriver<AndroidElement>(new URL("http://127.0.0.1:4723/wd/hub"),capabilities);  //
+	minWait();
+	setUpSys(); // initialize locator	    
+	Runtime.getRuntime().exec("adb -s "+p_Id+"shell svc power stayon true");
+	minWait();	   
+	Runtime.getRuntime().exec("adb -s "+p_Id+"shell input keyevent 82");
+	minWait();
+	aDriver.pressKeyCode(AndroidKeyCode.BACK);
+	wait.until(ExpectedConditions.visibilityOf(New_SanityLocators.app_List));
+	Runtime.getRuntime().exec("adb -s "+p_Id+" shell pm clear  com.google.android.music"); //  Clear music cache
+	launch_an_app("playMusic");
+	PlayandPause_music(sa);
+	sa.assertAll();	
 	}
-	
+
 	@Test(priority= 34,dataProvider="XP8_NewSanityTest", dataProviderClass= DataProviders.class)
 	public void XP8_DeviceSanity_34_Verify_Gmail_configuration(Hashtable<String, String> data) throws InterruptedException, IOException, AWTException, ParseException 
 	{
@@ -772,7 +805,7 @@ public class New_SanityTest extends New_SanityUtil {
 		APP_LOGS.info("===================== DeviceSanity_34 ======================");
 		startAdbLog("DeviceSanity_34");
 		clearRecentApps();
-		
+
 		launch_an_app("settings");
 		remove_GoogleAcccount_Orio(sa);
 		launch_an_app("settings");
@@ -786,7 +819,7 @@ public class New_SanityTest extends New_SanityUtil {
 		remove_GoogleAcccount_Orio(sa);
 		sa.assertAll();
 	}
-	
+
 	@Test(priority= 35,dataProvider="XP8_NewSanityTest", dataProviderClass= DataProviders.class)
 	public void XP8_DeviceSanity_35_Launch_Chrome_and_browse_URL(Hashtable<String, String> data) throws InterruptedException, IOException, AWTException, ParseException 
 	{
@@ -800,7 +833,7 @@ public class New_SanityTest extends New_SanityUtil {
 		Configure_browser_URL(sa);
 		sa.assertAll();
 	}
-	
+
 	@Test(priority= 36,dataProvider="XP8_NewSanityTest", dataProviderClass= DataProviders.class)
 	public void XP8_DeviceSanity_36_Launch_Photos_and_view_ImageVideo(Hashtable<String, String> data) throws InterruptedException, IOException, AWTException, ParseException 
 	{
@@ -815,7 +848,7 @@ public class New_SanityTest extends New_SanityUtil {
 		Configure_PHOTOS(sa);
 		sa.assertAll();
 	}
-	
+
 	@Test(priority= 37,dataProvider="XP8_NewSanityTest", dataProviderClass= DataProviders.class)
 	public void XP8_DeviceSanity_37_Launch_Youtube_and_Stream_video(Hashtable<String, String> data) throws InterruptedException, IOException, AWTException, ParseException 
 	{
@@ -823,16 +856,16 @@ public class New_SanityTest extends New_SanityUtil {
 		APP_LOGS.info("===================== DeviceSanity_37 ======================");
 		startAdbLog("DeviceSanity_37");
 		clearRecentApps();
-		
+
 		launch_an_app("settings");
 		remove_GoogleAcccount_Orio(sa);
 		launch_an_app("settings");
 		navigateTo_AddGoogleAccount_Orio(sa);
 		add_GoogleAccount(data.get("emailId"), data.get("password"),sa);	
 		test.log(LogStatus.PASS, "Preconditions are Set");
-		
+
 		Runtime.getRuntime().exec("adb -s "+p_Id+" shell pm clear com.google.android.youtube"); // clear youtube cache
-		
+
 		launch_an_app("youtube");
 		Search_and_play(sa);
 
@@ -848,16 +881,16 @@ public class New_SanityTest extends New_SanityUtil {
 		APP_LOGS.info("===================== DeviceSanity_38 ======================");
 		startAdbLog("DeviceSanity_38");
 		clearRecentApps();
-		
+
 		launch_an_app("settings");
 		remove_GoogleAcccount_Orio(sa);
 		launch_an_app("settings");
 		navigateTo_AddGoogleAccount_Orio(sa);
 		add_GoogleAccount(data.get("emailId"), data.get("password"),sa);	
 		test.log(LogStatus.PASS, "Preconditions are Set");
-		
+
 		Runtime.getRuntime().exec("adb -s "+p_Id+" shell pm clear com.google.android.calendar"); // clear calendar cache
-		
+
 		launch_an_app("calendar");
 		Configure_calendar(sa);
 		launch_an_app("calendar");
@@ -866,23 +899,23 @@ public class New_SanityTest extends New_SanityUtil {
 		remove_GoogleAcccount_Orio(sa);
 		sa.assertAll();
 	}
-	
-	@Test(priority= 39,dataProvider="XP8_NewSanityTest", dataProviderClass= DataProviders.class)
+
+	/*@Test(priority= -39,dataProvider="XP8_NewSanityTest", dataProviderClass= DataProviders.class)
 	public void XP8_DeviceSanity_39_Launch_Filemanager_and_browse_files(Hashtable<String, String> data) throws InterruptedException, IOException, AWTException, ParseException 
 	{
 		SoftAssert sa=new SoftAssert();//153
 		APP_LOGS.info("===================== DeviceSanity_39 ======================");
 		startAdbLog("DeviceSanity_39");
 		clearRecentApps();
-		Runtime.getRuntime().exec("adb -s "+p_Id+" shell pm clear org.codeaurora.snapcam"); // clear cam cache
+		Runtime.getRuntime().exec("adb -s "+p_Id+" shell pm clear org.codeaurora.snapcam"); // clear camera cache
 		launch_an_app("camera");
 		click_picture();
 		Runtime.getRuntime().exec("adb -s "+p_Id+" shell pm clear com.cyanogenmod.filemanager"); // clear filemanager cache
 		launch_an_app("fileManager");
 		browse_files();
-		sa.assertAll();
+		//sa.assertAll();
 	}
-	
+
 	@Test(priority= 40,dataProvider="XP8_NewSanityTest", dataProviderClass= DataProviders.class)
 	public void XP8_DeviceSanity_40_Launch_Sound_recorder_and_check_recording(Hashtable<String, String> data) throws InterruptedException, IOException, AWTException, ParseException 
 	{
@@ -897,8 +930,8 @@ public class New_SanityTest extends New_SanityUtil {
 		launch_an_app("fileManager");
 		browse_Audio_files();
 		sa.assertAll();
-	}
-	
+	}*/
+
 	@Test(priority= 41,dataProvider="XP8_NewSanityTest", dataProviderClass= DataProviders.class)
 	public void XP8_DeviceSanity_41_Turn_ON_and_OFF_Autorotate_from_QuickSettings(Hashtable<String, String> data) throws InterruptedException, IOException, AWTException, ParseException 
 	{
@@ -1006,39 +1039,41 @@ public class New_SanityTest extends New_SanityUtil {
 		Check_for_Scoutmodule();
 		sa.assertAll();
 	}
-	
+
 	/////////////////////////////Gobi Test cases Completed ///////////////////////////////////
-	
+
 	@Test(priority = 49, dataProvider = "XP8_NewSanityTest", dataProviderClass = DataProviders.class) // 178
 	public void XP8_DeviceSanity_0049_check_user_able_to_receiveMT_Call_whileBrowsing(Hashtable<String, String> dt)
 			throws InterruptedException, IOException, AWTException {
 
 		APP_LOGS.info("===================== XP8_DeviceSanity_0049_check_user_able_to_receiveMT_Call_whileBrowsing ======================");
 		SoftAssert sa = new SoftAssert();
-	
-		  customWait(2000);
-		  launch_An_App(dt.get("N_I_Package"),dt.get("N_I_Activity")); // launching  network setting
-		  clickBtn(New_SanityLocators.Wifi_wifiLnk); 
-		  turnOnWifi();
-		  customWait(3000);
-		  remove_connectedNtwrk();
-		  customWait(3000);
-		  connect_to_WiFi(ssid, pwsd);
-		  customWait(3000); clearChromeCache();
-		  Launch_App("browser"); 
-		  clearChromePermission(); 
-		  validate_And_BrowseIn_Chrome(sa); 
-		  make_Call_from_RefDev();
-		  customWait(5000);
-		  recieve_Call_PrimaryDev_O(); 
-		  customWait(5000); 
-		  end_Call(); 
-		  customWait(3000);
-		  launch_an_app("phone");
-		  validate_callHistory(sa,refNum);
-		  sa.assertAll();
+
+		customWait(2000);
+		deleteContact_ifExsist();
+		launch_An_App(dt.get("N_I_Package"),dt.get("N_I_Activity")); // launching  network setting
+		clickBtn(New_SanityLocators.Wifi_wifiLnk); 
+		turnOnWifi();
+		customWait(3000);
+		remove_connectedNtwrk();
+		customWait(3000);
+		connect_to_WiFi(ssid, pwsd);
+		customWait(3000);
+		clearChromeCache();
+		Launch_App("browser"); 
+		clearChromePermission(); 
+		validate_And_BrowseIn_Chrome(sa); 
+		make_Call_from_RefDev();
+		customWait(5000);
+		recieve_Call_PrimaryDev_O(); 
+		customWait(5000); 
+		end_Call(); 
+		customWait(3000);
+		launch_an_app("phone");
+		validate_callHistory(sa,refNum);
+		sa.assertAll();
 	}
-*/	
+
 	@Test(priority = 50, dataProvider = "XP8_NewSanityTest", dataProviderClass = DataProviders.class) // 82
 	public void XP8_DeviceSanity_0050_RejectMT_call_With_SMS(Hashtable<String, String> dt)
 			throws InterruptedException, IOException, AWTException {
@@ -1055,5 +1090,5 @@ public class New_SanityTest extends New_SanityUtil {
 		delete_SMS();
 		sa.assertAll();
 	}
-	
+
 }

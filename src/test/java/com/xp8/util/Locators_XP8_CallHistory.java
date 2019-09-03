@@ -599,10 +599,10 @@ public class Locators_XP8_CallHistory {
 	public static AndroidElement callDurationData;
 
 	//=====================XP8_Interruption==========================================//
-	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextViews\").text(\"Alarm\")")
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"Alarm\")")
 	public static AndroidElement alarm;
 
-	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextViews\").instance(0)")
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").instance(0)")
 	public static AndroidElement alarmInstance;
 
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.ImageButton\").description(\"Add alarm\")")
@@ -858,6 +858,9 @@ public class Locators_XP8_CallHistory {
 	//===========Play Music===================//
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Play Music\")")
 	public static AndroidElement PlayMusic ;
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"No music available\")")
+	public static AndroidElement noMusicAvailable;
 
 	//================Google Maps==================//
 	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.TextView\").text(\"Maps\")")
@@ -879,5 +882,7 @@ public class Locators_XP8_CallHistory {
 
 	@AndroidFindBy(xpath ="//android.widget.ImageView[@content-desc='Apps list']")
 	public static AndroidElement AppListIcon;
-
+	
+	@AndroidFindBy(uiAutomator="new UiSelector().className(\"android.widget.Button\").text(\"ACCEPT & CONTINUE\")")
+	public static AndroidElement ACCEPTCONTINUE;
 }

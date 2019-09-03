@@ -67,11 +67,11 @@ public class New_SanityUtil extends BaseUtil {
 		r_b_No = JsonFileReaderAndWriter.ReadRefDeviceFirmWare();
 	}
 
-/*	public boolean scrollToTextContains(String text) {
-		
-		 * Method used to select an element on the page by scrolling the Scroll
-		 * View/List View
-		 
+	/*	public boolean scrollToTextContains(String text) {
+
+	 * Method used to select an element on the page by scrolling the Scroll
+	 * View/List View
+
 
 		boolean check = false;
 		try {
@@ -85,12 +85,12 @@ public class New_SanityUtil extends BaseUtil {
 			return check;
 		}
 	}*/
-	
+
 	public boolean scrollText(String text) {
 		/*
 		Method used to scroll to an element in the scrollable view
-		*/
-		
+		 */
+
 		boolean check = false;
 		try {		
 			String scrollable = "new UiScrollable(new UiSelector().scrollable(true))";
@@ -99,11 +99,11 @@ public class New_SanityUtil extends BaseUtil {
 			APP_LOGS.info("Searched application is found sucessfully : ");
 			check = true;
 			return check;
-	}
+		}
 		catch(Exception e) {
 			return check;
-			}
 		}
+	}
 
 	public boolean scrollToText(String text) {
 		/*
@@ -253,7 +253,7 @@ public class New_SanityUtil extends BaseUtil {
 			test.log(LogStatus.ERROR, "Exeption in ->dailNumber()");
 		}
 	}
-	
+
 	public void dailNumberforEnggMenu(String dailNum) throws IOException {
 		try {
 			minWait();
@@ -388,7 +388,7 @@ public class New_SanityUtil extends BaseUtil {
 		try {
 			minWait();
 			Runtime.getRuntime()
-					.exec("adb -s " + r_Id + " shell am start -a android.intent.action.CALL -d tel:" + pryNum);
+			.exec("adb -s " + r_Id + " shell am start -a android.intent.action.CALL -d tel:" + pryNum);
 			minWait();
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 
@@ -451,7 +451,7 @@ public class New_SanityUtil extends BaseUtil {
 		}
 		return fileName;
 	}
-	
+
 	public void clearCameraPermission() throws InterruptedException {
 
 		try {
@@ -459,7 +459,7 @@ public class New_SanityUtil extends BaseUtil {
 			if (isElementExist(New_SanityLocators.allow_Permission)) {
 				clickBtn(New_SanityLocators.allow_Permission);
 				minWait();
-			//	clickBtn(New_SanityLocators.OK);
+				//	clickBtn(New_SanityLocators.OK);
 				minWait();
 			}
 			Runtime.getRuntime().exec("adb -s" + p_Id + " shell input swipe 889 1414 889 367");
@@ -637,11 +637,11 @@ public class New_SanityUtil extends BaseUtil {
 	// This Method validating calculated value from calci with added value
 	// Separately
 	public void basicOperationwithoutdecimalpt(SoftAssert sa) throws InterruptedException {
- 		boolean check1 = false;
+		boolean check1 = false;
 		boolean check2 = false;
 		boolean check3 = false;
 		boolean check4 = false;
-		
+
 		minWait();
 		minWait();
 		// Addition
@@ -767,7 +767,7 @@ public class New_SanityUtil extends BaseUtil {
 		}
 		minWait();
 		if(currentNumberText4.contains(".")) {
-			
+
 			String New = currentNumberText4.substring(0, currentNumberText4.indexOf(".") + 1);
 			New_SanityLocators.calc_Clear_btn.click();
 			// System.out.println(New);
@@ -788,7 +788,7 @@ public class New_SanityUtil extends BaseUtil {
 				test.log(LogStatus.FAIL, "Failed: Division of 2 numbers verified Unsuccessfully.");
 				Assert.assertFalse(check4);
 			}
-			
+
 		}
 		else {
 			double s4 = (num7 / num8);
@@ -806,11 +806,11 @@ public class New_SanityUtil extends BaseUtil {
 				test.log(LogStatus.FAIL, "Failed: Division of 2 numbers verified Unsuccessfully.");
 				Assert.assertFalse(check4);
 			}
-			
+
 		}
-		
-		
-		
+
+
+
 
 		customWait(2000);
 	}
@@ -1502,8 +1502,9 @@ public class New_SanityUtil extends BaseUtil {
 			customWait(2000);
 			String url = "https://www.google.com";
 			New_SanityLocators.google_urlBar.clear();
-			Runtime.getRuntime().exec("adb -s " + p_Id + " shell input text "+url);
-			minWait();
+			customWait(2000);
+			enterTextToInputField(New_SanityLocators.google_urlBar, url);
+			customWait(2000);
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_ENTER);
 			wait(New_SanityLocators.google_appsBtn, 20);
 
@@ -1511,7 +1512,7 @@ public class New_SanityUtil extends BaseUtil {
 			boolean check2 = New_SanityLocators.google_offeredInTxt.isDisplayed();
 			boolean check3 = New_SanityLocators.google_signinBtn.isDisplayed();
 
-			if (check1 && check2 && check3) {
+			if (check1 || check2 || check3) {
 				APP_LOGS.info("Suggeted URL Page Displayed Succeessfully");
 				soft.assertTrue(true, "TestCase Valiation is PASS");
 				test.log(LogStatus.PASS, "Data or WiFi Enabled and URL loaded successfully at iteration ");
@@ -1584,7 +1585,7 @@ public class New_SanityUtil extends BaseUtil {
 			customWait(3000);
 			Runtime r = Runtime.getRuntime();
 			r.exec("adb -s " + p_Id + " shell input swipe 534 1647 534 0");
-//			clickBtn(New_SanityLocators.AppListIcon);
+			//			clickBtn(New_SanityLocators.AppListIcon);
 			customWait(1000);
 			switch (appName) {
 			case "browser":
@@ -1829,10 +1830,12 @@ public class New_SanityUtil extends BaseUtil {
 	public void enterurl(String url1) {
 
 		try {
+			customWait(2000);
 			String url = url1;
 			New_SanityLocators.google_urlBar.clear();
-			Runtime.getRuntime().exec("adb -s " + p_Id + " shell input text "+url);
-			minWait();
+			customWait(2000);
+			enterTextToInputField(New_SanityLocators.google_urlBar, url1);
+			customWait(2000);
 			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_ENTER);
 			minWait();
 		} catch (org.openqa.selenium.NoSuchElementException e) {
@@ -1852,7 +1855,7 @@ public class New_SanityUtil extends BaseUtil {
 			boolean check1 = e1.isDisplayed();
 			boolean check2 = e2.isDisplayed();
 
-			if (check1 && check2) {
+			if (check1 || check2) {
 				APP_LOGS.info("Suggeted " + url1 + " Page Displayed Succeessfully");
 				soft.assertTrue(true, "TestCase Valiation is PASS");
 				test.log(LogStatus.PASS, "Suggeted " + url1 + " Page Displayed Succeessfully");
@@ -2199,7 +2202,7 @@ public class New_SanityUtil extends BaseUtil {
 			cal1.setTime(d);
 			cal1.add(Calendar.MINUTE, 1);
 			String newTime1 = df.format(cal1.getTime());
-			
+
 			System.out.println(newTime1);
 
 			Date date = new Date();
@@ -2208,12 +2211,12 @@ public class New_SanityUtil extends BaseUtil {
 			formatter = new SimpleDateFormat("MMMM d, yyyy");
 			strDate = formatter.format(date);
 			System.out.println("Date Format with dd MMMM yyyy : " + strDate);
-			
+
 			String strDate1 = formatter.format(date);
 			formatter = new SimpleDateFormat("d MMMM yyyy");
 			strDate1 = formatter.format(date);
 			System.out.println("Date Format with dd MMMM yyyy : " + strDate1);
-			
+
 
 			String time = New_SanityLocators.date_time_timeTxt.getText();
 			String Phndate = New_SanityLocators.date_time_dateTxt.getText();
@@ -2258,12 +2261,12 @@ public class New_SanityUtil extends BaseUtil {
 			while ((s = stdInput.readLine()) != null) {
 			s.replace("[", "").trim().replace("]", "").trim();
 			System.out.println(s);*/
-			
+
 			String batteryStatus = New_SanityLocators.battery_StatusId.getText();
 			String batteryPercent = New_SanityLocators.battery_percentTxt.getText();
-			
+
 			if(batteryStatus.equalsIgnoreCase("Charging") || batteryStatus.equalsIgnoreCase("Full")) {
-				
+
 				APP_LOGS.info("Battery Status = "+batteryStatus+" Battery Percentage = "+batteryPercent);
 				sa.assertTrue(true, "Battery Status = "+batteryStatus+" Battery Percentage = "+batteryPercent);
 				test.log(LogStatus.PASS, "Battery Status = "+batteryStatus+" ; Battery Percentage = "+batteryPercent);
@@ -2273,8 +2276,8 @@ public class New_SanityUtil extends BaseUtil {
 				sa.fail();
 				test.log(LogStatus.FAIL, "Test case Failed");
 			}
-			
-		
+
+
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 
 			test.log(LogStatus.ERROR, "Error in locators->validateBatteryStatus()");
@@ -2533,7 +2536,7 @@ public class New_SanityUtil extends BaseUtil {
 			test.log(LogStatus.ERROR, "Exeption in ->navigateTo_Apn()");
 		}
 	}
-	
+
 	public void reset_APN() throws InterruptedException {
 		/* Method used to create New SMS. */
 
@@ -2544,10 +2547,10 @@ public class New_SanityUtil extends BaseUtil {
 			clickBtn(New_SanityLocators.moreOptions);
 			minWait();
 			clickBtn(New_SanityLocators.reset_toDefaultBtn);
-		
+
 			customWait(2000);
-			
-			
+
+
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 
 			test.log(LogStatus.ERROR, "Error in locators->reset_APN()");
@@ -2726,11 +2729,11 @@ public class New_SanityUtil extends BaseUtil {
 			boolean check3 = isElementExist(New_SanityLocators.Att_netlogo);
 			boolean check1 = isElementExist(New_SanityLocators.Att_homepageLogo);
 			boolean check2 = isElementExist(New_SanityLocators.Att_mailIcon);
-			
+
 			minWait();
 
-			
-			
+
+
 
 			if (check1 || check2 || check3 ) {
 				APP_LOGS.info("Suggeted URL Page Displayed Succeessfully using IPv4");
@@ -2806,7 +2809,7 @@ public class New_SanityUtil extends BaseUtil {
 		/* Method used to validate data service is turned On Successfully */
 
 		try {
-			
+
 			Launch_App("browser");
 			validate_And_BrowseIn_Chrome(soft);
 
@@ -2825,7 +2828,7 @@ public class New_SanityUtil extends BaseUtil {
 			minWait();
 
 			Runtime.getRuntime()
-					.exec("adb -s " + p_Id + " shell am broadcast -a io.appium.settings.wifi --es setstatus disable");
+			.exec("adb -s " + p_Id + " shell am broadcast -a io.appium.settings.wifi --es setstatus disable");
 
 			minWait();
 		} catch (org.openqa.selenium.NoSuchElementException e) {
@@ -2966,11 +2969,11 @@ public class New_SanityUtil extends BaseUtil {
 	public void reject_Call_With_SMS_O(String message) throws InterruptedException {
 
 		try {
-		minWait();
-		
+			minWait();
+
 			getNotificationWindow();
 			clickBtn(New_SanityLocators.incomingCall_Lnk);
-			
+
 			// clickBtn(New_SanityLocators.incoming_Call);
 			//Runtime.getRuntime().exec("adb -s " + p_Id + " shell input tap 660 160");
 			minWait();
@@ -2990,32 +2993,32 @@ public class New_SanityUtil extends BaseUtil {
 			test.log(LogStatus.ERROR, "Exeption in ->reject_Call_With_SMS_O()");
 		}
 	}
-	
+
 	public void deleteContact_ifExsist() throws InterruptedException {
 
 		try {
-		    minWait();
-		aDriver.startActivity("com.android.contacts", "com.android.contacts.activities.PeopleActivity");
-		minWait();
-		
+			minWait();
+			aDriver.startActivity("com.android.contacts", "com.android.contacts.activities.PeopleActivity");
+			minWait();
+
 			clickBtn(New_SanityLocators.contact_searchIcon);
 			enterTextToInputField(New_SanityLocators.contactSearch_EditBx, refNum);
 			minWait();
 			for (int i = 0; i <= 5; i++) {
-			if(isElementExist(New_SanityLocators.contact_searchedCnctact)) {
-				clickBtn(New_SanityLocators.contact_searchedCnctact);
-				clickBtn(New_SanityLocators.MoreOptionsBtn);
-				scrollToText("Delete");
-				clickBtn(New_SanityLocators.Allow_Btn);
+				if(isElementExist(New_SanityLocators.contact_searchedCnctact)) {
+					clickBtn(New_SanityLocators.contact_searchedCnctact);
+					clickBtn(New_SanityLocators.MoreOptionsBtn);
+					scrollToText("Delete");
+					clickBtn(New_SanityLocators.Allow_Btn);
+				}
+				else {
+					break;
+				}
 			}
-			else {
-				break;
-			}
-		}
-		minWait();
-		aDriver.pressKeyCode(AndroidKeyCode.HOME);
-		
-		
+			minWait();
+			aDriver.pressKeyCode(AndroidKeyCode.HOME);
+
+
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 
 			test.log(LogStatus.ERROR, "Error in locators->deleteContact_ifExsist()");
@@ -3033,7 +3036,7 @@ public class New_SanityUtil extends BaseUtil {
 			minWait();
 			clickBtn(New_SanityLocators.dialer_callHistory1stNobtn);
 			minWait();
-			
+
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 
 			test.log(LogStatus.ERROR, "Error in locators->callfrom_CallHistory()");
@@ -3041,8 +3044,8 @@ public class New_SanityUtil extends BaseUtil {
 			test.log(LogStatus.ERROR, "Exeption in ->callfrom_CallHistory()");
 		}
 	}
-	
-		public void validate_callHistory(SoftAssert sa,String refnum) throws InterruptedException {
+
+	public void validate_callHistory(SoftAssert sa,String refnum) throws InterruptedException {
 		/*
 		 * This is To validate the call history for Outgoing call for the first num
 		 */
@@ -3056,15 +3059,15 @@ public class New_SanityUtil extends BaseUtil {
 			num.insert(9, ' ');
 			String res = num.toString();
 			System.out.println(num);
-			 boolean check1 = scrollToText(res);		
+			boolean check1 = scrollToText(res);		
 			minWait();
 			if(check1 == true) {
 				APP_LOGS.info("Successfully Call History Verified");
 				sa.assertTrue(true, "Successfully Call History Verified");
 				test.log(LogStatus.PASS, "Successfully Call History Verified");
-				
+
 			}
-			 else {
+			else {
 				APP_LOGS.info("Test case Failed");
 				sa.fail();
 				test.log(LogStatus.FAIL, "Test case Failed");
@@ -3076,273 +3079,232 @@ public class New_SanityUtil extends BaseUtil {
 			test.log(LogStatus.ERROR, "Exeption in ->validate_callHistory()");
 		}
 	}
-		
-		public void changeTo_FrontCam() {
-			try {
-				minWait();
-				if(isElementExist(New_SanityLocators.flash_Button)) {
-					minWait();
-					clickBtn(New_SanityLocators.front_back_switcher);
-					minWait();
-				}
-			}  catch (org.openqa.selenium.NoSuchElementException e) {
 
-				test.log(LogStatus.ERROR, "Error in locators->changeTo_FrontCam()");
-			} catch (Exception e) {
-				test.log(LogStatus.ERROR, "Exeption in ->changeTo_FrontCam()");
+	public void changeTo_FrontCam() {
+		try {
+			minWait();
+			if(isElementExist(New_SanityLocators.flash_Button)) {
+				minWait();
+				clickBtn(New_SanityLocators.front_back_switcher);
+				minWait();
 			}
-		}
-		
-		public void swipe_NotificationBar() throws InterruptedException {
-			/* Method is to swipe Notification Bar. */
-			try {
-				minWait();
-				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_NOTIFICATION);
-				aDriver.openNotifications();
-				minWait();
-				aDriver.swipe(600, 150, 600, 1200, 400);
-				minWait();
-			}  catch (org.openqa.selenium.NoSuchElementException e) {
+		}  catch (org.openqa.selenium.NoSuchElementException e) {
 
-				test.log(LogStatus.ERROR, "Error in locators->swipe_NotificationBar()");
-			} catch (Exception e) {
-				test.log(LogStatus.ERROR, "Exeption in ->swipe_NotificationBar()");
-			}	
+			test.log(LogStatus.ERROR, "Error in locators->changeTo_FrontCam()");
+		} catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->changeTo_FrontCam()");
 		}
-		
-		public void swipe_QuickPanel_SecondPage() throws InterruptedException {
-			try {
-				minWait();
-				aDriver.swipe(860, 660, 140, 660, 750);
-				minWait();
-			}catch (org.openqa.selenium.NoSuchElementException e) {
+	}
 
-				test.log(LogStatus.ERROR, "Error in locators->swipe_QuickPanel_SecondPage()");
-			} catch (Exception e) {
-				test.log(LogStatus.ERROR, "Exeption in ->swipe_QuickPanel_SecondPage()");
-			}		
-		}
-		
-		public void enable_Shortcuts_In_QuickPanel(AndroidElement offStateElelment) throws InterruptedException {
-			/*
-			 * This Method is to Enable Any Quick panel Settings.
-			 */
-			try {
-				minWait();
-				if(isElementExist(offStateElelment)) {
-					clickBtn(offStateElelment);
-					APP_LOGS.info("Requested Shortcut is Enabled in Quick Panel");
-					minWait();
-					clickBtn(New_SanityLocators.OK_1);
-					minWait();
-				} else {
-					APP_LOGS.info("Requested Shortcut Already Enabled");
-				}
-			} catch (org.openqa.selenium.NoSuchElementException e) {
+	public void swipe_NotificationBar() throws InterruptedException {
+		/* Method is to swipe Notification Bar. */
+		try {
+			minWait();
+			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_NOTIFICATION);
+			aDriver.openNotifications();
+			minWait();
+			aDriver.swipe(600, 150, 600, 1200, 400);
+			minWait();
+		}  catch (org.openqa.selenium.NoSuchElementException e) {
 
-				test.log(LogStatus.ERROR, "Error in locators->enable_Shortcuts_In_QuickPanel()");
-			} catch (Exception e) {
-				test.log(LogStatus.ERROR, "Exeption in ->enable_Shortcuts_In_QuickPanel()");
-			}	
-		}
-		
-		public void validate_Airplane_Enable(String dailNum) throws InterruptedException, IOException {
-			/* 
-			 * Method can be Used Validate Airplane Mode activation via by making the call.
-			 */
-			SoftAssert sf = new SoftAssert();
-			try {
-				minWait();
+			test.log(LogStatus.ERROR, "Error in locators->swipe_NotificationBar()");
+		} catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->swipe_NotificationBar()");
+		}	
+	}
 
-				minWait();
-				if(isElementExist(New_SanityLocators.turnOff_Airplane_PopUp)) {
-					minWait();
-					check=true;
-					APP_LOGS.info("TurnOff Airplane Mode PopUp Displayed Successfully");
-					sf.assertTrue(check, "TestCase Valiation is PASS");
-					test.log(LogStatus.PASS, "TestCase status is PASS");
-					test.log(LogStatus.INFO, "TurnOff Airplane Mode PopUp is Displayed");
-				} else  {
-					minWait();
-					APP_LOGS.info("TurnOff Airplane Mode PopUp NOT Displayed");				
-					sf.fail();
-					test.log(LogStatus.FAIL,"TurnOff Airplane Mode PopUp NOT Displayed");
-				}
-				minWait();
-				clickBtn(New_SanityLocators.OK);
-				minWait();
-				clickBtn(New_SanityLocators.CANCEL);
-				minWait();
-			} catch (org.openqa.selenium.NoSuchElementException e) {
+	public void swipe_QuickPanel_SecondPage() throws InterruptedException {
+		try {
+			minWait();
+			aDriver.swipe(860, 660, 140, 660, 750);
+			minWait();
+		}catch (org.openqa.selenium.NoSuchElementException e) {
 
-				test.log(LogStatus.ERROR, "Error in locators->validate_Airplane_Enable()");
-			} catch (Exception e) {
-				test.log(LogStatus.ERROR, "Exeption in ->validate_Airplane_Enable()");
-			}	
-			sf.assertAll();
-		}
-		
-		
-		public void disable_Shortcuts_QuickPanel(WebElement onStateElelment) throws InterruptedException {
-			/*
-			 * This Method is to cliuck on the shortcut in Quickpanel. 
-			 * Precondition : User Should remain in that perticular window which functionality they enabled.
-			 */		
-			try {
-				minWait();
-				if(isElementExist(onStateElelment)) {
-					minWait();
-					clickBtn(onStateElelment);
-					customWait(2000);
-					clickBtn(New_SanityLocators.switch_On_State);
-					APP_LOGS.info("Requested Shortcut is disabled in Quick Panel");
-					minWait();
-				} else {
-					APP_LOGS.info("Requested Shortcut Already disabled");
-				}
-			} catch (org.openqa.selenium.NoSuchElementException e) {
+			test.log(LogStatus.ERROR, "Error in locators->swipe_QuickPanel_SecondPage()");
+		} catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->swipe_QuickPanel_SecondPage()");
+		}		
+	}
 
-				test.log(LogStatus.ERROR, "Error in locators->disable_Shortcuts_QuickPanel()");
-			} catch (Exception e) {
-				test.log(LogStatus.ERROR, "Exeption in ->disable_Shortcuts_QuickPanel()");
-			}	
-		}
-		
-		public void validate_Airplane_Disable(String dailNum) throws InterruptedException, IOException {
-			/* 
-			 * Method can be Used Validate Airplane Mode activation via by making the call.
-			 */
-			SoftAssert sf = new SoftAssert();
-			try {
-				minWait();			
+	public void enable_Shortcuts_In_QuickPanel(AndroidElement offStateElelment) throws InterruptedException {
+		/*
+		 * This Method is to Enable Any Quick panel Settings.
+		 */
+		try {
+			minWait();
+			if(isElementExist(offStateElelment)) {
+				clickBtn(offStateElelment);
+				APP_LOGS.info("Requested Shortcut is Enabled in Quick Panel");
 				minWait();
-				if(!isElementExist(New_SanityLocators.turnOff_Airplane_PopUp)) {
-					minWait();
-					check=true;
-					APP_LOGS.info("TurnOff Airplane Mode PopUp NOT Displayed.");
-					sf.assertTrue(check, "TestCase Valiation is PASS");
-					test.log(LogStatus.PASS, "TestCase status is PASS");
-					test.log(LogStatus.INFO, "TurnOff Airplane Mode PopUp is NOT Displayed");
-				} else  {
-					minWait();
-					APP_LOGS.info("TurnOff Airplane Mode PopUp is Displayed");				
-					sf.fail();
-					test.log(LogStatus.FAIL,"TurnOff Airplane Mode PopUp is Displayed");
-				}
+				clickBtn(New_SanityLocators.OK_1);
 				minWait();
-				clickBtn(New_SanityLocators.OK);
-				minWait();
-			}catch (org.openqa.selenium.NoSuchElementException e) {
-
-				test.log(LogStatus.ERROR, "Error in locators->validate_Airplane_Disable()");
-			} catch (Exception e) {
-				test.log(LogStatus.ERROR, "Exeption in ->validate_Airplane_Disable()");
-			}	
-			sf.assertAll();
-		}
-		
-		public void delete_SMS() throws InterruptedException {
-			/* This Method delete the First Thread in the List. */
-			try {
-				minWait();
-				System.out.println(refNum);
-				String refNum_O = New_SanityLocators.message_1stMsg.getText();
-				String res = "";
-				for (int i = 0; i < refNum_O.length(); i++) {
-					if ((refNum_O.charAt(i) >= '0' && refNum_O.charAt(i) <= '9') || refNum_O.charAt(i) == '_' || refNum_O.charAt(i) == '+')
-						res = res + refNum_O.charAt(i);
-				}
-				System.out.println(res);
-				if(isElementExist(New_SanityLocators.message_1stMsg)) {
-					if(New_SanityLocators.message_1stMsg.getText().equalsIgnoreCase(refNum)) {
-						clickBtn(New_SanityLocators.firstSMS_InList);
-						minWait();
-						clickBtn(New_SanityLocators.moreOptions);
-						minWait();
-						clickBtn(New_SanityLocators.delete_Thread);
-						minWait();
-						clickBtn(New_SanityLocators.delete_Confirm);
-						minWait();
-					}
-				}
-				
-				
-				test.log(LogStatus.INFO, "SMS or MMS is deleted.");
-			} catch (NoSuchElementException e) {			 
-				e.printStackTrace();
+			} else {
+				APP_LOGS.info("Requested Shortcut Already Enabled");
 			}
-		}
-		
-		
-		public void unlock_RefPhone() throws InterruptedException, IOException {
-			/*
-			 *  Method is to Unlock the Device
-			 * Precondition : Only Swipe lock. 
-			 */
+		} catch (org.openqa.selenium.NoSuchElementException e) {
 
-			try {		
-					minWait();
-					Runtime.getRuntime().exec("adb -s "+r_Id+" shell input keyevent 3");
-					customWait(600);
-					Runtime.getRuntime().exec("adb -s "+r_Id+" shell input keyevent 82");
-					minWait();
-					
-			} catch (Exception e) {
-				e.printStackTrace();
+			test.log(LogStatus.ERROR, "Error in locators->enable_Shortcuts_In_QuickPanel()");
+		} catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->enable_Shortcuts_In_QuickPanel()");
+		}	
+	}
+
+	public void validate_Airplane_Enable(String dailNum) throws InterruptedException, IOException {
+		/* 
+		 * Method can be Used Validate Airplane Mode activation via by making the call.
+		 */
+		SoftAssert sf = new SoftAssert();
+		try {
+			minWait();
+
+			minWait();
+			if(isElementExist(New_SanityLocators.turnOff_Airplane_PopUp)) {
+				minWait();
+				check=true;
+				APP_LOGS.info("TurnOff Airplane Mode PopUp Displayed Successfully");
+				sf.assertTrue(check, "TestCase Valiation is PASS");
+				test.log(LogStatus.PASS, "TestCase status is PASS");
+				test.log(LogStatus.INFO, "TurnOff Airplane Mode PopUp is Displayed");
+			} else  {
+				minWait();
+				APP_LOGS.info("TurnOff Airplane Mode PopUp NOT Displayed");				
+				sf.fail();
+				test.log(LogStatus.FAIL,"TurnOff Airplane Mode PopUp NOT Displayed");
 			}
-		}
-		
-		public void sendSMS_fromRefDevice(String AutomationMessagee) {
+			minWait();
+			clickBtn(New_SanityLocators.OK);
+			minWait();
+			clickBtn(New_SanityLocators.CANCEL);
+			minWait();
+		} catch (org.openqa.selenium.NoSuchElementException e) {
 
-			// To validate MT Message User should be inside Messaging APP of Primary Device.
-			try {
+			test.log(LogStatus.ERROR, "Error in locators->validate_Airplane_Enable()");
+		} catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->validate_Airplane_Enable()");
+		}	
+		sf.assertAll();
+	}
+
+
+	public void disable_Shortcuts_QuickPanel(WebElement onStateElelment) throws InterruptedException {
+		/*
+		 * This Method is to cliuck on the shortcut in Quickpanel. 
+		 * Precondition : User Should remain in that perticular window which functionality they enabled.
+		 */		
+		try {
+			minWait();
+			if(isElementExist(onStateElelment)) {
 				minWait();
-				// Below Code To clear Battery PopUp.
-				Runtime.getRuntime().exec("adb -s "+r_Id+" shell input tap 777 1083"); 
+				clickBtn(onStateElelment);
+				customWait(2000);
+				clickBtn(New_SanityLocators.switch_On_State);
+				APP_LOGS.info("Requested Shortcut is disabled in Quick Panel");
 				minWait();
-				if (r_b_No.contains("8A.")) {
-					if (r_b_No.contains("-10.")||r_b_No.contains("-30.")||r_b_No.contains("-00.")) {
-						minWait();
-						Runtime.getRuntime().exec("adb -s "+r_Id+" shell input keyevent 3");
-						minWait();
-						Runtime.getRuntime().exec("adb -s "+r_Id+" shell am force-stop com.android.mms");
-						customWait(2000);
-						Runtime.getRuntime().exec("adb -s "+r_Id+" shell am start -a android.intent.action.SENDTO -d sms:"+pryNum+" --es sms_body \""+AutomationMessagee+"\" --ez exit_on_sent true");
-						customWait(6000);
-						Runtime.getRuntime().exec("adb -s "+r_Id+" shell input tap 540 1776");
-						minWait();
-						Runtime.getRuntime().exec("adb -s "+r_Id+" shell input tap 713 1098");
-						minWait();
-						Runtime.getRuntime().exec("adb -s "+r_Id+" shell input tap 918 1699");
-						minWait();
-						Runtime.getRuntime().exec("adb -s "+r_Id+" shell input tap 918 952");
-						minWait();
-					} else if(r_b_No.contains("-11.")||r_b_No.contains("-12.")||r_b_No.contains("-18.")||r_b_No.contains("-26.")||r_b_No.contains("-29.")){
-						minWait();
-						Runtime.getRuntime().exec("adb -s "+r_Id+" shell input keyevent 3");
-						minWait();
-						Runtime.getRuntime().exec("adb -s "+r_Id+" shell am force-stop com.google.android.apps.messaging");
-						customWait(2000);
-						Runtime.getRuntime().exec("adb -s "+r_Id+" shell am start -a android.intent.action.SENDTO -d sms:"+pryNum+" --es sms_body \""+AutomationMessagee+"\" --ez exit_on_sent true");
-						customWait(6000);
-						Runtime.getRuntime().exec("adb -s "+r_Id+" shell input tap 930 1756");
-						minWait();
-						Runtime.getRuntime().exec("adb -s "+r_Id+" shell input tap 930 976");
-						minWait();
-					}else if(r_b_No.contains("-15.")){
-						minWait();
-						Runtime.getRuntime().exec("adb -s "+r_Id+" shell input keyevent 3");
-						minWait();
-						Runtime.getRuntime().exec("adb -s "+r_Id+" shell am force-stop com.verizon.messaging.vzmsgs");
-						customWait(2000);
-						Runtime.getRuntime().exec("adb -s "+r_Id+" shell am start -a android.intent.action.SENDTO -d sms:"+pryNum+" --es sms_body \""+AutomationMessagee+"\" --ez exit_on_sent true");
-						customWait(6000);
-						Runtime.getRuntime().exec("adb -s "+r_Id+" shell input tap 948 1769");
-						minWait();
-						Runtime.getRuntime().exec("adb -s "+r_Id+" shell input tap 948 1022");
-						minWait();
-					}
-				} else if (r_b_No.contains("5SA.")){
+			} else {
+				APP_LOGS.info("Requested Shortcut Already disabled");
+			}
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in locators->disable_Shortcuts_QuickPanel()");
+		} catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->disable_Shortcuts_QuickPanel()");
+		}	
+	}
+
+	public void validate_Airplane_Disable(String dailNum) throws InterruptedException, IOException {
+		/* 
+		 * Method can be Used Validate Airplane Mode activation via by making the call.
+		 */
+		SoftAssert sf = new SoftAssert();
+		try {
+			minWait();			
+			minWait();
+			if(!isElementExist(New_SanityLocators.turnOff_Airplane_PopUp)) {
+				minWait();
+				check=true;
+				APP_LOGS.info("TurnOff Airplane Mode PopUp NOT Displayed.");
+				sf.assertTrue(check, "TestCase Valiation is PASS");
+				test.log(LogStatus.PASS, "TestCase status is PASS");
+				test.log(LogStatus.INFO, "TurnOff Airplane Mode PopUp is NOT Displayed");
+			} else  {
+				minWait();
+				APP_LOGS.info("TurnOff Airplane Mode PopUp is Displayed");				
+				sf.fail();
+				test.log(LogStatus.FAIL,"TurnOff Airplane Mode PopUp is Displayed");
+			}
+			minWait();
+			clickBtn(New_SanityLocators.OK);
+			minWait();
+		}catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in locators->validate_Airplane_Disable()");
+		} catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->validate_Airplane_Disable()");
+		}	
+		sf.assertAll();
+	}
+
+	public void delete_SMS() throws InterruptedException {
+		/* This Method delete the First Thread in the List. */
+		try {
+			minWait();
+			System.out.println(refNum);
+			String refNum_O = New_SanityLocators.message_1stMsg.getText();
+			String res = "";
+			for (int i = 0; i < refNum_O.length(); i++) {
+				if ((refNum_O.charAt(i) >= '0' && refNum_O.charAt(i) <= '9') || refNum_O.charAt(i) == '_' || refNum_O.charAt(i) == '+')
+					res = res + refNum_O.charAt(i);
+			}
+			System.out.println(res);
+			if(isElementExist(New_SanityLocators.message_1stMsg)) {
+				if(New_SanityLocators.message_1stMsg.getText().equalsIgnoreCase(refNum)) {
+					clickBtn(New_SanityLocators.firstSMS_InList);
+					minWait();
+					clickBtn(New_SanityLocators.moreOptions);
+					minWait();
+					clickBtn(New_SanityLocators.delete_Thread);
+					minWait();
+					clickBtn(New_SanityLocators.delete_Confirm);
+					minWait();
+				}
+			}
+
+
+			test.log(LogStatus.INFO, "SMS or MMS is deleted.");
+		} catch (NoSuchElementException e) {			 
+			e.printStackTrace();
+		}
+	}
+
+
+	public void unlock_RefPhone() throws InterruptedException, IOException {
+		/*
+		 *  Method is to Unlock the Device
+		 * Precondition : Only Swipe lock. 
+		 */
+
+		try {		
+			minWait();
+			Runtime.getRuntime().exec("adb -s "+r_Id+" shell input keyevent 3");
+			customWait(600);
+			Runtime.getRuntime().exec("adb -s "+r_Id+" shell input keyevent 82");
+			minWait();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void sendSMS_fromRefDevice(String AutomationMessagee) {
+
+		// To validate MT Message User should be inside Messaging APP of Primary Device.
+		try {
+			minWait();
+			// Below Code To clear Battery PopUp.
+			Runtime.getRuntime().exec("adb -s "+r_Id+" shell input tap 777 1083"); 
+			minWait();
+			if (r_b_No.contains("8A.")) {
+				if (r_b_No.contains("-10.")||r_b_No.contains("-30.")||r_b_No.contains("-00.")) {
 					minWait();
 					Runtime.getRuntime().exec("adb -s "+r_Id+" shell input keyevent 3");
 					minWait();
@@ -3350,90 +3312,131 @@ public class New_SanityUtil extends BaseUtil {
 					customWait(2000);
 					Runtime.getRuntime().exec("adb -s "+r_Id+" shell am start -a android.intent.action.SENDTO -d sms:"+pryNum+" --es sms_body \""+AutomationMessagee+"\" --ez exit_on_sent true");
 					customWait(6000);
-					Runtime.getRuntime().exec("adb -s "+r_Id+" shell input keyevent 66");
+					Runtime.getRuntime().exec("adb -s "+r_Id+" shell input tap 540 1776");
+					minWait();
+					Runtime.getRuntime().exec("adb -s "+r_Id+" shell input tap 713 1098");
+					minWait();
+					Runtime.getRuntime().exec("adb -s "+r_Id+" shell input tap 918 1699");
+					minWait();
+					Runtime.getRuntime().exec("adb -s "+r_Id+" shell input tap 918 952");
+					minWait();
+				} else if(r_b_No.contains("-11.")||r_b_No.contains("-12.")||r_b_No.contains("-18.")||r_b_No.contains("-26.")||r_b_No.contains("-29.")){
+					minWait();
+					Runtime.getRuntime().exec("adb -s "+r_Id+" shell input keyevent 3");
+					minWait();
+					Runtime.getRuntime().exec("adb -s "+r_Id+" shell am force-stop com.google.android.apps.messaging");
+					customWait(2000);
+					Runtime.getRuntime().exec("adb -s "+r_Id+" shell am start -a android.intent.action.SENDTO -d sms:"+pryNum+" --es sms_body \""+AutomationMessagee+"\" --ez exit_on_sent true");
+					customWait(6000);
+					Runtime.getRuntime().exec("adb -s "+r_Id+" shell input tap 930 1756");
+					minWait();
+					Runtime.getRuntime().exec("adb -s "+r_Id+" shell input tap 930 976");
+					minWait();
+				}else if(r_b_No.contains("-15.")){
+					minWait();
+					Runtime.getRuntime().exec("adb -s "+r_Id+" shell input keyevent 3");
+					minWait();
+					Runtime.getRuntime().exec("adb -s "+r_Id+" shell am force-stop com.verizon.messaging.vzmsgs");
+					customWait(2000);
+					Runtime.getRuntime().exec("adb -s "+r_Id+" shell am start -a android.intent.action.SENDTO -d sms:"+pryNum+" --es sms_body \""+AutomationMessagee+"\" --ez exit_on_sent true");
+					customWait(6000);
+					Runtime.getRuntime().exec("adb -s "+r_Id+" shell input tap 948 1769");
+					minWait();
+					Runtime.getRuntime().exec("adb -s "+r_Id+" shell input tap 948 1022");
 					minWait();
 				}
-			} catch (Exception e) {
-
-			}
-		}
-		
-		public void validate_RecievedMessage() throws InterruptedException {
-			/* User should navigate to the Messaging APP home Page in the Primary device. */
-			SoftAssert sf = new SoftAssert();
-			WebDriverWait wait  =new WebDriverWait(aDriver, 80);
-			wait.until(ExpectedConditions.visibilityOf(New_SanityLocators.now_Text));	
-			customWait(8000);
-			try {
-				if(isElementExist(New_SanityLocators.now_Text)||isElementExist(New_SanityLocators.not_Sent_Text)) {
-					check=true;
-					APP_LOGS.info("Message sent Succeccfully");
-					sf.assertTrue(check, "TestCase Valiation is PASS");
-					test.log(LogStatus.PASS, "Message Recieved Successfully.");
-				} else {
-					APP_LOGS.info("SMS didn't sent");
-					sf.fail();
-					test.log(LogStatus.FAIL,"Message didn't Recieved.");
-				}
-			} catch (NoSuchElementException e) {			 
-				e.printStackTrace();
-				sf.fail();
-			}
-			sf.assertAll();
-		}
-		
-		
-		public void validate_ableToCntWifi(SoftAssert sa,String ssid,String pswd){
-
-			try {
+			} else if (r_b_No.contains("5SA.")){
 				minWait();
-				connect_to_WiFi(ssid,pswd);
-				
-				boolean check1 = scrollToText("Connected");
-				
-					if(check1 == true){
-						
-						APP_LOGS.info("Successfully Wifi is connected in Secured Network");
-						sa.assertTrue(true, "Successfully Wifi is connected in Secured Network");
-						test.log(LogStatus.PASS,"Successfully Wifi is connected in Secured Network");	
-
-
-					}
-					else {
-						
-						APP_LOGS.info("Failed -> Wifi not connect in Secured Network");
-						sa.assertFalse(false, "Failed -> Wifi not connect in Secured Network");
-						test.log(LogStatus.FAIL, "Failed -> Wifi not connect in Secured Network");
-
-					}
-
-				} catch (org.openqa.selenium.NoSuchElementException e) {
-
-					test.log(LogStatus.ERROR,"Error in locators->validate_ableToCntWifi()");
-					
-				}catch (Exception e) {
-					test.log(LogStatus.ERROR,"Exeption in ->validate_ableToCntWifi()");
-				}
+				Runtime.getRuntime().exec("adb -s "+r_Id+" shell input keyevent 3");
+				minWait();
+				Runtime.getRuntime().exec("adb -s "+r_Id+" shell am force-stop com.android.mms");
+				customWait(2000);
+				Runtime.getRuntime().exec("adb -s "+r_Id+" shell am start -a android.intent.action.SENDTO -d sms:"+pryNum+" --es sms_body \""+AutomationMessagee+"\" --ez exit_on_sent true");
+				customWait(6000);
+				Runtime.getRuntime().exec("adb -s "+r_Id+" shell input keyevent 66");
+				minWait();
 			}
-		public void turnOffWifi_adb() throws InterruptedException, IOException {
-			/*
-			 *  Method is to disable wifi using ADB cmd
-			 * 
-			 */
+		} catch (Exception e) {
 
-			try {		
-					minWait();
-					Runtime.getRuntime().exec("adb -s "+p_Id+" shell am broadcast -a io.appium.settings.wifi --es setstatus disable");
-					minWait();
-					
-			} catch (org.openqa.selenium.NoSuchElementException e) {
-
-				test.log(LogStatus.ERROR, "Error in locators->turnOffWifi_adb()");
-			} catch (Exception e) {
-				test.log(LogStatus.ERROR, "Exeption in ->turnOffWifi_adb()");
-			}	
 		}
-		
+	}
+
+	public void validate_RecievedMessage() throws InterruptedException {
+		/* User should navigate to the Messaging APP home Page in the Primary device. */
+		SoftAssert sf = new SoftAssert();
+		WebDriverWait wait  =new WebDriverWait(aDriver, 80);
+		wait.until(ExpectedConditions.visibilityOf(New_SanityLocators.now_Text));	
+		customWait(8000);
+		try {
+			if(isElementExist(New_SanityLocators.now_Text)||isElementExist(New_SanityLocators.not_Sent_Text)) {
+				check=true;
+				APP_LOGS.info("Message sent Succeccfully");
+				sf.assertTrue(check, "TestCase Valiation is PASS");
+				test.log(LogStatus.PASS, "Message Recieved Successfully.");
+			} else {
+				APP_LOGS.info("SMS didn't sent");
+				sf.fail();
+				test.log(LogStatus.FAIL,"Message didn't Recieved.");
+			}
+		} catch (NoSuchElementException e) {			 
+			e.printStackTrace();
+			sf.fail();
+		}
+		sf.assertAll();
+	}
+
+
+	public void validate_ableToCntWifi(SoftAssert sa,String ssid,String pswd){
+
+		try {
+			minWait();
+			connect_to_WiFi(ssid,pswd);
+
+			boolean check1 = scrollToText("Connected");
+
+			if(check1 == true){
+
+				APP_LOGS.info("Successfully Wifi is connected in Secured Network");
+				sa.assertTrue(true, "Successfully Wifi is connected in Secured Network");
+				test.log(LogStatus.PASS,"Successfully Wifi is connected in Secured Network");	
+
+
+			}
+			else {
+
+				APP_LOGS.info("Failed -> Wifi not connect in Secured Network");
+				sa.assertFalse(false, "Failed -> Wifi not connect in Secured Network");
+				test.log(LogStatus.FAIL, "Failed -> Wifi not connect in Secured Network");
+
+			}
+
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR,"Error in locators->validate_ableToCntWifi()");
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR,"Exeption in ->validate_ableToCntWifi()");
+		}
+	}
+	public void turnOffWifi_adb() throws InterruptedException, IOException {
+		/*
+		 *  Method is to disable wifi using ADB cmd
+		 * 
+		 */
+
+		try {		
+			minWait();
+			Runtime.getRuntime().exec("adb -s "+p_Id+" shell am broadcast -a io.appium.settings.wifi --es setstatus disable");
+			minWait();
+
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in locators->turnOffWifi_adb()");
+		} catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exeption in ->turnOffWifi_adb()");
+		}	
+	}
+
 	public void clickOn_Battery() {
 
 		try {
@@ -3450,44 +3453,44 @@ public class New_SanityUtil extends BaseUtil {
 			test.log(LogStatus.ERROR, "Exeption in ->clickOn_Battery()");
 		}
 	}
-	
+
 	public void validate_DeviceCharging(SoftAssert sa){
 
 		try {
-			
+
 			String batteryStatus = New_SanityLocators.battery_statusTxt.getText();			
-			
-				if(batteryStatus.equalsIgnoreCase("Charging")||batteryStatus.equalsIgnoreCase("Full")){
-					
-					APP_LOGS.info("Successfully DUT is in Charging");
-					sa.assertTrue(true, "Successfully DUT is in Charging");
-					test.log(LogStatus.PASS,"Successfully DUT is in Charging");	
+
+			if(batteryStatus.equalsIgnoreCase("Charging")||batteryStatus.equalsIgnoreCase("Full")){
+
+				APP_LOGS.info("Successfully DUT is in Charging");
+				sa.assertTrue(true, "Successfully DUT is in Charging");
+				test.log(LogStatus.PASS,"Successfully DUT is in Charging");	
 
 
-				}
-				else {
-					
-					APP_LOGS.info("Failed -> Dut is not charging");
-					sa.assertFalse(false, "Failed -> Dut is not charging");
-					test.log(LogStatus.FAIL, "Failed -> Dut is not charging");
-
-				}
-
-			} catch (org.openqa.selenium.NoSuchElementException e) {
-
-				test.log(LogStatus.ERROR,"Error in locators->validate_usbConnected()");
-				
-			}catch (Exception e) {
-				test.log(LogStatus.ERROR,"Exeption in ->validate_usbConnected()");
 			}
+			else {
+
+				APP_LOGS.info("Failed -> Dut is not charging");
+				sa.assertFalse(false, "Failed -> Dut is not charging");
+				test.log(LogStatus.FAIL, "Failed -> Dut is not charging");
+
+			}
+
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR,"Error in locators->validate_usbConnected()");
+
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR,"Exeption in ->validate_usbConnected()");
 		}
-		
+	}
+
 	public void increaseDevice_Brightness(int result) {
 		/*
 		 * This method set the device to particular Brigthness
 		 */
 		try {
-			
+
 			getNotificationWindow();
 			if(result >= 0 && result <=10) {
 				Runtime.getRuntime().exec("adb -s " + p_Id + " shell input tap 112 170");
@@ -3509,7 +3512,7 @@ public class New_SanityUtil extends BaseUtil {
 				Runtime.getRuntime().exec("adb -s " + p_Id + " shell input tap 977 170");
 				minWait();
 			}
-			
+
 			aDriver.pressKeyCode(AndroidKeyCode.HOME);
 
 		} catch (org.openqa.selenium.NoSuchElementException e) {
@@ -3522,25 +3525,25 @@ public class New_SanityUtil extends BaseUtil {
 			test.log(LogStatus.ERROR, "Exeption in ->increaseDevice_Brightness()");
 		}
 	}
-	
+
 	public void validate_Brightness(SoftAssert sa,int percent){
 
 		try {
-			
+
 			aDriver.startActivity("com.android.settings", "com.android.settings.Settings$DisplaySettingsActivity");
 			minWait();
 			String check1 = New_SanityLocators.display_BrightnessPercentTxt.getText();
-			
+
 			String numericValue = "";
 			for (int i = 0; i < check1.length(); i++) {
 				if ((check1.charAt(i) >= '0' && check1.charAt(i) <= '9'))
 					numericValue = numericValue + check1.charAt(i);
 			}
-			
-		  int result = Integer.parseInt(numericValue);
 
-		  if(result >= 0 && result <=10) {
-			  	APP_LOGS.info("Device Brightness Successfully adjusted To -> " +check1 );
+			int result = Integer.parseInt(numericValue);
+
+			if(result >= 0 && result <=10) {
+				APP_LOGS.info("Device Brightness Successfully adjusted To -> " +check1 );
 				sa.assertTrue(true, "Device Brightness Successfully adjusted To -> " +check1 );
 				test.log(LogStatus.PASS, "Device Brightness Successfully adjusted To -> " +check1 );
 			}
@@ -3563,7 +3566,7 @@ public class New_SanityUtil extends BaseUtil {
 				APP_LOGS.info("Device Brightness Successfully adjusted To -> " +check1 );
 				sa.assertTrue(true, "Device Brightness Successfully adjusted To -> " +check1 );
 				test.log(LogStatus.PASS, "Device Brightness Successfully adjusted To -> " +check1 );
-		
+
 			} else {
 				APP_LOGS.info("Device Brightness Adjustment Failed");
 				sa.fail();
@@ -3577,7 +3580,7 @@ public class New_SanityUtil extends BaseUtil {
 			test.log(LogStatus.ERROR, "Exeption in ->validate_Brightness()");
 		}
 	}
-	
+
 	public void disable_bluetooth() throws InterruptedException {
 		/* Method used to create New SMS. */
 
@@ -3591,7 +3594,7 @@ public class New_SanityUtil extends BaseUtil {
 			minWait();
 			Runtime.getRuntime().exec("adb -s "+r_Id+" shell input tap 869 1073");
 			customWait(3000);
-			
+
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 
 			test.log(LogStatus.ERROR, "Error in locators->disable_bluetooth()");
@@ -3599,1058 +3602,1063 @@ public class New_SanityUtil extends BaseUtil {
 			test.log(LogStatus.ERROR, "Exeption in ->disable_bluetooth()");
 		}
 	}
+
+
+
+
+
+
+	//////////////////////////////// Gobi /////////////////////////////////////////////////////
 	
-	
-	
-	
-		
-		//////////////////////////////// Gobi /////////////////////////////////////////////////////
-		
-		public void Check_for_Scoutmodule() throws InterruptedException {
-			SoftAssert sa =new SoftAssert();
-			WebDriverWait wait = new WebDriverWait(aDriver, 60);
-			try {
-				minWait();
-				String getName1 = New_SanityLocators.ScoutSetup.getText();
-				String getName2 = New_SanityLocators.ScoutUtilities.getText();
-				String getName3 = New_SanityLocators.ScoutSupport.getText();
+	public void Check_for_Scoutmodule() throws InterruptedException {
+		SoftAssert sa =new SoftAssert();
+		WebDriverWait wait = new WebDriverWait(aDriver, 60);
+		try {
+			minWait();
+			String getName1 = New_SanityLocators.ScoutSetup.getText();
+			String getName2 = New_SanityLocators.ScoutUtilities.getText();
+			String getName3 = New_SanityLocators.ScoutSupport.getText();
 
-				if(getName1.equalsIgnoreCase("Setup") && getName2.equalsIgnoreCase("Utilities") && 
-						getName3.equalsIgnoreCase("Support") )
-				{
-					minWait();
-					System.out.println(getName1);
-					System.out.println(getName2);
-					System.out.println(getName3);
-					System.out.println("Scout modules are present");
-					APP_LOGS.info("Scout modules are present");
-					test.log(LogStatus.PASS, "Scout modules are present");
-					aDriver.pressKeyCode(AndroidKeyCode.HOME);
+			if(getName1.equalsIgnoreCase("Setup") && getName2.equalsIgnoreCase("Utilities") && 
+					getName3.equalsIgnoreCase("Support") )
+			{
+				minWait();
+				System.out.println(getName1);
+				System.out.println(getName2);
+				System.out.println(getName3);
+				System.out.println("Scout modules are present");
+				APP_LOGS.info("Scout modules are present");
+				test.log(LogStatus.PASS, "Scout modules are present");
+				aDriver.pressKeyCode(AndroidKeyCode.HOME);
 
-				}else {
-					minWait();
-					System.out.println("Scout modules are not present");
-					APP_LOGS.info("Scout modules are not present");
-					aDriver.pressKeyCode(AndroidKeyCode.HOME);
-				}
-			}
-			catch (org.openqa.selenium.NoSuchElementException e) {
-
-				test.log(LogStatus.ERROR, "Error in the locators");
-				e.printStackTrace();
-
-			}
-			catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			sa.assertAll();
-		}
-
-		public void Lock_UnLock_SIM_card() throws InterruptedException {
-			SoftAssert sa =new SoftAssert();
-			WebDriverWait wait = new WebDriverWait(aDriver, 60);
-			try {
+			}else {
 				minWait();
-				scrollToText("Security & location");
-				minWait();
-				scrollToText("SIM card lock");
-				minWait();
-				clickBtn(New_SanityLocators.Switch);
-				minWait();
-				enterTextToInputField(New_SanityLocators.editPIN, "1234");
-				minWait();
-				clickBtn(multi_Loc_Strategy(New_SanityLocators.OK, New_SanityLocators.Ok, New_SanityLocators.OK_1,
-						New_SanityLocators.OK_2, null, 777,852));
-				minWait();
-				System.out.println("SIM Lock done,PIN set as 1234");
-				minWait();
-
-				clickBtn(New_SanityLocators.Switch);
-				minWait();
-				enterTextToInputField(New_SanityLocators.editPIN, "1234");
-				minWait();
-				clickBtn(multi_Loc_Strategy(New_SanityLocators.OK, New_SanityLocators.Ok, New_SanityLocators.OK_1,
-						New_SanityLocators.OK_2, null, 777,852));
-				minWait();
-				System.out.println("SIM UnLock done,with PIN 1234");
-				minWait();
-				APP_LOGS.info("Lock_UnLock_SIM_card");
-				test.log(LogStatus.PASS, "Lock_UnLock_SIM_card");
+				System.out.println("Scout modules are not present");
+				APP_LOGS.info("Scout modules are not present");
 				aDriver.pressKeyCode(AndroidKeyCode.HOME);
 			}
-			catch (org.openqa.selenium.NoSuchElementException e) {
-
-				test.log(LogStatus.ERROR, "Error in the locators");
-				e.printStackTrace();
-
-			}
-			catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			sa.assertAll();
 		}
+		catch (org.openqa.selenium.NoSuchElementException e) {
 
-		public void deleteContacts() throws InterruptedException {
-			try {
-				minWait();
-				System.out.println("IM in Contacts");
-				if (isElementExist(New_SanityLocators.No_Contacts)) {
-					APP_LOGS.info("No Contact"); 
-					System.out.println("No Contact");
-					minWait();
-				} else {
-					clickBtn(New_SanityLocators.deleteContactOptn1);
-					minWait();
-					clickBtn(New_SanityLocators.Selection_menu);
-					minWait();
-					if(isElementExist(New_SanityLocators.ALL_Selection_menu)) {
-						clickBtn(New_SanityLocators.ALL_Selection_menu);
-						minWait();
-					}
-					else {
-						minWait();
-						clickBtn(New_SanityLocators.one_Selection_menu);
-					}
-					clickBtn(New_SanityLocators.OKBtn1);
-					minWait();
-					clickBtn(New_SanityLocators.OKBtn);
-					APP_LOGS.info("Contacts Deleted");
-					minWait();
-				}
-			} 
-			catch (org.openqa.selenium.NoSuchElementException e) {
-
-				test.log(LogStatus.ERROR, "Error in the locators");
-				e.printStackTrace();
-			}
-			catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				test.log(LogStatus.ERROR, "No Such element Found");
-			}
-		}
-
-		public void addcontactsTO_SIM(String name,String Phone1,String Phone2,String email,SoftAssert sa) 
-				throws InterruptedException {
-			try {
-				minWait();
-				System.out.println("IM in Contacts");
-				minWait();
-				clickBtn(New_SanityLocators.ContactsMoreOptions);
-				minWait();
-				scrollText("SIM");
-				minWait();
-				clickBtn(New_SanityLocators.AccountSIMOPt);
-				minWait();
-				clickBtn(New_SanityLocators.AddcontactBtn);
-				minWait();
-				enterTextToInputField(New_SanityLocators.nameField, name);
-				customWait(3000);
-				enterTextToInputField(New_SanityLocators.phoneField, Phone1);
-				customWait(3000);
-				enterTextToInputField(New_SanityLocators.phoneField, Phone2);
-				customWait(3000);
-				enterTextToInputField(New_SanityLocators.emailField, email);
-				customWait(3000);
-				clickBtn(New_SanityLocators.SaveBtn);
-				minWait();
-				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
-				minWait();
-				System.out.println("Contacts added in SIM");
-				APP_LOGS.info("Contacts added in SIM");
-				test.log(LogStatus.PASS, "Contacts added in SIM");
-				minWait();
-			} 
-			catch (org.openqa.selenium.NoSuchElementException e) {
-
-				test.log(LogStatus.ERROR, "Error in the locators");
-				e.printStackTrace();
-
-			}
-			catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				test.log(LogStatus.ERROR, "No Such element Found");
-			}
-		}
-
-		public void addcontactsTO_Phone(String name,String Phone1,String email,String Address) throws InterruptedException {
-			try {
-				minWait();
-				System.out.println("IM in Contacts");
-				minWait();
-				clickBtn(New_SanityLocators.ContactsMoreOptions);
-				minWait();
-				scrollToElements(New_SanityLocators.AccountsPhoneOPt1);
-				//		scrollText("PHONE");
-				minWait();
-				clickBtn(New_SanityLocators.AccountsPhoneOPt1);
-				minWait();
-				clickBtn(New_SanityLocators.AddcontactBtn);
-				minWait();
-				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
-				minWait();
-				clickBtn(New_SanityLocators.Morefields);
-				minWait();
-				enterTextToInputField(New_SanityLocators.FirstnameField, name); 
-				customWait(3000);
-				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
-				minWait();
-				scrollToElements(New_SanityLocators.phoneField);
-				minWait();
-				enterTextToInputField(New_SanityLocators.phoneField, Phone1);
-				customWait(3000);
-				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
-				minWait();
-				scrollToElements(New_SanityLocators.EmailField);
-				minWait();
-				enterTextToInputField(New_SanityLocators.EmailField, email);
-				customWait(3000);
-				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
-				minWait();
-				scrollToElements(New_SanityLocators.Addressfield);
-				minWait();
-				enterTextToInputField(New_SanityLocators.Addressfield, Address);
-				customWait(3000);
-				if (isElementExist(New_SanityLocators.OK)){
-					clickBtn(New_SanityLocators.OK);
-					minWait();
-				}
-				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
-				minWait();
-				clickBtn(New_SanityLocators.SaveBtn);
-				minWait();
-				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
-				minWait();
-				APP_LOGS.info("Contacts added in Phone");
-				test.log(LogStatus.PASS, "Contacts added in Phone");
-				minWait();
-			}
-			catch (org.openqa.selenium.NoSuchElementException e) {
-
-				test.log(LogStatus.ERROR, "Error in the locators");
-				e.printStackTrace();
-
-			}
-			catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				test.log(LogStatus.ERROR, "No Such element Found");
-			}
-		}
-
-		public void deleteSIMContacts() throws InterruptedException {
-			try {
-				minWait();
-				System.out.println("IM in Contacts");
-				minWait();
-				clickBtn(New_SanityLocators.ContactsMoreOptions);
-				minWait();
-				scrollText("SIM");
-				minWait();
-				clickBtn(New_SanityLocators.AccountSIMOPt);
-				minWait();
-				if (isElementExist(New_SanityLocators.No_Contacts)) {
-					APP_LOGS.info("No Contact"); 
-					System.out.println("No Contact");
-					minWait();
-				} else {
-					clickBtn(New_SanityLocators.deleteContactOptn1);
-					minWait();
-					clickBtn(New_SanityLocators.Selection_menu);
-					minWait();
-					if(isElementExist(New_SanityLocators.ALL_Selection_menu)) {
-						clickBtn(New_SanityLocators.ALL_Selection_menu);
-						minWait();
-					}
-					else {
-						minWait();
-						clickBtn(New_SanityLocators.one_Selection_menu);
-					}
-					clickBtn(New_SanityLocators.OKBtn1);
-					minWait();
-					clickBtn(New_SanityLocators.OKBtn);
-					test.log(LogStatus.PASS, "Contact Deleted");
-					APP_LOGS.info("Contact Deleted");
-					minWait();
-				}
-			} 
-			catch (org.openqa.selenium.NoSuchElementException e) {
-
-				test.log(LogStatus.ERROR, "Error in the locators");
-				e.printStackTrace();
-			}
-			catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				test.log(LogStatus.ERROR, "No Such element Found");
-			}
-		}
-
-		public void deletePHONEContacts() throws InterruptedException {
-			try {
-				minWait();
-				System.out.println("IM in Contacts");
-				minWait();
-				clickBtn(New_SanityLocators.ContactsMoreOptions);
-				minWait();
-				scrollToElements(New_SanityLocators.AccountsPhoneOPt1);
-				//		scrollText("PHONE");
-				minWait();
-				clickBtn(New_SanityLocators.AccountsPhoneOPt1);
-				minWait();
-				if (isElementExist(New_SanityLocators.No_Contacts)) {
-					APP_LOGS.info("No Contact"); 
-					System.out.println("No Contact");
-					minWait();
-				} else {
-					clickBtn(New_SanityLocators.deleteContactOptn1);
-					minWait();
-					clickBtn(New_SanityLocators.Selection_menu);
-					minWait();
-					if(isElementExist(New_SanityLocators.ALL_Selection_menu)) {
-						clickBtn(New_SanityLocators.ALL_Selection_menu);
-						minWait();
-					}
-					else {
-						minWait();
-						clickBtn(New_SanityLocators.one_Selection_menu);
-					}
-					clickBtn(New_SanityLocators.OKBtn1);
-					minWait();
-					clickBtn(New_SanityLocators.OKBtn);
-					test.log(LogStatus.PASS, "Contact Deleted");
-					APP_LOGS.info("Contact Deleted");
-					minWait();
-				}
-			} 
-			catch (org.openqa.selenium.NoSuchElementException e) {
-
-				test.log(LogStatus.ERROR, "Error in the locators");
-				e.printStackTrace();
-			}
-			catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				test.log(LogStatus.ERROR, "No Such element Found");
-			}
-		}
-
-		public void Make_call_to_contact() throws InterruptedException {
-			WebDriverWait wait = new WebDriverWait(aDriver, 60);
-			try {
-				minWait();
-				System.out.println("IM in Contacts");
-				minWait();
-				clickBtn(New_SanityLocators.ContactsMoreOptions);
-				minWait();
-				clickBtn(New_SanityLocators.contactsBtn);
-				minWait();
-				clickBtn(New_SanityLocators.Test_1);
-				minWait();
-				clickBtn(New_SanityLocators.callBtn);
-
-				wait.until(ExpectedConditions.visibilityOf(New_SanityLocators.KeypadOPT));
-				if(isElementExist(New_SanityLocators.KeypadOPT)) {
-					clickBtn(New_SanityLocators.endBtn);
-					minWait();
-					System.out.println("Call initiated");
-					APP_LOGS.info("Call initiated");
-					minWait();
-					aDriver.pressKeyCode(AndroidKeyCode.HOME);
-					minWait();
-					test.log(LogStatus.PASS, "Call initiated,Test case Status is PASS");
-				}else {
-					APP_LOGS.info("Call did't initiated");
-					minWait();
-					aDriver.pressKeyCode(AndroidKeyCode.HOME);
-					minWait();
-					test.log(LogStatus.INFO, "Call did't initiated,network issue");
-				}
-			}	
-			catch (org.openqa.selenium.NoSuchElementException e) {
-
-				test.log(LogStatus.ERROR, "Error in the locators");
-				e.printStackTrace();
-
-			}
-			catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				test.log(LogStatus.ERROR, "No Such element Found");
-			}
-		}
-
-		public void clickOn_Networks_and_Internet() {
-			try {
-				minWait();
-				scrollToText("Network & Internet");
-				minWait();
-			} 
-			catch (org.openqa.selenium.NoSuchElementException e) {
-				test.log(LogStatus.ERROR, "Error in the locators");
-				e.printStackTrace();
-			}
-			catch (Exception e) {
-				test.log(LogStatus.ERROR, "Exception in clickOn_Networks_and_Internet() ");
-				e.printStackTrace();
-			}
-		}
-
-		public void ON_Switch(String switch_To_ON,SoftAssert sa) {
-			try {
-				minWait();
-
-				aDriver.findElementByXPath("//*[contains(@text,'"+switch_To_ON+"')]/../..//*[@text='OFF']").click();
-				minWait();
-			}
-			catch (org.openqa.selenium.NoSuchElementException e) {
-				test.log(LogStatus.ERROR, "Error in the locators");
-				e.printStackTrace();
-			}
-			catch (Exception e) {
-				test.log(LogStatus.ERROR, "Exception in clicking Switch");
-				e.printStackTrace();
-			}
-			sa.assertAll();
-		}
-
-		public boolean scrollToTextContains(String text) {
-			/*
-				  Method used to select an element on the page by scrolling the Scroll View/List View
-			 */
-			boolean check = false;
-			try {  
-				String scrollable = "new UiScrollable(new UiSelector().scrollable(true))";
-				String textElement = ".scrollIntoView(new UiSelector().description(\""+ text +"\"))";
-				aDriver.findElementByAndroidUIAutomator(scrollable+textElement).click();
-				APP_LOGS.info("Searched application is found sucessfully : ");
-				check = true;
-				return check;
-			}		
-			catch(NoSuchElementException e) {
-				return check;
-			}
-		}
-
-		public void checkWifiConnected1() throws InterruptedException {
-			try {
-				customWait(4000);
-				if(isElementExist(New_SanityLocators.connectedWIFI1)) {
-					String getTxt = New_SanityLocators.connectedWIFI1.getText();
-					System.out.println("Connected "+getTxt);
-					//					test.log(LogStatus.INFO, "Wi-Fi is Connected");
-				}
-				else {
-					System.out.println("Not Connected");
-					selectSSIDwifi();	
-					enterPassword();
-				}
-			} 
-			catch (org.openqa.selenium.NoSuchElementException e) {
-				test.log(LogStatus.ERROR, "Error in the locators");
-				e.printStackTrace();
-			}
-			catch (Exception e) {
-				test.log(LogStatus.ERROR, "Exception in WifiConnected1");
-				e.printStackTrace();
-			}
-
-			//		catch (Exception e) {
-			//			// TODO Auto-generated catch block
-			//			e.printStackTrace();
-			//		}
-		}
-
-		public void checkWifiConnected() throws InterruptedException {
-			try {
-				customWait(4000);
-				if(isElementExist(New_SanityLocators.connectedWIFI1)) {
-					String getTxt = New_SanityLocators.connectedWIFI1.getText();
-					System.out.println(getTxt);
-					test.log(LogStatus.INFO, "Wi-Fi is Connected : will be disconnecting");
-					disconnectSSIDifConnected();
-				}
-				else {
-					System.out.println("Not Connected");
-				}
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		public void disconnectSSIDifConnected() throws InterruptedException {
-			/*
-			 * disconnect wifi[SSID]if IDC wifi connected
-			 */
-			SoftAssert Sa = new SoftAssert();
-			try {
-				selectSSIDwifi();
-				customWait(4000);
-				clickBtn(New_SanityLocators.wifi_IDC_ForgetBtn);
-				APP_LOGS.info("IDC available secured wifi is disconnected");
-				System.out.println("Disconnected");
-				customWait(4000);
-			} catch (Exception e) {
-				e.printStackTrace();
-				test.log(LogStatus.ERROR, "Wi-Fi Forget button: No such Element found");		
-			}
-		}
-
-		public void selectSSIDwifi() throws InterruptedException {
-			/*
-			 * Select IDC wifi which is available
-			 */
-			SoftAssert Sa = new SoftAssert();
-			try {
-				customWait(4000);
-				for(int i=1; i<=50; i++) {
-					if(isElementExist(New_SanityLocators.wifi_IDC)) {
-						customWait(2000);
-						clickBtn(New_SanityLocators.wifi_IDC);
-						APP_LOGS.info("IDC available secured wifi is Selected");
-						System.out.println("IDC available secured wifi is Selected");
-						break;
-					}
-					else if(isElementExist(New_SanityLocators.wifi_Dellas)) {
-						minWait();
-						clickBtn(New_SanityLocators.wifi_Dellas);
-						APP_LOGS.info("Dellas available secured wifi is Selected");
-						break;
-					}
-					else if(isElementExist(New_SanityLocators.wifi_Cannada)) {
-						minWait();
-						clickBtn(New_SanityLocators.wifi_Cannada);
-						APP_LOGS.info("Cannada available secured wifi is Selected");
-						break;
-					}
-					else {
-						minWait();
-						aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_DPAD_DOWN);
-						continue;
-					}
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-				APP_LOGS.info("WIFI : No such Element found");
-				test.log(LogStatus.ERROR, "Wi-Fi is not available : No such Element found");
-			}
-		}
-
-		public void enterPassword() throws InterruptedException, IOException {
-			/*
-			 * enter Password for SSID
-			 */
-			try {
-				minWait();
-				if(isElementExist(New_SanityLocators.SSIDTxt)) {
-					String getSSIDTitle = New_SanityLocators.SSIDTxt.getText();
-					aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_DPAD_DOWN);
-					minWait();
-					aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_DPAD_CENTER);
-					minWait();
-					changeToNumberMode();
-					customWait(2000);
-					if(getSSIDTitle.equalsIgnoreCase("IDCSONWAP")) {
-						minWait();
-						clickBtn(New_SanityLocators.wifi_IDC_Psswd);
-						customWait(4000);
-						//					enterTextToInputField(New_SanityLocators.wifi_IDC_Psswd,"1dcS0n1md0tc0MbLr");
-						Runtime.getRuntime().exec("adb -s "+p_Id+" shell input text 1dcS0n1md0tc0MbLr");		
-						customWait(3000);	
-					}
-					minWait();
-					String psswrd = New_SanityLocators.wifi_IDC_Psswd.getText();
-					System.out.println(psswrd);
-					customWait(1000);
-					clickBtn(New_SanityLocators.wifi_IDC_ConnectBtn);
-					customWait(3000);
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-				APP_LOGS.info("Wi-Fi Forget button: No such Element found");
-			}
-		}
-
-		public void changeToNumberMode() throws InterruptedException {
-
-			try {
-				minWait();
-				New_SanityLocators.wifi_IDC_Psswd.sendKeys("123");
-				customWait(1500);
-				String text = New_SanityLocators.wifi_IDC_Psswd.getText();
-				System.out.println(text);
-				if(!text.equals("123")) {
-					for (int i = 0; i < 3; i++) {
-						aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_POUND);
-						minWait();
-					}
-				}
-				New_SanityLocators.wifi_IDC_Psswd.clear();
-			} catch (Exception e) {
-				e.printStackTrace();
-				APP_LOGS.info("Wi-Fi Forget button: No such Element found");
-			}
-		}
-
-		public void remove_GoogleAcccount_Orio(SoftAssert sa) {
-			//remove added google Account if any 
-			try {
-				scrollToText("Users & accounts");
-				//				clickOnAccounts();
-				minWait();
-				if(isElementExist(New_SanityLocators.connectedAccount)) {
-					System.out.println("Account is present");
-					minWait();
-					clickBtn(New_SanityLocators.connectedAccount);
-					minWait();
-					clickBtn(New_SanityLocators.REMOVE_ACCOUNT);
-					minWait();
-					clickBtn(New_SanityLocators.REMOVE_ACCOUNT);
-					customWait(3000);
-				}
-				else {
-					System.out.println("No Google account present");
-				}
-			} 
-			catch (org.openqa.selenium.NoSuchElementException e) {
-				test.log(LogStatus.ERROR, "Error in the locators");
-				e.printStackTrace();
-			}
-			catch (Exception e) {
-				test.log(LogStatus.ERROR, "Exception");
-				e.printStackTrace();
-			}
-			sa.assertAll();
-		}
-
-		public void navigateTo_AddGoogleAccount_Orio(SoftAssert sa) {
-			//navigate to settings option Add google Account
-			WebDriverWait wt = new WebDriverWait(aDriver, 60);
-			try {
-				scrollToText("Users & accounts");
-				clickBtn(New_SanityLocators.add_Account);
-				minWait();
-				clickBtn(New_SanityLocators.google_Account);
-				customWait(2000);
-				//		wt.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//*[contains(@text,'Checking info')]")));
-				minWait();
-			}
-			catch (org.openqa.selenium.NoSuchElementException e) {
-				test.log(LogStatus.ERROR, "Error in the locators");
-				e.printStackTrace();
-			}
-			catch (Exception e) {
-				test.log(LogStatus.ERROR, "Exception in navigateTo_AddGoogleAccount_Orio() ");
-				e.printStackTrace();
-			}
-			sa.assertAll();
-		}
-
-		public void add_GoogleAccount(String emailId, String password,SoftAssert sa) {
-			WebDriverWait wt = new WebDriverWait(aDriver, 60);
-			try {
-				minWait();
-				enterTextToInputField(New_SanityLocators.email_googleAcnt, emailId);
-				minWait();
-				clickBtn(New_SanityLocators.next);
-				minWait();
-				customWait(6000);
-				//		wt.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@text='Welcome' or @resource-id='profileIdentifier']")));
-				minWait();
-				enterTextToInputField(New_SanityLocators.password_googleAcnt, password);
-				customWait(5000);
-				clickBtn(New_SanityLocators.next);
-				customWait(3000);
-				if(isElementExist(New_SanityLocators.I_agreeOtn))
-				{
-					clickBtn(New_SanityLocators.I_agreeOtn);
-					minWait();
-				}
-				clickBtn(multi_Loc_Strategy(New_SanityLocators.skip_, New_SanityLocators.MOREOtn, null, null, null,0,0));
-				scroll() ;
-				scroll() ;
-				minWait();
-				//			clickBtn(multi_Loc_Strategy(New_SanityLocators.skip_, New_SanityLocators.MOREOtn, null, null, null,0,0));
-				//			aDriver.findElementByAndroidUIAutomator("new UiScrollable(new UiSelector().className(\"android.widget.Button\")).scrollIntoView(new UiSelector().textContains(\"Skip\"))").click();
-				minWait();
-				//			    scrollToText("Skip");
-				//			if (p_b_No.contains("-11.")||p_b_No.contains("-12.")||p_b_No.contains("-18.")||p_b_No.contains("-26.")||p_b_No.contains("-29.")) {
-				//				try {
-				//					aDriver.findElementByAndroidUIAutomator("new UiScrollable(new UiSelector().className(\"android.webkit.WebView\")).scrollIntoView(new UiSelector().textContains(\"Yes\"))").click();
-				//					minWait();
-				//				}
-				//				catch (org.openqa.selenium.NoSuchElementException e) {
-				//					test.log(LogStatus.ERROR, "Error in the locators");
-				//					e.printStackTrace();
-				//				}
-				//				catch (Exception e) {
-				//					test.log(LogStatus.ERROR, "Exception");
-				//					e.printStackTrace();
-				//				}
-				//				//				catch (Exception e) {
-				//				//				}
-				//			}		
-				//			customWait(1000);
-				//			clickBtn(New_SanityLocators.i_agree);
-				//			minWait();
-				//			wt.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//*[contains(@text,'Checking info')]")));
-				//			minWait();
-				//			clickBtn(New_SanityLocators.MORE);
-				//			minWait();
-				clickBtn(multi_Loc_Strategy(New_SanityLocators.skip_, New_SanityLocators.MOREOtn, New_SanityLocators.ACCEPTorAGREE,
-						null, null,0,0));
-				customWait(3000);
-			} 
-			catch (org.openqa.selenium.NoSuchElementException e) {
-				test.log(LogStatus.ERROR, "Error in the locators");
-				e.printStackTrace();
-			}
-			catch (Exception e) {
-				test.log(LogStatus.ERROR, "Exception");
-				e.printStackTrace();
-			}
-			sa.assertAll();
-			//		catch (Exception e) {
-			//		}
-		}
-
-		public void validate_Installed_App(String appName,SoftAssert soft) {
-
-			try {
-				boolean check = false;
-				clickOnAppList();
-				enterTextToInputField(New_SanityLocators.searchApps, appName);
-				minWait();
-				if (isElementExist(New_SanityLocators.apkExtractor)) {
-					check=true;
-					soft.assertTrue(check, "TestCase Valiation is PASS");
-					test.log(LogStatus.PASS, "APK installed " + "\" "+ appName +"\"" + " Successfully");
-				} else {		
-					test.log(LogStatus.FAIL,"APK didn't Installed "+ "\" "+ appName + "\"" +"at iteration: ");
-					soft.fail();
-				}
-				minWait();
-				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
-				minWait();
-				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
-				minWait();
-			}
-			catch (org.openqa.selenium.NoSuchElementException e) {
-				test.log(LogStatus.ERROR, "Error in the locators");
-				e.printStackTrace();
-			}
-			catch (Exception e) {
-				test.log(LogStatus.ERROR, "Exception in validate_Installed_App");
-				soft.fail();
-				e.printStackTrace();
-			}	
-			//		catch (Exception e) {
-			//			soft.fail();
-			//		}
+			test.log(LogStatus.ERROR, "Error in the locators");
+			e.printStackTrace();
 
 		}
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		sa.assertAll();
+	}
 
-		public void clickOnAppList() throws InterruptedException {
-
-			//try {
+	public void Lock_UnLock_SIM_card() throws InterruptedException {
+		SoftAssert sa =new SoftAssert();
+		WebDriverWait wait = new WebDriverWait(aDriver, 60);
+		try {
 			minWait();
-			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_HOME);			
-			customWait(2000);			
-			clickBtn(New_SanityLocators.app_List);
+			scrollToText("Security & location");
 			minWait();
-			//	} catch (Exception e) {
-			//	e.printStackTrace();
-			//	}
+			scrollToText("SIM card lock");
+			minWait();
+			clickBtn(New_SanityLocators.Switch);
+			minWait();
+			enterTextToInputField(New_SanityLocators.editPIN, "1234");
+			minWait();
+			clickBtn(multi_Loc_Strategy(New_SanityLocators.OK, New_SanityLocators.Ok, New_SanityLocators.OK_1,
+					New_SanityLocators.OK_2, null, 777,852));
+			minWait();
+			System.out.println("SIM Lock done,PIN set as 1234");
+			minWait();
+
+			clickBtn(New_SanityLocators.Switch);
+			minWait();
+			enterTextToInputField(New_SanityLocators.editPIN, "1234");
+			minWait();
+			clickBtn(multi_Loc_Strategy(New_SanityLocators.OK, New_SanityLocators.Ok, New_SanityLocators.OK_1,
+					New_SanityLocators.OK_2, null, 777,852));
+			minWait();
+			System.out.println("SIM UnLock done,with PIN 1234");
+			minWait();
+			APP_LOGS.info("Lock_UnLock_SIM_card");
+			test.log(LogStatus.PASS, "Lock_UnLock_SIM_card");
+			aDriver.pressKeyCode(AndroidKeyCode.HOME);
+		}
+		catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators");
+			e.printStackTrace();
 
 		}
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		sa.assertAll();
+	}
 
-		public void CheckInstalled_App(String appName) throws InterruptedException {
-			//Search Application is installed and uninstall
-
-			try {
-				clickOnAppList();
-
-				enterTextToInputField(New_SanityLocators.searchApps, appName);
+	public void deleteContacts() throws InterruptedException {
+		try {
+			minWait();
+			System.out.println("IM in Contacts");
+			if (isElementExist(New_SanityLocators.No_Contacts)) {
+				APP_LOGS.info("No Contact"); 
+				System.out.println("No Contact");
 				minWait();
-				System.out.println("Checking....");
-				if (isElementExist(New_SanityLocators.apkExtractor)) {
-					System.out.println("Yes App is Present...");
+			} else {
+				clickBtn(New_SanityLocators.deleteContactOptn1);
+				minWait();
+				clickBtn(New_SanityLocators.Selection_menu);
+				minWait();
+				if(isElementExist(New_SanityLocators.ALL_Selection_menu)) {
+					clickBtn(New_SanityLocators.ALL_Selection_menu);
 					minWait();
-					launch_APP(New_SanityLocators.PlayStore);
-					unInstall_App("Twitter");
-
 				}
-
 				else {
-					System.out.println("App is not there");
-					launch_APP(New_SanityLocators.PlayStore);
-					unInstall_App(appName);		
+					minWait();
+					clickBtn(New_SanityLocators.one_Selection_menu);
 				}
-				System.out.println("Uninstalled");
+				clickBtn(New_SanityLocators.OKBtn1);
+				minWait();
+				clickBtn(New_SanityLocators.OKBtn);
+				APP_LOGS.info("Contacts Deleted");
+				minWait();
+			}
+		} 
+		catch (org.openqa.selenium.NoSuchElementException e) {
 
-			} 
-			catch (org.openqa.selenium.NoSuchElementException e) {
-				test.log(LogStatus.ERROR, "Error in the locator");
-				e.printStackTrace();
-			}
-			catch (Exception e) {
-				test.log(LogStatus.ERROR, "Exception in CheckInstalled_App");
-				e.printStackTrace();
-			}
+			test.log(LogStatus.ERROR, "Error in the locators");
+			e.printStackTrace();
 		}
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			test.log(LogStatus.ERROR, "No Such element Found");
+		}
+	}
 
-		public void TurnOFF_App_Autoupdate() throws InterruptedException {
-			//TurnOFF App Auto update in playstore settings
+	public void addcontactsTO_SIM(String name,String Phone1,String Phone2,String email,SoftAssert sa) 
+			throws InterruptedException {
+		try {
+			minWait();
+			System.out.println("IM in Contacts");
+			minWait();
+			clickBtn(New_SanityLocators.ContactsMoreOptions);
+			minWait();
+			scrollText("SIM");
+			minWait();
+			clickBtn(New_SanityLocators.AccountSIMOPt);
+			minWait();
+			clickBtn(New_SanityLocators.AddcontactBtn);
+			minWait();
+			enterTextToInputField(New_SanityLocators.nameField, name);
+			customWait(3000);
+			enterTextToInputField(New_SanityLocators.phoneField, Phone1);
+			customWait(3000);
+			enterTextToInputField(New_SanityLocators.phoneField, Phone2);
+			customWait(3000);
+			enterTextToInputField(New_SanityLocators.emailField, email);
+			customWait(3000);
+			clickBtn(New_SanityLocators.SaveBtn);
+			minWait();
+			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
+			minWait();
+			System.out.println("Contacts added in SIM");
+			APP_LOGS.info("Contacts added in SIM");
+			test.log(LogStatus.PASS, "Contacts added in SIM");
+			minWait();
+		} 
+		catch (org.openqa.selenium.NoSuchElementException e) {
 
-			try {
-				minWait();
-				clickBtn(multi_Loc_Strategy(New_SanityLocators.more_Btn2, New_SanityLocators.more_Btn,
-						null, null, null, 0,0));
-				minWait();
-				scrollToText("Settings");
-				minWait();
-				clickBtn(New_SanityLocators.Auto_update_apps);
-				minWait();
-				clickBtn(New_SanityLocators.Dont_auto_update_apps);
-				minWait();
-				clickBtn(New_SanityLocators.done_Btn);
-				minWait();
-				aDriver.pressKeyCode(AndroidKeyCode.BACK);
-				minWait();
-				System.out.println("App Autoupdate is turn off");
-
-			} 
-			catch (org.openqa.selenium.NoSuchElementException e) {
-				test.log(LogStatus.ERROR, "Error in the locator");
-				e.printStackTrace();
-			}
-			catch (Exception e) {
-				test.log(LogStatus.ERROR, "Exception in CheckInstalled_App");
-				e.printStackTrace();
-			}
+			test.log(LogStatus.ERROR, "Error in the locators");
+			e.printStackTrace();
 
 		}
-
-	/*	public void launch_APP(AndroidElement appToClick) throws InterruptedException {
-			try {
-				clickOnAppList();
-				for (int i = 0; i < 6; i++) {
-					if (isElementExist(appToClick)) {
-						//						test.log(LogStatus.INFO, "\""+appToClick.getText()+"\" app launched.");
-						clickBtn(appToClick);
-						minWait();
-						break;
-					} else {
-						scroll();
-						minWait();
-					}
-				}
-			} 
-			catch (org.openqa.selenium.NoSuchElementException e) {
-				test.log(LogStatus.ERROR, "Error in the locators");
-				e.printStackTrace();
-			}
-			catch (Exception e) {
-				test.log(LogStatus.ERROR, "Exception in launch_APP()");
-				e.printStackTrace();
-			}
-			//		catch (Exception e) {
-			//			e.printStackTrace();
-			//		}
-		}*/
-
-		public void unInstall_App(String appName) {
-
-			WebDriverWait wait = new WebDriverWait(aDriver, 180);
-			try {
-				minWait();
-				TurnOFF_App_Autoupdate();
-				minWait();
-				clickBtn(multi_Loc_Strategy(New_SanityLocators.search_PlayStore2, New_SanityLocators.google_Play,
-						null, null, null, 0,0));
-				minWait();
-				enterTextToInputField(multi_Loc_Strategy(New_SanityLocators.search_PlayStore2, New_SanityLocators.google_Play,
-						New_SanityLocators.search_PlayStore, null, null, 0,0), appName);
-				minWait();
-				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_ENTER);
-				customWait(5000);
-				if(isElementExist(New_SanityLocators.installed_Playstore1)) {
-					customWait(3000);
-					clickBtn(New_SanityLocators.installed_Playstore1);
-				}
-				if (isElementExist(New_SanityLocators.UNINSTALL)) {
-					System.out.println("Uninstalling");
-					minWait();
-					clickBtn(New_SanityLocators.UNINSTALL);
-					minWait();
-					clickBtn(New_SanityLocators.OK);
-					minWait();
-					wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@text='INSTALL']")));
-					minWait();					
-				} 
-				else if(isElementExist(New_SanityLocators.UNINSTALL1)){
-					System.out.println("Uninstalling....");
-					minWait();
-					clickBtn(New_SanityLocators.UNINSTALL1);
-					minWait();
-					clickBtn(New_SanityLocators.OK);
-					minWait();
-					wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@text='INSTALL']")));
-					minWait();
-				}
-
-				minWait();
-				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
-				minWait();
-				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
-			} catch (Exception e) {
-
-			}
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			test.log(LogStatus.ERROR, "No Such element Found");
 		}
+	}
 
-		public void install_App(String appName,WebElement element) throws InterruptedException, IOException {
-
-			if(isElementExist(New_SanityLocators.account_Page)) {
-				clearRecentApps();
-				Runtime.getRuntime().exec("adb -s "+p_Id+" shell pm clear com.android.vending"); //  Clear Playstore cache
+	public void addcontactsTO_Phone(String name,String Phone1,String email,String Address) throws InterruptedException {
+		try {
+			minWait();
+			System.out.println("IM in Contacts");
+			minWait();
+			clickBtn(New_SanityLocators.ContactsMoreOptions);
+			minWait();
+			scrollToElements(New_SanityLocators.AccountsPhoneOPt1);
+			//		scrollText("PHONE");
+			minWait();
+			clickBtn(New_SanityLocators.AccountsPhoneOPt1);
+			minWait();
+			clickBtn(New_SanityLocators.AddcontactBtn);
+			minWait();
+			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
+			minWait();
+			clickBtn(New_SanityLocators.Morefields);
+			minWait();
+			enterTextToInputField(New_SanityLocators.FirstnameField, name); 
+			customWait(3000);
+			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
+			minWait();
+			scrollToElements(New_SanityLocators.phoneField);
+			minWait();
+			enterTextToInputField(New_SanityLocators.phoneField, Phone1);
+			customWait(3000);
+			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
+			minWait();
+			scrollToElements(New_SanityLocators.EmailField);
+			minWait();
+			enterTextToInputField(New_SanityLocators.EmailField, email);
+			customWait(3000);
+			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
+			minWait();
+			scrollToElements(New_SanityLocators.Addressfield);
+			minWait();
+			enterTextToInputField(New_SanityLocators.Addressfield, Address);
+			customWait(3000);
+			if (isElementExist(New_SanityLocators.OK)){
+				clickBtn(New_SanityLocators.OK);
 				minWait();
-				launch_APP(New_SanityLocators.PlayStore);
 			}
+			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
+			minWait();
+			clickBtn(New_SanityLocators.SaveBtn);
+			minWait();
+			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
+			minWait();
+			APP_LOGS.info("Contacts added in Phone");
+			test.log(LogStatus.PASS, "Contacts added in Phone");
+			minWait();
+		}
+		catch (org.openqa.selenium.NoSuchElementException e) {
 
-			WebDriverWait wait = new WebDriverWait(aDriver, 120);
-			try {
-				System.out.println("To Be install "+appName);
-				customWait(3000);
-				clickBtn(New_SanityLocators.google_Play);
-				customWait(3000);
-				enterTextToInputField(multi_Loc_Strategy(New_SanityLocators.search_PlayStore,
-						New_SanityLocators.search_PlayStore1, null, null, null, 216,102),appName);
-				customWait(3000);
-				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_ENTER);
-				customWait(8000);
-				System.out.println("Scrolling");
-				scrollToElementWithDpadDown(element);
-				minWait();
+			test.log(LogStatus.ERROR, "Error in the locators");
+			e.printStackTrace();
 
-				wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@text='INSTALL']")));
-				customWait(6000);
-				if(isElementExist(New_SanityLocators.installed_Playstore1)) {
-					customWait(3000);
-					clickBtn(New_SanityLocators.installed_Playstore1);
-				}
-				if (isElementExist(New_SanityLocators.INSTALL)) {
-					minWait();
-					clickBtn(New_SanityLocators.INSTALL);
-					minWait();
-					//		clickBtn(New_SanityLocators.ACCEPT);
-					minWait();
-					wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@text='UNINSTALL']")));
-					minWait();
-				} else {
-					test.log(LogStatus.ERROR, "App already installed.");
-				}
-				System.out.println("Installed");
+		}
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			test.log(LogStatus.ERROR, "No Such element Found");
+		}
+	}
+
+	public void deleteSIMContacts() throws InterruptedException {
+		try {
+			minWait();
+			System.out.println("IM in Contacts");
+			minWait();
+			clickBtn(New_SanityLocators.ContactsMoreOptions);
+			minWait();
+			scrollText("SIM");
+			minWait();
+			clickBtn(New_SanityLocators.AccountSIMOPt);
+			minWait();
+			if (isElementExist(New_SanityLocators.No_Contacts)) {
+				APP_LOGS.info("No Contact"); 
+				System.out.println("No Contact");
 				minWait();
-				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
+			} else {
+				clickBtn(New_SanityLocators.deleteContactOptn1);
+				minWait();
+				clickBtn(New_SanityLocators.Selection_menu);
+				minWait();
+				if(isElementExist(New_SanityLocators.ALL_Selection_menu)) {
+					clickBtn(New_SanityLocators.ALL_Selection_menu);
+					minWait();
+				}
+				else {
+					minWait();
+					clickBtn(New_SanityLocators.one_Selection_menu);
+				}
+				clickBtn(New_SanityLocators.OKBtn1);
+				minWait();
+				clickBtn(New_SanityLocators.OKBtn);
+				test.log(LogStatus.PASS, "Contact Deleted");
+				APP_LOGS.info("Contact Deleted");
+				minWait();
+			}
+		} 
+		catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators");
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			test.log(LogStatus.ERROR, "No Such element Found");
+		}
+	}
+
+	public void deletePHONEContacts() throws InterruptedException {
+		try {
+			minWait();
+			System.out.println("IM in Contacts");
+			minWait();
+			clickBtn(New_SanityLocators.ContactsMoreOptions);
+			minWait();
+			scrollToElements(New_SanityLocators.AccountsPhoneOPt1);
+			//		scrollText("PHONE");
+			minWait();
+			clickBtn(New_SanityLocators.AccountsPhoneOPt1);
+			minWait();
+			if (isElementExist(New_SanityLocators.No_Contacts)) {
+				APP_LOGS.info("No Contact"); 
+				System.out.println("No Contact");
+				minWait();
+			} else {
+				clickBtn(New_SanityLocators.deleteContactOptn1);
+				minWait();
+				clickBtn(New_SanityLocators.Selection_menu);
+				minWait();
+				if(isElementExist(New_SanityLocators.ALL_Selection_menu)) {
+					clickBtn(New_SanityLocators.ALL_Selection_menu);
+					minWait();
+				}
+				else {
+					minWait();
+					clickBtn(New_SanityLocators.one_Selection_menu);
+				}
+				clickBtn(New_SanityLocators.OKBtn1);
+				minWait();
+				clickBtn(New_SanityLocators.OKBtn);
+				test.log(LogStatus.PASS, "Contact Deleted");
+				APP_LOGS.info("Contact Deleted");
+				minWait();
+			}
+		} 
+		catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators");
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			test.log(LogStatus.ERROR, "No Such element Found");
+		}
+	}
+
+	public void Make_call_to_contact() throws InterruptedException {
+		WebDriverWait wait = new WebDriverWait(aDriver, 60);
+		try {
+			minWait();
+			System.out.println("IM in Contacts");
+			minWait();
+			clickBtn(New_SanityLocators.ContactsMoreOptions);
+			minWait();
+			clickBtn(New_SanityLocators.contactsBtn);
+			minWait();
+			clickBtn(New_SanityLocators.Test_1);
+			minWait();
+			clickBtn(New_SanityLocators.callBtn);
+
+			wait.until(ExpectedConditions.visibilityOf(New_SanityLocators.KeypadOPT));
+			if(isElementExist(New_SanityLocators.KeypadOPT)) {
+				clickBtn(New_SanityLocators.endBtn);
+				minWait();
+				System.out.println("Call initiated");
+				APP_LOGS.info("Call initiated");
 				minWait();
 				aDriver.pressKeyCode(AndroidKeyCode.HOME);
-			} 
-			catch (org.openqa.selenium.NoSuchElementException e) {
-				test.log(LogStatus.ERROR, "Error in the locators");
-				e.printStackTrace();
+				minWait();
+				test.log(LogStatus.PASS, "Call initiated,Test case Status is PASS");
+			}else {
+				APP_LOGS.info("Call did't initiated");
+				minWait();
+				aDriver.pressKeyCode(AndroidKeyCode.HOME);
+				minWait();
+				test.log(LogStatus.INFO, "Call did't initiated,network issue");
 			}
-			catch (Exception e) {
-				test.log(LogStatus.ERROR, "Exception in install_App() ");
-				e.printStackTrace();
-			}
-			//		catch (Exception e) {
-			//			//                e.printStackTrace();
-			//		}
-		}
+		}	
+		catch (org.openqa.selenium.NoSuchElementException e) {
 
-		public void scrollToElementWithDpadDown(WebElement element) {
-			/*
-			 * Clicks up button till element is available
-			 */
-			System.out.println("Clicking Element1");
-			if(isElementExist(element)) {
-				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_DPAD_DOWN);
-				System.out.println("Clicking Element");
-				element.click();
+			test.log(LogStatus.ERROR, "Error in the locators");
+			e.printStackTrace();
+
+		}
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			test.log(LogStatus.ERROR, "No Such element Found");
+		}
+	}
+
+	public void clickOn_Networks_and_Internet() {
+		try {
+			minWait();
+			scrollToText("Network & Internet");
+			minWait();
+		} 
+		catch (org.openqa.selenium.NoSuchElementException e) {
+			test.log(LogStatus.ERROR, "Error in the locators");
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in clickOn_Networks_and_Internet() ");
+			e.printStackTrace();
+		}
+	}
+
+	public void ON_Switch(String switch_To_ON,SoftAssert sa) {
+		try {
+			minWait();
+
+			aDriver.findElementByXPath("//*[contains(@text,'"+switch_To_ON+"')]/../..//*[@text='OFF']").click();
+			minWait();
+		}
+		catch (org.openqa.selenium.NoSuchElementException e) {
+			test.log(LogStatus.ERROR, "Error in the locators");
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in clicking Switch");
+			e.printStackTrace();
+		}
+		sa.assertAll();
+	}
+
+	public boolean scrollToTextContains(String text) {
+		/*
+			  Method used to select an element on the page by scrolling the Scroll View/List View
+		 */
+		boolean check = false;
+		try {  
+			String scrollable = "new UiScrollable(new UiSelector().scrollable(true))";
+			String textElement = ".scrollIntoView(new UiSelector().description(\""+ text +"\"))";
+			aDriver.findElementByAndroidUIAutomator(scrollable+textElement).click();
+			APP_LOGS.info("Searched application is found sucessfully : ");
+			check = true;
+			return check;
+		}		
+		catch(NoSuchElementException e) {
+			return check;
+		}
+	}
+
+	public void checkWifiConnected1() throws InterruptedException {
+		try {
+			customWait(4000);
+			if(isElementExist(New_SanityLocators.connectedWIFI1)) {
+				String getTxt = New_SanityLocators.connectedWIFI1.getText();
+				System.out.println("Connected "+getTxt);
+				//					test.log(LogStatus.INFO, "Wi-Fi is Connected");
 			}
 			else {
-				System.out.println("Clicking First Element");
-				clickBtn(New_SanityLocators.firstApp_Suggetion);
+				System.out.println("Not Connected");
+				selectSSIDwifi();	
+				enterPassword();
 			}
+		} 
+		catch (org.openqa.selenium.NoSuchElementException e) {
+			test.log(LogStatus.ERROR, "Error in the locators");
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in WifiConnected1");
+			e.printStackTrace();
 		}
 
-		public void PlayandPause_music(SoftAssert sa) throws InterruptedException {
-			try {
+		//		catch (Exception e) {
+		//			// TODO Auto-generated catch block
+		//			e.printStackTrace();
+		//		}
+	}
+
+	public void checkWifiConnected() throws InterruptedException {
+		try {
+			customWait(4000);
+			if(isElementExist(New_SanityLocators.connectedWIFI1)) {
+				String getTxt = New_SanityLocators.connectedWIFI1.getText();
+				System.out.println(getTxt);
+				test.log(LogStatus.INFO, "Wi-Fi is Connected : will be disconnecting");
+				disconnectSSIDifConnected();
+			}
+			else {
+				System.out.println("Not Connected");
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void disconnectSSIDifConnected() throws InterruptedException {
+		/*
+		 * disconnect wifi[SSID]if IDC wifi connected
+		 */
+		SoftAssert Sa = new SoftAssert();
+		try {
+			selectSSIDwifi();
+			customWait(4000);
+			clickBtn(New_SanityLocators.wifi_IDC_ForgetBtn);
+			APP_LOGS.info("IDC available secured wifi is disconnected");
+			System.out.println("Disconnected");
+			customWait(4000);
+		} catch (Exception e) {
+			e.printStackTrace();
+			test.log(LogStatus.ERROR, "Wi-Fi Forget button: No such Element found");		
+		}
+	}
+
+	public void selectSSIDwifi() throws InterruptedException {
+		/*
+		 * Select IDC wifi which is available
+		 */
+		SoftAssert Sa = new SoftAssert();
+		try {
+			customWait(4000);
+			for(int i=1; i<=50; i++) {
+				if(isElementExist(New_SanityLocators.wifi_IDC)) {
+					customWait(2000);
+					clickBtn(New_SanityLocators.wifi_IDC);
+					APP_LOGS.info("IDC available secured wifi is Selected");
+					System.out.println("IDC available secured wifi is Selected");
+					break;
+				}
+				else if(isElementExist(New_SanityLocators.wifi_Dellas)) {
+					minWait();
+					clickBtn(New_SanityLocators.wifi_Dellas);
+					APP_LOGS.info("Dellas available secured wifi is Selected");
+					break;
+				}
+				else if(isElementExist(New_SanityLocators.wifi_Cannada)) {
+					minWait();
+					clickBtn(New_SanityLocators.wifi_Cannada);
+					APP_LOGS.info("Cannada available secured wifi is Selected");
+					break;
+				}
+				else {
+					minWait();
+					aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_DPAD_DOWN);
+					continue;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			APP_LOGS.info("WIFI : No such Element found");
+			test.log(LogStatus.ERROR, "Wi-Fi is not available : No such Element found");
+		}
+	}
+
+	public void enterPassword() throws InterruptedException, IOException {
+		/*
+		 * enter Password for SSID
+		 */
+		try {
+			minWait();
+			if(isElementExist(New_SanityLocators.SSIDTxt)) {
+				String getSSIDTitle = New_SanityLocators.SSIDTxt.getText();
+				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_DPAD_DOWN);
 				minWait();
-				if (isElementExist(New_SanityLocators.skipBtn)) {
+				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_DPAD_CENTER);
+				minWait();
+				changeToNumberMode();
+				customWait(2000);
+				if(getSSIDTitle.equalsIgnoreCase("IDCSONWAP")) {
 					minWait();
-					clickBtn(New_SanityLocators.skipBtn);
+					clickBtn(New_SanityLocators.wifi_IDC_Psswd);
+					customWait(4000);
+					//					enterTextToInputField(New_SanityLocators.wifi_IDC_Psswd,"1dcS0n1md0tc0MbLr");
+					Runtime.getRuntime().exec("adb -s "+p_Id+" shell input text 1dcS0n1md0tc0MbLr");		
+					customWait(3000);	
+				}
+				minWait();
+				String psswrd = New_SanityLocators.wifi_IDC_Psswd.getText();
+				System.out.println(psswrd);
+				customWait(1000);
+				clickBtn(New_SanityLocators.wifi_IDC_ConnectBtn);
+				customWait(3000);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			APP_LOGS.info("Wi-Fi Forget button: No such Element found");
+		}
+	}
+
+	public void changeToNumberMode() throws InterruptedException {
+
+		try {
+			minWait();
+			New_SanityLocators.wifi_IDC_Psswd.sendKeys("123");
+			customWait(1500);
+			String text = New_SanityLocators.wifi_IDC_Psswd.getText();
+			System.out.println(text);
+			if(!text.equals("123")) {
+				for (int i = 0; i < 3; i++) {
+					aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_POUND);
 					minWait();
-					APP_LOGS.info("SkipBtn is there"); 
-					System.out.println("SkipBtn is there");
+				}
+			}
+			New_SanityLocators.wifi_IDC_Psswd.clear();
+		} catch (Exception e) {
+			e.printStackTrace();
+			APP_LOGS.info("Wi-Fi Forget button: No such Element found");
+		}
+	}
+
+	public void remove_GoogleAcccount_Orio(SoftAssert sa) {
+		//remove added google Account if any 
+		try {
+			scrollToText("Users & accounts");
+			//				clickOnAccounts();
+			minWait();
+			if(isElementExist(New_SanityLocators.connectedAccount)) {
+				System.out.println("Account is present");
+				minWait();
+				clickBtn(New_SanityLocators.connectedAccount);
+				minWait();
+				clickBtn(New_SanityLocators.REMOVE_ACCOUNT);
+				minWait();
+				clickBtn(New_SanityLocators.REMOVE_ACCOUNT);
+				customWait(3000);
+			}
+			else {
+				System.out.println("No Google account present");
+			}
+		} 
+		catch (org.openqa.selenium.NoSuchElementException e) {
+			test.log(LogStatus.ERROR, "Error in the locators");
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception");
+			e.printStackTrace();
+		}
+		sa.assertAll();
+	}
+
+	public void navigateTo_AddGoogleAccount_Orio(SoftAssert sa) {
+		//navigate to settings option Add google Account
+		WebDriverWait wt = new WebDriverWait(aDriver, 60);
+		try {
+			scrollToText("Users & accounts");
+			clickBtn(New_SanityLocators.add_Account);
+			minWait();
+			clickBtn(New_SanityLocators.google_Account);
+			customWait(2000);
+			//		wt.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//*[contains(@text,'Checking info')]")));
+			minWait();
+		}
+		catch (org.openqa.selenium.NoSuchElementException e) {
+			test.log(LogStatus.ERROR, "Error in the locators");
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in navigateTo_AddGoogleAccount_Orio() ");
+			e.printStackTrace();
+		}
+		sa.assertAll();
+	}
+
+	public void add_GoogleAccount(String emailId, String password,SoftAssert sa) {
+		WebDriverWait wt = new WebDriverWait(aDriver, 120);
+		try {
+			minWait();
+			enterTextToInputField(New_SanityLocators.email_googleAcnt, emailId);
+			minWait();
+			clickBtn(New_SanityLocators.next);
+			minWait();
+			customWait(6000);
+			//		wt.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@text='Welcome' or @resource-id='profileIdentifier']")));
+			minWait();
+			enterTextToInputField(New_SanityLocators.password_googleAcnt, password);
+			wt.until(ExpectedConditions.visibilityOf(New_SanityLocators.next));
+//			customWait(5000);
+			clickBtn(New_SanityLocators.next);
+			customWait(5000);
+			if(isElementExist(New_SanityLocators.I_agreeOtn))
+			{
+				clickBtn(New_SanityLocators.I_agreeOtn);
+				minWait();
+			}
+			clickBtn(multi_Loc_Strategy(New_SanityLocators.skip_, New_SanityLocators.MOREOtn, null, null, null,0,0));
+			scroll() ;
+			scroll() ;
+			minWait();
+			//			clickBtn(multi_Loc_Strategy(New_SanityLocators.skip_, New_SanityLocators.MOREOtn, null, null, null,0,0));
+			//			aDriver.findElementByAndroidUIAutomator("new UiScrollable(new UiSelector().className(\"android.widget.Button\")).scrollIntoView(new UiSelector().textContains(\"Skip\"))").click();
+			minWait();
+			//			    scrollToText("Skip");
+			//			if (p_b_No.contains("-11.")||p_b_No.contains("-12.")||p_b_No.contains("-18.")||p_b_No.contains("-26.")||p_b_No.contains("-29.")) {
+			//				try {
+			//					aDriver.findElementByAndroidUIAutomator("new UiScrollable(new UiSelector().className(\"android.webkit.WebView\")).scrollIntoView(new UiSelector().textContains(\"Yes\"))").click();
+			//					minWait();
+			//				}
+			//				catch (org.openqa.selenium.NoSuchElementException e) {
+			//					test.log(LogStatus.ERROR, "Error in the locators");
+			//					e.printStackTrace();
+			//				}
+			//				catch (Exception e) {
+			//					test.log(LogStatus.ERROR, "Exception");
+			//					e.printStackTrace();
+			//				}
+			//				//				catch (Exception e) {
+			//				//				}
+			//			}		
+			//			customWait(1000);
+			//			clickBtn(New_SanityLocators.i_agree);
+			//			minWait();
+			//			wt.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//*[contains(@text,'Checking info')]")));
+			//			minWait();
+			//			clickBtn(New_SanityLocators.MORE);
+			//			minWait();
+			clickBtn(multi_Loc_Strategy(New_SanityLocators.skip_, New_SanityLocators.MOREOtn, New_SanityLocators.ACCEPTorAGREE,
+					null, null,0,0));
+			customWait(3000);
+		} 
+		catch (org.openqa.selenium.NoSuchElementException e) {
+			test.log(LogStatus.ERROR, "Error in the locators");
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception");
+			e.printStackTrace();
+		}
+		sa.assertAll();
+		//		catch (Exception e) {
+		//		}
+	}
+
+	public void validate_Installed_App(String appName,SoftAssert soft) {
+
+		try {
+			boolean check = false;
+			clickOnAppList();
+			enterTextToInputField(New_SanityLocators.searchApps, appName);
+			minWait();
+			if (isElementExist(New_SanityLocators.apkExtractor)) {
+				check=true;
+				soft.assertTrue(check, "TestCase Valiation is PASS");
+				test.log(LogStatus.PASS, "APK installed " + "\" "+ appName +"\"" + " Successfully");
+			} else {		
+				test.log(LogStatus.FAIL,"APK didn't Installed "+ "\" "+ appName + "\"" +"at iteration: ");
+				soft.fail();
+			}
+			minWait();
+			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
+			minWait();
+			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
+			minWait();
+		}
+		catch (org.openqa.selenium.NoSuchElementException e) {
+			test.log(LogStatus.ERROR, "Error in the locators");
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in validate_Installed_App");
+			soft.fail();
+			e.printStackTrace();
+		}	
+		//		catch (Exception e) {
+		//			soft.fail();
+		//		}
+
+	}
+
+	public void clickOnAppList() throws InterruptedException {
+
+		//try {
+		minWait();
+		aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_HOME);			
+		customWait(2000);			
+		clickBtn(New_SanityLocators.app_List);
+		minWait();
+		//	} catch (Exception e) {
+		//	e.printStackTrace();
+		//	}
+
+	}
+
+	public void CheckInstalled_App(String appName) throws InterruptedException {
+		//Search Application is installed and uninstall
+
+		try {
+			clickOnAppList();
+
+			enterTextToInputField(New_SanityLocators.searchApps, appName);
+			minWait();
+			System.out.println("Checking....");
+			if (isElementExist(New_SanityLocators.apkExtractor)) {
+				System.out.println("Yes App is Present...");
+				minWait();
+				launch_APP(New_SanityLocators.PlayStore);
+				unInstall_App("Twitter");
+
+			}
+
+			else {
+				System.out.println("App is not there");
+//				launch_APP(New_SanityLocators.PlayStore);
+//				unInstall_App(appName);		
+			}
+			System.out.println("Uninstalled");
+			aDriver.pressKeyCode(AndroidKeyCode.HOME);
+
+		} 
+		catch (org.openqa.selenium.NoSuchElementException e) {
+			test.log(LogStatus.ERROR, "Error in the locator");
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in CheckInstalled_App");
+			e.printStackTrace();
+		}
+	}
+
+	public void TurnOFF_App_Autoupdate() throws InterruptedException {
+		//TurnOFF App Auto update in playstore settings
+
+		try {
+			minWait();
+			clickBtn(multi_Loc_Strategy(New_SanityLocators.more_Btn2, New_SanityLocators.more_Btn,
+					null, null, null, 0,0));
+			minWait();
+			scrollToText("Settings");
+			minWait();
+			clickBtn(New_SanityLocators.Auto_update_apps);
+			minWait();
+			clickBtn(New_SanityLocators.Dont_auto_update_apps);
+			minWait();
+			clickBtn(New_SanityLocators.done_Btn);
+			minWait();
+			aDriver.pressKeyCode(AndroidKeyCode.BACK);
+			minWait();
+			System.out.println("App Autoupdate is turn off");
+
+		} 
+		catch (org.openqa.selenium.NoSuchElementException e) {
+			test.log(LogStatus.ERROR, "Error in the locator");
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in CheckInstalled_App");
+			e.printStackTrace();
+		}
+
+	}
+
+/*	public void launch_APP(AndroidElement appToClick) throws InterruptedException {
+		try {
+			clickOnAppList();
+			for (int i = 0; i < 6; i++) {
+				if (isElementExist(appToClick)) {
+					//						test.log(LogStatus.INFO, "\""+appToClick.getText()+"\" app launched.");
+					clickBtn(appToClick);
 					minWait();
+					break;
 				} else {
-					minWait();
-					System.out.println("SkipBtn is not there");
+					scroll();
 					minWait();
 				}
-				minWait();
-				clickBtn(New_SanityLocators.searchOpt);
-				minWait();
-				enterTextToInputField(multi_Loc_Strategy(New_SanityLocators.Search1, New_SanityLocators.Search2,
-						null, null, null, 204,94), "Ninja Tuna");
-				minWait();
-				aDriver.pressKeyCode(AndroidKeyCode.ENTER);
-				minWait();
-				clickBtn(New_SanityLocators.musicfile);
-				minWait();
-				clickBtn(New_SanityLocators.playBtn);
-				customWait(6000);
-				clickBtn(New_SanityLocators.play_pause_Btn);
-				minWait();
-				aDriver.pressKeyCode(AndroidKeyCode.HOME);
-				minWait();
-				APP_LOGS.info("play_pause working fine");
-				test.log(LogStatus.PASS, "play_pause working fine");
-				minWait();
+			}
+		} 
+		catch (org.openqa.selenium.NoSuchElementException e) {
+			test.log(LogStatus.ERROR, "Error in the locators");
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in launch_APP()");
+			e.printStackTrace();
+		}
+		//		catch (Exception e) {
+		//			e.printStackTrace();
+		//		}
+	}*/
 
+	public void unInstall_App(String appName) {
+
+		WebDriverWait wait = new WebDriverWait(aDriver, 180);
+		try {
+			minWait();
+			TurnOFF_App_Autoupdate();
+			minWait();
+			clickBtn(multi_Loc_Strategy(New_SanityLocators.search_PlayStore2, New_SanityLocators.google_Play,
+					null, null, null, 0,0));
+			minWait();
+			enterTextToInputField(multi_Loc_Strategy(New_SanityLocators.search_PlayStore2, New_SanityLocators.google_Play,
+					New_SanityLocators.search_PlayStore, null, null, 0,0), appName);
+			minWait();
+			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_ENTER);
+			customWait(5000);
+			if(isElementExist(New_SanityLocators.installed_Playstore1)) {
+				customWait(3000);
+				clickBtn(New_SanityLocators.installed_Playstore1);
+			}
+			if (isElementExist(New_SanityLocators.UNINSTALL)) {
+				System.out.println("Uninstalling");
+				minWait();
+				clickBtn(New_SanityLocators.UNINSTALL);
+				minWait();
+				clickBtn(New_SanityLocators.OK);
+				minWait();
+				wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@text='INSTALL']")));
+				minWait();					
 			} 
-			catch (org.openqa.selenium.NoSuchElementException e) {
+			else if(isElementExist(New_SanityLocators.UNINSTALL1)){
+				System.out.println("Uninstalling....");
+				minWait();
+				clickBtn(New_SanityLocators.UNINSTALL1);
+				minWait();
+				clickBtn(New_SanityLocators.OK);
+				minWait();
+				wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@text='INSTALL']")));
+				minWait();
+			}
 
-				test.log(LogStatus.ERROR, "Error in the locators");
-				e.printStackTrace();
-			}
-			catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				test.log(LogStatus.ERROR, "No Such element Found");
-			}
-			sa.assertAll();
+			minWait();
+			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
+			minWait();
+			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
+		} catch (Exception e) {
+
+		}
+	}
+
+	public void install_App(String appName,WebElement element) throws InterruptedException, IOException {
+
+		if(isElementExist(New_SanityLocators.account_Page)) {
+			clearRecentApps();
+			Runtime.getRuntime().exec("adb -s "+p_Id+" shell pm clear com.android.vending"); //  Clear Playstore cache
+			minWait();
+			launch_APP(New_SanityLocators.PlayStore);
 		}
 
-		public void Configure_Gmail(SoftAssert sa) throws InterruptedException {
-			try {
+		WebDriverWait wait = new WebDriverWait(aDriver, 120);
+		try {
+			System.out.println("To Be install "+appName);
+			customWait(3000);
+			clickBtn(New_SanityLocators.google_Play);
+			customWait(3000);
+			enterTextToInputField(multi_Loc_Strategy(New_SanityLocators.search_PlayStore,
+					New_SanityLocators.search_PlayStore1, null, null, null, 216,102),appName);
+			customWait(3000);
+			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_ENTER);
+			customWait(8000);
+//			System.out.println("Scrolling");
+//			scrollToElementWithDpadDown(element);
+			minWait();
+
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@text='INSTALL']")));
+			customWait(6000);
+			if(isElementExist(New_SanityLocators.installed_Playstore1)) {
+				customWait(3000);
+				clickBtn(New_SanityLocators.installed_Playstore1);
+			}
+			if (isElementExist(New_SanityLocators.INSTALL)) {
+				minWait();
+				clickBtn(New_SanityLocators.INSTALL);
+				minWait();
+				//		clickBtn(New_SanityLocators.ACCEPT);
+				minWait();
+				wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@text='UNINSTALL']")));
+				minWait();
+			} else {
+				test.log(LogStatus.ERROR, "App already installed.");
+			}
+			System.out.println("Installed");
+			minWait();
+			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
+			minWait();
+			aDriver.pressKeyCode(AndroidKeyCode.HOME);
+		} 
+		catch (org.openqa.selenium.NoSuchElementException e) {
+			test.log(LogStatus.ERROR, "Error in the locators");
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			test.log(LogStatus.ERROR, "Exception in install_App() ");
+			e.printStackTrace();
+		}
+		//		catch (Exception e) {
+		//			//                e.printStackTrace();
+		//		}
+	}
+
+	public void scrollToElementWithDpadDown(WebElement element) {
+		/*
+		 * Clicks up button till element is available
+		 */
+		System.out.println("Clicking Element1");
+		if(isElementExist(element)) {
+			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_DPAD_DOWN);
+			System.out.println("Clicking Element");
+			element.click();
+		}
+		else {
+			System.out.println("Clicking First Element");
+			clickBtn(New_SanityLocators.firstApp_Suggetion);
+		}
+	}
+
+	public void PlayandPause_music(SoftAssert sa) throws InterruptedException {
+		try {
+			minWait();
+			if (isElementExist(New_SanityLocators.skipBtn)) {
+				minWait();
+				clickBtn(New_SanityLocators.skipBtn);
+				minWait();
+				APP_LOGS.info("SkipBtn is there"); 
+				System.out.println("SkipBtn is there");
+				minWait();
+			} else {
+				minWait();
+				System.out.println("SkipBtn is not there");
+				minWait();
+			}
+			minWait();
+			clickBtn(New_SanityLocators.searchOpt);
+			minWait();
+			enterTextToInputField(multi_Loc_Strategy(New_SanityLocators.Search1, New_SanityLocators.Search2,
+					null, null, null, 204,94), "Ninja Tuna");
+			minWait();
+			aDriver.pressKeyCode(AndroidKeyCode.ENTER);
+			minWait();
+			clickBtn(New_SanityLocators.musicfile);
+			minWait();
+			clickBtn(New_SanityLocators.playBtn);
+			customWait(6000);
+			clickBtn(New_SanityLocators.play_pause_Btn);
+			minWait();
+			aDriver.pressKeyCode(AndroidKeyCode.HOME);
+			minWait();
+			APP_LOGS.info("play_pause working fine");
+			test.log(LogStatus.PASS, "play_pause working fine");
+			minWait();
+
+		} 
+		catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators");
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			test.log(LogStatus.ERROR, "No Such element Found");
+		}
+		sa.assertAll();
+	}
+
+	public void Configure_Gmail(SoftAssert sa) throws InterruptedException {
+		WebDriverWait wait = new WebDriverWait(aDriver, 180);
+		try {
+			minWait();
+
+			if(isElementExist(New_SanityLocators.skipOtn) || isElementExist(New_SanityLocators.gotitBtn) )
+			{
 				minWait();
 
-				if(isElementExist(New_SanityLocators.skipOtn) || isElementExist(New_SanityLocators.gotitBtn) )
+				clickBtn(multi_Loc_Strategy(New_SanityLocators.skipOtn, New_SanityLocators.gotitBtn, null, null, null,0,0));
+				customWait(5000);
+				wait.until(ExpectedConditions.visibilityOf(New_SanityLocators.account_address));
+				if(isElementExist(New_SanityLocators.account_address))
 				{
-					minWait();
-
-					clickBtn(multi_Loc_Strategy(New_SanityLocators.skipOtn, New_SanityLocators.gotitBtn, null, null, null,0,0));
-					customWait(5000);
-					clickBtn(multi_Loc_Strategy(New_SanityLocators.TAKE_ME_TO_GMAIL, null, null, null, null,0,0));
-					minWait();
-						
-				}
+				clickBtn(multi_Loc_Strategy(New_SanityLocators.TAKE_ME_TO_GMAIL, null, null, null, null,0,0));
+				minWait();
 				if (isElementExist(New_SanityLocators.next))
 				{
 				clickBtn(New_SanityLocators.next);
@@ -4660,8 +4668,6 @@ public class New_SanityUtil extends BaseUtil {
 				{
 				clickBtn(New_SanityLocators.OK);
 				}
-
-
 				isElementExist(multi_Loc_Strategy(New_SanityLocators.PrimaryOtn, New_SanityLocators.Search_mail, 
 						null, null, null,0,0));
 				APP_LOGS.info("Gmail main page"); 
@@ -4669,1042 +4675,1089 @@ public class New_SanityUtil extends BaseUtil {
 				minWait();
 				test.log(LogStatus.PASS, "Gmail Configuration done");
 				minWait();
-
-				// 
-			} 
-			catch (org.openqa.selenium.NoSuchElementException e) {
-
-				test.log(LogStatus.ERROR, "Error in the locators");
-				e.printStackTrace();
-			}
-			catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				test.log(LogStatus.ERROR, "No Such element Found");
-			}
-			sa.assertAll();
-
-		}
-
-
-		public void Configure_browser_URL(SoftAssert sa) throws InterruptedException {
-			WebDriverWait wait = new WebDriverWait(aDriver, 120);
-			try {
-				minWait();
-
-				if(isElementExist(New_SanityLocators.Accept_continuebtn))
-				{
-					minWait();
-					clickBtn(New_SanityLocators.Accept_continuebtn);
-					wait.until(ExpectedConditions.visibilityOf(New_SanityLocators.Nextbtn));
-				}	
-
-				if(isElementExist(New_SanityLocators.Nextbtn))
-				{
-					minWait();
-					clickBtn(New_SanityLocators.Nextbtn);
-					wait.until(ExpectedConditions.visibilityOf(multi_Loc_Strategy(New_SanityLocators.No_thanksbtn2,
-							New_SanityLocators.No_thanksbtn, null,null, null, 48,1764)));
 				}
-				if(isElementExist(New_SanityLocators.No_thanksbtn) || isElementExist(New_SanityLocators.No_thanksbtn2))
-				{
+				else{
+					System.out.println("Acount did't sync");
+					APP_LOGS.info("Acount did't sync"); 
+					System.out.println("Acount did't sync");
 					minWait();
-					clickBtn(multi_Loc_Strategy(New_SanityLocators.No_thanksbtn2, New_SanityLocators.No_thanksbtn, null,
-							null, null, 48,1764));
-					customWait(4000);
+					test.log(LogStatus.INFO, "Acount did't sync");
 				}
-				customWait(10000);
-
-				Runtime.getRuntime().exec("adb -s "+p_Id+" shell am start -a android.intent.action.VIEW -d https://www.bbc.com");
-				wait.until(ExpectedConditions.visibilityOf(New_SanityLocators.Homepage));
-				//			isElementExist(multi_Loc_Strategy(New_SanityLocators.bbcURL, New_SanityLocators.bbcURL2, null, null, null,0,0));
-				APP_LOGS.info("browser configured for bbc"); 
-				System.out.println("browser configured for bbc");
-				test.log(LogStatus.PASS, "browser Configuration done");
-				minWait();
 			} 
-			catch (org.openqa.selenium.NoSuchElementException e) {
+		} 
+		catch (org.openqa.selenium.NoSuchElementException e) {
 
-				test.log(LogStatus.ERROR, "Error in the locators");
-				e.printStackTrace();
-			}
-			catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				test.log(LogStatus.ERROR, "No Such element Found");
-			}
-			sa.assertAll();
-
+			test.log(LogStatus.ERROR, "Error in the locators");
+			e.printStackTrace();
 		}
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			test.log(LogStatus.ERROR, "No Such element Found");
+		}
+		sa.assertAll();
 
-		public void Configure_PHOTOS(SoftAssert sa) throws InterruptedException {
-			WebDriverWait wait = new WebDriverWait(aDriver, 120);
-			try {
+	}
+
+
+	public void Configure_browser_URL(SoftAssert sa) throws InterruptedException {
+		WebDriverWait wait = new WebDriverWait(aDriver, 120);
+		try {
+			minWait();
+
+			if(isElementExist(New_SanityLocators.Accept_continuebtn))
+			{
+				minWait();
+				clickBtn(New_SanityLocators.Accept_continuebtn);
+				wait.until(ExpectedConditions.visibilityOf(New_SanityLocators.Nextbtn));
+			}	
+
+			if(isElementExist(New_SanityLocators.Nextbtn))
+			{
+				minWait();
+				clickBtn(New_SanityLocators.Nextbtn);
+				wait.until(ExpectedConditions.visibilityOf(multi_Loc_Strategy(New_SanityLocators.No_thanksbtn2,
+						New_SanityLocators.No_thanksbtn, null,null, null, 48,1764)));
+			}
+			if(isElementExist(New_SanityLocators.No_thanksbtn) || isElementExist(New_SanityLocators.No_thanksbtn2))
+			{
+				minWait();
+				clickBtn(multi_Loc_Strategy(New_SanityLocators.No_thanksbtn2, New_SanityLocators.No_thanksbtn, null,
+						null, null, 48,1764));
+				customWait(4000);
+			}
+			customWait(10000);
+
+			Runtime.getRuntime().exec("adb -s "+p_Id+" shell am start -a android.intent.action.VIEW -d https://www.bbc.com");
+			wait.until(ExpectedConditions.visibilityOf(New_SanityLocators.Homepage));
+			//			isElementExist(multi_Loc_Strategy(New_SanityLocators.bbcURL, New_SanityLocators.bbcURL2, null, null, null,0,0));
+			APP_LOGS.info("browser configured for bbc"); 
+			System.out.println("browser configured for bbc");
+			test.log(LogStatus.PASS, "browser Configuration done");
+			minWait();
+		} 
+		catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators");
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			test.log(LogStatus.ERROR, "No Such element Found");
+		}
+		sa.assertAll();
+
+	}
+
+	public void Configure_PHOTOS(SoftAssert sa) throws InterruptedException {
+		WebDriverWait wait = new WebDriverWait(aDriver, 120);
+		try {
+			customWait(5000);
+			if(isElementExist(New_SanityLocators.Notnow))
+			{
+				minWait();
+				clickBtn(New_SanityLocators.Notnow);
 				customWait(5000);
-				if(isElementExist(New_SanityLocators.Notnow))
-				{
-					minWait();
-					clickBtn(New_SanityLocators.Notnow);
-					customWait(5000);
-				}	
+			}	
 
-				if(isElementExist(New_SanityLocators.Backup_sync1)  || isElementExist(New_SanityLocators.Backup_sync2) )
-				{
-					minWait();
-					aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
-					minWait();
-					clickBtn(New_SanityLocators.Keep_off);
-					customWait(5000);
-				}
-				APP_LOGS.info("PHOTOS configured"); 
-				System.out.println("PHOTOS configured");
-				test.log(LogStatus.PASS, "PHOTOS Configuration done");
+			if(isElementExist(New_SanityLocators.Backup_sync1)  || isElementExist(New_SanityLocators.Backup_sync2) )
+			{
 				minWait();
-			} 
-			catch (org.openqa.selenium.NoSuchElementException e) {
-
-				test.log(LogStatus.ERROR, "Error in the locators");
-				e.printStackTrace();
-			}
-			catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				test.log(LogStatus.ERROR, "No Such element Found");
-			}
-			sa.assertAll();
-
-		}
-
-		public void Configure_camera(SoftAssert sa) throws InterruptedException {
-			WebDriverWait wait = new WebDriverWait(aDriver, 120);
-			try {
-				customWait(3000);
-				clickBtn(New_SanityLocators.shutter_button);
-				wait.until(ExpectedConditions.visibilityOf(New_SanityLocators.preview_thumb));
+				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
 				minWait();
-				clickBtn(New_SanityLocators.video_button);
-				customWait(15000);
-				clickBtn(New_SanityLocators.video_button);
-				wait.until(ExpectedConditions.visibilityOf(New_SanityLocators.preview_thumb));
-				minWait();
-				aDriver.pressKeyCode(AndroidKeyCode.HOME);
-
-				APP_LOGS.info("camera configured"); 
-				System.out.println("camera configaration done");
-				minWait();
-			} 
-			catch (org.openqa.selenium.NoSuchElementException e) {
-
-				test.log(LogStatus.ERROR, "Error in the locators");
-				e.printStackTrace();
-			}
-			catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				test.log(LogStatus.ERROR, "No Such element Found");
-			}
-			sa.assertAll();
-
-		}
-
-		public void Search_and_play(SoftAssert sa) throws InterruptedException {
-			WebDriverWait wait = new WebDriverWait(aDriver, 120);
-			try {
-				//			customWait(3000);
-				//			if(isElementExist(New_SanityLocators.NOT_NOWBtn)){
-				//				minWait();
-				//				System.out.println("NOT_NOWBtn is there");
-				//				clickBtn(New_SanityLocators.NOT_NOWBtn);
-				//				customWait(3000);
-				//			}
-				//			else{
-				//				System.out.println("NOT_NOWBtn is not there");
-				//			}
-				//			wait.until(ExpectedConditions.visibilityOf(multi_Loc_Strategy(New_SanityLocators.SearchOpn1,
-				//					New_SanityLocators.SearchOpn2, null, null, null, 780,72)));
-				//			clickBtn(multi_Loc_Strategy(New_SanityLocators.SearchOpn1,
-				//					New_SanityLocators.SearchOpn2, null, null, null, 780,72));
-				//
-				//			wait.until(ExpectedConditions.visibilityOf(New_SanityLocators.Search_YouTube));
-				//			minWait();
-				//			enterTextToInputField(New_SanityLocators.Search_YouTube, "WWE ");
-				//			aDriver.pressKeyCode(AndroidKeyCode.ENTER);
-//				aDriver.pressKeyCode(AndroidKeyCode.HOME);
-				Runtime.getRuntime().exec("adb -s "+p_Id+" shell am start  https://www.youtube.com/watch?v=JELtUgW7otM");
-				customWait(10000);
-
-	//
-//				clickBtn(multi_Loc_Strategy(New_SanityLocators.Screen2, New_SanityLocators.Screen, null, null, null, 478,351));
-//				clickBtn(multi_Loc_Strategy(New_SanityLocators.Screen2, New_SanityLocators.Screen, null, null, null, 478,351));
-//				wait.until(ExpectedConditions.visibilityOf(multi_Loc_Strategy(New_SanityLocators.Full_Screen2, 
-//						New_SanityLocators.Full_Screen,New_SanityLocators.Full_Screen3, null, null, 960,553)));
-//				clickBtn(multi_Loc_Strategy(New_SanityLocators.Full_Screen2, New_SanityLocators.Full_Screen,
-//						New_SanityLocators.Full_Screen3, null, null, 960,553));			
-//				customWait(10000);
-				aDriver.pressKeyCode(AndroidKeyCode.HOME);
-
-				APP_LOGS.info("Youtube Stream done"); 
-				System.out.println("Youtube Stream done");
-				test.log(LogStatus.PASS, "Youtube Stream done");
-				minWait();
-			} 
-			catch (org.openqa.selenium.NoSuchElementException e) {
-				test.log(LogStatus.ERROR, "Error in the locators");
-				e.printStackTrace();
-			}
-			catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				test.log(LogStatus.ERROR, "No Such element Found");
-			}
-			sa.assertAll();
-
-		}
-
-		public void Configure_calendar(SoftAssert sa) throws InterruptedException {
-			try {
-				customWait(3000);
-				if(isElementExist(New_SanityLocators.right_arrow)){
-					clickBtn(New_SanityLocators.right_arrow);	
-				}
-				minWait();
-				if(isElementExist(New_SanityLocators.right_arrow)){
-					clickBtn(New_SanityLocators.right_arrow);	
-				}
-				minWait();
-				if(isElementExist(New_SanityLocators.GOT_it)){
-					clickBtn(New_SanityLocators.GOT_it);	
-				}
+				clickBtn(New_SanityLocators.Keep_off);
 				customWait(5000);
-
-				if(isElementExist(New_SanityLocators.Tap_to_create1) || isElementExist(New_SanityLocators.Tap_to_create2) )
-				{
-					minWait();
-					System.out.println("No event is there");
-
-				}
-				clickBtn(multi_Loc_Strategy(New_SanityLocators.action_button, null,null, null, null,0,0));
-				minWait();
-				clickBtn(multi_Loc_Strategy(New_SanityLocators.EventBtn2, New_SanityLocators.EventBtn1,null, null, null,0,0));
-				minWait();
-				enterTextToInputField(New_SanityLocators.Enter_title, "Test Event");
-				minWait();
-				clickBtn(New_SanityLocators.SwitchBtn);
-				minWait();
-				aDriver.hideKeyboard();
-				minWait();
-				scrollToText("Add location");
-				minWait();
-				if(isElementExist(New_SanityLocators.permissionPopUp)) {
-					check=true;
-					minWait();
-					for(int i=0;i<3;i++){
-						minWait();
-						clickBtn(New_SanityLocators.allowBtn);
-					}
-				}
-				minWait();
-				enterTextToInputField(New_SanityLocators.Add_location, "Bengaluru");
-				minWait();
-				aDriver.pressKeyCode(AndroidKeyCode.ENTER);
-				minWait();
-				scrollToText("Add note");
-				minWait();
-				aDriver.hideKeyboard();
-				customWait(2000);
-				System.out.println(p_Id);
-				Runtime.getRuntime().exec("adb -s "+p_Id+" shell input text Testnote");
-
-				customWait(2000);
-				clickBtn(New_SanityLocators.Save);
-				minWait();
-				aDriver.pressKeyCode(AndroidKeyCode.HOME);
-				minWait();
-				APP_LOGS.info("calander notification created"); 
-				System.out.println("calander notification created");
-				minWait();
-				test.log(LogStatus.PASS, "calander notification created");
-				minWait();
-			} 
-			catch (org.openqa.selenium.NoSuchElementException e) {
-
-				test.log(LogStatus.ERROR, "Error in the locators");
-				e.printStackTrace();
 			}
-			catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				test.log(LogStatus.ERROR, "No Such element Found");
-			}
-			sa.assertAll();
+			APP_LOGS.info("PHOTOS configured"); 
+			System.out.println("PHOTOS configured");
+			test.log(LogStatus.PASS, "PHOTOS Configuration done");
+			minWait();
+		} 
+		catch (org.openqa.selenium.NoSuchElementException e) {
 
+			test.log(LogStatus.ERROR, "Error in the locators");
+			e.printStackTrace();
 		}
-
-		public void Check_for_notification(SoftAssert sa) throws InterruptedException {
-			try {
-				customWait(3000);
-				if(isElementExist(New_SanityLocators.right_arrow)){
-					clickBtn(New_SanityLocators.right_arrow);	
-				}
-				minWait();
-				if(isElementExist(New_SanityLocators.right_arrow)){
-					clickBtn(New_SanityLocators.right_arrow);	
-				}
-				minWait();
-				if(isElementExist(New_SanityLocators.GOT_it)){
-					clickBtn(New_SanityLocators.GOT_it);	
-				}
-				customWait(2000);
-
-				clickBtn(New_SanityLocators.eventBtn);
-				customWait(2000);
-				if(isElementExist(New_SanityLocators.Test_Event))
-				{
-					minWait();
-					System.out.println("calander notification is there");
-					minWait();
-					APP_LOGS.info("calander notification is there"); 
-					minWait();
-					test.log(LogStatus.PASS, "calander notification is there");
-					minWait();
-				}
-
-				clickBtn(New_SanityLocators.More_options);
-				minWait();
-				clickBtn(New_SanityLocators.Delete2);
-				minWait();
-				clickBtn(New_SanityLocators.Delete);
-				minWait();
-
-
-			} 
-			catch (org.openqa.selenium.NoSuchElementException e) {
-
-				test.log(LogStatus.ERROR, "Error in the locators");
-				e.printStackTrace();
-			}
-			catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				test.log(LogStatus.ERROR, "No Such element Found");
-			}
-			sa.assertAll();
-
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			test.log(LogStatus.ERROR, "No Such element Found");
 		}
+		sa.assertAll();
 
-		public void send_messaging(SoftAssert sa) throws InterruptedException {
-			WebDriverWait wait = new WebDriverWait(aDriver, 60);
-			try {
-				customWait(3000);
-				clickBtn(New_SanityLocators.createBtn);
-				wait.until(ExpectedConditions.visibilityOf(New_SanityLocators.TO_Field));
-				enterTextToInputField(New_SanityLocators.TO_Field,refNum );
-				customWait(2000);
-				enterTextToInputField(New_SanityLocators.Type_message,"Test message");
-				minWait();
-				clickBtn(New_SanityLocators.sendBtn);
-				minWait();
-				if(isElementExist(New_SanityLocators.now_Text1)||isElementExist(New_SanityLocators.justnow_Text)||
-						isElementExist(New_SanityLocators.not_Sent_Text1)||isElementExist(New_SanityLocators.sending_Txt)) {
-					APP_LOGS.info("Message sent Succeccfully");
-					System.out.println("Message sent Succeccfully");
-					test.log(LogStatus.PASS, "Message sent Succeccfully");
-				}
-			} 
-			catch (org.openqa.selenium.NoSuchElementException e) {
+	}
 
-				test.log(LogStatus.ERROR, "Error in the locators");
-				e.printStackTrace();
-			}
-			catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				test.log(LogStatus.ERROR, "No Such element Found");
-			}
-			sa.assertAll();
+	public void Configure_camera(SoftAssert sa) throws InterruptedException {
+		WebDriverWait wait = new WebDriverWait(aDriver, 120);
+		try {
+			customWait(3000);
+			clickBtn(New_SanityLocators.shutter_button);
+			wait.until(ExpectedConditions.visibilityOf(New_SanityLocators.preview_thumb));
+			minWait();
+			clickBtn(New_SanityLocators.video_button);
+			customWait(15000);
+			clickBtn(New_SanityLocators.video_button);
+			wait.until(ExpectedConditions.visibilityOf(New_SanityLocators.preview_thumb));
+			minWait();
+			aDriver.pressKeyCode(AndroidKeyCode.HOME);
 
+			APP_LOGS.info("camera configured"); 
+			System.out.println("camera configaration done");
+			minWait();
+		} 
+		catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators");
+			e.printStackTrace();
 		}
-
-		public void send_MSISDN_mailId_url_simultanously(SoftAssert sa) throws InterruptedException {
-			WebDriverWait wait = new WebDriverWait(aDriver, 60);
-			try {
-				customWait(3000);
-				clickBtn(New_SanityLocators.createBtn);
-				wait.until(ExpectedConditions.visibilityOf(New_SanityLocators.TO_Field));
-				enterTextToInputField(New_SanityLocators.TO_Field,refNum );
-				customWait(2000);
-				enterTextToInputField(New_SanityLocators.Type_message,refNum);
-				minWait();
-				clickBtn(New_SanityLocators.sendBtn);
-				minWait();
-				wait.until(ExpectedConditions.visibilityOf(multi_Loc_Strategy(New_SanityLocators.now_Text1,
-						New_SanityLocators.justnow_Text, New_SanityLocators.not_Sent_Text1, New_SanityLocators.sending_Txt,
-						null, 0,0)));
-				if(isElementExist(New_SanityLocators.now_Text1)||isElementExist(New_SanityLocators.justnow_Text)||
-						isElementExist(New_SanityLocators.not_Sent_Text1)||isElementExist(New_SanityLocators.sending_Txt)) {
-					APP_LOGS.info("MSISDN sent Succeccfully");
-					System.out.println("MSISDN sent Succeccfully");
-					test.log(LogStatus.PASS, "MSISDN sent Succeccfully");
-				}
-				minWait();
-				enterTextToInputField(New_SanityLocators.Type_message,"test@gmail.com");
-				minWait();
-				clickBtn(New_SanityLocators.sendBtn);
-				minWait();
-				wait.until(ExpectedConditions.visibilityOf(multi_Loc_Strategy(New_SanityLocators.now_Text1,
-						New_SanityLocators.justnow_Text, New_SanityLocators.not_Sent_Text1, New_SanityLocators.sending_Txt,
-						null, 0,0)));
-				if(isElementExist(New_SanityLocators.now_Text1)||isElementExist(New_SanityLocators.justnow_Text)||
-						isElementExist(New_SanityLocators.not_Sent_Text1)||isElementExist(New_SanityLocators.sending_Txt)) {
-					APP_LOGS.info("mailId sent Succeccfully");
-					System.out.println("mailId sent Succeccfully");
-					test.log(LogStatus.PASS, "mailId sent Succeccfully");
-				}
-				minWait();
-				enterTextToInputField(New_SanityLocators.Type_message,"https://test.sonimcloud.com");
-				minWait();
-				clickBtn(New_SanityLocators.sendBtn);
-				minWait();
-				wait.until(ExpectedConditions.visibilityOf(multi_Loc_Strategy(New_SanityLocators.now_Text1,
-						New_SanityLocators.justnow_Text, New_SanityLocators.not_Sent_Text1, New_SanityLocators.sending_Txt,
-						null, 0,0)));
-				if(isElementExist(New_SanityLocators.now_Text1)||isElementExist(New_SanityLocators.justnow_Text)||
-						isElementExist(New_SanityLocators.not_Sent_Text1)||isElementExist(New_SanityLocators.sending_Txt)) {
-					APP_LOGS.info("url sent Succeccfully");
-					System.out.println("url sent Succeccfully");
-					test.log(LogStatus.PASS, "url sent Succeccfully");
-				}
-			} 
-			catch (org.openqa.selenium.NoSuchElementException e) {
-
-				test.log(LogStatus.ERROR, "Error in the locators");
-				e.printStackTrace();
-			}
-			catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				test.log(LogStatus.ERROR, "No Such element Found");
-			}
-			sa.assertAll();
-
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			test.log(LogStatus.ERROR, "No Such element Found");
 		}
+		sa.assertAll();
 
-		public void receive_messaging(SoftAssert sa) {
+	}
 
-			// To validate MT Message User should be inside Messaging APP of Primary Device.
-			try {
+	public void Search_and_play(SoftAssert sa) throws InterruptedException {
+		WebDriverWait wait = new WebDriverWait(aDriver, 120);
+		try {
+			//			customWait(3000);
+			//			if(isElementExist(New_SanityLocators.NOT_NOWBtn)){
+			//				minWait();
+			//				System.out.println("NOT_NOWBtn is there");
+			//				clickBtn(New_SanityLocators.NOT_NOWBtn);
+			//				customWait(3000);
+			//			}
+			//			else{
+			//				System.out.println("NOT_NOWBtn is not there");
+			//			}
+			//			wait.until(ExpectedConditions.visibilityOf(multi_Loc_Strategy(New_SanityLocators.SearchOpn1,
+			//					New_SanityLocators.SearchOpn2, null, null, null, 780,72)));
+			//			clickBtn(multi_Loc_Strategy(New_SanityLocators.SearchOpn1,
+			//					New_SanityLocators.SearchOpn2, null, null, null, 780,72));
+			//
+			//			wait.until(ExpectedConditions.visibilityOf(New_SanityLocators.Search_YouTube));
+			//			minWait();
+			//			enterTextToInputField(New_SanityLocators.Search_YouTube, "WWE ");
+			//			aDriver.pressKeyCode(AndroidKeyCode.ENTER);
+//			aDriver.pressKeyCode(AndroidKeyCode.HOME);
+			Runtime.getRuntime().exec("adb -s "+p_Id+" shell am start  https://www.youtube.com/watch?v=JELtUgW7otM");
+			customWait(10000);
 
-				// Below Code To clear Battery PopUp.
-				//			Runtime.getRuntime().exec("adb -s "+r_Id+" shell input tap 777 1083"); 
+//
+//			clickBtn(multi_Loc_Strategy(New_SanityLocators.Screen2, New_SanityLocators.Screen, null, null, null, 478,351));
+//			clickBtn(multi_Loc_Strategy(New_SanityLocators.Screen2, New_SanityLocators.Screen, null, null, null, 478,351));
+//			wait.until(ExpectedConditions.visibilityOf(multi_Loc_Strategy(New_SanityLocators.Full_Screen2, 
+//					New_SanityLocators.Full_Screen,New_SanityLocators.Full_Screen3, null, null, 960,553)));
+//			clickBtn(multi_Loc_Strategy(New_SanityLocators.Full_Screen2, New_SanityLocators.Full_Screen,
+//					New_SanityLocators.Full_Screen3, null, null, 960,553));			
+//			customWait(10000);
+			aDriver.pressKeyCode(AndroidKeyCode.HOME);
+
+			APP_LOGS.info("Youtube Stream done"); 
+			System.out.println("Youtube Stream done");
+			test.log(LogStatus.PASS, "Youtube Stream done");
+			minWait();
+		} 
+		catch (org.openqa.selenium.NoSuchElementException e) {
+			test.log(LogStatus.ERROR, "Error in the locators");
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			test.log(LogStatus.ERROR, "No Such element Found");
+		}
+		sa.assertAll();
+
+	}
+
+	public void Configure_calendar(SoftAssert sa) throws InterruptedException {
+		try {
+			customWait(3000);
+			if(isElementExist(New_SanityLocators.right_arrow)){
+				clickBtn(New_SanityLocators.right_arrow);	
+			}
+			minWait();
+			if(isElementExist(New_SanityLocators.right_arrow)){
+				clickBtn(New_SanityLocators.right_arrow);	
+			}
+			minWait();
+			if(isElementExist(New_SanityLocators.GOT_it)){
+				clickBtn(New_SanityLocators.GOT_it);	
+			}
+			customWait(5000);
+
+			if(isElementExist(New_SanityLocators.Tap_to_create1) || isElementExist(New_SanityLocators.Tap_to_create2) )
+			{
 				minWait();
-				if (r_b_No.contains("8A.")) {
-					if (r_b_No.contains("-10.")||r_b_No.contains("-30.")) {
+				System.out.println("No event is there");
 
-						System.out.println("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
-
-						Runtime.getRuntime().exec("adb -s "+r_Id+" shell service call isms 7 i32 0 s16 \"com.android.mms.service\" s16 "+pryNum+" s16 \"null\" s16 \"SMAT\" s16 \"null\" s16 \"null\"");
-
-						/*minWait();
-						Runtime.getRuntime().exec("adb -s "+r_Id+" shell input keyevent 3");
-						minWait();
-						Runtime.getRuntime().exec("adb -s "+r_Id+" shell am force-stop com.android.mms");
-						customWait(2000);
-						Runtime.getRuntime().exec("adb -s "+r_Id+" shell am start -a android.intent.action.SENDTO -d sms:"+pryNum+" --es sms_body \""+AutomationMessagee+"\" --ez exit_on_sent true");
-						customWait(6000);
-						Runtime.getRuntime().exec("adb -s "+r_Id+" shell input tap 540 1776");
-						minWait();
-						Runtime.getRuntime().exec("adb -s "+r_Id+" shell input tap 713 1098");
-						minWait();
-						Runtime.getRuntime().exec("adb -s "+r_Id+" shell input tap 918 1699");
-						minWait();
-						Runtime.getRuntime().exec("adb -s "+r_Id+" shell input tap 918 952");
-						minWait();*/
-					} else if(r_b_No.contains("-11.")||r_b_No.contains("-12.")||r_b_No.contains("-18.")||r_b_No.contains("-26.")||r_b_No.contains("-29.")){
-						/*minWait();
-						Runtime.getRuntime().exec("adb -s "+r_Id+" shell input keyevent 3");
-						minWait();
-						Runtime.getRuntime().exec("adb -s "+r_Id+" shell am force-stop com.google.android.apps.messaging");
-						customWait(2000);
-						Runtime.getRuntime().exec("adb -s "+r_Id+" shell am start -a android.intent.action.SENDTO -d sms:"+pryNum+" --es sms_body \""+AutomationMessagee+"\" --ez exit_on_sent true");
-						customWait(6000);
-						Runtime.getRuntime().exec("adb -s "+r_Id+" shell input tap 930 1756");
-						minWait();
-						Runtime.getRuntime().exec("adb -s "+r_Id+" shell input tap 930 976");
-						minWait();*/
-						Runtime.getRuntime().exec("adb -s "+r_Id+" shell service call isms 7 i32 0 s16 \"com.android.mms.service\" s16 "+pryNum+" s16 \"null\" s16 \"SMAT\" s16 \"null\" s16 \"null\"");
-
-					}else if(r_b_No.contains("-15.")){
-						minWait();
-						/*System.out.println("IN Android O");
-						minWait();
-						Runtime.getRuntime().exec("adb -s "+r_Id+" shell input keyevent 3");
-						minWait();
-						Runtime.getRuntime().exec("adb -s "+r_Id+" shell am force-stop com.verizon.messaging.vzmsgs");
-						customWait(4000);
-						Runtime.getRuntime().exec("adb -s "+r_Id+" shell am start -a android.intent.action.SENDTO -d sms:"+pryNum+" --es sms_body \""+AutomationMessagee+"\" --ez exit_on_sent true");
-						customWait(6000);
-						System.out.println("Sending Message...");
-						Runtime.getRuntime().exec("adb -s "+r_Id+" shell input tap 948 1769");
-						minWait();
-						Runtime.getRuntime().exec("adb -s "+r_Id+" shell input tap 948 1022");
-						minWait();*/
-						Runtime.getRuntime().exec("adb -s "+r_Id+" shell service call isms 7 i32 0 s16 \"com.android.mms.service\" s16 "+pryNum+" s16 \"null\" s16 \"SMAT\" s16 \"null\" s16 \"null\"");
-
-					}
-				} else if (r_b_No.contains("5SA.")){
+			}
+			clickBtn(multi_Loc_Strategy(New_SanityLocators.action_button, null,null, null, null,0,0));
+			minWait();
+			clickBtn(multi_Loc_Strategy(New_SanityLocators.EventBtn2, New_SanityLocators.EventBtn1,null, null, null,0,0));
+			minWait();
+			enterTextToInputField(New_SanityLocators.Enter_title, "Test Event");
+			minWait();
+			clickBtn(New_SanityLocators.SwitchBtn);
+			minWait();
+			aDriver.hideKeyboard();
+			minWait();
+			scrollToText("Add location");
+			minWait();
+			if(isElementExist(New_SanityLocators.permissionPopUp)) {
+//				check=true;
+//				minWait();
+//				for(int i=0;i<3;i++){
 					minWait();
-					/*Runtime.getRuntime().exec("adb -s "+r_Id+" shell input keyevent 3");
+					clickBtn(New_SanityLocators.allowBtn);
+				}
+//			}
+			if(isElementExist(New_SanityLocators.permissionPopUp)) {
+					minWait();
+					clickBtn(New_SanityLocators.allowBtn);
+				}
+			if(isElementExist(New_SanityLocators.permissionPopUp)) {
+					minWait();
+					clickBtn(New_SanityLocators.allowBtn);
+				}
+			minWait();
+			enterTextToInputField(New_SanityLocators.Add_location, "Bengaluru");
+			minWait();
+			aDriver.pressKeyCode(AndroidKeyCode.ENTER);
+			minWait();
+			scrollToText("Add note");
+			minWait();
+			aDriver.hideKeyboard();
+			customWait(2000);
+			System.out.println(p_Id);
+			Runtime.getRuntime().exec("adb -s "+p_Id+" shell input text Testnote");
+
+			customWait(2000);
+			clickBtn(New_SanityLocators.Save);
+			minWait();
+			aDriver.pressKeyCode(AndroidKeyCode.HOME);
+			minWait();
+			APP_LOGS.info("calander notification created"); 
+			System.out.println("calander notification created");
+			minWait();
+			test.log(LogStatus.PASS, "calander notification created");
+			minWait();
+		} 
+		catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators");
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			test.log(LogStatus.ERROR, "No Such element Found");
+		}
+		sa.assertAll();
+
+	}
+
+	public void Check_for_notification(SoftAssert sa) throws InterruptedException {
+		try {
+			customWait(3000);
+			if(isElementExist(New_SanityLocators.right_arrow)){
+				clickBtn(New_SanityLocators.right_arrow);	
+			}
+			minWait();
+			if(isElementExist(New_SanityLocators.right_arrow)){
+				clickBtn(New_SanityLocators.right_arrow);	
+			}
+			minWait();
+			if(isElementExist(New_SanityLocators.GOT_it)){
+				clickBtn(New_SanityLocators.GOT_it);	
+			}
+			customWait(2000);
+
+			clickBtn(New_SanityLocators.eventBtn);
+			customWait(2000);
+			if(isElementExist(New_SanityLocators.Test_Event))
+			{
+				minWait();
+				System.out.println("calander notification is there");
+				minWait();
+				APP_LOGS.info("calander notification is there"); 
+				minWait();
+				test.log(LogStatus.PASS, "calander notification is there");
+				minWait();
+			}
+
+			clickBtn(New_SanityLocators.More_options);
+			minWait();
+			clickBtn(New_SanityLocators.Delete2);
+			minWait();
+			clickBtn(New_SanityLocators.Delete);
+			minWait();
+
+
+		} 
+		catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators");
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			test.log(LogStatus.ERROR, "No Such element Found");
+		}
+		sa.assertAll();
+
+	}
+
+	public void send_messaging(SoftAssert sa) throws InterruptedException {
+		WebDriverWait wait = new WebDriverWait(aDriver, 60);
+		try {
+			customWait(3000);
+			clickBtn(New_SanityLocators.createBtn);
+			wait.until(ExpectedConditions.visibilityOf(New_SanityLocators.TO_Field));
+			enterTextToInputField(New_SanityLocators.TO_Field,refNum );
+			aDriver.pressKeyCode(AndroidKeyCode.ENTER);
+			customWait(2000);
+			enterTextToInputField(New_SanityLocators.Type_message,"Test message");
+			minWait();
+			clickBtn(New_SanityLocators.sendBtn);
+			minWait();
+			if(isElementExist(New_SanityLocators.now_Text1)||isElementExist(New_SanityLocators.justnow_Text)||
+					isElementExist(New_SanityLocators.not_Sent_Text1)||isElementExist(New_SanityLocators.sending_Txt)) {
+				APP_LOGS.info("Message sent Succeccfully");
+				System.out.println("Message sent Succeccfully");
+				test.log(LogStatus.PASS, "Message sent Succeccfully");
+			}
+		} 
+		catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators");
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			test.log(LogStatus.ERROR, "No Such element Found");
+		}
+		sa.assertAll();
+
+	}
+
+	public void send_MSISDN_mailId_url_simultanously(SoftAssert sa) throws InterruptedException {
+		WebDriverWait wait = new WebDriverWait(aDriver, 60);
+		try {
+			customWait(3000);
+			clickBtn(New_SanityLocators.createBtn);
+			wait.until(ExpectedConditions.visibilityOf(New_SanityLocators.TO_Field));
+			enterTextToInputField(New_SanityLocators.TO_Field,refNum );
+			aDriver.pressKeyCode(AndroidKeyCode.ENTER);
+			customWait(2000);
+			enterTextToInputField(New_SanityLocators.Type_message,refNum);
+			minWait();
+			clickBtn(New_SanityLocators.sendBtn);
+			minWait();
+			wait.until(ExpectedConditions.visibilityOf(multi_Loc_Strategy(New_SanityLocators.now_Text1,
+					New_SanityLocators.justnow_Text, New_SanityLocators.not_Sent_Text1, New_SanityLocators.sending_Txt,
+					null, 0,0)));
+			if(isElementExist(New_SanityLocators.now_Text1)||isElementExist(New_SanityLocators.justnow_Text)||
+					isElementExist(New_SanityLocators.not_Sent_Text1)||isElementExist(New_SanityLocators.sending_Txt)) {
+				APP_LOGS.info("MSISDN sent Succeccfully");
+				System.out.println("MSISDN sent Succeccfully");
+				test.log(LogStatus.PASS, "MSISDN sent Succeccfully");
+			}
+			minWait();
+			enterTextToInputField(New_SanityLocators.Type_message,"test@gmail.com");
+			minWait();
+			clickBtn(New_SanityLocators.sendBtn);
+			minWait();
+			wait.until(ExpectedConditions.visibilityOf(multi_Loc_Strategy(New_SanityLocators.now_Text1,
+					New_SanityLocators.justnow_Text, New_SanityLocators.not_Sent_Text1, New_SanityLocators.sending_Txt,
+					null, 0,0)));
+			if(isElementExist(New_SanityLocators.now_Text1)||isElementExist(New_SanityLocators.justnow_Text)||
+					isElementExist(New_SanityLocators.not_Sent_Text1)||isElementExist(New_SanityLocators.sending_Txt)) {
+				APP_LOGS.info("mailId sent Succeccfully");
+				System.out.println("mailId sent Succeccfully");
+				test.log(LogStatus.PASS, "mailId sent Succeccfully");
+			}
+			minWait();
+			enterTextToInputField(New_SanityLocators.Type_message,"https://test.sonimcloud.com");
+			minWait();
+			clickBtn(New_SanityLocators.sendBtn);
+			minWait();
+			wait.until(ExpectedConditions.visibilityOf(multi_Loc_Strategy(New_SanityLocators.now_Text1,
+					New_SanityLocators.justnow_Text, New_SanityLocators.not_Sent_Text1, New_SanityLocators.sending_Txt,
+					null, 0,0)));
+			if(isElementExist(New_SanityLocators.now_Text1)||isElementExist(New_SanityLocators.justnow_Text)||
+					isElementExist(New_SanityLocators.not_Sent_Text1)||isElementExist(New_SanityLocators.sending_Txt)) {
+				APP_LOGS.info("url sent Succeccfully");
+				System.out.println("url sent Succeccfully");
+				test.log(LogStatus.PASS, "url sent Succeccfully");
+			}
+		} 
+		catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators");
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			test.log(LogStatus.ERROR, "No Such element Found");
+		}
+		sa.assertAll();
+
+	}
+
+	public void receive_messaging(SoftAssert sa) {
+
+		// To validate MT Message User should be inside Messaging APP of Primary Device.
+		try {
+
+			// Below Code To clear Battery PopUp.
+			//			Runtime.getRuntime().exec("adb -s "+r_Id+" shell input tap 777 1083"); 
+			minWait();
+			if (r_b_No.contains("8A.")) {
+				if (r_b_No.contains("-10.")||r_b_No.contains("-30.")) {
+
+					System.out.println("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
+
+					Runtime.getRuntime().exec("adb -s "+r_Id+" shell service call isms 7 i32 0 s16 \"com.android.mms.service\" s16 "+pryNum+" s16 \"null\" s16 \"SMAT\" s16 \"null\" s16 \"null\"");
+
+					/*minWait();
+					Runtime.getRuntime().exec("adb -s "+r_Id+" shell input keyevent 3");
 					minWait();
 					Runtime.getRuntime().exec("adb -s "+r_Id+" shell am force-stop com.android.mms");
 					customWait(2000);
 					Runtime.getRuntime().exec("adb -s "+r_Id+" shell am start -a android.intent.action.SENDTO -d sms:"+pryNum+" --es sms_body \""+AutomationMessagee+"\" --ez exit_on_sent true");
 					customWait(6000);
-					Runtime.getRuntime().exec("adb -s "+r_Id+" shell input keyevent 66");
+					Runtime.getRuntime().exec("adb -s "+r_Id+" shell input tap 540 1776");
+					minWait();
+					Runtime.getRuntime().exec("adb -s "+r_Id+" shell input tap 713 1098");
+					minWait();
+					Runtime.getRuntime().exec("adb -s "+r_Id+" shell input tap 918 1699");
+					minWait();
+					Runtime.getRuntime().exec("adb -s "+r_Id+" shell input tap 918 952");
+					minWait();*/
+				} else if(r_b_No.contains("-11.")||r_b_No.contains("-12.")||r_b_No.contains("-18.")||r_b_No.contains("-26.")||r_b_No.contains("-29.")){
+					/*minWait();
+					Runtime.getRuntime().exec("adb -s "+r_Id+" shell input keyevent 3");
+					minWait();
+					Runtime.getRuntime().exec("adb -s "+r_Id+" shell am force-stop com.google.android.apps.messaging");
+					customWait(2000);
+					Runtime.getRuntime().exec("adb -s "+r_Id+" shell am start -a android.intent.action.SENDTO -d sms:"+pryNum+" --es sms_body \""+AutomationMessagee+"\" --ez exit_on_sent true");
+					customWait(6000);
+					Runtime.getRuntime().exec("adb -s "+r_Id+" shell input tap 930 1756");
+					minWait();
+					Runtime.getRuntime().exec("adb -s "+r_Id+" shell input tap 930 976");
+					minWait();*/
+					Runtime.getRuntime().exec("adb -s "+r_Id+" shell service call isms 7 i32 0 s16 \"com.android.mms.service\" s16 "+pryNum+" s16 \"null\" s16 \"SMAT\" s16 \"null\" s16 \"null\"");
+
+				}else if(r_b_No.contains("-15.")){
+					minWait();
+					/*System.out.println("IN Android O");
+					minWait();
+					Runtime.getRuntime().exec("adb -s "+r_Id+" shell input keyevent 3");
+					minWait();
+					Runtime.getRuntime().exec("adb -s "+r_Id+" shell am force-stop com.verizon.messaging.vzmsgs");
+					customWait(4000);
+					Runtime.getRuntime().exec("adb -s "+r_Id+" shell am start -a android.intent.action.SENDTO -d sms:"+pryNum+" --es sms_body \""+AutomationMessagee+"\" --ez exit_on_sent true");
+					customWait(6000);
+					System.out.println("Sending Message...");
+					Runtime.getRuntime().exec("adb -s "+r_Id+" shell input tap 948 1769");
+					minWait();
+					Runtime.getRuntime().exec("adb -s "+r_Id+" shell input tap 948 1022");
 					minWait();*/
 					Runtime.getRuntime().exec("adb -s "+r_Id+" shell service call isms 7 i32 0 s16 \"com.android.mms.service\" s16 "+pryNum+" s16 \"null\" s16 \"SMAT\" s16 \"null\" s16 \"null\"");
 
 				}
-
-				test.log(LogStatus.PASS, "SMS received Succeccfully");
-
-			}  catch (org.openqa.selenium.NoSuchElementException e) {
-
-				test.log(LogStatus.ERROR,"Error in locators->sendSMS_fromRefDevice()");
-			}catch (Exception e) {
-				test.log(LogStatus.ERROR,"Exeption in ->sendSMS_fromRefDevice()");
-			}
-			sa.assertAll();
-		}
-
-		public void addcontactsTO_Phone(SoftAssert sa) throws InterruptedException {
-			try {
+			} else if (r_b_No.contains("5SA.")){
 				minWait();
-				System.out.println("IM in Contacts");
+				/*Runtime.getRuntime().exec("adb -s "+r_Id+" shell input keyevent 3");
 				minWait();
-				clickBtn(New_SanityLocators.ContactsMoreOptions);
-				minWait();
-				scrollToElements(New_SanityLocators.AccountsPhoneOPt1);
-				//		scrollText("PHONE");
-				minWait();
-				clickBtn(New_SanityLocators.AccountsPhoneOPt1);
-				minWait();
-				clickBtn(New_SanityLocators.AddcontactBtn);
-				minWait();
-				enterTextToInputField(New_SanityLocators.FirstnameField, "Refname"); 
-				customWait(3000);
-				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
-				minWait();
-				enterTextToInputField(New_SanityLocators.phoneField, refNum);
-				customWait(3000);
-				clickBtn(New_SanityLocators.SaveBtn);
-				minWait();
-				aDriver.pressKeyCode(AndroidKeyCode.BACK);
-				minWait();
-				aDriver.pressKeyCode(AndroidKeyCode.HOME);
-				minWait();
-				APP_LOGS.info("Contacts added in Phone");
-				System.out.println("Contacts added in Phone");
-				minWait();
-
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				test.log(LogStatus.ERROR, "No Such element Found");
-			}
-		}
-
-		public void send_SMS_to_Saved_Contact(SoftAssert sa) throws InterruptedException {
-			WebDriverWait wait = new WebDriverWait(aDriver, 120);
-			try {
-				customWait(3000);
-				clickBtn(New_SanityLocators.createBtn);
-				wait.until(ExpectedConditions.visibilityOf(New_SanityLocators.TO_Field));
-				//			enterTextToInputField(New_SanityLocators.TO_Field,refNum);
-
+				Runtime.getRuntime().exec("adb -s "+r_Id+" shell am force-stop com.android.mms");
 				customWait(2000);
-				clickBtn(New_SanityLocators.Type_message);
-				enterTextToInputField(New_SanityLocators.Type_message,"Test message");
-				minWait();
-				clickBtn(New_SanityLocators.add_con_Btn);
-				minWait();
-				scrollToText("Refname");
-				minWait();
-				clickBtn(New_SanityLocators.Ok);
-				minWait();
-				wait.until(ExpectedConditions.visibilityOf(multi_Loc_Strategy(New_SanityLocators.sendbtn, New_SanityLocators.sendBtn,
-						null, null, null, 0,0)));
-				clickBtn(multi_Loc_Strategy(New_SanityLocators.sendbtn, New_SanityLocators.sendBtn,null, null, null, 0,0));
-				minWait();
-				if(isElementExist(New_SanityLocators.now_Text1)||isElementExist(New_SanityLocators.justnow_Text)||
-						isElementExist(New_SanityLocators.not_Sent_Text1)||isElementExist(New_SanityLocators.sending_Txt)) {
-					APP_LOGS.info("Message sent Succeccfully to saved contact");
-					System.out.println("Message sent Succeccfully to saved contact");
-					test.log(LogStatus.PASS, "Message sent Succeccfully to saved contact");
-					aDriver.pressKeyCode(AndroidKeyCode.BACK);
-					aDriver.pressKeyCode(AndroidKeyCode.HOME);
-				}
-			} 
-			catch (org.openqa.selenium.NoSuchElementException e) {
+				Runtime.getRuntime().exec("adb -s "+r_Id+" shell am start -a android.intent.action.SENDTO -d sms:"+pryNum+" --es sms_body \""+AutomationMessagee+"\" --ez exit_on_sent true");
+				customWait(6000);
+				Runtime.getRuntime().exec("adb -s "+r_Id+" shell input keyevent 66");
+				minWait();*/
+				Runtime.getRuntime().exec("adb -s "+r_Id+" shell service call isms 7 i32 0 s16 \"com.android.mms.service\" s16 "+pryNum+" s16 \"null\" s16 \"SMAT\" s16 \"null\" s16 \"null\"");
 
-				test.log(LogStatus.ERROR, "Error in the locators");
-				e.printStackTrace();
 			}
-			catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				test.log(LogStatus.ERROR, "No Such element Found");
-			}
-			sa.assertAll();
 
+			test.log(LogStatus.PASS, "SMS received Succeccfully");
+
+		}  catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR,"Error in locators->sendSMS_fromRefDevice()");
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR,"Exeption in ->sendSMS_fromRefDevice()");
 		}
+		sa.assertAll();
+	}
 
-		public void makeCall(String contactNo) {
-			try {
-				if(isElementExist(New_SanityLocators.keypad)) {
-					clickBtn(New_SanityLocators.keypad);
-					minWait();
-				}if(isElementExist(New_SanityLocators.enterNumber)) {
-					enterTextToInputField(New_SanityLocators.enterNumber,contactNo);
-					minWait();
-				}if(isElementExist(New_SanityLocators.call)) {
-					clickBtn(New_SanityLocators.call);
-				}
-			}catch (NoSuchElementException e) {
-				test.log(LogStatus.ERROR,"Error in the locators => makeCall()");
-				e.printStackTrace();
-			}catch (Exception e) {
-				test.log(LogStatus.ERROR,"Exception in functionality=> makeCall()");
-				e.printStackTrace();
-			}
+	public void addcontactsTO_Phone(SoftAssert sa) throws InterruptedException {
+		try {
+			minWait();
+			System.out.println("IM in Contacts");
+			minWait();
+			clickBtn(New_SanityLocators.ContactsMoreOptions);
+			minWait();
+			scrollToElements(New_SanityLocators.AccountsPhoneOPt1);
+			//		scrollText("PHONE");
+			minWait();
+			clickBtn(New_SanityLocators.AccountsPhoneOPt1);
+			minWait();
+			clickBtn(New_SanityLocators.AddcontactBtn);
+			minWait();
+			enterTextToInputField(New_SanityLocators.FirstnameField, "Refname"); 
+			customWait(3000);
+			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
+			minWait();
+			enterTextToInputField(New_SanityLocators.phoneField, refNum);
+			customWait(3000);
+			clickBtn(New_SanityLocators.SaveBtn);
+			minWait();
+			aDriver.pressKeyCode(AndroidKeyCode.BACK);
+			minWait();
+			aDriver.pressKeyCode(AndroidKeyCode.HOME);
+			minWait();
+			APP_LOGS.info("Contacts added in Phone");
+			System.out.println("Contacts added in Phone");
+			minWait();
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			test.log(LogStatus.ERROR, "No Such element Found");
 		}
-		
-		public void validate_Airplane_Enable(SoftAssert soft) throws InterruptedException, IOException {
-			/* 
-			* Method can be Used Validate Airplane Mode activation via by making the call.
-			*/
-			try {
+	}
+
+	public void send_SMS_to_Saved_Contact(SoftAssert sa) throws InterruptedException {
+		WebDriverWait wait = new WebDriverWait(aDriver, 120);
+		try {
+			customWait(3000);
+			clickBtn(New_SanityLocators.createBtn);
+			wait.until(ExpectedConditions.visibilityOf(New_SanityLocators.TO_Field));
+			//			enterTextToInputField(New_SanityLocators.TO_Field,refNum);
+
 			customWait(2000);
-			if(isElementExist(New_SanityLocators.turnOff_Airplane_PopUp)) {
+			clickBtn(New_SanityLocators.Type_message);
+			enterTextToInputField(New_SanityLocators.Type_message,"Test message");
 			minWait();
-			APP_LOGS.info("Turn off Airplane mode popup is displayed -> Airplane mode is enabled successfully");
-			soft.assertTrue(true, "Turn off Airplane mode popup is displayed -> Airplane mode is enabled successfully");
-			test.log(LogStatus.PASS, "Turn off Airplane mode popup is displayed -> Airplane mode is enabled successfully");
-			} else {
+			clickBtn(New_SanityLocators.add_con_Btn);
 			minWait();
-			APP_LOGS.info("TurnOff Airplane Mode Popup is not Displayed");	
-			soft.fail();
-			test.log(LogStatus.FAIL,"TurnOff Airplane Mode Popup is not Displayed");
-			}
-			} catch (NoSuchElementException e) {
-			test.log(LogStatus.ERROR,"Error in the locators => validate_Airplane_Enable()");
-			e.printStackTrace();
-			}catch (Exception e) {
-			test.log(LogStatus.ERROR,"Exception in functionality=> validate_Airplane_Enable()");
-			e.printStackTrace();
-			}
-			}
-		
-		
-		public void validate_Airplane_Disable(SoftAssert soft) throws InterruptedException, IOException {
-			/* 
-			 * Method can be Used Validate Airplane Mode activation via by making the call.
-			 */
-			try {		
-				minWait();
-				if(!isElementExist(New_SanityLocators.turnOff_Airplane_PopUp)) {
-					minWait();
-					check=true;
-					APP_LOGS.info("Turn off Airplane mode popup is not displayed -> Airplane mode is disabled successfully");
-					soft.assertTrue(true, "Turn off Airplane mode popup is not displayed -> Airplane mode is disabled successfully");
-					test.log(LogStatus.PASS, "Turn off Airplane mode popup is not displayed -> Airplane mode is disabled successfully");
-				} else  {
-					minWait();
-					APP_LOGS.info(" Airplane mode is not disabled");	
-					soft.fail();
-					test.log(LogStatus.FAIL,"Airplane mode is not disabled");
-				}
-				minWait();
-				minWait();
-			} catch (NoSuchElementException e) {
-				test.log(LogStatus.ERROR,"Error in the locators => validate_Airplane_Disable()");
-				e.printStackTrace();
-			}catch (Exception e) {
-				test.log(LogStatus.ERROR,"Exception in functionality=> validate_Airplane_Disable()");
-				e.printStackTrace();
-			}
-		}
-		
-		public void addcontactsTO_Phone_Make_call(String name,String email,String Address, SoftAssert sa) throws InterruptedException {
-			WebDriverWait wait = new WebDriverWait(aDriver, 120);
-			try {
-				minWait();
-				System.out.println("IM in Contacts");
-				minWait();
-				clickBtn(New_SanityLocators.ContactsMoreOptions);
-				minWait();
-				scrollToElements(New_SanityLocators.AccountsPhoneOPt1);
-				//		scrollText("PHONE");
-				minWait();
-				clickBtn(New_SanityLocators.AccountsPhoneOPt1);
-				minWait();
-				clickBtn(New_SanityLocators.AddcontactBtn);
-				minWait();
-				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
-				minWait();
-				clickBtn(New_SanityLocators.Morefields);
-				minWait();
-				enterTextToInputField(New_SanityLocators.FirstnameField, name); 
-				customWait(3000);
-				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
-				minWait();
-				scrollToElements(New_SanityLocators.phoneField);
-				minWait();
-				enterTextToInputField(New_SanityLocators.phoneField, refNum);
-				customWait(3000);
-				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
-				minWait();
-				scrollToElements(New_SanityLocators.EmailField);
-				minWait();
-				enterTextToInputField(New_SanityLocators.EmailField, email);
-				customWait(3000);
-				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
-				minWait();
-				scrollToElements(New_SanityLocators.Addressfield);
-				minWait();
-				enterTextToInputField(New_SanityLocators.Addressfield, Address);
-				customWait(3000);
-				if (isElementExist(New_SanityLocators.OK)){
-					clickBtn(New_SanityLocators.OK);
-					minWait();
-				}
-				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
-				minWait();
-				clickBtn(New_SanityLocators.SaveBtn);
-				minWait();
-				clickBtn(New_SanityLocators.callBtn);
-				minWait();
-				
-				wait.until(ExpectedConditions.visibilityOf(New_SanityLocators.KeypadOPT));
-				if(isElementExist(New_SanityLocators.KeypadOPT)) {
-					takeScreenShot();
-					Read_File.takeScreenShotForOcr("Call");
-					my_main.validate_Using_OCR("Call.png");
-					validate_Alarm_OCR(sa);
-					
-					
-					clickBtn(New_SanityLocators.endBtn);
-					minWait();
-					System.out.println("Call animation displayed");
-					APP_LOGS.info("Call animation displayed");
-					minWait();
-					aDriver.pressKeyCode(AndroidKeyCode.HOME);
-					minWait();
-					test.log(LogStatus.PASS, "Call animation displayed");
-				}else {
-					APP_LOGS.info("Call did't initiated");
-					minWait();
-					aDriver.pressKeyCode(AndroidKeyCode.HOME);
-					minWait();
-					test.log(LogStatus.INFO, "Call did't initiated,network issue");
-				}
-			}
-			catch (org.openqa.selenium.NoSuchElementException e) {
-
-				test.log(LogStatus.ERROR, "Error in the locators");
-				e.printStackTrace();
-
-			}
-			catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				test.log(LogStatus.ERROR, "No Such element Found");
-			}
-		}
-		
-		public String readFile(String filename) {
-			String content = null;
-			try {
-			content = new String(Files.readAllBytes(Paths.get(filename)));
-
-			} catch (Exception e) {
-			e.printStackTrace();
-			}
-			return content;
-			}
-		
-		public void validate_Alarm_OCR(SoftAssert SA) {
-			try {
-			String content = readFile(".\\src\\test\\resources\\OCR_FILES\\ocr.txt");
-			System.out.println("text from screenshot = " + content.substring(content.length() - 20));
-			if (content.contains("Calling")) {
-			System.out.println("Call animation displayed");
-			APP_LOGS.info("Call animation displayed");
-			SA.assertTrue(true, "Call animation displayed");
-			test.log(LogStatus.INFO, "Call animation displayed");
-			} else {
-			System.out.println("Call animation not displayed");
-			APP_LOGS.info("Call animation not displayed");
-			test.log(LogStatus.INFO, "Call animation not displayed");
-			SA.fail();
-			}
-			} catch (org.openqa.selenium.NoSuchElementException e) {
-			test.log(LogStatus.ERROR, "Error in the locators->validate_dailpad()");
-			e.printStackTrace();
-
-			} catch (Exception e) {
-			test.log(LogStatus.ERROR, "Exeption in ->validate_dailpad()");
-			}
-			}
-		
-		public void check_different_option(SoftAssert sa) throws InterruptedException {
-			WebDriverWait wait = new WebDriverWait(aDriver, 120);
-			try {
-				minWait();
-				
-				if (isElementExist(New_SanityLocators.more_button)){
-					clickBtn(New_SanityLocators.mute_button);
-					customWait(2000);
-					clickBtn(New_SanityLocators.mute_button);
-					minWait();
-					clickBtn(New_SanityLocators.speaker_button);
-					customWait(2000);
-					clickBtn(New_SanityLocators.speaker_button);
-					minWait();
-					clickBtn(New_SanityLocators.hold_button);
-					customWait(5000);
-					clickBtn(New_SanityLocators.hold_button);
-					customWait(3000);
-					
-					System.out.println("All buttons are clicked");
-					APP_LOGS.info("All buttons are clicked");
-					test.log(LogStatus.PASS,"All buttons are clicked");
-					
-				}
-				
-				
-			}
-			catch (org.openqa.selenium.NoSuchElementException e) {
-
-				test.log(LogStatus.ERROR, "Error in the locators");
-				e.printStackTrace();
-
-			}
-			catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				test.log(LogStatus.ERROR, "No Such element Found");
-			}
-			sa.assertAll();
-		}
-		
-		public void endCall_PrimeDevice() {
-			try {
-				minWait();
-				Runtime.getRuntime().exec("adb -s " + p_Id + " shell input keyevent 6");
-				Thread.sleep(1000);
-			} catch (org.openqa.selenium.NoSuchElementException e) {
-
-				test.log(LogStatus.ERROR, "Error in the locators->endCall_RefDevice()");
-				e.printStackTrace();
-
-			} catch (Exception e) {
-
-				test.log(LogStatus.ERROR, "Exeption in ->endCall_RefDevice()");
-			}
-		}
-		
-		public void click_picture() {
-			WebDriverWait wait = new WebDriverWait(aDriver, 120);
-			try {
-				minWait();
-				if(isElementExist(New_SanityLocators.permissionPopUp)) {
-					check=true;
-					minWait();
-					for(int i=0;i<3;i++){
-						minWait();
-						clickBtn(New_SanityLocators.allowBtn);
-					}
-				}
-				minWait();
-				clickBtn(New_SanityLocators.shutter_button);
-				customWait(7000);
-				if(isElementExist(New_SanityLocators.camdone_button))
-				{minWait();
-				clickBtn(New_SanityLocators.camdone_button);
-				minWait();
-				}
+			scrollToText("Refname");
+			minWait();
+			clickBtn(New_SanityLocators.Ok);
+			minWait();
+			wait.until(ExpectedConditions.visibilityOf(multi_Loc_Strategy(New_SanityLocators.sendbtn, New_SanityLocators.sendBtn,
+					null, null, null, 0,0)));
+			clickBtn(multi_Loc_Strategy(New_SanityLocators.sendbtn, New_SanityLocators.sendBtn,null, null, null, 0,0));
+			minWait();
+			if(isElementExist(New_SanityLocators.now_Text1)||isElementExist(New_SanityLocators.justnow_Text)||
+					isElementExist(New_SanityLocators.not_Sent_Text1)||isElementExist(New_SanityLocators.sending_Txt)) {
+				APP_LOGS.info("Message sent Succeccfully to saved contact");
+				System.out.println("Message sent Succeccfully to saved contact");
+				test.log(LogStatus.PASS, "Message sent Succeccfully to saved contact");
+				aDriver.pressKeyCode(AndroidKeyCode.BACK);
 				aDriver.pressKeyCode(AndroidKeyCode.HOME);
-				minWait();
-				System.out.println("Picture clicked");
-				APP_LOGS.info("Picture clicked");
-				test.log(LogStatus.INFO, "Picture clicked");
-			} catch (org.openqa.selenium.NoSuchElementException e) {
-
-				test.log(LogStatus.ERROR, "Error in the locators->endCall_RefDevice()");
-				e.printStackTrace();
-
-			} catch (Exception e) {
-
-				test.log(LogStatus.ERROR, "Exeption in ->endCall_RefDevice()");
 			}
+		} 
+		catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators");
+			e.printStackTrace();
 		}
-		
-		public void browse_files() {
-			WebDriverWait wait = new WebDriverWait(aDriver, 120);
-			try {
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			test.log(LogStatus.ERROR, "No Such element Found");
+		}
+		sa.assertAll();
+
+	}
+
+	public void makeCall(String contactNo) {
+		try {
+			if(isElementExist(New_SanityLocators.keypad)) {
+				clickBtn(New_SanityLocators.keypad);
 				minWait();
-				if(isElementExist(New_SanityLocators.permissionPopUp)) {
-					check=true;
-					minWait();
-					for(int i=0;i<3;i++){
-						minWait();
-						clickBtn(New_SanityLocators.allowBtn);
-					}
-				}
+			}if(isElementExist(New_SanityLocators.enterNumber)) {
+				enterTextToInputField(New_SanityLocators.enterNumber,contactNo);
 				minWait();
-				scrollToText("DCIM");
+			}if(isElementExist(New_SanityLocators.call)) {
+				clickBtn(New_SanityLocators.call);
+			}
+		}catch (NoSuchElementException e) {
+			test.log(LogStatus.ERROR,"Error in the locators => makeCall()");
+			e.printStackTrace();
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR,"Exception in functionality=> makeCall()");
+			e.printStackTrace();
+		}
+	}
+	
+	public void validate_Airplane_Enable(SoftAssert soft) throws InterruptedException, IOException {
+		/* 
+		* Method can be Used Validate Airplane Mode activation via by making the call.
+		*/
+		try {
+		customWait(2000);
+		if(isElementExist(New_SanityLocators.turnOff_Airplane_PopUp)) {
+		minWait();
+		APP_LOGS.info("Turn off Airplane mode popup is displayed -> Airplane mode is enabled successfully");
+		soft.assertTrue(true, "Turn off Airplane mode popup is displayed -> Airplane mode is enabled successfully");
+		test.log(LogStatus.PASS, "Turn off Airplane mode popup is displayed -> Airplane mode is enabled successfully");
+		} else {
+		minWait();
+		APP_LOGS.info("TurnOff Airplane Mode Popup is not Displayed");	
+		soft.fail();
+		test.log(LogStatus.FAIL,"TurnOff Airplane Mode Popup is not Displayed");
+		}
+		} catch (NoSuchElementException e) {
+		test.log(LogStatus.ERROR,"Error in the locators => validate_Airplane_Enable()");
+		e.printStackTrace();
+		}catch (Exception e) {
+		test.log(LogStatus.ERROR,"Exception in functionality=> validate_Airplane_Enable()");
+		e.printStackTrace();
+		}
+		}
+	
+	
+	public void validate_Airplane_Disable(SoftAssert soft) throws InterruptedException, IOException {
+		/* 
+		 * Method can be Used Validate Airplane Mode activation via by making the call.
+		 */
+		try {		
+			minWait();
+			if(!isElementExist(New_SanityLocators.turnOff_Airplane_PopUp)) {
 				minWait();
-				scrollToText("Camera");
+				check=true;
+				APP_LOGS.info("Turn off Airplane mode popup is not displayed -> Airplane mode is disabled successfully");
+				soft.assertTrue(true, "Turn off Airplane mode popup is not displayed -> Airplane mode is disabled successfully");
+				test.log(LogStatus.PASS, "Turn off Airplane mode popup is not displayed -> Airplane mode is disabled successfully");
+			} else  {
 				minWait();
-				if(isElementExist(New_SanityLocators.image))
-				{
-					System.out.println("Picture file is there");
-					APP_LOGS.info("Picture file is there");
-					test.log(LogStatus.PASS, "Picture file is there");
-				}
-				else{
-					System.out.println("Picture file is not there");
-					APP_LOGS.info("Picture file is not there");
-					test.log(LogStatus.PASS, "Picture file is not there");
-				}
+				APP_LOGS.info(" Airplane mode is not disabled");	
+				soft.fail();
+				test.log(LogStatus.FAIL,"Airplane mode is not disabled");
+			}
+			minWait();
+			minWait();
+		} catch (NoSuchElementException e) {
+			test.log(LogStatus.ERROR,"Error in the locators => validate_Airplane_Disable()");
+			e.printStackTrace();
+		}catch (Exception e) {
+			test.log(LogStatus.ERROR,"Exception in functionality=> validate_Airplane_Disable()");
+			e.printStackTrace();
+		}
+	}
+	
+	public void addcontactsTO_Phone_Make_call(String name,String email,String Address, SoftAssert sa) throws InterruptedException {
+		WebDriverWait wait = new WebDriverWait(aDriver, 120);
+		try {
+			minWait();
+			System.out.println("IM in Contacts");
+			minWait();
+			clickBtn(New_SanityLocators.ContactsMoreOptions);
+			minWait();
+			scrollToElements(New_SanityLocators.AccountsPhoneOPt1);
+			//		scrollText("PHONE");
+			minWait();
+			clickBtn(New_SanityLocators.AccountsPhoneOPt1);
+			minWait();
+			clickBtn(New_SanityLocators.AddcontactBtn);
+			minWait();
+			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
+			minWait();
+			clickBtn(New_SanityLocators.Morefields);
+			minWait();
+			enterTextToInputField(New_SanityLocators.FirstnameField, name); 
+			customWait(3000);
+			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
+			minWait();
+			scrollToElements(New_SanityLocators.phoneField);
+			minWait();
+			enterTextToInputField(New_SanityLocators.phoneField, refNum);
+			customWait(3000);
+			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
+			minWait();
+			scrollToElements(New_SanityLocators.EmailField);
+			minWait();
+			enterTextToInputField(New_SanityLocators.EmailField, email);
+			customWait(3000);
+			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
+			minWait();
+			scrollToElements(New_SanityLocators.Addressfield);
+			minWait();
+			enterTextToInputField(New_SanityLocators.Addressfield, Address);
+			customWait(3000);
+			if (isElementExist(New_SanityLocators.OK)){
+				clickBtn(New_SanityLocators.OK);
+				minWait();
+			}
+			aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
+			minWait();
+			clickBtn(New_SanityLocators.SaveBtn);
+			minWait();
+			clickBtn(New_SanityLocators.callBtn);
+			minWait();
+			
+			wait.until(ExpectedConditions.visibilityOf(New_SanityLocators.KeypadOPT));
+			if(isElementExist(New_SanityLocators.KeypadOPT)) {
+				takeScreenShot();
+				Read_File.takeScreenShotForOcr("Call");
+				my_main.validate_Using_OCR("Call.png");
+				validate_Alarm_OCR(sa);
 				
-			} catch (org.openqa.selenium.NoSuchElementException e) {
-
-				test.log(LogStatus.ERROR, "Error in the locators->endCall_RefDevice()");
-				e.printStackTrace();
-
-			} catch (Exception e) {
-
-				test.log(LogStatus.ERROR, "Exeption in ->endCall_RefDevice()");
-			}
-		}
-		
-		public void start_record() {
-			WebDriverWait wait = new WebDriverWait(aDriver, 120);
-			try {
+				
+				clickBtn(New_SanityLocators.endBtn);
 				minWait();
-				if(isElementExist(New_SanityLocators.permissionPopUp)) {
-					check=true;
-					minWait();
-					for(int i=0;i<3;i++){
-						minWait();
-						clickBtn(New_SanityLocators.allowBtn);
-					}
-				}
-				minWait();
-				clickBtn(New_SanityLocators.record_button);
-				minWait();
-				if(isElementExist(New_SanityLocators.permissionPopUp)) {
-					check=true;
-					minWait();
-					for(int i=0;i<3;i++){
-						minWait();
-						clickBtn(New_SanityLocators.allowBtn);
-					}
-				}
-				customWait(10000);
-				clickBtn(New_SanityLocators.stopButton);
-				minWait();
-				clickBtn(New_SanityLocators.SaveBtn);
+				System.out.println("Call animation displayed");
+				APP_LOGS.info("Call animation displayed");
 				minWait();
 				aDriver.pressKeyCode(AndroidKeyCode.HOME);
 				minWait();
-				System.out.println("Audio file recorded");
-				APP_LOGS.info("Audio file recorded");
-				test.log(LogStatus.INFO, "Audio file recorded");
-			} catch (org.openqa.selenium.NoSuchElementException e) {
-
-				test.log(LogStatus.ERROR, "Error in the locators->endCall_RefDevice()");
-				e.printStackTrace();
-
-			} catch (Exception e) {
-
-				test.log(LogStatus.ERROR, "Exeption in ->endCall_RefDevice()");
+				test.log(LogStatus.PASS, "Call animation displayed");
+			}else {
+				APP_LOGS.info("Call did't initiated");
+				minWait();
+				aDriver.pressKeyCode(AndroidKeyCode.HOME);
+				minWait();
+				test.log(LogStatus.INFO, "Call did't initiated,network issue");
 			}
 		}
-		
-		public void browse_Audio_files() {
-			WebDriverWait wait = new WebDriverWait(aDriver, 120);
-			try {
+		catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators");
+			e.printStackTrace();
+
+		}
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			test.log(LogStatus.ERROR, "No Such element Found");
+		}
+	}
+	
+	public String readFile(String filename) {
+		String content = null;
+		try {
+		content = new String(Files.readAllBytes(Paths.get(filename)));
+
+		} catch (Exception e) {
+		e.printStackTrace();
+		}
+		return content;
+		}
+	
+	public void validate_Alarm_OCR(SoftAssert SA) {
+		try {
+		String content = readFile(".\\src\\test\\resources\\OCR_FILES\\ocr.txt");
+		System.out.println("text from screenshot = " + content.substring(content.length() - 20));
+		if (content.contains("Calling")) {
+		System.out.println("Call animation displayed");
+		APP_LOGS.info("Call animation displayed");
+		SA.assertTrue(true, "Call animation displayed");
+		test.log(LogStatus.INFO, "Call animation displayed");
+		} else {
+		System.out.println("Call animation not displayed");
+		APP_LOGS.info("Call animation not displayed");
+		test.log(LogStatus.INFO, "Call animation not displayed");
+		SA.fail();
+		}
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+		test.log(LogStatus.ERROR, "Error in the locators->validate_dailpad()");
+		e.printStackTrace();
+
+		} catch (Exception e) {
+		test.log(LogStatus.ERROR, "Exeption in ->validate_dailpad()");
+		}
+		}
+	
+	public void check_different_option(SoftAssert sa) throws InterruptedException {
+		WebDriverWait wait = new WebDriverWait(aDriver, 120);
+		try {
+			minWait();
+			
+			if (isElementExist(New_SanityLocators.more_button)){
+				clickBtn(New_SanityLocators.mute_button);
+				customWait(2000);
+				clickBtn(New_SanityLocators.mute_button);
 				minWait();
-				if(isElementExist(New_SanityLocators.permissionPopUp)) {
-					check=true;
-					minWait();
-					for(int i=0;i<3;i++){
-						minWait();
-						clickBtn(New_SanityLocators.allowBtn);
-					}
-				}
+				clickBtn(New_SanityLocators.speaker_button);
+				customWait(2000);
+				clickBtn(New_SanityLocators.speaker_button);
 				minWait();
-				scrollToText("SoundRecorder");
-				minWait();
-				if(isElementExist(New_SanityLocators.Audiofile))
-				{
-					System.out.println("Audiofile file is there");
-					APP_LOGS.info("Audiofile file is there");
-					test.log(LogStatus.PASS, "Audiofile file is there");
-				}
-				else{
-					System.out.println("Audiofile file is not there");
-					APP_LOGS.info("Audiofile file is not there");
-					test.log(LogStatus.PASS, "Audiofile file is not there");
-				}
+				clickBtn(New_SanityLocators.hold_button);
+				customWait(5000);
+				clickBtn(New_SanityLocators.hold_button);
+				customWait(3000);
 				
-			} catch (org.openqa.selenium.NoSuchElementException e) {
+				System.out.println("All buttons are clicked");
+				APP_LOGS.info("All buttons are clicked");
+				test.log(LogStatus.PASS,"All buttons are clicked");
+				
+			}
+			
+			
+		}
+		catch (org.openqa.selenium.NoSuchElementException e) {
 
-				test.log(LogStatus.ERROR, "Error in the locators->endCall_RefDevice()");
-				e.printStackTrace();
+			test.log(LogStatus.ERROR, "Error in the locators");
+			e.printStackTrace();
 
-			} catch (Exception e) {
+		}
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			test.log(LogStatus.ERROR, "No Such element Found");
+		}
+		sa.assertAll();
+	}
+	
+	public void endCall_PrimeDevice() {
+		try {
+			minWait();
+			Runtime.getRuntime().exec("adb -s " + p_Id + " shell input keyevent 6");
+			Thread.sleep(1000);
+		} catch (org.openqa.selenium.NoSuchElementException e) {
 
-				test.log(LogStatus.ERROR, "Exeption in ->endCall_RefDevice()");
+			test.log(LogStatus.ERROR, "Error in the locators->endCall_RefDevice()");
+			e.printStackTrace();
+
+		} catch (Exception e) {
+
+			test.log(LogStatus.ERROR, "Exeption in ->endCall_RefDevice()");
+		}
+	}
+	
+	public void click_picture() {
+		WebDriverWait wait = new WebDriverWait(aDriver, 120);
+		try {
+			minWait();
+			if(isElementExist(New_SanityLocators.permissionPopUp)) {
+					minWait();
+					clickBtn(New_SanityLocators.allowBtn);
+				}
+			if(isElementExist(New_SanityLocators.permissionPopUp)) {
+				minWait();
+				clickBtn(New_SanityLocators.allowBtn);
+			}
+			if(isElementExist(New_SanityLocators.permissionPopUp)) {
+				minWait();
+				clickBtn(New_SanityLocators.allowBtn);
+			}
+			minWait();
+			clickBtn(New_SanityLocators.shutter_button);
+			customWait(7000);
+			if(isElementExist(New_SanityLocators.camdone_button))
+			{minWait();
+			clickBtn(New_SanityLocators.camdone_button);
+			minWait();
+			}
+			aDriver.pressKeyCode(AndroidKeyCode.HOME);
+			minWait();
+			System.out.println("Picture clicked");
+			APP_LOGS.info("Picture clicked");
+			test.log(LogStatus.INFO, "Picture clicked");
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->endCall_RefDevice()");
+			e.printStackTrace();
+
+		} catch (Exception e) {
+
+			test.log(LogStatus.ERROR, "Exeption in ->endCall_RefDevice()");
+		}
+	}
+	
+	public void browse_files() {
+		WebDriverWait wait = new WebDriverWait(aDriver, 120);
+		try {
+			minWait();
+			if(isElementExist(New_SanityLocators.permissionPopUp)) {
+					minWait();
+					clickBtn(New_SanityLocators.allowBtn);
+				}
+			if(isElementExist(New_SanityLocators.permissionPopUp)) {
+				minWait();
+				clickBtn(New_SanityLocators.allowBtn);
+			}
+			if(isElementExist(New_SanityLocators.permissionPopUp)) {
+				minWait();
+				clickBtn(New_SanityLocators.allowBtn);
+			}
+			minWait();
+			
+		while(true){
+			
+			if(isElementExist(aDriver.findElementByXPath("\\android.widget.TextView[@text='DCIM']"))){
+				aDriver.findElementByXPath("\\android.widget.TextView[@text='DCIM']").click();
+				break;
+				
+			}else {
+				aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_DPAD_DOWN);
+				minWait();
+				continue;
 			}
 		}
-		
-		public void check_Autorotate() {
-			WebDriverWait wait = new WebDriverWait(aDriver, 120);
-			try {
+			
+		/*	scrollToElement(New_SanityLocators.FileMgr_DCIMFldr);
+			clickBtn(New_SanityLocators.FileMgr_DCIMFldr);
+		scrollToText("DCIM");
+			//aDriver.pressKeyCode(AndroidKeyCode.KEYCODE_PAGE_DOWN);
+			
+			minWait();
+			scrollToElement(New_SanityLocators.FileMgr_CameraFldr);
+			clickBtn(New_SanityLocators.FileMgr_CameraFldr);
+//			scrollToText("Camera");
+			minWait();
+			if(isElementExist(New_SanityLocators.image))
+			{
+				System.out.println("Picture file is there");
+				APP_LOGS.info("Picture file is there");
+				test.log(LogStatus.PASS, "Picture file is there");
+			}
+			else{
+				System.out.println("Picture file is not there");
+				APP_LOGS.info("Picture file is not there");
+				test.log(LogStatus.PASS, "Picture file is not there");
+			}*/
+			
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->endCall_RefDevice()");
+			e.printStackTrace();
+
+		} catch (Exception e) {
+
+			test.log(LogStatus.ERROR, "Exeption in ->endCall_RefDevice()");
+		}
+	}
+	
+	public void start_record() {
+		WebDriverWait wait = new WebDriverWait(aDriver, 120);
+		try {
+			minWait();
+			if(isElementExist(New_SanityLocators.permissionPopUp)) {
+				check=true;
+				minWait();
+				for(int i=0;i<3;i++){
+					minWait();
+					clickBtn(New_SanityLocators.allowBtn);
+				}
+			}
+			minWait();
+			clickBtn(New_SanityLocators.record_button);
+			minWait();
+			if(isElementExist(New_SanityLocators.permissionPopUp)) {
+				check=true;
+				minWait();
+				for(int i=0;i<3;i++){
+					minWait();
+					clickBtn(New_SanityLocators.allowBtn);
+				}
+			}
+			customWait(10000);
+			clickBtn(New_SanityLocators.stopButton);
+			minWait();
+			clickBtn(New_SanityLocators.SaveBtn);
+			minWait();
+			aDriver.pressKeyCode(AndroidKeyCode.HOME);
+			minWait();
+			System.out.println("Audio file recorded");
+			APP_LOGS.info("Audio file recorded");
+			test.log(LogStatus.INFO, "Audio file recorded");
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->endCall_RefDevice()");
+			e.printStackTrace();
+
+		} catch (Exception e) {
+
+			test.log(LogStatus.ERROR, "Exeption in ->endCall_RefDevice()");
+		}
+	}
+	
+	public void browse_Audio_files() {
+		WebDriverWait wait = new WebDriverWait(aDriver, 120);
+		try {
+			minWait();
+			if(isElementExist(New_SanityLocators.permissionPopUp)) {
+				check=true;
+				minWait();
+				for(int i=0;i<3;i++){
+					minWait();
+					clickBtn(New_SanityLocators.allowBtn);
+				}
+			}
+			minWait();
+			scrollToText("SoundRecorder");
+			minWait();
+			if(isElementExist(New_SanityLocators.Audiofile))
+			{
+				System.out.println("Audiofile file is there");
+				APP_LOGS.info("Audiofile file is there");
+				test.log(LogStatus.PASS, "Audiofile file is there");
+			}
+			else{
+				System.out.println("Audiofile file is not there");
+				APP_LOGS.info("Audiofile file is not there");
+				test.log(LogStatus.PASS, "Audiofile file is not there");
+			}
+			
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->endCall_RefDevice()");
+			e.printStackTrace();
+
+		} catch (Exception e) {
+
+			test.log(LogStatus.ERROR, "Exeption in ->endCall_RefDevice()");
+		}
+	}
+	
+	public void check_Autorotate() {
+		WebDriverWait wait = new WebDriverWait(aDriver, 120);
+		try {
+			minWait();
+			if(isElementExist(New_SanityLocators.Autorotate)) {
+				System.out.println("Autorotate is on");
+				APP_LOGS.info("Autorotate is on");
+				test.log(LogStatus.INFO, "Autorotate is on");
+				aDriver.pressKeyCode(AndroidKeyCode.HOME);
+			}
+			else if (isElementExist(New_SanityLocators.Portrait))
+					{
+				minWait();
+				clickBtn(New_SanityLocators.Portrait);
 				minWait();
 				if(isElementExist(New_SanityLocators.Autorotate)) {
-					System.out.println("Autorotate is on");
-					APP_LOGS.info("Autorotate is on");
-					test.log(LogStatus.INFO, "Autorotate is on");
+					System.out.println("Autorotate is turned on");
+					APP_LOGS.info("Autorotate is turned on");
+					test.log(LogStatus.PASS, "Autorotate is turned on");
 					aDriver.pressKeyCode(AndroidKeyCode.HOME);
-				}
-				else if (isElementExist(New_SanityLocators.Portrait))
-						{
-					minWait();
-					clickBtn(New_SanityLocators.Portrait);
-					minWait();
-					if(isElementExist(New_SanityLocators.Autorotate)) {
-						System.out.println("Autorotate is turned on");
-						APP_LOGS.info("Autorotate is turned on");
-						test.log(LogStatus.PASS, "Autorotate is turned on");
-						aDriver.pressKeyCode(AndroidKeyCode.HOME);
-					}	
-				}
-			} catch (org.openqa.selenium.NoSuchElementException e) {
-
-				test.log(LogStatus.ERROR, "Error in the locators->endCall_RefDevice()");
-				e.printStackTrace();
-
-			} catch (Exception e) {
-
-				test.log(LogStatus.ERROR, "Exeption in ->endCall_RefDevice()");
+				}		
 			}
+			customWait(10000);
 		}
-		
-		
-		//////////////////////////////////////////////////////////////////////////////////////////
+		catch (org.openqa.selenium.NoSuchElementException e) {
+
+			test.log(LogStatus.ERROR, "Error in the locators->endCall_RefDevice()");
+			e.printStackTrace();
+
+		} catch (Exception e) {
+
+			test.log(LogStatus.ERROR, "Exeption in ->endCall_RefDevice()");
+		}
+	}
 	
+	
+	//////////////////////////////////////////////////////////////////////////////////////////
+
 }

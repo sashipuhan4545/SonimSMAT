@@ -822,7 +822,7 @@ public class XP8_Wifi_Test extends XP8_Wifi_Util {
 	}
 	}sa.assertAll();	
 	}		 
-	@Test(priority=22,dataProvider="XP8_Wifi", dataProviderClass=DataProviders.class)
+/*	@Test(priority=22,dataProvider="XP8_Wifi", dataProviderClass=DataProviders.class)
 	public void XP8_TC_22_Wifi_ConnectInLandscape(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException
 	{  
 		SoftAssert sa=new SoftAssert();
@@ -858,7 +858,7 @@ if(operator.contains("-10") || operator.contains("-11") || operator.contains("-1
 		aDriver.rotate(ScreenOrientation.PORTRAIT);
         }
 		 }sa.assertAll();
-	}
+	}*/
 	@Test(priority=23,dataProvider="XP8_Wifi", dataProviderClass=DataProviders.class)
 	public void XP8_TC_23_Wifi_Verify_IPAddress_Same_InAboutPhone_WifiPreferences(Hashtable<String, String> data) throws InterruptedException, AWTException, IOException
 	{  

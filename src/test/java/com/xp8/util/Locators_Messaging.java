@@ -133,6 +133,8 @@ public class Locators_Messaging {
 //------------send btn
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.ImageButton\").resourceId(\"com.android.mms:id/send_button_sms\")")
 	public static AndroidElement send_Icon;
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.ImageButton\").description(\"Send MMS\")")
+	public static AndroidElement send_Icon_P;
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.Button\").text(\"SEND\")")
 	public static AndroidElement SEND;
 	@AndroidFindBy(xpath="//android.widget.ImageButton[@content-desc='Send']")
@@ -224,7 +226,9 @@ public class Locators_Messaging {
 	public static AndroidElement add_contact;
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"Demo1\")")
 	public static AndroidElement demo1;
-	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").text(\"Create new contact\")")
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.ImageButton\").description(\"Create new contact\")")
+	public static AndroidElement create_contact_A;
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").description(\"Create new contact\")")
 	public static AndroidElement create_contact;
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.LinearLayout\").resourceId(\"com.google.android.apps.messaging:id/contact_picker_create_group\")")
 	public static AndroidElement group_coversation;
@@ -265,7 +269,7 @@ public class Locators_Messaging {
 	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.Button\").text(\"UNBLOCK\")")
 	public static AndroidElement unblock_confirm2;
 	//-------------------create contact----------------
-	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.ImageButton\").resourceId(\"com.android.contacts:id/floating_action_button\")")
+	@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.ImageView\").description(\"Show more\")")
 	public static AndroidElement AddtoContact;
 	@AndroidFindBy(xpath = "//android.widget.ImageView[@resource-id='android:id/icon']")
 	public static AndroidElement Choose_Phone;

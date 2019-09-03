@@ -186,7 +186,10 @@ public class XP8_Interruption_Test extends XP8_Interruption_Util{
 		SoftAssert SA = new SoftAssert();
 		clearRecentApps();
 		postconditionMemoryStorageCheck();
+		minWait();
 		Post_Condition_Set_Sleeptime_30sec();
+		aDriver.pressKeyCode(AndroidKeyCode.HOME);
+		deleteSMSInPostCondition();
 		aDriver.pressKeyCode(AndroidKeyCode.HOME);
 		deleteContacts(pryNum, SA);
 		aDriver.pressKeyCode(AndroidKeyCode.HOME);
@@ -214,7 +217,7 @@ public class XP8_Interruption_Test extends XP8_Interruption_Util{
 		addAlarm();
 		timerExpire();
 		endCall_RefDevice();
-		validateCallDetails(SA);
+		//validateCallDetails(SA);
 		SA.assertAll();
 	}
 
@@ -235,7 +238,7 @@ public class XP8_Interruption_Test extends XP8_Interruption_Util{
 		String cmd1 = "adb -s "+r_Id+" shell service call isms 7 i32 0 s16 \"com.android.mms.service\" s16 "+pryNum+" s16 \"null\" s16 \"HiTest\" s16 \"null\" s16 \"null\"";
 		Runtime.getRuntime().exec(cmd1);
 		customWait(2000);
-		recieveSMSFromReferenceDeviceForSMSInterruption();
+		recieveSMSFromReferenceDevice();
 		Runtime.getRuntime().exec("adb -s "+p_Id+" shell pm clear com.google.android.deskclock");
 		minWait();
 		addAlarm();
@@ -250,7 +253,7 @@ public class XP8_Interruption_Test extends XP8_Interruption_Util{
 		SoftAssert SA = new SoftAssert();
 		clearRecentApps();
 		launch_an_app("browser");
-		if(isElementExist(multi_Loc_Strategy(Locators_Stability.ACCEPTCONTINUE, Locators_Stability.ACCEPTCONTINUEByID, Locators_Stability.ACCEPTCONTINUEByResourceId, Locators_Stability.ACCEPTCONTINUEByText, Locators_Stability.ACCEPTCONTINUEByXpath, 332, 1764))){
+		if(isElementExist(multi_Loc_Strategy(Locators_XP8_CallHistory.ACCEPTCONTINUE, Locators_Stability.ACCEPTCONTINUEByID, Locators_Stability.ACCEPTCONTINUEByResourceId, Locators_Stability.ACCEPTCONTINUEByText, Locators_Stability.ACCEPTCONTINUEByXpath, 332, 1764))){
 			clearChromePermission();		
 		}
 		minWait();
@@ -434,31 +437,71 @@ public class XP8_Interruption_Test extends XP8_Interruption_Util{
 		clearRecentApps();
 		launch_an_app("playMusic");
 		minWait();
-		if(isElementExist(Locators_XP8_CallHistory.NoThanksBtnMusic)){
-			clickBtn(Locators_XP8_CallHistory.NoThanksBtnMusic);
-			minWait();
-			clickBtn(Locators_XP8_CallHistory.SkipBtnMusic);
-			minWait();
-			clickBtn(Locators_XP8_CallHistory.SkipBtnMusic);
-			minWait();
-		}
-		else if(isElementExist(Locators_XP8_CallHistory.SkipBtnMusic)){
-			clickBtn(Locators_XP8_CallHistory.SkipBtnMusic);
+		if(!isElementExist(Locators_XP8_CallHistory.noMusicAvailable)){
+			if(isElementExist(Locators_XP8_CallHistory.NoThanksBtnMusic)){
+				clickBtn(Locators_XP8_CallHistory.NoThanksBtnMusic);
+				minWait();
+				clickBtn(Locators_XP8_CallHistory.SkipBtnMusic);
+				minWait();
+				clickBtn(Locators_XP8_CallHistory.SkipBtnMusic);
+				minWait();
+			}
+			else if(isElementExist(Locators_XP8_CallHistory.SkipBtnMusic)){
+				clickBtn(Locators_XP8_CallHistory.SkipBtnMusic);
+			}
+			else{
+				System.out.println("Music app launched");
+				APP_LOGS.info("Music app launched");
+				test.log(LogStatus.PASS, "Music app launched");
+			}
+			clickBtn(Locators_XP8_CallHistory.musicPlayButton);
+
+			WebDriverWait wait = new WebDriverWait(aDriver, 120);
+			wait.until(ExpectedConditions.visibilityOf(Locators_XP8_CallHistory.musicPauseStopButton));
+
+			if(isElementExist(Locators_XP8_CallHistory.musicPauseStopButton)){
+				System.out.println("Music Playing successfully");
+				APP_LOGS.info("Music Playing successfully");
+				test.log(LogStatus.PASS, "Music Playing successfully");
+				minWait();
+				validateCallInterruption();
+				customWait(10000);
+				endCall_RefDevice();
+				minWait();
+				String cmd1 = "adb -s "+r_Id+" shell service call isms 7 i32 0 s16 \"com.android.mms.service\" s16 "+pryNum+" s16 \"null\" s16 \"HiTest\" s16 \"null\" s16 \"null\"";
+				Runtime.getRuntime().exec(cmd1);
+				customWait(2000);
+				recieveSMSFromReferenceDevice();
+				Runtime.getRuntime().exec("adb -s "+p_Id+" shell pm clear com.google.android.deskclock");
+				minWait();
+				addAlarm();
+				minWait();
+				timerExpire();
+				minWait();
+				launch_an_app("playMusic");
+				minWait();
+				if(isElementExist(Locators_XP8_CallHistory.musicPauseEnabled)){
+					clickBtn(Locators_XP8_CallHistory.musicPauseEnabled);
+					minWait();
+					System.out.println("Music stopped");
+					test.log(LogStatus.PASS, "Music stopped");
+				}
+				else{
+					System.out.println("Music stopped");
+					test.log(LogStatus.PASS, "Music stopped");
+				}
+				//clickBtn(Locators_XP8_CallHistory.musicPauseStopButton);
+			}
+			else{
+				System.out.println("Music app isn't launched");
+				APP_LOGS.info("Music app isn't launched");
+				test.log(LogStatus.FAIL, "Music app isn't launched");
+			}
 		}
 		else{
-			System.out.println("Music app launched");
-			APP_LOGS.info("Music app launched");
-			test.log(LogStatus.PASS, "Music app launched");
-		}
-		clickBtn(Locators_XP8_CallHistory.musicPlayButton);
-
-		WebDriverWait wait = new WebDriverWait(aDriver, 120);
-		wait.until(ExpectedConditions.visibilityOf(Locators_XP8_CallHistory.musicPauseStopButton));
-		
-		if(isElementExist(Locators_XP8_CallHistory.musicPauseStopButton)){
-			System.out.println("Music Playing successfully");
-			APP_LOGS.info("Music Playing successfully");
-			test.log(LogStatus.PASS, "Music Playing successfully");
+			System.out.println("Music app doesnt have songs");
+			APP_LOGS.info("Music app doesnt have songs");
+			test.log(LogStatus.INFO, "Music app doesnt have songs");
 			minWait();
 			validateCallInterruption();
 			customWait(10000);
@@ -473,25 +516,6 @@ public class XP8_Interruption_Test extends XP8_Interruption_Util{
 			addAlarm();
 			minWait();
 			timerExpire();
-			minWait();
-			launch_an_app("playMusic");
-			minWait();
-			if(isElementExist(Locators_XP8_CallHistory.musicPauseEnabled)){
-				clickBtn(Locators_XP8_CallHistory.musicPauseEnabled);
-				minWait();
-				System.out.println("Music stopped");
-				test.log(LogStatus.PASS, "Music stopped");
-			}
-			else{
-				System.out.println("Music stopped");
-				test.log(LogStatus.PASS, "Music stopped");
-			}
-			//clickBtn(Locators_XP8_CallHistory.musicPauseStopButton);
-		}
-		else{
-			System.out.println("Music app isn't launched");
-			APP_LOGS.info("Music app isn't launched");
-			test.log(LogStatus.FAIL, "Music app isn't launched");
 		}
 		SA.assertAll();
 	}
@@ -514,7 +538,7 @@ public class XP8_Interruption_Test extends XP8_Interruption_Util{
 				test.log(LogStatus.INFO, "FM isn't ON");
 				minWait();
 				clickBtn(Locators_XP8_CallHistory.fmPowerONOFF);
-				
+
 			}
 			else{
 				System.out.println("FM is ON");
@@ -596,7 +620,7 @@ public class XP8_Interruption_Test extends XP8_Interruption_Util{
 		timerExpire();
 		SA.assertAll();
 	}
-	
+
 	@Test(priority=14,dataProvider="XP8_Interruption", dataProviderClass=DataProviders.class)
 	public void XP8_TC_14_Validate_Gmail_Interruptions(Hashtable<String, String> data) throws Exception
 	{
