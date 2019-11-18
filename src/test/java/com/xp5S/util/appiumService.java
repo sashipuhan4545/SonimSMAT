@@ -60,8 +60,7 @@ public class appiumService {
 		builder.usingDriverExecutable(new File("C:\\Program Files\\nodejs\\node.exe"));
 		builder.withAppiumJS(new File(System.getProperty("user.home")+"\\AppData\\Roaming\\npm\\node_modules\\appium\\build\\lib\\main.js"));
 		builder.withLogFile(new File (System.getProperty("user.home")+"\\AppiumServerLogs.txt"));
-
-		builder.withIPAddress("127.0.0.1");
+        builder.withIPAddress("127.0.0.1");
 		builder.usingPort(port);
 
 

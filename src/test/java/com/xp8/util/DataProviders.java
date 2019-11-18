@@ -1,7 +1,10 @@
 package com.xp8.util;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.testng.TestNG;
 import org.testng.annotations.DataProvider;
 
 import com.aosp.Utils.ExcelUtils;
@@ -9,6 +12,11 @@ import com.xp5S.util.ExcelConstants;
 import com.xp5S.util.ExcelReader;
 
 public class DataProviders {
+	
+	
+	TestNG runner=new TestNG();
+	List<String> suite=new ArrayList<String>();
+	
 	
 	
 	

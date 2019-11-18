@@ -71,7 +71,8 @@ public class XP8_Device_QA_Sanity_Test extends XP8_Sanity_Util {
 		Locators_BaseUtil loc1=new Locators_BaseUtil(aDriver);
 		PageFactory.initElements(new AppiumFieldDecorator(aDriver),loc);
 		PageFactory.initElements(new AppiumFieldDecorator(aDriver),loc1);
-		excel=new ExcelReader(ExcelConstants.XP5S_XL_PATH);		
+		excel=new ExcelReader(ExcelConstants.XP5S_XL_PATH);	
+		
 	}
 
 	@BeforeTest

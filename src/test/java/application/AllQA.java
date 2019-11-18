@@ -90,17 +90,17 @@ import javafx.util.Pair;
 public class AllQA  extends CommonConfig {
 
 	//ObservableList<String> items=FXCollections.observableArrayList("Sanity Test","MultiMedia","Messaging","Connectivity","GMS","Browser","Settings","Tools","Contacts","Call","ScoutApps","Performance","DeviceFunctionality");
-	ObservableList<String> items=FXCollections.observableArrayList("New Sanity",/*"PTT"*//*"Sanity Test",*/"DataAndConnectivity","VOLTE-CallPerformance","3G-CallPerformance","Stability","Interaction","Messaging","Call","Interruption"/*,"SCOUT","Call","Stability_AT&T-15595"*/);
+	ObservableList<String> items=FXCollections.observableArrayList("CSFB + VoLTE","RebootScenario","New Sanity",/*"PTT"*//*"Sanity Test",*/"DataAndConnectivity","VOLTE-CallPerformance","3G-CallPerformance","Stability","Interaction","Messaging","Call","Interruption"/*,"SCOUT","Call","Stability_AT&T-15595"*/);
 
 	//ObservableList<String> items=FXCollections.observableArrayList("Quick Sanity","Performance");
 	//	ObservableList<String> Sanity = FXCollections.observableArrayList("Sanity");
-
 
 	//ObservableList<String> Sanity = FXCollections.observableArrayList("Device","DEV-QA-Sanity");
 	ObservableList<String> New_Sanity = FXCollections.observableArrayList("Device Sanity");
 
 	ObservableList<String> Sanity = FXCollections.observableArrayList("Device");	
 	ObservableList<String> Messaging= FXCollections.observableArrayList("Messaging");
+	ObservableList<String> reboot= FXCollections.observableArrayList("RebootScenario");
 
 
 
@@ -120,7 +120,7 @@ public class AllQA  extends CommonConfig {
 	ObservableList<String> CallPerformance = FXCollections.observableArrayList("MO-Call","MT-Call","MO-MT-Call");
 	ObservableList<String> stability = FXCollections.observableArrayList("Contacts Stability",/*"Multitasking",*/"Wifi","Network Stability","Browser Stability","Device Stability","SMS"/*,*/);
 	ObservableList<String> ATTStablity = FXCollections.observableArrayList("Telephony","Email");
-	ObservableList<String> ptt = FXCollections.observableArrayList("KodiakPTT");
+	ObservableList<String> ptt = FXCollections.observableArrayList("CSFB + VoLTE");
 	ObservableList<String> IOT = FXCollections.observableArrayList("Interaction Cases");
 	ObservableList<String> interruption = FXCollections.observableArrayList("Interruption Cases");
 
@@ -145,6 +145,9 @@ public class AllQA  extends CommonConfig {
 	public static String SSID;
 	public static String WIFIPASSWORD;
 	public static int NUMOFCALLS;
+	public static int NUMOFSTEPS;
+
+	
 	//Here call duration defualt value is 1 minute
 	public static int CALLDURATION=1;
 	//Here call gap defualt value is 1 minute
@@ -156,7 +159,7 @@ public class AllQA  extends CommonConfig {
 	public Timer timer2;
 	public static Timer timer3_failure;
 	public Timer onskip;
-	public static Dialog<Pair<String, String>> dialog;
+	public static Dialog<Pair<String, String>> dialog_new;
 	public ProgressIndicator pi;
 	public ProgressIndicator loadingScreen;
 	public Timer percentageCalculator;
@@ -170,9 +173,7 @@ public class AllQA  extends CommonConfig {
 	public static double CALL_COUNT;
 
 
-
-
-
+  
 
 	@FXML
 	private TextField DUTMDN;
@@ -400,8 +401,12 @@ public class AllQA  extends CommonConfig {
 					t.start();*/
 
 				}
+			
 
 			});
+			
+	//Here i m terminating the adb connection once device is detected		
+		debugBridge.terminate();
 
 		}catch (java.lang.IllegalStateException e)	{
 
@@ -959,7 +964,7 @@ public class AllQA  extends CommonConfig {
 
 				listView.setItems(devicefunctionality);
 				listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-			}else if (comboBoxItems=="PTT") {
+			}else if (comboBoxItems=="CSFB + VoLTE") { 
 
 				listView.setItems(ptt);
 				listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
@@ -995,6 +1000,11 @@ public class AllQA  extends CommonConfig {
 				listView.setItems(interruption);
 				listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 				
+			}else if (comboBoxItems=="RebootScenario") {
+				
+				listView.setItems(reboot);
+				listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+				
 			}
 
 
@@ -1015,8 +1025,6 @@ public class AllQA  extends CommonConfig {
 	public void executeTC(ActionEvent event) throws FileNotFoundException, IOException, ParseException, InterruptedException {
 
 		try {
-
-
 
 
 			//Here at every run reseting the global variable values to its defualt value
@@ -1046,7 +1054,9 @@ public class AllQA  extends CommonConfig {
 
 
 						Thread SC=new Thread(new Runnable() {
+							
 							public void run() {
+								
 								TestNG runner=new TestNG();
 								List<String> suitefiles=new ArrayList<String>();
 								suitefiles.add("src/test/resources/drivers/XP5_SonimCare_O.xml");
@@ -1071,8 +1081,6 @@ public class AllQA  extends CommonConfig {
 								System.out.println("XP5 :");
 								runner.setTestSuites(suitefiles);
 								runner.run();	
-
-
 							}
 						});
 						SG.start();
@@ -1491,6 +1499,25 @@ public class AllQA  extends CommonConfig {
 					switch (itemvalue) {
 					
 					
+					case "RebootScenario":
+						Thread RS=new Thread(new Runnable() {
+							public void run() {
+
+								TestNG runner=new TestNG();
+								List<String> suitefiles=new ArrayList<String>();
+								suitefiles.add("src/test/resources/drivers/XP8_Reboot.xml");
+								System.out.println("XP8 messaging ..............");
+								runner.setTestSuites(suitefiles);
+								runner.run();	
+
+
+							}
+						});
+						RS.start();
+						break;
+						
+					
+					
 					
 					case "Messaging":
 						Thread msg=new Thread(new Runnable() {
@@ -1639,7 +1666,7 @@ public class AllQA  extends CommonConfig {
 						CS.start();
 						break;
 
-					case "KodiakPTT":
+					case "CSFB + VoLTE":
 
 						Thread ptt=new Thread(new Runnable() {
 							public void run() {
@@ -3452,10 +3479,73 @@ public class AllQA  extends CommonConfig {
 			ObservableList<String> topics;
 
 			topics = listView.getSelectionModel().getSelectedItems();
+			
 			for (String itemvalue : topics) {
 
 
 				switch (itemvalue) {
+				
+				
+				
+				case "CSFB + VoLTE":
+					
+					
+					File csfb = new File("src/test/resources/extentreport/CSFB_VoLTE.html");
+					File csfb_src = new File(System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog");
+					String csfv_path=System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog";
+					try {
+						FileUtils.copyFileToDirectory(csfb, csfb_src);
+					} catch (IOException e) {
+
+						e.printStackTrace();
+					}
+					if(csfb.exists()) {
+
+						try {
+							BaseUtil.openReportPath(csfv_path);
+						} catch (IOException e) {
+
+							e.printStackTrace();
+						}
+
+
+
+					}
+					else {
+						executionReportDoesnotExist("Test Report is not generated yet");
+					}
+
+					break;
+				
+				
+				case "RebootScenario":
+
+					File RebootSc = new File("src/test/resources/extentreport/XP8_RebootScenario.html");
+					File reboot = new File(System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog");
+					String rboot_path=System.getProperty("user.home") +File.separator +"ExecutionReport_AdbLog";
+					try {
+						FileUtils.copyFileToDirectory(RebootSc, reboot);
+					} catch (IOException e) {
+
+						e.printStackTrace();
+					}
+					if(RebootSc.exists()) {
+
+						try {
+							BaseUtil.openReportPath(rboot_path);
+						} catch (IOException e) {
+
+							e.printStackTrace();
+						}
+
+
+
+					}
+					else {
+						executionReportDoesnotExist("Test Report is not generated yet");
+					}
+
+					break;
 				
 				
 				case "Wi-fi":
@@ -5131,29 +5221,29 @@ public class AllQA  extends CommonConfig {
 	public void showMdnDialogbox() {
 
 		// Create the custom dialog.
-		dialog = new Dialog<>();
-		dialog.setTitle("S-MAT");
+		dialog_new = new Dialog<>();
+		dialog_new.setTitle("S-MAT");
 
-		dialog.initStyle(StageStyle.DECORATED);
+		dialog_new.initStyle(StageStyle.DECORATED);
 		//	dialog.getDialogPane().lookupButton(ButtonType.CLOSE).setDisable(true);
 
 
-		dialog.setHeaderText("Please enter MDN's including country Code [Excluding prefix '+']");
+		dialog_new.setHeaderText("Please enter MDN's including country Code [Excluding prefix '+']");
 
 		//MainController.secondaryStage1.setAlwaysOnTop(true);
-		dialog.initOwner(MainController.secondaryStage1);
+		dialog_new.initOwner(MainController.secondaryStage1);
 
 
 
 		// Set the button types.
 		ButtonType loginButtonType = new ButtonType("Submit", ButtonData.OK_DONE);
-		dialog.getDialogPane().getButtonTypes().addAll(loginButtonType);
+		dialog_new.getDialogPane().getButtonTypes().addAll(loginButtonType);
 		//dialog.initStyle(StageStyle.UNDECORATED);
-		DialogPane dialogPane = dialog.getDialogPane();
+		DialogPane dialogPane = dialog_new.getDialogPane();
 		dialogPane.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		dialogPane.getStyleClass().add("MDN_Popup");
 
-		dialog.getDialogPane().getScene().getWindow().setOnCloseRequest(e->{
+		dialog_new.getDialogPane().getScene().getWindow().setOnCloseRequest(e->{
 
 			e.consume();
 
@@ -5204,7 +5294,7 @@ public class AllQA  extends CommonConfig {
 
 
 		// Enable/Disable login button depending on whether a username was entered.
-		Node loginButton = dialog.getDialogPane().lookupButton(loginButtonType);
+		Node loginButton = dialog_new.getDialogPane().lookupButton(loginButtonType);
 		loginButton.setDisable(true);
 
 		// Do some validation (using the Java 8 lambda syntax).
@@ -5242,13 +5332,13 @@ public class AllQA  extends CommonConfig {
 
 		});
 
-		dialog.getDialogPane().setContent(grid);
+		dialog_new.getDialogPane().setContent(grid);
 
 		// Request focus on the username field by default.
 		Platform.runLater(() -> username.requestFocus());
 
 		// Convert the result to a username-password-pair when the login button is clicked.
-		dialog.setResultConverter(dialogButton -> {
+		dialog_new.setResultConverter(dialogButton -> {
 			if (dialogButton == loginButtonType) {
 				return new Pair<>(username.getText(), password.getText());
 			}
@@ -5256,7 +5346,7 @@ public class AllQA  extends CommonConfig {
 		});
 
 
-		Optional<Pair<String, String>> result = dialog.showAndWait();
+		Optional<Pair<String, String>> result = dialog_new.showAndWait();
 		result.ifPresent(Dut_Ref_Dut_email -> {
 
 			PRIMARYDEVMDN="+"+Dut_Ref_Dut_email.getKey();
@@ -5575,6 +5665,11 @@ public class AllQA  extends CommonConfig {
 							}else if (newValue.contains("Contacts Stability")) {
 								EMAILREPORT="src/test/resources/extentreport/XP8_Contact_Stability.html";
 
+							}else if (newValue.contains("RebootScenario")) {
+								
+								EMAILREPORT="src/test/resources/extentreport/XP8_RebootScenario.html";
+
+								
 							}
 
 						}else if (JsonFileReaderAndWriter.primaryDevModelReader().contains("xp3800") || JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("3A")) {
@@ -5702,6 +5797,14 @@ public class AllQA  extends CommonConfig {
 						testCaseDisplay.setStyle("-fx-text-inner-color: green;");
 						testCaseDisplay.setText("Please follow the below preconditions :\n\n1. Side Connector should be connected \n2. Head phone should be connected \n3. Connect the Device to the Wi-fi network");
 						
+						
+					}else if (newValue.equals("RebootScenario")) {
+						
+						iteration_Reboot();
+						
+					}else if (newValue.equals("CSFB + VoLTE")) {
+						
+						iteration_Input_Dialog();
 						
 					}else {
 						System.out.println("Here we are reseting the Call Module to null");
@@ -5948,15 +6051,15 @@ public class AllQA  extends CommonConfig {
 	public void inputDialogBoxfornumOfCalls() {
 
 
-		dialog = new Dialog<>();
-		dialog.setTitle("S-MAT");
-		dialog.setHeaderText("Please Enter the Call details below :");
-		dialog.initOwner(MainController.secondaryStage1);
+		dialog_new = new Dialog<>();
+		dialog_new.setTitle("S-MAT");
+		dialog_new.setHeaderText("Please Enter the Call details below :");
+		dialog_new.initOwner(MainController.secondaryStage1);
 
 
 		// Set the button types.
 		ButtonType loginButtonType = new ButtonType("Submit", ButtonData.OK_DONE);
-		dialog.getDialogPane().getButtonTypes().addAll(loginButtonType);
+		dialog_new.getDialogPane().getButtonTypes().addAll(loginButtonType);
 		//dialog.initStyle(StageStyle.UNDECORATED);
 
 		// Create the username and password labels and fields.
@@ -5988,7 +6091,7 @@ public class AllQA  extends CommonConfig {
 
 
 		// Enable/Disable login button depending on whether a username was entered.
-		Node loginButton = dialog.getDialogPane().lookupButton(loginButtonType);
+		Node loginButton = dialog_new.getDialogPane().lookupButton(loginButtonType);
 		loginButton.setDisable(true);
 
 		// Do some validation (using the Java 8 lambda syntax).
@@ -5997,20 +6100,20 @@ public class AllQA  extends CommonConfig {
 		});
 
 
-		dialog.getDialogPane().setContent(grid);
+		dialog_new.getDialogPane().setContent(grid);
 
 		// Request focus on the username field by default.
 		//	Platform.runLater(() -> username.requestFocus());
 
 		// Convert the result to a username-password-pair when the login button is clicked.
-		dialog.setResultConverter(dialogButton -> {
+		dialog_new.setResultConverter(dialogButton -> {
 			if (dialogButton == loginButtonType) {
 				return new Pair<>(username.getText(),"");
 			}
 			return null;
 		});
 
-		Optional<Pair<String, String>> result = dialog.showAndWait();
+		Optional<Pair<String, String>> result = dialog_new.showAndWait();
 
 		result.ifPresent(usernamePassword -> {
 			NUMOFCALLS=Integer.parseInt(usernamePassword.getKey());
@@ -6203,7 +6306,142 @@ public class AllQA  extends CommonConfig {
 
 	}
 
+	//THis method is for reboot scenario
+
+	public void iteration_Reboot() {
+		
+
+		try {
+			dialog_new = new Dialog<>();
+			dialog_new.setTitle("S-MAT");
+			dialog_new.initOwner(MainController.secondaryStage1);
+
+
+			// Set the button types.
+			ButtonType loginButtonType = new ButtonType("Submit", ButtonData.OK_DONE);
+			dialog_new.getDialogPane().getButtonTypes().addAll(loginButtonType);
+			//dialog.initStyle(StageStyle.UNDECORATED);
+
+			// Create the username and password labels and fields.
+			GridPane grid = new GridPane();
+			grid.setHgap(12);
+			grid.setVgap(12);
+			grid.setPadding(new Insets(20, 150, 10, 10));
+
+			final TextField username = new TextField();
+			username.setPromptText("Num of reboots");
+
+			final TextField CallDuration = new TextField();
+			CallDuration.setPromptText("Total num of steps");
 
 
 
+
+
+			grid.add(new Label("Num of time device Reboots(This will reboot the device as per the user inputs)[max=100]:"), 0, 0);
+			grid.add(username, 1, 0);
+
+			grid.add(new Label("Total num of iter(Reboot + number of times script will execute )[max=10]"), 0, 1);
+			grid.add(CallDuration, 1, 1);
+
+
+
+
+
+			// Enable/Disable login button depending on whether a username was entered.
+			Node loginButton = dialog_new.getDialogPane().lookupButton(loginButtonType);
+			loginButton.setDisable(true);
+
+			// Do some validation (using the Java 8 lambda syntax).
+			username.textProperty().addListener((observable, oldValue, newValue) -> {
+				loginButton.setDisable(newValue.trim().isEmpty());
+			});
+
+
+			dialog_new.getDialogPane().setContent(grid);
+
+			// Request focus on the username field by default.
+			//	Platform.runLater(() -> username.requestFocus());
+
+			// Convert the result to a username-password-pair when the login button is clicked.
+			dialog_new.setResultConverter(dialogButton -> {
+				if (dialogButton == loginButtonType) {
+					return new Pair<>(username.getText(),"");
+				}
+				return null;
+			});
+
+			Optional<Pair<String, String>> result = dialog_new.showAndWait();
+
+			result.ifPresent(usernamePassword -> {
+				NUMOFCALLS=Integer.parseInt(usernamePassword.getKey());
+				NUMOFSTEPS=Integer.parseInt(CallDuration.getText());
+
+
+
+				System.out.println("The number of call"+NUMOFCALLS);
+				System.out.println("Call Duration is "+NUMOFSTEPS);
+
+				/*if(result.isPresent() && NUMOFCALLS<=1000) {
+
+					//Here updating the values of Appium command timeout based on only call performance
+					CommonConfig.COMMAND_TIMEOUT=3600;
+
+
+
+					Alert alert = new Alert(AlertType.CONFIRMATION);
+					alert.setTitle("S-MAT");
+					alert.initStyle(StageStyle.UNDECORATED);
+					alert.setContentText("The number of 'Call' and 'Call Duration' are : "+NUMOFCALLS +"  "+CALLDURATION);
+					alert.initOwner(MainController.secondaryStage1);
+					ButtonType yesButton = new ButtonType("Yes",ButtonData.YES);
+					ButtonType noButton = new ButtonType("No",ButtonData.NO);
+					alert.getButtonTypes().setAll(yesButton, noButton);
+					Optional<ButtonType> action = alert.showAndWait();
+					if(action.get()==yesButton && NUMOFCALLS<=1000) {
+
+
+					}
+					else if (action.get()==noButton) {
+						inputDialogBoxfornumOfCalls();
+
+					}
+
+				}
+
+				else {
+
+					Alert alert1 = new Alert(AlertType.INFORMATION);
+					alert1.setTitle("S-MAT");
+					alert1.initStyle(StageStyle.UNDECORATED);
+					alert1.setContentText("Number of call should be less than 1000!!!");
+					Optional<ButtonType> action1 = alert1.showAndWait();
+					if(action1.get()==ButtonType.OK) {
+						inputDialogBoxfornumOfCalls();
+
+
+					}
+
+
+
+				}
+
+*/
+			});
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+
+	
+		
+
+	
+	
+	
+	
+	
+}
 }

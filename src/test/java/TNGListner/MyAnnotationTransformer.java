@@ -1,4 +1,4 @@
-/*package TNGListner;
+package TNGListner;
 
 import java.lang.reflect.Constructor;
 import com.xp8.util.BaseUtil;
@@ -21,4 +21,3 @@ public class MyAnnotationTransformer implements IAnnotationTransformer{
 	
 
 }
-*/

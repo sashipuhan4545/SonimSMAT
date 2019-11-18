@@ -14,7 +14,7 @@
 		<parameter name="App_Activity_Name_"  value="com.android.dialer.DialerMainActivity" />
 			
 		<classes>
-			<class name="com.aosp.Tests.XP5S_Browser_StabilityTest_Orio" />
+			<class name="com.aosp.Tests.XP5S_Browser_StabilityTest_Orio"/>
 		</classes>
 	</test>
 </suite>

@@ -20,6 +20,9 @@ import org.apache.commons.lang3.text.WordUtils;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.json.simple.parser.ParseException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
@@ -47,6 +50,8 @@ public class CommonConfig extends appiumService {
 	public static Logger APP_LOGS = null;
 	private static String deviceId;
 	public static DesiredCapabilities capabilities;
+	
+
 
 
 
@@ -81,6 +86,9 @@ public class CommonConfig extends appiumService {
 			capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
 			capabilities.setCapability("appPackage", App_Package_Name_);
 			capabilities.setCapability("appActivity", App_Activity_Name_);
+			
+			
+		
 
 
 

@@ -391,7 +391,7 @@ public class MOCall extends XP5S_Data_Utils{
 
 					if(!JsonFileReaderAndWriter.primaryDevFirmwareReader().contains("-10.")) {
 
-						enableData_Pref_Network_Type_To_LTE();//This is as a precondition
+					//	enableData_Pref_Network_Type_To_LTE();//This is as a precondition
 						minWait();
 
 					}

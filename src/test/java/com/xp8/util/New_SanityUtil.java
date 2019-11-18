@@ -5411,7 +5411,7 @@ public class New_SanityUtil extends BaseUtil {
 			if(isElementExist(New_SanityLocators.KeypadOPT)) {
 				takeScreenShot();
 				Read_File.takeScreenShotForOcr("Call");
-				my_main.validate_Using_OCR("Call.png");
+				my_main.validate_Using_OCR("Call.jpeg");
 				validate_Alarm_OCR(sa);
 				
 				
@@ -5484,7 +5484,7 @@ public class New_SanityUtil extends BaseUtil {
 		try {
 			minWait();
 			
-			if (isElementExist(New_SanityLocators.more_button)){
+			if (isElementExist(New_SanityLocators.mute_button)){
 				clickBtn(New_SanityLocators.mute_button);
 				customWait(2000);
 				clickBtn(New_SanityLocators.mute_button);
